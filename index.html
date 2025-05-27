@@ -50,7 +50,7 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
-            --room-half-depth: 1500px; /* Definido no seu código */
+            --room-half-depth: 1500px; 
         }
         * {
             box-sizing: border-box;
@@ -91,16 +91,12 @@
             cursor: grab;
             top: 0;
             left: 0;
-            /* A variável CSS --zoom-level é definida pelo JS */
-            /* A ordem das transformações aqui será definida pelo JavaScript em updateRoomTransform */
         }
         #room-container.grabbing {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
         .room-face {
             position: absolute;
-            width: 100%; /* Será ajustado pelo JS para ROOM_DEPTH */
-            height: 100%; /* Será ajustado pelo JS para ROOM_DEPTH */
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
@@ -110,7 +106,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            overflow: hidden; /* Mantenha, mas pode precisar de ajuste dependendo do conteúdo */
+            overflow: hidden; 
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
@@ -485,7 +481,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
         const firebaseConfig = {
-            apiKey: "AIzaSyAB7D9_tOjAZQPomQ1ldpkM-PPxQzYukMGU", // Chave API ligeiramente ofuscada para exemplo
+            apiKey: "AIzaSyAB7D9_tOjAZQPomQ1ldpkM-PPxQzYukMGU", 
             authDomain: "curtirbotao.firebaseapp.com",
             databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
             projectId: "curtirbotao",
@@ -506,7 +502,7 @@
         window.initializeAudioAndSounds = function() {
             if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); // Certifique-se que o caminho está correto
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
                 window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente:", e));
@@ -514,7 +510,7 @@
         };
          window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
-                const audio = new Audio(filePath); // Certifique-se que o caminho está correto
+                const audio = new Audio(filePath); 
                 audio.volume = volume;
                 audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
@@ -555,7 +551,7 @@
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3'); // Certifique-se que o caminho está correto
+            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3'); 
         }
 
         likeButton.addEventListener("click", handleLike);
@@ -601,17 +597,17 @@
                 elemento.addEventListener("mouseenter", function () {
                     if (!document.pointerLockElement) {
                         if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto(elemento.innerText);
-                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2); // Certifique-se que o caminho está correto
+                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2); 
                     }
                 });
-                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); }); // Certifique-se que o caminho está correto
+                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); }); 
             });
             botaoToggle.addEventListener("click", function () {
                 window.acessibilidadeAtivada = !window.acessibilidadeAtivada;
                 botaoToggle.innerText = window.acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
                 if (window.synth) window.synth.cancel();
                 if (window.ambientSound) { window.ambientSound.muted = !window.acessibilidadeAtivada; }
-                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5); // Certifique-se que o caminho está correto
+                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5); 
             });
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
@@ -629,9 +625,8 @@
             const roomContainer = document.getElementById('room-container');
             const crosshair = document.getElementById('crosshair');
             
-            let isMouseLookActive = false;
-            let playerX = 0, playerY = 0, playerZ = 0;
-            let lookYaw = 0, lookPitch = 0;
+            let playerX = 0, playerY = 0, playerZ = 0; // Coordenadas da câmera no mundo
+            let lookYaw = 0, lookPitch = 0; // Orientação da câmera
             let zoomLevel = 1;
             
             const rotationSensitivity = 0.15;
@@ -643,34 +638,32 @@
             const maxZoom = 2.0;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000; // Profundidade da sala (usada para dimensionar as faces)
+            const ROOM_DEPTH = 3000; 
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
             
-            // Ajusta o tamanho e posição das faces da sala dinamicamente
-            // Isso é importante para que --room-half-depth usado no CSS corresponda ao JS
             document.documentElement.style.setProperty('--room-half-depth', `${ROOM_HALF_DEPTH}px`);
 
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
-                // Centraliza as faces em relação ao roomContainer
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
             
             viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
-            const paddingFactor = 0.45; // Quão perto das "bordas" da sala o jogador pode chegar
+            const paddingFactor = 0.45; 
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * paddingFactor, xMax: ROOM_HALF_DEPTH * paddingFactor,
-                yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor, // yMin/yMax não são usados ativamente sem movimento vertical
+                yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor,
                 zMin: -ROOM_HALF_DEPTH * paddingFactor, zMax: ROOM_HALF_DEPTH * paddingFactor
             };
 
             function updateRoomTransform() {
-                // ORDEM CORRIGIDA: Translações primeiro, depois rotações, depois escala.
-                // Isso garante que playerX/Y/Z sejam coordenadas no sistema global do mundo,
-                // e as rotações da câmera são aplicadas a esse mundo já posicionado.
+                // Ordem CORRIGIDA: Translações primeiro, depois Rotações, depois Escala.
+                // As translações (-playerX, -playerY, playerZ) movem o mundo para que
+                // a posição do jogador (playerX, playerY, playerZ) fique na origem da tela.
+                // As rotações (-lookPitch, -lookYaw) então orientam o mundo em volta dessa origem.
                 roomContainer.style.transform = `
                     translateX(${-playerX}px) 
                     translateY(${-playerY}px) 
@@ -691,16 +684,21 @@
                 let dX_world = 0;
                 let dZ_world = 0;
 
-                // W: Mover para frente (na direção da câmera)
-                // Usa a matemática padrão/original que é correta para movimento relativo à câmera.
+                // W: Mover para frente (direção da câmera)
                 if (keysPressed['w']) {
                     dX_world += moveSpeed * Math.sin(yawRad);
-                    dZ_world -= moveSpeed * Math.cos(yawRad); 
+                    // Para W ir para frente (aproximar):
+                    // Se playerZ diminuindo aproxima (padrão translateZ), então dZ_world deve ser -cos.
+                    // Se playerZ aumentando aproxima (translateZ invertido), então dZ_world deve ser +cos.
+                    // Vamos testar com a lógica que faz playerZ aumentar, assumindo que isso aproxima
+                    // devido ao problema original de "W ia para trás".
+                    dZ_world += moveSpeed * Math.cos(yawRad); 
                 }
-                // S: Mover para trás
+                // S: Mover para trás (oposto da câmera)
                 if (keysPressed['s']) {
                     dX_world -= moveSpeed * Math.sin(yawRad);
-                    dZ_world += moveSpeed * Math.cos(yawRad); 
+                    // Correspondentemente, para S ir para trás (afastar), playerZ deve diminuir.
+                    dZ_world -= moveSpeed * Math.cos(yawRad);
                 }
 
                 // A: Mover para a esquerda (strafe)
@@ -716,12 +714,12 @@
 
                 if (keysPressed['q']) {
                     zoomLevel = Math.min(maxZoom, zoomLevel + zoomSpeed);
-                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); // Certifique-se que o caminho está correto
+                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); 
                     if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom aumentado");
                 }
                 if (keysPressed['e']) {
                     zoomLevel = Math.max(minZoom, zoomLevel - zoomSpeed);
-                     if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); // Certifique-se que o caminho está correto
+                     if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); 
                      if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom reduzido");
                 }
 
@@ -742,7 +740,7 @@
                     if (element) {
                         const clickableTarget = element.closest('a, button, .subscribe-button, iframe');
                         if (clickableTarget) {
-                             if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); // Certifique-se que o caminho está correto
+                             if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); 
                             if (clickableTarget.tagName === 'A' && clickableTarget.href) {
                                 window.open(clickableTarget.href, clickableTarget.target || '_self');
                             } else if (clickableTarget.tagName === 'BUTTON' || clickableTarget.classList.contains('subscribe-button')) {
@@ -777,13 +775,13 @@
             });
             
             document.addEventListener('pointerlockchange', () => {
-                isMouseLookActive = (document.pointerLockElement === document.body);
+                const isMouseLookActive = (document.pointerLockElement === document.body); // Removido 'let' para usar a variável do escopo superior se existir, ou cria global
                 if (crosshair) { 
                     crosshair.classList.toggle('active', isMouseLookActive);
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active'); } });
-            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active');} });
+            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.pointerLockElement !== null) { /*isMouseLookActive = false;*/ if(crosshair) crosshair.classList.remove('active'); } }); // Ajustado para verificar se é null também
+            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.pointerLockElement !== null) { /*isMouseLookActive = false;*/ if(crosshair) crosshair.classList.remove('active');} }); // Ajustado
             
             function gameLoop() {
                 handleMovement();
