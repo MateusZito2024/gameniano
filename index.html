@@ -50,6 +50,7 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
+            --room-half-depth: 1500px; /* Restaurado para corresponder ao cubo original */
         }
         * {
             box-sizing: border-box;
@@ -97,8 +98,8 @@
         }
         .room-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: calc(2 * var(--room-half-depth));
+            height: calc(2 * var(--room-half-depth));
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
@@ -111,11 +112,12 @@
             overflow: hidden;
             transform-style: preserve-3d;
             backface-visibility: hidden;
-            /* Efeito de glitch nas paredes */
             position: relative;
             z-index: 1;
+            left: calc(50% - var(--room-half-depth));
+            top: calc(50% - var(--room-half-depth));
         }
-        /* Efeito de glitch sistêmico nas paredes */
+        /* Efeito de glitch nas paredes */
         .room-face.glitch-effect {
             animation: wall-glitch 0.3s ease-in-out infinite alternate;
             background: linear-gradient(
@@ -802,7 +804,6 @@
             const loadingScreen = document.getElementById('loading-screen');
             const staticOverlay = document.getElementById('static-overlay');
             let isMouseLookActive = false;
-            let lastMouseX, lastMouseY;
             let playerX = 0;
             let playerY = 0;
             let playerZ = 0;
@@ -814,24 +815,8 @@
             const minLookPitch = -60;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000;
+            const ROOM_DEPTH = 3000; // Mantido para cálculos de limites
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
-
-            document.querySelectorAll('.room-face').forEach(face => {
-                face.style.width = `${ROOM_DEPTH}px`;
-                face.style.height = `${ROOM_DEPTH}px`;
-                face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
-                face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
-            });
-
-            document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('left-wall').style.transform = `rotateY(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`;
 
             const paddingFactor = 0.45;
             const bounds = {
@@ -926,7 +911,7 @@
             // Efeito de glitch nas paredes
             document.querySelectorAll('.room-face').forEach(wall => {
                 setInterval(() => {
-                    if (Math.random() < 0.15) { // 15% de chance a cada 1,5s
+                    if (Math.random() < 0.15) {
                         wall.classList.add('glitch-effect');
                         setTimeout(() => {
                             wall.classList.remove('glitch-effect');
@@ -937,7 +922,7 @@
 
             // Efeito de estática (fora do ar)
             function triggerStaticEffect() {
-                if (Math.random() < 0.05) { // 5% de chance a cada 3s
+                if (Math.random() < 0.05) {
                     staticOverlay.classList.add('static-active');
                     window.playSound('seus-sons/static-noise.mp3', 0.4);
                     setTimeout(() => {
