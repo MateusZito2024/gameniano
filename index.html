@@ -21,7 +21,7 @@
         {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "url": "https://gameniano.com.br",
+            "url": "https://www.gameniano.com.br",
             "name": "Gameniano",
             "description": "Gameniano: seu portal de notícias e análises sobre o mundo dos games. Fique por dentro das últimas novidades, lançamentos, dicas e reviews dos jogos que você ama.",
             "publisher": {
@@ -38,32 +38,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
-            --color-terminal-bg: #0d0d0f; /* Fundo muito escuro, quase preto */
-            --color-terminal-text: #00ff66; /* Verde terminal brilhante */
-            --color-terminal-accent: #ff00ff; /* Magenta vibrante para destaque */
-            --color-terminal-error: #ff3300; /* Vermelho para "glitch" ou erro */
-            --color-border-scan: #00ffff; /* Ciano para linhas de scan */
+            --color-terminal-bg: #0d0d0f;
+            --color-terminal-text: #00ff66;
+            --color-terminal-accent: #ff00ff;
+            --color-terminal-error: #ff3300;
+            --color-border-scan: #00ffff;
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
             --twitch-color: #9146ff;
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
-            --room-half-depth: 1500px; /* Definido para corresponder a ROOM_HALF_DEPTH */
         }
-        /* RESET E BASE */
         * {
             box-sizing: border-box;
-            -webkit-user-select: none; /* Desativa seleção de texto */
+            -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         html {
             height: 100%;
-            overflow: hidden; /* Esconde barras de rolagem */
+            overflow: hidden;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
@@ -76,12 +73,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Garante que não haja scrollbar */
+            overflow: hidden;
         }
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
+            perspective: 1500px;
             overflow: hidden;
             position: relative;
         }
@@ -100,8 +97,8 @@
         }
         .room-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; 
+            height: 100%; 
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
@@ -111,9 +108,10 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            overflow: hidden;
+            overflow: hidden; 
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            position: relative; 
         }
         #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
@@ -121,6 +119,7 @@
         #left-wall { transform: rotateY(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #bottom-floor { transform: rotateX(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
+        
         .content-panel {
             background-color: rgba(0, 0, 0, 0.6);
             padding: 15px;
@@ -131,7 +130,7 @@
             margin: auto;
             text-align: left;
             position: relative;
-            z-index: 1;
+            z-index: 2; 
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
@@ -155,7 +154,6 @@
             border: 2px solid var(--color-border-scan);
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
-            cursor: pointer;
         }
         .subscribe-button {
             display: inline-flex;
@@ -179,9 +177,7 @@
         .twitch-button { background-color: var(--twitch-color); color: white; }
         .tiktok-button { background-color: var(--tiktok-color); color: white; }
         .kwai-button { background-color: var(--kwai-color); color: white; }
-        .comments-section {
-            text-align: left;
-        }
+        .comments-section { text-align: left; }
         .comment {
             background-color: rgba(0, 0, 0, 0.4);
             padding: 10px;
@@ -189,34 +185,25 @@
             margin-bottom: 10px;
             border-left: 3px solid var(--color-terminal-accent);
         }
-        .comment p {
-            font-size: 0.9em;
-            margin: 0;
-        }
-        .comment strong {
-            color: var(--color-terminal-accent);
-        }
+        .comment p { font-size: 0.9em; margin: 0; }
+        .comment strong { color: var(--color-terminal-accent); }
         .comments-section a {
             color: var(--color-border-scan);
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
             pointer-events: auto;
-            cursor: pointer;
         }
         #hud {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1000;
         }
         #system-status {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 20px; left: 20px;
             font-family: 'Press Start 2P', cursive;
             font-size: 14px;
             color: var(--color-terminal-text);
@@ -228,13 +215,10 @@
             pointer-events: auto;
             animation: flicker 1.5s infinite alternate;
         }
-        #visitCountHud {
-            color: var(--color-terminal-accent);
-        }
+        #visitCountHud { color: var(--color-terminal-accent); }
         @keyframes flicker {
             0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
             50% { opacity: 0.8; text-shadow: none; }
-            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
         }
         .hud-button {
             position: fixed;
@@ -263,7 +247,7 @@
             cursor: not-allowed;
             box-shadow: none;
         }
-        .glitch-effect-active {
+        .glitch-effect-active { 
             animation: glitch 0.1s infinite alternate;
         }
         @keyframes glitch {
@@ -276,8 +260,7 @@
         }
         #likeParticles {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 500;
@@ -288,21 +271,14 @@
             border-radius: 50%;
             animation: particleAnim 1s ease-out forwards;
             box-shadow: 0 0 8px rgba(255,69,0,0.7);
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
         }
         .content-panel::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                transparent 50%,
-                rgba(0, 0, 0, 0.3) 50%
-            );
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 50%);
             background-size: 100% 4px;
             pointer-events: none;
             animation: scanlineMove 2s linear infinite;
@@ -313,10 +289,8 @@
         }
         #loading-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-color: var(--color-terminal-bg);
             color: var(--color-terminal-text);
             display: flex;
@@ -326,15 +300,13 @@
             font-family: 'Press Start 2P', cursive;
             font-size: 2em;
             z-index: 9999;
-            opacity: 1;
-            visibility: visible;
+            opacity: 1; visibility: visible;
             transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
             text-align: center;
         }
         #loading-screen p { margin-bottom: 20px; text-shadow: 0 0 10px var(--color-terminal-text); }
         .loading-bar {
-            width: 200px;
-            height: 10px;
+            width: 200px; height: 10px;
             background-color: var(--color-terminal-accent);
             margin-top: 20px;
             border-radius: 5px;
@@ -343,8 +315,7 @@
             box-shadow: 0 0 10px var(--color-terminal-accent);
         }
         .loading-bar .progress {
-            width: 0%;
-            height: 100%;
+            width: 0%; height: 100%;
             background-color: var(--color-terminal-text);
             animation: loadProgress 3s forwards;
         }
@@ -352,90 +323,56 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
-        /* Estilo do Crosshair */
-        #crosshair {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 1001;
-            display: none; /* Oculto até o pointerLock ser ativado */
-        }
-        #crosshair::before,
-        #crosshair::after {
-            content: '';
+
+        .static-overlay {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAABieyzuAAAADFBMVEUAAAAAAAABAgMAAADgAAAAAQCeKsEAAAAB3RJTUUH4QQyDwQTgUdtRQAAACBjSFJNAAB6IwAAgIMAQkAAAACVRYdGNyZWF0aW9uIGRhdGUAAAAAAAEAAABkAAAAAwAAAP//AAAAAABrdZ4AAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAWeVFh0cFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmc9AAAAjElEQVRIx2NkwA8D8DsYJxMDAwMDAwMDEwM4gMQCsQExAAAC8wEq8eH6LAAAAAElFTkSuQmCC');
+            background-repeat: repeat;
             position: absolute;
-            background: var(--color-border-scan);
-            box-shadow: 0 0 5px var(--color-border-scan);
-            transition: transform 0.2s, background 0.2s;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1; 
+            transition: opacity 0.05s linear;
         }
-        #crosshair::before {
-            width: 2px;
-            height: 12px;
-            top: 4px;
-            left: 9px;
+
+        .glitch-block {
+            position: absolute;
+            background-color: var(--color-terminal-error);
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 1; 
         }
-        #crosshair::after {
-            width: 12px;
-            height: 2px;
-            top: 9px;
-            left: 4px;
+       
+        #hand-cursor {
+            position: fixed;
+            display: none; 
+            font-size: 28px; 
+            color: var(--color-terminal-text);
+            pointer-events: none; 
+            z-index: 2000;
+            transition: transform 0.1s ease-out, color 0.1s ease-out;
+            /* Para fa-hand-point-left, o "dedo" já está à esquerda, então o JS ajustará left/top */
         }
-        #crosshair.active {
-            display: block;
+
+        #hand-cursor.interactive {
+            color: var(--color-terminal-accent); 
+            transform: scale(1.2); 
         }
-        #crosshair.interactive::before,
-        #crosshair.interactive::after {
-            background: var(--color-terminal-accent);
-            transform: scale(1.2);
-            box-shadow: 0 0 10px var(--color-terminal-accent);
-        }
-        @keyframes crosshair-pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        #crosshair {
-            animation: crosshair-pulse 1.5s infinite;
-        }
+       
         @media (max-width: 768px) {
-            #viewport-wrapper {
-                perspective: 800px;
-            }
-            .room-face {
-                padding: 10px;
-                font-size: 0.9em;
-            }
-            .content-panel {
-                max-width: 95%;
-            }
-            .content-panel h2 {
-                font-size: 1.2em;
-            }
-            .content-panel p {
-                font-size: 0.9em;
-            }
-            .subscribe-button {
-                padding: 8px 15px;
-                font-size: 0.9em;
-                margin: 5px;
-            }
-            #system-status {
-                font-size: 10px;
-                top: 10px;
-                left: 10px;
-                padding: 5px 10px;
-            }
-            .hud-button {
-                font-size: 14px;
-                padding: 10px 15px;
-            }
+            #viewport-wrapper { perspective: 800px; }
+            .room-face { padding: 10px; font-size: 0.9em; }
+            .content-panel { max-width: 95%; }
+            .content-panel h2 { font-size: 1.2em; }
+            .content-panel p { font-size: 0.9em; }
+            .subscribe-button { padding: 8px 15px; font-size: 0.9em; margin: 5px; }
+            #system-status { font-size: 10px; top: 10px; left: 10px; padding: 5px 10px; }
+            .hud-button { font-size: 14px; padding: 10px 15px; }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #crosshair { display: none; }
+            /* #crosshair { display: none; } Removido pois #crosshair não é mais usado */
+            #hand-cursor { display: none !important; } /* Garante que a mão customizada não apareça em mobile onde o pointer lock é problemático */
         }
     </style>
     <script>
@@ -446,7 +383,6 @@
                 loadingScreen.style.opacity = '0';
                 loadingScreen.style.visibility = 'hidden';
                 loadingScreen.style.display = 'none';
-                console.log('Tela de carregamento forçada a sumir (script inline).');
             }
         }
         setTimeout(hideLoadingScreenImmediately, 100);
@@ -567,9 +503,11 @@
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
-        <div id="crosshair"></div>
     </div>
     <div id="likeParticles"></div>
+    <div id="hand-cursor"> <i class="fas fa-hand-point-left"></i>
+    </div>
+
     <script type="module" async>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
@@ -584,26 +522,28 @@
         };
         const appLike = initializeApp(firebaseConfig, "appLike");
         const databaseLike = getDatabase(appLike);
-        const appVisit = initializeApp(firebaseConfig, "appVisit");
+        const appVisit = initializeApp(firebaseConfig, "appVisit"); 
         const databaseVisit = getDatabase(appVisit);
+
         window.acessibilidadeAtivada = false;
         window.audioContext = null;
         window.ambientSound = null;
         window.synth = null;
+
         window.initializeAudioAndSounds = function() {
             if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
-                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));
+                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente:", e));
             }
         };
         window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
                 const audio = new Audio(filePath);
                 audio.volume = volume;
-                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
+                audio.play().catch(e => console.error(`Erro ao reproduzir ${filePath}:`, e));
             }
         };
         window.falarTexto = function(texto) {
@@ -614,6 +554,7 @@
                 window.synth.speak(fala);
             }
         };
+
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
@@ -631,7 +572,8 @@
             }
         `;
         document.head.appendChild(particleAnimStyle);
-        function createLikeParticles() {
+
+        function createLikeParticles() { 
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement("div");
                 particle.classList.add("like-particle");
@@ -640,27 +582,15 @@
                 particle.style.width = `${Math.random() * 10 + 5}px`;
                 particle.style.height = `${Math.random() * 10 + 5}px`;
                 likeParticlesContainer.appendChild(particle);
-                setTimeout(() => {
-                    particle.remove();
-                }, 1000);
+                setTimeout(() => { particle.remove(); }, 1000);
             }
         }
-        function handleLike() {
-            if (localStorage.getItem("hasLiked")) {
-                alert("Você já curtiu este botão nesta sessão.");
-                return;
-            }
-            const likeCountRef = ref(databaseLike, 'likes/total');
-            get(likeCountRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const currentLikes = snapshot.val();
-                    set(likeCountRef, currentLikes + 1);
-                } else {
-                    set(likeCountRef, 1);
-                }
-            }).catch((error) => {
-                console.error("Erro ao atualizar contagem de curtidas:", error);
-            });
+        function handleLike() { 
+            if (localStorage.getItem("hasLiked")) { return; }
+            const likeCountRefDb = ref(databaseLike, 'likes/total'); 
+            get(likeCountRefDb).then((snapshot) => {
+                set(likeCountRefDb, (snapshot.exists() ? snapshot.val() : 0) + 1);
+            }).catch(console.error);
             localStorage.setItem("hasLiked", "true");
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
@@ -668,76 +598,55 @@
             window.playSound('seus-sons/like-confirm.mp3');
         }
         likeButton.addEventListener("click", handleLike);
-        const likeCountRef = ref(databaseLike, 'likes/total');
+        const likeCountRef = ref(databaseLike, 'likes/total'); 
         onValue(likeCountRef, (snapshot) => {
-            if (snapshot.exists()) {
-                likeCountDisplay.innerText = snapshot.val();
-            }
+            if (snapshot.exists()) { likeCountDisplay.innerText = snapshot.val(); }
         });
         if (localStorage.getItem("hasLiked")) {
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
         }
+
         const visitCountDisplayHud = document.getElementById("visitCountHud");
-        function handleVisit() {
-            if (sessionStorage.getItem("hasVisitedThisSession")) {
-                return;
-            }
-            const visitCountRef = ref(databaseVisit, 'visits/total');
-            get(visitCountRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const currentVisits = snapshot.val();
-                    set(visitCountRef, currentVisits + 1);
-                } else {
-                    set(visitCountRef, 1);
-                }
-            }).catch((error) => {
-                console.error("Erro ao atualizar contagem de visitas:", error);
-            });
+        function handleVisit() { 
+            if (sessionStorage.getItem("hasVisitedThisSession")) { return; }
+            const visitCountRefDb = ref(databaseVisit, 'visits/total'); 
+            get(visitCountRefDb).then((snapshot) => {
+                set(visitCountRefDb, (snapshot.exists() ? snapshot.val() : 0) + 1);
+            }).catch(console.error);
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
         handleVisit();
-        const visitCountRef = ref(databaseVisit, 'visits/total');
+        const visitCountRef = ref(databaseVisit, 'visits/total'); 
         onValue(visitCountRef, (snapshot) => {
-            if (snapshot.exists()) {
-                visitCountDisplayHud.innerText = snapshot.val();
-            }
+            if (snapshot.exists()) { visitCountDisplayHud.innerText = snapshot.val(); }
         });
-        async function getLastCommitDate() {
-            const repoOwner = "MateusZito2024";
-            const repoName = "gameniano.blog";
+
+        async function getLastCommitDate() { 
+            const repoOwner = "MateusZito2024"; const repoName = "gameniano.blog";
             try {
                 const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits`);
                 const data = await response.json();
                 if (data.length > 0) {
-                    const lastCommitDate = new Date(data[0].commit.committer.date);
-                    document.getElementById("last-modified").textContent = formatarDataHora(lastCommitDate);
-                } else {
-                    document.getElementById("last-modified").textContent = "Não encontrado";
-                }
-            }
-            catch (error) {
-                console.warn("Aviso: Erro ao buscar último commit (pode ser limite de API ou repositório privado):", error);
+                    document.getElementById("last-modified").textContent = formatarDataHora(new Date(data[0].commit.committer.date));
+                } else { document.getElementById("last-modified").textContent = "Não encontrado"; }
+            } catch (error) {
+                console.warn("Erro ao buscar commit:", error);
                 document.getElementById("last-modified").textContent = "Erro ao buscar";
             }
         }
-        function formatarDataHora(data) {
-            const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
-                            "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
-            const dia = data.getDate();
-            const mes = meses[data.getMonth()];
-            const ano = data.getFullYear();
-            const horas = data.getHours().toString().padStart(2, '0');
-            const minutos = data.getMinutes().toString().padStart(2, '0');
-            return `${dia} de ${mes} de ${ano}, ${horas}:${minutos}`;
+        function formatarDataHora(data) { 
+            const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+            return `${data.getDate()} de ${meses[data.getMonth()]} de ${data.getFullYear()}, ${data.getHours().toString().padStart(2, '0')}:${data.getMinutes().toString().padStart(2, '0')}`;
         }
         getLastCommitDate();
+
         document.addEventListener("DOMContentLoaded", function () {
             window.synth = window.speechSynthesis;
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
             document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
-            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
-                                        .filter(el => !el.closest('#hud'));
+            
+            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li")).filter(el => !el.closest('#hud'));
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
@@ -746,26 +655,21 @@
                         window.playSound('seus-sons/hover-ui.mp3', 0.2);
                     }
                 });
-                elemento.addEventListener("click", function() {
-                    window.playSound('seus-sons/click-ui.mp3', 0.3);
-                });
+                elemento.addEventListener("click", function() { window.playSound('seus-sons/click-ui.mp3', 0.3); });
             });
             botaoToggle.addEventListener("click", function () {
                 window.acessibilidadeAtivada = !window.acessibilidadeAtivada;
                 botaoToggle.innerText = window.acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
                 if (window.synth) window.synth.cancel();
-                if (window.ambientSound) {
-                    window.ambientSound.muted = !window.acessibilidadeAtivada;
-                }
+                if (window.ambientSound) { window.ambientSound.muted = !window.acessibilidadeAtivada; }
                 window.playSound('seus-sons/toggle-ui.mp3', 0.5);
             });
+
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
                     if (Math.random() < 0.1) {
                         panel.classList.add('glitch-effect-active');
-                        setTimeout(() => {
-                            panel.classList.remove('glitch-effect-active');
-                        }, 500);
+                        setTimeout(() => { panel.classList.remove('glitch-effect-active'); }, 500);
                     }
                 }, 2000);
             });
@@ -775,23 +679,21 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
-            const loadingScreen = document.getElementById('loading-screen');
-            const crosshair = document.getElementById('crosshair');
+            const handCursorElement = document.getElementById('hand-cursor'); 
+
             let isMouseLookActive = false;
-            let lastMouseX, lastMouseY;
-            let playerX = 0;
-            let playerY = 0; 
-            let playerZ = 0;
-            let lookYaw = 0;   
-            let lookPitch = 0; 
+            let playerX = 0, playerY = 0, playerZ = 0;
+            let lookYaw = 0, lookPitch = 0;
             const rotationSensitivity = 0.15;
-            const moveSpeed = 25; 
-            const maxLookPitch = 60; 
-            const minLookPitch = -60; 
+            const moveSpeed = 25;
+            const maxLookPitch = 60, minLookPitch = -60;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000; 
+            const ROOM_DEPTH = 3000;
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
+
+            const interactionPointOffsetX = -80; 
+            const interactionPointOffsetY = 0;  
 
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
@@ -809,41 +711,27 @@
             
             viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
-            const paddingFactor = 0.45; 
+            const paddingFactor = 0.45;
             const bounds = {
-                xMin: -ROOM_HALF_DEPTH * paddingFactor,
-                xMax: ROOM_HALF_DEPTH * paddingFactor,
-                yMin: -ROOM_HALF_DEPTH * paddingFactor, 
-                yMax: ROOM_HALF_DEPTH * paddingFactor, 
-                zMin: -ROOM_HALF_DEPTH * paddingFactor,
-                zMax: ROOM_HALF_DEPTH * paddingFactor
+                xMin: -ROOM_HALF_DEPTH * paddingFactor, xMax: ROOM_HALF_DEPTH * paddingFactor,
+                yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor,
+                zMin: -ROOM_HALF_DEPTH * paddingFactor, zMax: ROOM_HALF_DEPTH * paddingFactor
             };
 
             function updateRoomTransform() {
                 roomContainer.style.transform = `
-                    rotateX(${-lookPitch}deg)
-                    rotateY(${-lookYaw}deg)
-                    translateX(${-playerX}px)
-                    translateY(${-playerY}px)
-                    translateZ(${-playerZ}px)
+                    rotateX(${-lookPitch}deg) rotateY(${-lookYaw}deg)
+                    translateX(${-playerX}px) translateY(${-playerY}px) translateZ(${-playerZ}px)
                 `;
             }
 
-            document.addEventListener('keydown', (e) => {
-                keysPressed[e.key.toLowerCase()] = true;
-            });
-
-            document.addEventListener('keyup', (e) => {
-                keysPressed[e.key.toLowerCase()] = false;
-            });
+            document.addEventListener('keydown', (e) => { keysPressed[e.key.toLowerCase()] = true; });
+            document.addEventListener('keyup', (e) => { keysPressed[e.key.toLowerCase()] = false; });
 
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
                 const pitchRad = lookPitch * Math.PI / 180;
-
-                let dX = 0; 
-                let dZ = 0;
-                
+                let dX = 0, dZ = 0;
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -853,79 +741,145 @@
                     dZ += moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
                 }
                 if (keysPressed['a']) {
-                    dX -= moveSpeed * Math.cos(yawRad);
-                    dZ += moveSpeed * Math.sin(yawRad);
+                    dX -= moveSpeed * Math.cos(yawRad); dZ += moveSpeed * Math.sin(yawRad);
                 }
                 if (keysPressed['d']) {
-                    dX += moveSpeed * Math.cos(yawRad);
-                    dZ -= moveSpeed * Math.sin(yawRad);
+                    dX += moveSpeed * Math.cos(yawRad); dZ -= moveSpeed * Math.sin(yawRad);
                 }
-
-                playerX += dX;
-                playerZ += dZ;
-
+                playerX += dX; playerZ += dZ;
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
+                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax));
             }
+            
+            document.body.addEventListener('click', () => {
+                if (document.pointerLockElement === document.body) {
+                    const interactionX = (window.innerWidth / 2) + interactionPointOffsetX;
+                    const interactionY = (window.innerHeight / 2) + interactionPointOffsetY;
+                    let elementToClick = document.elementFromPoint(interactionX, interactionY);
 
-            document.body.addEventListener('click', (e) => {
-                if (!document.pointerLockElement) {
-                    document.body.requestPointerLock();
-                } else {
-                    // Detectar elemento sob o crosshair
-                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
-                    if (element) {
-                        if (element.tagName === 'A' && element.href) {
-                            window.playSound('seus-sons/click-ui.mp3', 0.3);
-                            window.open(element.href, element.target || '_self');
-                        } else if (element.tagName === 'IFRAME') {
-                            window.playSound('seus-sons/click-ui.mp3', 0.3);
-                            window.open(element.src, '_blank');
+                    if (elementToClick) {
+                        const interactiveTarget = elementToClick.closest('a, button, .subscribe-button, .comment a');
+                        if (interactiveTarget && interactiveTarget.closest('.content-panel')) {
+                            interactiveTarget.click();
+                            if (window.playSound) {
+                                window.playSound('seus-sons/click-ui.mp3', 0.4);
+                            }
                         }
+                    }
+                } else {
+                    if (document.body.requestPointerLock) {
+                        document.body.requestPointerLock();
                     }
                 }
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body) {
-                    const deltaXmouse = e.movementX;
-                    const deltaYmouse = e.movementY;
-
-                    lookYaw -= deltaXmouse * rotationSensitivity;
+                if (document.pointerLockElement === document.body) { 
+                    const deltaXmouse = e.movementX; const deltaYmouse = e.movementY;
+                    lookYaw -= deltaXmouse * rotationSensitivity; 
                     lookPitch += deltaYmouse * rotationSensitivity;
-
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
-
-                    // Verificar se o crosshair está sobre um elemento interativo
-                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
-                    if (element && (element.tagName === 'A' || element.tagName === 'IFRAME')) {
-                        crosshair.classList.add('interactive');
-                    } else {
-                        crosshair.classList.remove('interactive');
-                    }
                 }
             });
             
             document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === document.body) {
-                    isMouseLookActive = true;
-                    crosshair.classList.add('active');
-                    console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
-                } else {
-                    isMouseLookActive = false;
-                    crosshair.classList.remove('active');
-                    console.log('Pointer unlocked.');
+                isMouseLookActive = (document.pointerLockElement === document.body);
+                if (handCursorElement) {
+                    handCursorElement.style.display = isMouseLookActive ? 'flex' : 'none'; 
                 }
+                // console.log(isMouseLookActive ? 'Pointer locked.' : 'Pointer unlocked.');
             });
-            document.addEventListener('mozpointerlockchange', () => {});
-            document.addEventListener('webkitpointerlockchange', () => {});
+            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(handCursorElement) handCursorElement.style.display = 'none'; /* console.log('Pointer unlocked (Firefox).'); */ } });
+            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(handCursorElement) handCursorElement.style.display = 'none'; /* console.log('Pointer unlocked (WebKit).'); */ } });
 
+            const roomFaces = document.querySelectorAll('.room-face');
+            function createStaticOverlay(face) {
+                const overlay = document.createElement('div');
+                overlay.classList.add('static-overlay');
+                face.appendChild(overlay);
+                return overlay;
+            }
+            function triggerStatic(face) {
+                const overlay = face.querySelector('.static-overlay') || createStaticOverlay(face);
+                overlay.style.opacity = 0.2 + Math.random() * 0.3; 
+                const duration = 40 + Math.random() * 120; 
+                setTimeout(() => { overlay.style.opacity = 0; }, duration);
+            }
+            function createGlitchBlock(face) {
+                const block = document.createElement('div');
+                block.classList.add('glitch-block');
+                const width = Math.random() * 25 + 8; const height = Math.random() * 8 + 2;  
+                const x = Math.random() * 95; const y = Math.random() * 95; 
+                block.style.width = `${width}px`; block.style.height = `${height}px`;
+                block.style.left = `${x}%`; block.style.top = `${y}%`;
+                const glitchColors = [getComputedStyle(document.documentElement).getPropertyValue('--color-terminal-error'), 
+                                    getComputedStyle(document.documentElement).getPropertyValue('--color-glitch-primary'), 
+                                    getComputedStyle(document.documentElement).getPropertyValue('--color-glitch-secondary')];
+                block.style.backgroundColor = glitchColors[Math.floor(Math.random() * glitchColors.length)];
+                face.appendChild(block);
+                setTimeout(() => { block.remove(); }, 100 + Math.random() * 150); 
+            }
+            setInterval(() => {
+                if (Math.random() < 0.2) { 
+                    const randomIndex = Math.floor(Math.random() * roomFaces.length);
+                    if (roomFaces[randomIndex]) triggerStatic(roomFaces[randomIndex]); // Adicionada verificação
+                }
+            }, 2000); 
+            setInterval(() => {
+                roomFaces.forEach(face => {
+                    if (Math.random() < 0.05) { 
+                        for(let i = 0; i < Math.ceil(Math.random() * 3); i++) { createGlitchBlock(face); }
+                    }
+                });
+            }, 400); 
+
+            function positionHandCursor() {
+                if (!handCursorElement || !isMouseLookActive) return;
+
+                const interactionX = (window.innerWidth / 2) + interactionPointOffsetX;
+                const interactionY = (window.innerHeight / 2) + interactionPointOffsetY;
+                
+                const iconHeight = handCursorElement.offsetHeight || 28; 
+                handCursorElement.style.left = interactionX + 'px';
+                handCursorElement.style.top = (interactionY - iconHeight / 2) + 'px';
+            }
+
+            function checkInteractionTarget() {
+                if (!isMouseLookActive || !handCursorElement) return;
+
+                const interactionX = (window.innerWidth / 2) + interactionPointOffsetX;
+                const interactionY = (window.innerHeight / 2) + interactionPointOffsetY;
+                let elementUnderCursor = document.elementFromPoint(interactionX, interactionY);
+                let isInteractive = false;
+
+                if (elementUnderCursor) {
+                    const interactiveTarget = elementUnderCursor.closest('a, button, .subscribe-button, .comment a');
+                    if (interactiveTarget && interactiveTarget.closest('.content-panel')) {
+                        isInteractive = true;
+                    }
+                }
+
+                if (isInteractive) {
+                    handCursorElement.classList.add('interactive');
+                } else {
+                    handCursorElement.classList.remove('interactive');
+                }
+            }
+            
             function gameLoop() {
                 handleMovement();
                 updateRoomTransform();
+                if (isMouseLookActive) {
+                    checkInteractionTarget();
+                    positionHandCursor(); 
+                }
                 requestAnimationFrame(gameLoop);
             }
             
+            if (handCursorElement) {
+                 handCursorElement.style.display = 'none';
+            }
             updateRoomTransform(); 
             requestAnimationFrame(gameLoop);
         });
