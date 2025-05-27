@@ -38,12 +38,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
-            --color-terminal-bg: #0d0d0f;
-            --color-terminal-text: #00ff66;
-            --color-terminal-accent: #ff00ff;
-            --color-terminal-error: #ff3300;
-            --color-border-scan: #00ffff;
+            --color-terminal-bg: #0d0d0f; /* Fundo muito escuro, quase preto */
+            --color-terminal-text: #00ff66; /* Verde terminal brilhante */
+            --color-terminal-accent: #ff00ff; /* Magenta vibrante para destaque */
+            --color-terminal-error: #ff3300; /* Vermelho para "glitch" ou erro */
+            --color-border-scan: #00ffff; /* Ciano para linhas de scan */
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
             --twitch-color: #9146ff;
@@ -51,16 +52,17 @@
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
         }
+        /* RESET E BASE */
         * {
             box-sizing: border-box;
-            -webkit-user-select: none;
+            -webkit-user-select: none; /* Desativa seleção de texto */
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         html {
             height: 100%;
-            overflow: hidden;
+            overflow: hidden; /* Esconde barras de rolagem */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
@@ -73,12 +75,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* Garante que não haja scrollbar */
         }
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px;
+            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
             overflow: hidden;
             position: relative;
         }
@@ -682,7 +684,7 @@
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
             document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
             const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
-                                           .filter(el => !el.closest('#hud'));
+                                        .filter(el => !el.closest('#hud'));
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
@@ -724,131 +726,151 @@
             let isMouseLookActive = false;
             let lastMouseX, lastMouseY;
             let playerX = 0;
-            let playerY = 0;
+            let playerY = 0; // Posição Y inicial do jogador (altura)
             let playerZ = 0;
-            let lookYaw = 0;
-            let lookPitch = 0;
+            let lookYaw = 0;   // Rotação horizontal (guinada)
+            let lookPitch = 0; // Rotação vertical (inclinação)
             const rotationSensitivity = 0.15;
-            const moveSpeed = 10;
-            const maxLookPitch = 60;
+            const moveSpeed = 25; // Aumentei um pouco a velocidade para melhor percepção
+            const maxLookPitch = 60;  // Máxima inclinação para cima/baixo
             const minLookPitch = -60;
             const keysPressed = {};
-            const ROOM_DEPTH = 3000;
+
+            const ROOM_DEPTH = 3000; // Profundidade da sala (igual à largura e altura das faces)
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
+
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
+                // Centraliza as faces
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
+
+            // Define a posição inicial das paredes usando ROOM_HALF_DEPTH
             document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('left-wall').style.transform = `rotateY(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`;
-            const padding = 0.4;
+            
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; // Ajusta perspectiva baseada no tamanho da sala
+
+            // Limites de movimento dentro da sala (para não atravessar paredes)
+            // Ajuste o padding para o quão perto das paredes o jogador pode chegar
+            const paddingFactor = 0.45; // Ex: 0.45 significa que o jogador pode ir até 45% da metade da profundidade
             const bounds = {
-                xMin: -ROOM_HALF_DEPTH * padding,
-                xMax: ROOM_HALF_DEPTH * padding,
-                yMin: -ROOM_HALF_DEPTH * padding,
-                yMax: ROOM_HALF_DEPTH * padding,
-                zMin: -ROOM_HALF_DEPTH * padding,
-                zMax: ROOM_HALF_DEPTH * padding
+                xMin: -ROOM_HALF_DEPTH * paddingFactor,
+                xMax: ROOM_HALF_DEPTH * paddingFactor,
+                yMin: -ROOM_HALF_DEPTH * paddingFactor, // Se houver movimento vertical
+                yMax: ROOM_HALF_DEPTH * paddingFactor, // Se houver movimento vertical
+                zMin: -ROOM_HALF_DEPTH * paddingFactor,
+                zMax: ROOM_HALF_DEPTH * paddingFactor
             };
+
             function updateRoomTransform() {
+                // A ordem é importante: Rotações primeiro, depois Translações
+                // Isso faz com que o mundo gire em torno do jogador e depois se mova com ele.
+                // Se fosse ao contrário, o jogador orbitaria o centro do mundo ao olhar em volta.
                 roomContainer.style.transform = `
-                    translateZ(${-playerZ}px)
-                    translateX(${-playerX}px)
-                    translateY(${-playerY}px)
                     rotateX(${-lookPitch}deg)
                     rotateY(${-lookYaw}deg)
+                    translateX(${-playerX}px)
+                    translateY(${-playerY}px)
+                    translateZ(${-playerZ}px)
                 `;
             }
+
             document.addEventListener('keydown', (e) => {
                 keysPressed[e.key.toLowerCase()] = true;
             });
+
             document.addEventListener('keyup', (e) => {
                 keysPressed[e.key.toLowerCase()] = false;
             });
+
             function handleMovement() {
-                const moveAmount = moveSpeed;
                 const yawRad = lookYaw * Math.PI / 180;
-                const pitchRad = lookPitch * Math.PI / 180;
-                let deltaX = 0;
-                let deltaZ = 0;
-                let deltaY = 0;
-                // Vetor de direção "frente" (baseado no yaw e pitch)
-                const forwardX = -Math.sin(yawRad) * Math.cos(pitchRad);
-                const forwardZ = -Math.cos(yawRad) * Math.cos(pitchRad);
-                // Vetor de direção "direita" (perpendicular ao vetor frente)
-                const rightX = Math.cos(yawRad);
-                const rightZ = -Math.sin(yawRad);
-                // Movimentação com base nas teclas
-                if (keysPressed['w']) {
-                    // Mover para frente (na direção que o jogador está olhando)
-                    deltaX += moveAmount * forwardX;
-                    deltaZ += moveAmount * forwardZ;
+                const pitchRad = lookPitch * Math.PI / 180; // Usado para escalar o movimento XZ se houver inclinação
+
+                let dX = 0; // Renomeado para clareza (delta X para este frame)
+                let dZ = 0; // Renomeado para clareza (delta Z para este frame)
+                // playerY não é alterado por WASD neste código, mantendo o movimento no plano horizontal da câmera
+
+                // --- INÍCIO DA CORREÇÃO ---
+                if (keysPressed['w']) { // Mover para frente
+                    dX += moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
+                    dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
                 }
-                if (keysPressed['s']) {
-                    // Mover para trás (oposto à direção que o jogador está olhando)
-                    deltaX -= moveAmount * forwardX;
-                    deltaZ -= moveAmount * forwardZ;
+                if (keysPressed['s']) { // Mover para trás
+                    dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
+                    dZ += moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
                 }
-                if (keysPressed['a']) {
-                    // Mover para a esquerda (perpendicular à esquerda da direção frontal)
-                    deltaX -= moveAmount * rightX;
-                    deltaZ -= moveAmount * rightZ;
+                if (keysPressed['a']) { // Mover para a esquerda (strafe)
+                    dX -= moveSpeed * Math.cos(yawRad);
+                    dZ -= moveSpeed * Math.sin(yawRad);
                 }
-                if (keysPressed['d']) {
-                    // Mover para a direita (perpendicular à direita da direção frontal)
-                    deltaX += moveAmount * rightX;
-                    deltaZ += moveAmount * rightZ;
+                if (keysPressed['d']) { // Mover para a direita (strafe)
+                    dX += moveSpeed * Math.cos(yawRad);
+                    dZ += moveSpeed * Math.sin(yawRad);
                 }
-                // Atualizar a posição do jogador
-                playerX += deltaX;
-                playerZ += deltaZ;
-                playerY += deltaY;
-                // Limitar a movimentação dentro dos limites da sala
+                // --- FIM DA CORREÇÃO ---
+
+                playerX += dX;
+                playerZ += dZ;
+
+                // Aplicar limites para não sair da sala
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
-                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax));
+                // playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax)); // Se houver movimento Y
             }
+
+            // Captura do mouse para controle da câmera
             document.body.addEventListener('click', () => {
-                if (roomContainer.requestPointerLock) {
-                    roomContainer.requestPointerLock();
+                if (roomContainer.requestPointerLock) { // Verifica se está no body, não no roomContainer diretamente
+                    document.body.requestPointerLock(); // Solicita ao body
                 }
             });
+
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === roomContainer) {
-                    const deltaX = e.movementX;
-                    const deltaY = e.movementY;
-                    lookYaw += deltaX * rotationSensitivity;
-                    lookPitch += deltaY * rotationSensitivity;
+                if (document.pointerLockElement === document.body) { // Verifica se o body tem o lock
+                    const deltaXmouse = e.movementX;
+                    const deltaYmouse = e.movementY;
+
+                    lookYaw += deltaXmouse * rotationSensitivity;
+                    lookPitch += deltaYmouse * rotationSensitivity;
+
+                    // Limitar a inclinação vertical (pitch)
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
             });
+
             document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === roomContainer) {
+                if (document.pointerLockElement === document.body) { // Verifica se o body tem o lock
                     isMouseLookActive = true;
-                    document.documentElement.style.cursor = 'none';
+                    // O cursor já é customizado via CSS, e o pointer lock o esconde.
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
                     isMouseLookActive = false;
-                    document.documentElement.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto`;
+                    // Cursor volta ao normal (definido no CSS do html)
                     console.log('Pointer unlocked.');
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => {});
-            document.addEventListener('webkitpointerlockchange', () => {});
+            // Fallbacks para outros navegadores (opcional, mas bom ter)
+            document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
+            document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
+
+
             function gameLoop() {
                 handleMovement();
                 updateRoomTransform();
                 requestAnimationFrame(gameLoop);
             }
+
+            // Iniciar o loop do jogo e a transformação inicial da sala
+            updateRoomTransform(); // Define a posição/rotação inicial
             requestAnimationFrame(gameLoop);
-            updateRoomTransform();
         });
     </script>
 </body>
