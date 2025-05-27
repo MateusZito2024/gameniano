@@ -51,6 +51,7 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
+            --room-half-depth: 1500px; /* Definido para corresponder a ROOM_HALF_DEPTH */
         }
         /* RESET E BASE */
         * {
@@ -154,6 +155,7 @@
             border: 2px solid var(--color-border-scan);
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
+            cursor: pointer;
         }
         .subscribe-button {
             display: inline-flex;
@@ -200,6 +202,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
             pointer-events: auto;
+            cursor: pointer;
         }
         #hud {
             position: fixed;
@@ -348,6 +351,55 @@
         @keyframes loadProgress {
             0% { width: 0%; }
             100% { width: 100%; }
+        }
+        /* Estilo do Crosshair */
+        #crosshair {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1001;
+            display: none; /* Oculto até o pointerLock ser ativado */
+        }
+        #crosshair::before,
+        #crosshair::after {
+            content: '';
+            position: absolute;
+            background: var(--color-border-scan);
+            box-shadow: 0 0 5px var(--color-border-scan);
+            transition: transform 0.2s, background 0.2s;
+        }
+        #crosshair::before {
+            width: 2px;
+            height: 12px;
+            top: 4px;
+            left: 9px;
+        }
+        #crosshair::after {
+            width: 12px;
+            height: 2px;
+            top: 9px;
+            left: 4px;
+        }
+        #crosshair.active {
+            display: block;
+        }
+        #crosshair.interactive::before,
+        #crosshair.interactive::after {
+            background: var(--color-terminal-accent);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--color-terminal-accent);
+        }
+        @keyframes crosshair-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #crosshair {
+            animation: crosshair-pulse 1.5s infinite;
         }
         @media (max-width: 768px) {
             #viewport-wrapper {
@@ -515,6 +567,7 @@
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
+        <div id="crosshair"></div>
     </div>
     <div id="likeParticles"></div>
     <script type="module" async>
@@ -723,6 +776,7 @@
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
             const loadingScreen = document.getElementById('loading-screen');
+            const crosshair = document.getElementById('crosshair');
             let isMouseLookActive = false;
             let lastMouseX, lastMouseY;
             let playerX = 0;
@@ -732,8 +786,8 @@
             let lookPitch = 0; 
             const rotationSensitivity = 0.15;
             const moveSpeed = 25; 
-            const maxLookPitch = 60;  
-            const minLookPitch = -60;
+            const maxLookPitch = 60; 
+            const minLookPitch = -60; 
             const keysPressed = {};
 
             const ROOM_DEPTH = 3000; 
@@ -788,9 +842,8 @@
                 const pitchRad = lookPitch * Math.PI / 180;
 
                 let dX = 0; 
-                let dZ = 0; 
+                let dZ = 0;
                 
-                // LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO (C0)
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -815,38 +868,57 @@
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
             }
 
-            document.body.addEventListener('click', () => {
-                if (document.body.requestPointerLock) { 
-                    document.body.requestPointerLock(); 
+            document.body.addEventListener('click', (e) => {
+                if (!document.pointerLockElement) {
+                    document.body.requestPointerLock();
+                } else {
+                    // Detectar elemento sob o crosshair
+                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+                    if (element) {
+                        if (element.tagName === 'A' && element.href) {
+                            window.playSound('seus-sons/click-ui.mp3', 0.3);
+                            window.open(element.href, element.target || '_self');
+                        } else if (element.tagName === 'IFRAME') {
+                            window.playSound('seus-sons/click-ui.mp3', 0.3);
+                            window.open(element.src, '_blank');
+                        }
+                    }
                 }
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body) { 
+                if (document.pointerLockElement === document.body) {
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
-                    // --- CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookYaw -= deltaXmouse * rotationSensitivity; // Invertido para corrigir o eixo horizontal do mouse
-                    // --- FIM DA CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookPitch += deltaYmouse * rotationSensitivity; // Vertical permanece como estava (correto)
+                    lookYaw -= deltaXmouse * rotationSensitivity;
+                    lookPitch += deltaYmouse * rotationSensitivity;
 
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
+
+                    // Verificar se o crosshair está sobre um elemento interativo
+                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+                    if (element && (element.tagName === 'A' || element.tagName === 'IFRAME')) {
+                        crosshair.classList.add('interactive');
+                    } else {
+                        crosshair.classList.remove('interactive');
+                    }
                 }
             });
             
             document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === document.body) { 
+                if (document.pointerLockElement === document.body) {
                     isMouseLookActive = true;
+                    crosshair.classList.add('active');
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
                     isMouseLookActive = false;
+                    crosshair.classList.remove('active');
                     console.log('Pointer unlocked.');
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
-            document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
-
+            document.addEventListener('mozpointerlockchange', () => {});
+            document.addEventListener('webkitpointerlockchange', () => {});
 
             function gameLoop() {
                 handleMovement();
