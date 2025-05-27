@@ -50,7 +50,7 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
-            --room-half-depth: 1500px; 
+            --room-half-depth: 1500px;
         }
         * {
             box-sizing: border-box;
@@ -106,7 +106,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            overflow: hidden; 
+            overflow: hidden;
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
@@ -116,7 +116,6 @@
         #left-wall { transform: rotateY(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #bottom-floor { transform: rotateX(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
-        
         .content-panel {
             background-color: rgba(0, 0, 0, 0.6);
             padding: 15px;
@@ -124,10 +123,10 @@
             border: 1px solid var(--color-terminal-accent);
             box-shadow: 0 0 15px var(--color-terminal-accent);
             max-width: 80%;
-            margin: 10px auto; 
+            margin: 10px auto;
             text-align: left;
             position: relative;
-            z-index: 1; 
+            z-index: 1;
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
@@ -144,16 +143,16 @@
             font-size: 1em;
             line-height: 1.6;
         }
-         .content-panel ul { 
+        .content-panel ul {
             list-style: none;
             padding: 0;
         }
-        .content-panel li { 
+        .content-panel li {
             margin-bottom: 8px;
             font-size: 1em;
             line-height: 1.5;
         }
-        .content-panel li strong { 
+        .content-panel li strong {
             color: var(--color-border-scan);
         }
         .content-panel iframe {
@@ -163,7 +162,7 @@
             border: 2px solid var(--color-border-scan);
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
-            cursor: pointer; 
+            cursor: pointer;
         }
         .subscribe-button {
             display: inline-flex;
@@ -187,7 +186,6 @@
         .twitch-button { background-color: var(--twitch-color); color: white; }
         .tiktok-button { background-color: var(--tiktok-color); color: white; }
         .kwai-button { background-color: var(--kwai-color); color: white; }
-        
         .comments-section { text-align: left; }
         .comment {
             background-color: rgba(0, 0, 0, 0.4);
@@ -204,9 +202,8 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
             pointer-events: auto;
-            cursor: pointer; 
+            cursor: pointer;
         }
-
         #hud {
             position: fixed;
             top: 0; left: 0;
@@ -260,7 +257,6 @@
             cursor: not-allowed;
             box-shadow: none;
         }
-
         .glitch-effect-active { animation: glitch 0.1s infinite alternate; }
         @keyframes glitch {
             0% { transform: translate(0); opacity: 1; }
@@ -270,7 +266,6 @@
             80% { transform: translate(2px, -2px); opacity: 0.8; }
             100% { transform: translate(0); opacity: 1; }
         }
-
         #likeParticles {
             position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
@@ -293,7 +288,6 @@
             from { background-position: 0 0; }
             to { background-position: 0 100%; }
         }
-
         #loading-screen {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -320,15 +314,14 @@
             animation: loadProgress 3s forwards;
         }
         @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
-        
         #crosshair {
             position: fixed;
             top: 50%; left: 50%;
             width: 20px; height: 20px;
             transform: translate(-50%, -50%);
             pointer-events: none; z-index: 1001;
-            display: none; 
-             animation: crosshair-pulse 1.5s infinite; 
+            display: none;
+            animation: crosshair-pulse 1.5s infinite;
         }
         #crosshair::before,
         #crosshair::after {
@@ -352,13 +345,11 @@
             transform: scale(1.2);
             box-shadow: 0 0 10px var(--color-terminal-accent);
         }
-         @keyframes crosshair-pulse { 
+        @keyframes crosshair-pulse {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
             50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
-
-
         @media (max-width: 768px) {
             #viewport-wrapper { perspective: 800px; }
             .room-face { padding: 10px; font-size: 0.9em; }
@@ -370,7 +361,7 @@
             .hud-button { font-size: 14px; padding: 10px 15px; }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #crosshair { display: none !important; } 
+            #crosshair { display: none !important; }
         }
     </style>
     <script>
@@ -391,7 +382,6 @@
         <p>INICIANDO PROTOCOLO GAMENIANO...</p>
         <div class="loading-bar"><div class="progress"></div></div>
     </div>
-
     <div id="viewport-wrapper">
         <div id="room-container">
             <div id="front-wall" class="room-face">
@@ -435,7 +425,7 @@
                     <p>Siga nas redes e junte-se à comunidade!</p>
                     <a href="Meu-site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);"><i class="fas fa-user-astronaut"></i> Perfil Completo</a>
                 </div>
-                 <div class="content-panel">
+                <div class="content-panel">
                     <h2><i class="fas fa-clock"></i> Última Sincronização</h2>
                     <p id="last-modified">Carregando...</p>
                 </div>
@@ -469,19 +459,18 @@
             </div>
         </div>
     </div>
-
     <div id="hud">
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
-        <div id="crosshair"></div> </div>
+        <div id="crosshair"></div>
+    </div>
     <div id="likeParticles"></div>
-
     <script type="module" async>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
         const firebaseConfig = {
-            apiKey: "AIzaSyAB7D9_tOjAZQPomQ1ldpkM-PPxQzYukMGU", 
+            apiKey: "AIzaSyAB7D9_tOjAZQPomQ1ldpkM-PPxQzYukMGU",
             authDomain: "curtirbotao.firebaseapp.com",
             databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
             projectId: "curtirbotao",
@@ -493,24 +482,22 @@
         const databaseLike = getDatabase(appLike);
         const appVisit = initializeApp(firebaseConfig, "appVisit");
         const databaseVisit = getDatabase(appVisit);
-
         window.acessibilidadeAtivada = false;
         window.audioContext = null;
         window.ambientSound = null;
         window.synth = null;
-
         window.initializeAudioAndSounds = function() {
             if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
                 window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente:", e));
             }
         };
-         window.playSound = function(filePath, volume = 0.5) {
+        window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
-                const audio = new Audio(filePath); 
+                const audio = new Audio(filePath);
                 audio.volume = volume;
                 audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
@@ -523,14 +510,12 @@
                 window.synth.speak(fala);
             }
         };
-
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
         const particleAnimStyle = document.createElement('style');
         particleAnimStyle.innerHTML = `@keyframes particleAnim { 0% { transform: scale(1) translate(0,0); opacity: 1; } 100% { transform: scale(0) translate(calc((var(--random-x,.5) - .5) * 200px), calc((var(--random-y,.5) - .5) * -200px)); opacity: 0; }}`;
         document.head.appendChild(particleAnimStyle);
-        
         function createLikeParticles() {
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement("div");
@@ -551,14 +536,12 @@
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3'); 
+            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3');
         }
-
         likeButton.addEventListener("click", handleLike);
         const likeCountRef = ref(databaseLike, 'likes/total');
         onValue(likeCountRef, (snapshot) => { if (snapshot.exists()) { likeCountDisplay.innerText = snapshot.val(); }});
         if (localStorage.getItem("hasLiked")) { likeButton.disabled = true; likeButton.style.backgroundColor = '#555'; }
-
         const visitCountDisplayHud = document.getElementById("visitCountHud");
         function handleVisit() {
             if (sessionStorage.getItem("hasVisitedThisSession")) { return; }
@@ -566,11 +549,9 @@
             get(visitCountRefDb).then((snapshot) => set(visitCountRefDb, (snapshot.exists() ? snapshot.val() : 0) + 1)).catch(console.error);
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
-
         handleVisit();
         const visitCountRef = ref(databaseVisit, 'visits/total');
         onValue(visitCountRef, (snapshot) => { if (snapshot.exists()) { visitCountDisplayHud.innerText = snapshot.val(); }});
-
         async function getLastCommitDate() {
             const repoOwner = "MateusZito2024"; const repoName = "gameniano.blog";
             try {
@@ -584,9 +565,7 @@
             const meses = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
             return `${data.getDate()} de ${meses[data.getMonth()]} de ${data.getFullYear()}, ${data.getHours().toString().padStart(2,'0')}:${data.getMinutes().toString().padStart(2,'0')}`;
         }
-
         getLastCommitDate();
-
         document.addEventListener("DOMContentLoaded", function () {
             window.synth = window.speechSynthesis;
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
@@ -597,17 +576,17 @@
                 elemento.addEventListener("mouseenter", function () {
                     if (!document.pointerLockElement) {
                         if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto(elemento.innerText);
-                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2); 
+                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2);
                     }
                 });
-                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); }); 
+                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); });
             });
             botaoToggle.addEventListener("click", function () {
                 window.acessibilidadeAtivada = !window.acessibilidadeAtivada;
                 botaoToggle.innerText = window.acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
                 if (window.synth) window.synth.cancel();
                 if (window.ambientSound) { window.ambientSound.muted = !window.acessibilidadeAtivada; }
-                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5); 
+                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5);
             });
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
@@ -624,11 +603,10 @@
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
             const crosshair = document.getElementById('crosshair');
-            
-            let playerX = 0, playerY = 0, playerZ = 0; 
-            let lookYaw = 0, lookPitch = 0; 
+            let isMouseLookActive = false;
+            let playerX = 0, playerY = 0, playerZ = 0;
+            let lookYaw = 0, lookPitch = 0;
             let zoomLevel = 1;
-            
             const rotationSensitivity = 0.15;
             const moveSpeed = 20;
             const zoomSpeed = 0.05;
@@ -637,33 +615,23 @@
             const minZoom = 0.5;
             const maxZoom = 2.0;
             const keysPressed = {};
-
-            const ROOM_DEPTH = 3000; 
+            const ROOM_DEPTH = 3000;
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
-            
             document.documentElement.style.setProperty('--room-half-depth', `${ROOM_HALF_DEPTH}px`);
-
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
-            
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
-
-            const paddingFactor = 0.45; 
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`;
+            const paddingFactor = 0.45;
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * paddingFactor, xMax: ROOM_HALF_DEPTH * paddingFactor,
                 yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor,
                 zMin: -ROOM_HALF_DEPTH * paddingFactor, zMax: ROOM_HALF_DEPTH * paddingFactor
             };
-
-            // FUNÇÃO CORRIGIDA: updateRoomTransform
             function updateRoomTransform() {
-                // Ordem: Translações primeiro, depois Rotações, depois Escala.
-                // Isso garante que playerX/Y/Z sejam coordenadas no sistema global do mundo,
-                // e as rotações da câmera são aplicadas a esse mundo já posicionado.
                 roomContainer.style.transform = `
                     translateX(${-playerX}px) 
                     translateY(${-playerY}px) 
@@ -674,58 +642,48 @@
                 `;
                 roomContainer.style.setProperty('--zoom-level', zoomLevel);
             }
-
             document.addEventListener('keydown', (e) => { keysPressed[e.key.toLowerCase()] = true; });
             document.addEventListener('keyup', (e) => { keysPressed[e.key.toLowerCase()] = false; });
-
-            // FUNÇÃO CORRIGIDA: handleMovement
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
-                
                 let dX_world = 0;
                 let dZ_world = 0;
-
-                // W: Mover para FRENTE (direção da câmera)
+                // W: Mover para frente (na direção da câmera)
                 if (keysPressed['w']) {
-                    dX_world += moveSpeed * Math.sin(yawRad);
-                    dZ_world -= moveSpeed * Math.cos(yawRad); // Lógica padrão: -cos para Z frente
-                }
-                // S: Mover para TRÁS (oposto da câmera)
-                if (keysPressed['s']) {
                     dX_world -= moveSpeed * Math.sin(yawRad);
-                    dZ_world += moveSpeed * Math.cos(yawRad); // Lógica padrão: +cos para Z trás
+                    dZ_world -= moveSpeed * Math.cos(yawRad);
                 }
-
-                // A: Mover para ESQUERDA (strafe)
+                // S: Mover para trás (oposto à direção da câmera)
+                if (keysPressed['s']) {
+                    dX_world += moveSpeed * Math.sin(yawRad);
+                    dZ_world += moveSpeed * Math.cos(yawRad);
+                }
+                // A: Mover para esquerda (perpendicular à direção da câmera)
                 if (keysPressed['a']) {
-                    dX_world -= moveSpeed * Math.cos(yawRad); // Componente X do vetor "direita" da câmera é cos(yawRad)
-                    dZ_world -= moveSpeed * Math.sin(yawRad); // Componente Z do vetor "direita" da câmera é sin(yawRad)
-                                                              // Para "esquerda", invertemos os sinais dos componentes do vetor "direita"
-                }
-                // D: Mover para DIREITA (strafe)
-                if (keysPressed['d']) {
-                    dX_world += moveSpeed * Math.cos(yawRad);
+                    dX_world -= moveSpeed * Math.cos(yawRad);
                     dZ_world += moveSpeed * Math.sin(yawRad);
                 }
-
+                // D: Mover para direita (perpendicular à direção da câmera)
+                if (keysPressed['d']) {
+                    dX_world += moveSpeed * Math.cos(yawRad);
+                    dZ_world -= moveSpeed * Math.sin(yawRad);
+                }
+                // Zoom controls
                 if (keysPressed['q']) {
                     zoomLevel = Math.min(maxZoom, zoomLevel + zoomSpeed);
-                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); 
+                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2);
                     if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom aumentado");
                 }
                 if (keysPressed['e']) {
                     zoomLevel = Math.max(minZoom, zoomLevel - zoomSpeed);
-                     if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); 
-                     if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom reduzido");
+                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2);
+                    if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom reduzido");
                 }
-
                 playerX += dX_world;
                 playerZ += dZ_world;
-
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
             }
-            
             document.body.addEventListener('click', (e) => {
                 if (!document.pointerLockElement) {
                     document.body.requestPointerLock();
@@ -736,11 +694,11 @@
                     if (element) {
                         const clickableTarget = element.closest('a, button, .subscribe-button, iframe');
                         if (clickableTarget) {
-                             if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); 
+                            if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3);
                             if (clickableTarget.tagName === 'A' && clickableTarget.href) {
                                 window.open(clickableTarget.href, clickableTarget.target || '_self');
                             } else if (clickableTarget.tagName === 'BUTTON' || clickableTarget.classList.contains('subscribe-button')) {
-                                clickableTarget.click(); 
+                                clickableTarget.click();
                             } else if (clickableTarget.tagName === 'IFRAME' && clickableTarget.src) {
                                 window.open(clickableTarget.src, '_blank');
                             }
@@ -748,19 +706,17 @@
                     }
                 }
             });
-
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body) { 
-                    const deltaXmouse = e.movementX; 
+                if (document.pointerLockElement === document.body) {
+                    const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
-                    lookYaw -= deltaXmouse * rotationSensitivity; 
+                    lookYaw -= deltaXmouse * rotationSensitivity;
                     lookPitch += deltaYmouse * rotationSensitivity;
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
-
                     const centerX = window.innerWidth / 2;
                     const centerY = window.innerHeight / 2;
                     const element = document.elementFromPoint(centerX, centerY);
-                    if (crosshair) { 
+                    if (crosshair) {
                         if (element && element.closest('a, button, .subscribe-button, iframe')) {
                             crosshair.classList.add('interactive');
                         } else {
@@ -769,23 +725,30 @@
                     }
                 }
             });
-            
             document.addEventListener('pointerlockchange', () => {
-                const isMouseLookActive = (document.pointerLockElement === document.body);
-                if (crosshair) { 
+                isMouseLookActive = (document.pointerLockElement === document.body);
+                if (crosshair) {
                     crosshair.classList.toggle('active', isMouseLookActive);
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { if(document.mozPointerLockElement === null && document.pointerLockElement !== document.body) { if(crosshair) crosshair.classList.remove('active'); } }); 
-            document.addEventListener('webkitpointerlockchange', () => { if(document.webkitPointerLockElement === null && document.pointerLockElement !== document.body) { if(crosshair) crosshair.classList.remove('active');} });
-            
+            document.addEventListener('mozpointerlockchange', () => { 
+                if(document.mozPointerLockElement === null && isMouseLookActive) {
+                    isMouseLookActive = false; 
+                    if(crosshair) crosshair.classList.remove('active'); 
+                } 
+            });
+            document.addEventListener('webkitpointerlockchange', () => { 
+                if(document.webkitPointerLockElement === null && isMouseLookActive) {
+                    isMouseLookActive = false; 
+                    if(crosshair) crosshair.classList.remove('active'); 
+                } 
+            });
             function gameLoop() {
                 handleMovement();
                 updateRoomTransform();
                 requestAnimationFrame(gameLoop);
             }
-            
-            updateRoomTransform(); 
+            updateRoomTransform();
             requestAnimationFrame(gameLoop);
         });
     </script>
