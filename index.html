@@ -68,7 +68,8 @@
         html {
             height: 100%;
             overflow: hidden; /* Esconde barras de rolagem */
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><line x1="1" y1="12" x2="23" y2="12"></line></svg>') 12 12, auto; /* Cursor de crosshair verde neon */
+            /* NOVO CURSOR: Mão tecnológica, ajustado em JS também */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
 
         body {
@@ -88,33 +89,35 @@
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1000px; /* A perspectiva é aplicada aqui */
+            perspective: 1500px; /* Perspectiva para uma sala GRANDE. Ajuste conforme necessário */
             overflow: hidden;
-            position: relative; /* Para posicionar o room-container dentro dele */
+            position: relative; 
         }
 
         /* Container da Sala 3D - Agora movido e girado para simular o jogador */
         #room-container {
-            width: 100%;
-            height: 100%;
+            width: 100%; /* Será ajustado pelo JS para o ROOM_DEPTH */
+            height: 100%; /* Será ajustado pelo JS para o ROOM_DEPTH */
             position: absolute;
             transform-style: preserve-3d;
             cursor: grab;
             top: 0;
             left: 0;
             /* Variáveis CSS para o player transform, atualizadas via JS */
+            /* As transformações aqui são inversas ao movimento do jogador */
             transform: translateZ(var(--player-z, 0px)) translateX(var(--player-x, 0px)) translateY(var(--player-y, 0px)) rotateX(var(--look-pitch, 0deg)) rotateY(var(--look-yaw, 0deg));
         }
 
         #room-container.grabbing {
-            cursor: grabbing;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
 
         /* Faces da Sala */
         .room-face {
             position: absolute;
-            width: 100vw; 
-            height: 100vh;
+            /* Essas dimensões serão definidas pelo JS para corresponder a ROOM_DEPTH */
+            width: 100%; 
+            height: 100%;
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
@@ -130,13 +133,14 @@
             backface-visibility: hidden; 
         }
 
-        /* Posições das Faces - Usando o tamanho da sala como base */
-        #front-wall { transform: rotateY(0deg) translateZ(-50vw); } 
-        #right-wall { transform: rotateY(90deg) translateZ(-50vw); }
-        #back-wall { transform: rotateY(180deg) translateZ(-50vw); }
-        #left-wall { transform: rotateY(-90deg) translateZ(-50vw); }
-        #top-ceiling { transform: rotateX(90deg) translateZ(-50vh); } 
-        #bottom-floor { transform: rotateX(-90deg) translateZ(-50vh); }
+        /* Posições das Faces - Ajustadas para serem metade da profundidade da sala */
+        /* Estas transformações são estáticas e o JS ajustará o tamanho e a posição do room-container */
+        #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); } 
+        #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
+        #back-wall { transform: rotateY(180deg) translateZ(calc(-1 * var(--room-half-depth))); }
+        #left-wall { transform: rotateY(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
+        #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); } 
+        #bottom-floor { transform: rotateX(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
 
         /* Estilos de Conteúdo */
         .content-panel {
@@ -151,6 +155,7 @@
             position: relative;
             z-index: 1; 
             backdrop-filter: blur(2px);
+            pointer-events: auto; /* Garante que os painéis sejam clicáveis */
         }
 
         .content-panel h2 {
@@ -191,6 +196,7 @@
             margin-top: 10px;
             margin-left: 5px; 
             margin-right: 5px;
+            pointer-events: auto; /* Garante que os botões dentro do painel sejam clicáveis */
         }
         .subscribe-button i { margin-right: 8px; }
         .subscribe-button:hover { transform: scale(1.05); }
@@ -222,6 +228,7 @@
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
+            pointer-events: auto; /* Garante que os links sejam clicáveis */
         }
 
         /* HUD elements */
@@ -235,25 +242,7 @@
             z-index: 1000;
         }
 
-        #crosshair {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--color-terminal-text);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            box-shadow: 0 0 10px var(--color-terminal-text);
-            animation: pulse-crosshair 1.5s infinite alternate; 
-        }
-        @keyframes pulse-crosshair {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-
+        /* Removido #crosshair, pois o cursor personalizado já serve */
 
         #system-status {
             position: absolute;
@@ -278,6 +267,7 @@
         @keyframes flicker {
             0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
             50% { opacity: 0.8; text-shadow: none; }
+            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); } /* Repeti para garantir ciclo completo */
         }
 
         .hud-button {
@@ -482,13 +472,13 @@
                     </header>
                     <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
                     <iframe width="560" height="315"
-                        src="https://www.youtube.com/@Gameniano8" 
+                        src="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk2" 
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
                     <p>Confira minha última gameplay cheia de sustos e adrenalina!</p>
-                    <a href="https://www.youtube.com/@Gameniano9" class="subscribe-button youtube-button" target="_blank">
+                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk3" class="subscribe-button youtube-button" target="_blank">
                         <i class="fab fa-youtube"></i> Inscreva-se no meu canal!
                     </a>
                 </div>
@@ -525,7 +515,7 @@
                         <p><strong>Ana Sophia:</strong></p>
                         <p>Sempre me divirto com seus vídeos! Continue assim.</p>
                     </div>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk0" target="_blank"><i class="fas fa-arrow-right"></i> Ver mais comunicações</a>
+                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank"><i class="fas fa-arrow-right"></i> Ver mais comunicações</a>
                 </div>
                 <div class="content-panel" style="margin-top: 20px;">
                     <h2><i class="fas fa-share-alt"></i> Conexões Sociais</h2>
@@ -583,7 +573,6 @@
     </div>
 
     <div id="hud">
-        <div id="crosshair"></div>
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
@@ -608,15 +597,14 @@
         const appLike = initializeApp(firebaseConfig, "appLike");
         const databaseLike = getDatabase(appLike);
 
-        const appVisit = initializeApp(firebaseConfig, "appVisit");
+        const appVisit = initializeApp(firebaseConfig, "appVisit"); 
         const databaseVisit = getDatabase(appVisit);
 
-        // --- Funções de Áudio e Acessibilidade (Expostas globalmente) ---
-        // Estas funções são definidas no escopo global para serem acessíveis pelos outros scripts
-        window.acessibilidadeAtivada = false; // Estado inicial da acessibilidade
+        // --- Declaração global para funções de áudio (para serem acessíveis em outros scripts) ---
+        window.acessibilidadeAtivada = false; 
         window.audioContext = null;
         window.ambientSound = null; 
-        window.synth = null; // Referência global para SpeechSynthesis
+        window.synth = null; 
 
         window.initializeAudioAndSounds = function() { 
             if (!window.audioContext) { 
@@ -760,8 +748,11 @@
                 } else {
                     document.getElementById("last-modified").textContent = "Não encontrado";
                 }
-            } catch (error) {
-                console.error("Erro ao buscar último commit:", error);
+            }
+            // Não logar erro no console se a API do GitHub estiver sendo chamada de forma muito frequente (limite de rate)
+            // ou se o repositório for privado e não acessível.
+            catch (error) {
+                console.warn("Aviso: Erro ao buscar último commit (pode ser limite de API ou repositório privado):", error);
                 document.getElementById("last-modified").textContent = "Erro ao buscar";
             }
         }
@@ -790,9 +781,13 @@
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             
             elementosParaLer.forEach((elemento) => {
+                // Eventos de mouse só se o ponteiro NÃO estiver bloqueado (para não interferir com a mira)
                 elemento.addEventListener("mouseenter", function () {
-                    if (window.acessibilidadeAtivada) window.falarTexto(elemento.innerText);
-                    window.playSound('seus-sons/hover-ui.mp3', 0.2);
+                    // console.log("Mouse enter no elemento:", elemento.innerText); // Debug
+                    if (!document.pointerLockElement) { // Só fala se o ponteiro não estiver bloqueado
+                        if (window.acessibilidadeAtivada) window.falarTexto(elemento.innerText);
+                        window.playSound('seus-sons/hover-ui.mp3', 0.2);
+                    }
                 });
                 elemento.addEventListener("click", function() {
                     window.playSound('seus-sons/click-ui.mp3', 0.3);
@@ -827,33 +822,38 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewportWrapper = document.getElementById('viewport-wrapper'); 
             const roomContainer = document.getElementById('room-container');
-            const loadingScreen = document.getElementById('loading-screen');
+            const loadingScreen = document.getElementById('loading-screen'); // Para esconder se ainda estiver visível
 
-            let isDragging = false;
+            let isMouseLookActive = false; // Controla se o mouse está ativo para olhar (via clique)
             let lastMouseX, lastMouseY;
 
             let playerX = 0; 
-            let playerY = 0; 
+            let playerY = 0; // Vertical position (not controlled by WASD by default)
             let playerZ = 0; 
 
             let lookYaw = 0; 
             let lookPitch = 0; 
 
             const rotationSensitivity = 0.15; 
-            const moveSpeed = 10; // Aumentei a velocidade de movimento para ser mais perceptível
+            const moveSpeed = 10; 
 
             const maxLookPitch = 60; 
             const minLookPitch = -60; 
 
             const keysPressed = {}; 
 
-            // Definir o tamanho da sala em um valor fixo (ex: em pixels ou uma unidade relativa)
-            // Usaremos 1000px de profundidade para o cubo
-            const ROOM_DEPTH = 1000; // Profundidade do cubo em pixels
-            const ROOM_HALF_DEPTH = ROOM_DEPTH / 2; // Metade da profundidade
+            const ROOM_DEPTH = 3000; // Aumentado significativamente para uma sala GRANDE (em pixels)
+            const ROOM_HALF_DEPTH = ROOM_DEPTH / 2; 
 
-            // Os translateZ das paredes agora devem se referir à metade da profundidade da sala
-            // Isso garante que o jogador esteja DENTRO do cubo.
+            // Ajusta o tamanho das faces para preencher o ROOM_DEPTH
+            document.querySelectorAll('.room-face').forEach(face => {
+                face.style.width = `${ROOM_DEPTH}px`;
+                face.style.height = `${ROOM_DEPTH}px`;
+                face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`; 
+                face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`; 
+            });
+            
+            // Define as posições das faces da sala em relação ao ROOM_DEPTH
             document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
@@ -861,26 +861,15 @@
             document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
 
-            // Ajusta o tamanho das faces para preencher o ROOM_DEPTH
-            document.querySelectorAll('.room-face').forEach(face => {
-                face.style.width = `${ROOM_DEPTH}px`;
-                face.style.height = `${ROOM_DEPTH}px`;
-                face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`; // Centraliza
-                face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;   // Centraliza
-            });
-            
             // Ajustar a perspectiva do viewport-wrapper para o tamanho da sala
-            // Para ver a sala inteira sem distorção, a perspectiva deve ser maior que a metade da sala
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 1.5}px`; // Ex: 1.5x a profundidade da sala
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; // 0.7x a profundidade da sala, para ver mais distorção e profundidade
 
-
-            // Limites de movimento (para não sair da sala)
-            // Agora baseados no ROOM_HALF_DEPTH em pixels
-            const padding = 0.4; // 40% de margem das bordas para o player
+            // Limites de movimento (para não sair da sala) - Aumentados para preencher a sala maior
+            const padding = 0.4; // 40% de margem das bordas
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * padding,
                 xMax: ROOM_HALF_DEPTH * padding,
-                yMin: -ROOM_HALF_DEPTH * padding,
+                yMin: -ROOM_HALF_DEPTH * padding, // Pode adicionar controles para playerY se quiser
                 yMax: ROOM_HALF_DEPTH * padding,
                 zMin: -ROOM_HALF_DEPTH * padding,
                 zMax: ROOM_HALF_DEPTH * padding
@@ -910,20 +899,26 @@
             function handleMovement() {
                 const moveAmount = moveSpeed;
 
-                // Converte lookYaw para radianos para calcular as direções
+                // Converte lookYaw e lookPitch para radianos
                 const yawRad = lookYaw * Math.PI / 180;
+                const pitchRad = lookPitch * Math.PI / 180; // Necessário para movimento vertical
+
 
                 let deltaX = 0;
                 let deltaZ = 0;
+                let deltaY = 0; // Para movimento vertical se implementado
 
                 // Movimento W (frente) / S (trás)
+                // O movimento agora considera a rotação vertical (lookPitch) também, para andar na direção que está olhando
                 if (keysPressed['w']) {
-                    deltaX += moveAmount * Math.sin(yawRad);
-                    deltaZ += moveAmount * Math.cos(yawRad);
+                    deltaX += moveAmount * Math.sin(yawRad) * Math.cos(pitchRad);
+                    deltaZ += moveAmount * Math.cos(yawRad) * Math.cos(pitchRad);
+                    // deltaY += moveAmount * Math.sin(pitchRad); // Se quiser que W/S também mova para cima/baixo
                 }
                 if (keysPressed['s']) {
-                    deltaX -= moveAmount * Math.sin(yawRad);
-                    deltaZ -= moveAmount * Math.cos(yawRad);
+                    deltaX -= moveAmount * Math.sin(yawRad) * Math.cos(pitchRad);
+                    deltaZ -= moveAmount * Math.cos(yawRad) * Math.cos(pitchRad);
+                    // deltaY -= moveAmount * Math.sin(pitchRad); // Se quiser que W/S também mova para cima/baixo
                 }
 
                 // Movimento A (esquerda) / D (direita)
@@ -936,68 +931,51 @@
                     deltaZ += moveAmount * Math.cos(yawRad + Math.PI / 2);
                 }
 
-                playerX += deltaX;
-                playerZ += deltaZ;
+                playerX -= deltaX; // Invertido para o movimento da sala
+                playerZ -= deltaZ; // Invertido para o movimento da sala
+                playerY -= deltaY; // Invertido, se deltaY for usado
 
-                // Colisão com as paredes da sala (limitar playerX e playerZ)
+                // Colisão com as paredes da sala (limitar playerX, playerY, playerZ)
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
-                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax)); // Se playerY for afetado por outras teclas
-
-                // Note: playerY não é diretamente afetado por WASD aqui, mas mantido para consistência
+                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax)); 
             }
 
+
             // --- Lógica de Olhar (Mouse) ---
-            document.addEventListener('mousedown', (e) => {
-                if (e.button === 0) { 
-                    isDragging = true;
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
-                    roomContainer.classList.add('grabbing');
-                    e.preventDefault(); 
-                    // Tenta capturar o ponteiro para uma experiência mais fluida, como em jogos
-                    // Requer interação do usuário para funcionar
-                    if (roomContainer.requestPointerLock) {
-                        roomContainer.requestPointerLock();
-                    }
+            // Adicionado evento click para ativar o pointer lock
+            document.body.addEventListener('click', () => {
+                if (roomContainer.requestPointerLock) {
+                    roomContainer.requestPointerLock();
                 }
             });
 
             document.addEventListener('mousemove', (e) => {
-                // Usar e.movementX/Y para maior precisão e quando o ponteiro está bloqueado
-                const deltaX = e.movementX || (e.clientX - lastMouseX);
-                const deltaY = e.movementY || (e.clientY - lastMouseY);
+                // Checa se o ponteiro está bloqueado
+                if (document.pointerLockElement === roomContainer) { 
+                    const deltaX = e.movementX; // movementX/Y são mais precisos para pointer lock
+                    const deltaY = e.movementY;
 
-                if (isDragging || document.pointerLockElement === roomContainer) { // Se arrastando OU ponteiro bloqueado
                     lookYaw += deltaX * rotationSensitivity;
-                    lookPitch -= deltaY * rotationSensitivity; 
+                    lookPitch += deltaY * rotationSensitivity; // Use '+' aqui para movimento mais natural para cima/baixo
 
+                    // Limitar rotação vertical
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
-
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
                 }
             });
 
-            document.addEventListener('mouseup', (e) => {
-                if (e.button === 0) { 
-                    isDragging = false;
-                    roomContainer.classList.remove('grabbing');
-                    // Opcional: liberar o ponteiro ao soltar o clique, ou mantê-lo bloqueado
-                    // if (document.pointerLockElement === roomContainer) {
-                    //     document.exitPointerLock();
-                    // }
-                }
-            });
-
-            // Adicionado evento para PointerLockChange (se o ponteiro for bloqueado/desbloqueado)
+            // Evento para PointerLockChange (se o ponteiro for bloqueado/desbloqueado)
             document.addEventListener('pointerlockchange', () => {
                 if (document.pointerLockElement === roomContainer) {
-                    isDragging = true; // Considera arrastando se o ponteiro está bloqueado
-                    console.log('Pointer locked');
+                    isMouseLookActive = true;
+                    // Mudar o cursor para "none" quando o ponteiro está bloqueado
+                    document.documentElement.style.cursor = 'none'; 
+                    console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
-                    isDragging = false;
-                    console.log('Pointer unlocked');
+                    isMouseLookActive = false;
+                    // Restaurar o cursor personalizado quando o ponteiro é desbloqueado
+                    document.documentElement.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto`;
+                    console.log('Pointer unlocked.');
                 }
             });
             document.addEventListener('mozpointerlockchange', () => { /* For Firefox */ });
