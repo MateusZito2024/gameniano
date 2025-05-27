@@ -34,11 +34,7 @@
             }
         }
     </script>
-    <link rel="icon" href="https://i.postimg.cc/jjB7PLxC/channels4-banner.jpg" type="image/png">
-    <meta name="author" content="Gameniano">
-    <meta name="keywords" content="games, notícias de games, análises de jogos, reviews, dicas de jogos, cultura gamer">
-    <meta http-equiv="content-language" content="pt-BR">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="https://i.postimg.cc/2SnKzzCM/OUTROCONTROLE-removebg-preview.png" type="image/png">
 
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -85,30 +81,42 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px; /* Perspectiva 3D para a sala. Ajuste para mudar a sensação de profundidade. */
+            /* A perspectiva agora é definida no elemento que contém a sala, para que a sala esteja DENTRO do espaço 3D */
             overflow: hidden; /* Garante que não haja scrollbar */
         }
 
-        /* Container da Sala 3D */
+        /* NOVO: Wrapper para aplicar a perspectiva e simular a câmera */
+        #viewport-wrapper {
+            width: 100%;
+            height: 100%;
+            perspective: 1000px; /* A perspectiva é aplicada aqui */
+            overflow: hidden;
+            position: relative; /* Para posicionar o room-container dentro dele */
+        }
+
+        /* Container da Sala 3D - Agora movido e girado para simular o jogador */
         #room-container {
             width: 100%;
             height: 100%;
             position: absolute;
             transform-style: preserve-3d;
-            transition: transform 0.1s linear; /* Movimento suave da câmera */
-            cursor: grab; /* Feedback visual para o usuário */
+            /* Removido o transition aqui para que o RequestAnimationFrame controle o movimento de forma mais suave */
+            cursor: grab;
+            top: 0;
+            left: 0;
+            transform: translateZ(var(--player-z)) translateX(var(--player-x)) translateY(var(--player-y)) rotateX(var(--look-pitch)) rotateY(var(--look-yaw));
         }
 
         #room-container.grabbing {
-            cursor: grabbing; /* Cursor durante o arrasto */
+            cursor: grabbing;
         }
 
         /* Faces da Sala */
         .room-face {
             position: absolute;
-            width: 100vw; /* Cada face preenche 100% da largura da tela */
-            height: 100vh; /* E 100% da altura da tela */
-            background-color: rgba(13, 13, 15, 0.9); /* Fundo base para o conteúdo na parede */
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
             display: flex;
@@ -117,32 +125,36 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            overflow: hidden; /* Para conteúdo que pode exceder */
-            transform-style: preserve-3d; /* Para elementos internos em 3D se necessário */
-            /* filter: saturate(1.5) brightness(1.1); Adicione efeitos visuais aqui se quiser um look mais sci-fi para as paredes */
+            overflow: hidden;
+            transform-style: preserve-3d;
+            /* CRUCIAL: Esconde a parte de trás da face, resolvendo o problema de sobreposição */
+            backface-visibility: hidden; 
         }
 
-        /* Posições das Faces - Ajustadas para serem metade da largura/altura da viewport */
-        #front-wall { transform: translateZ(-50vw); } /* A parede frontal está a 50vw do centro da perspectiva */
+        /* Posições das Faces - Agora usando o tamanho da sala como base */
+        /* Definimos um "tamanho da sala" e posicionamos as faces ao redor do centro */
+        /* O jogador estará no centro (0,0,0) do sistema de coordenadas do #viewport-wrapper */
+        /* E a sala se moverá e girará em torno do jogador */
+        #front-wall { transform: rotateY(0deg) translateZ(-50vw); } 
         #right-wall { transform: rotateY(90deg) translateZ(-50vw); }
         #back-wall { transform: rotateY(180deg) translateZ(-50vw); }
         #left-wall { transform: rotateY(-90deg) translateZ(-50vw); }
-        #top-ceiling { transform: rotateX(90deg) translateZ(-50vh); } /* O teto está a 50vh do centro da perspectiva */
+        #top-ceiling { transform: rotateX(90deg) translateZ(-50vh); } 
         #bottom-floor { transform: rotateX(-90deg) translateZ(-50vh); }
 
         /* Estilos de Conteúdo (adaptação do seu CSS original) */
         .content-panel {
-            background-color: rgba(0, 0, 0, 0.6); /* Fundo mais escuro para o painel de conteúdo */
+            background-color: rgba(0, 0, 0, 0.6); 
             padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--color-terminal-accent);
             box-shadow: 0 0 15px var(--color-terminal-accent);
-            max-width: 80%; /* Para não ocupar 100% da parede */
+            max-width: 80%; 
             margin: auto;
             text-align: left;
             position: relative;
-            z-index: 1; /* Garante que o conteúdo apareça acima de qualquer imagem de fundo da parede */
-            backdrop-filter: blur(2px); /* Efeito de vidro embaçado para painéis */
+            z-index: 1; 
+            backdrop-filter: blur(2px);
         }
 
         .content-panel h2 {
@@ -181,13 +193,12 @@
             text-transform: uppercase;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 10px;
-            margin-left: 5px; /* Espaçamento entre os botões */
+            margin-left: 5px; 
             margin-right: 5px;
         }
         .subscribe-button i { margin-right: 8px; }
         .subscribe-button:hover { transform: scale(1.05); }
 
-        /* Cores dos botões de rede social */
         .youtube-button { background-color: var(--youtube-color); color: white; }
         .twitch-button { background-color: var(--twitch-color); color: white; }
         .tiktok-button { background-color: var(--tiktok-color); color: white; }
@@ -239,7 +250,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             box-shadow: 0 0 10px var(--color-terminal-text);
-            animation: pulse-crosshair 1.5s infinite alternate; /* Adiciona animação ao crosshair */
+            animation: pulse-crosshair 1.5s infinite alternate; 
         }
         @keyframes pulse-crosshair {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -305,7 +316,7 @@
 
         /* Efeito de glitch para transições (simulado) */
         .glitch-effect-active {
-            animation: glitch 0.1s infinite alternate; /* Mais rápido para parecer falha */
+            animation: glitch 0.1s infinite alternate; 
         }
         @keyframes glitch {
             0% { transform: translate(0); opacity: 1; }
@@ -318,10 +329,10 @@
 
         /* Partículas de curtir */
         #likeParticles {
-            position: fixed; /* Fixado na tela, não na sala 3D */
-            top: 50%; /* Centraliza o ponto de origem das partículas */
+            position: fixed; 
+            top: 50%; 
             left: 50%;
-            transform: translate(-50%, -50%); /* Ajusta para o centro exato */
+            transform: translate(-50%, -50%); 
             pointer-events: none;
             z-index: 500;
         }
@@ -332,12 +343,9 @@
             border-radius: 50%;
             animation: particleAnim 1s ease-out forwards;
             box-shadow: 0 0 8px rgba(255,69,0,0.7);
-            /* As posições iniciais são manipuladas pelo JS */
             left: 0;
             top: 0;
         }
-
-        /* A animação do particleAnim é gerada dinamicamente pelo JS para variar a direção */
 
         /* Efeito de "scanline" para o conteúdo - opcional, remove ou ajusta se não gostar */
         .content-panel::after {
@@ -379,7 +387,8 @@
             z-index: 9999;
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Fade out effect */
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; 
+            text-align: center; 
         }
         #loading-screen p { margin-bottom: 20px; text-shadow: 0 0 10px var(--color-terminal-text); }
         .loading-bar {
@@ -405,15 +414,15 @@
 
         /* Responsividade (Ajustes para Mobile - crucial para 3D) */
         @media (max-width: 768px) {
-            body {
-                perspective: 800px; /* Menor perspectiva para telas menores */
+            #viewport-wrapper {
+                perspective: 800px; 
             }
             .room-face {
                 padding: 10px;
                 font-size: 0.9em;
             }
             .content-panel {
-                max-width: 95%; /* Ocupa mais espaço em mobile */
+                max-width: 95%; 
             }
             .content-panel h2 {
                 font-size: 1.2em;
@@ -424,7 +433,7 @@
             .subscribe-button {
                 padding: 8px 15px;
                 font-size: 0.9em;
-                margin: 5px; /* Espaçamento menor em mobile */
+                margin: 5px; 
             }
             #system-status {
                 font-size: 10px;
@@ -438,7 +447,7 @@
             }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #crosshair { display: none; } /* O crosshair geralmente não faz sentido em touch */
+            #crosshair { display: none; } 
         }
     </style>
 </head>
@@ -450,110 +459,112 @@
         </div>
     </div>
 
-    <div id="room-container">
-        <div id="front-wall" class="room-face">
-            <div class="content-panel">
-                <header>
-                    <h1>GAMENIANO <span style="color: var(--color-terminal-accent);">HUB</span></h1>
-                    <p>Seu portal imersivo no universo do streaming e games!</p>
-                </header>
-                <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
-                <iframe width="560" height="315"
-                    src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID_HERE_0"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-                <p>Confira minha última gameplay cheia de sustos e adrenalina!</p>
-                <a href="https://www.youtube.com/channel/YOUR_CHANNEL_ID_HERE_1" class="subscribe-button youtube-button">
-                    <i class="fab fa-youtube"></i> Inscreva-se no meu canal!
-                </a>
-            </div>
-        </div>
-
-        <div id="right-wall" class="room-face">
-            <div class="content-panel">
-                <h2><i class="fas fa-bell"></i> Notícias e Atualizações</h2>
-                <p>
-                    🎮 Agora todos os dias tem <strong style="color: var(--color-terminal-accent);">Live na Twitch às 21:00!</strong>
-                    Fique ligado para as novidades.
-                </p>
-                <p>
-                    🔔 Acompanhe para não perder as lives!
-                </p>
-                <a href="https://www.twitch.tv/gameniano_" class="subscribe-button twitch-button">
-                    <i class="fab fa-twitch"></i> Inscreva-se na minha Twitch!
-                </a>
-                <br>
-                <a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
-                    <i class="fas fa-newspaper"></i> Mais Notícias
-                </a>
-            </div>
-        </div>
-
-        <div id="back-wall" class="room-face">
-            <div class="content-panel comments-section">
-                <h2><i class="fas fa-comments"></i> Comentários do Terminal</h2>
-                <div class="comment">
-                    <p><strong>Daniel Alencar:</strong></p>
-                    <p>Adorei a gameplay, estou apavorado hahaha!</p>
+    <div id="viewport-wrapper">
+        <div id="room-container">
+            <div id="front-wall" class="room-face">
+                <div class="content-panel">
+                    <header>
+                        <h1>GAMENIANO <span style="color: var(--color-terminal-accent);">HUB</span></h1>
+                        <p>Seu portal imersivo no universo do streaming e games!</p>
+                    </header>
+                    <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
+                    <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    <p>Confira minha última gameplay cheia de sustos e adrenalina!</p>
+                    <a href="https://www.youtube.com/@gameniano" class="subscribe-button youtube-button" target="_blank">
+                        <i class="fab fa-youtube"></i> Inscreva-se no meu canal!
+                    </a>
                 </div>
-                <div class="comment">
-                    <p><strong>Ana Sophia:</strong></p>
-                    <p>Sempre me divirto com seus vídeos! Continue assim.</p>
+            </div>
+
+            <div id="right-wall" class="room-face">
+                <div class="content-panel">
+                    <h2><i class="fas fa-bell"></i> Notícias e Atualizações</h2>
+                    <p>
+                        🎮 Agora todos os dias tem <strong style="color: var(--color-terminal-accent);">Live na Twitch às 21:00!</strong>
+                        Fique ligado para as novidades.
+                    </p>
+                    <p>
+                        🔔 Acompanhe para não perder as lives!
+                    </p>
+                    <a href="https://www.twitch.tv/gameniano_" class="subscribe-button twitch-button" target="_blank">
+                        <i class="fab fa-twitch"></i> Inscreva-se na minha Twitch!
+                    </a>
+                    <br>
+                    <a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
+                        <i class="fas fa-newspaper"></i> Mais Notícias
+                    </a>
                 </div>
-                <a href="https://www.youtube.com/channel/YOUR_CHANNEL_ID_HERE_2" target="_blank"><i class="fas fa-arrow-right"></i> Ver mais comunicações</a>
             </div>
-            <div class="content-panel" style="margin-top: 20px;">
-                <h2><i class="fas fa-share-alt"></i> Conexões Sociais</h2>
-                <a href="https://www.tiktok.com/@gameniano" class="subscribe-button tiktok-button">
-                    <i class="fab fa-tiktok"></i> TikTok
-                </a>
-                <a href="https://www.kwai.com/@Gameniano" class="subscribe-button kwai-button">
-                    <i class="fa-solid fa-camera-retro"></i> Kwai
-                </a>
-            </div>
-        </div>
 
-        <div id="left-wall" class="room-face">
-            <div class="content-panel">
-                <h2><i class="fas fa-info-circle"></i> Sobre o Operador (Gameniano)</h2>
-                <p>
-                    Bem-vindo(a) ao meu QG! Sou o Gameniano, seu guia no mundo dos jogos de terror e gameplays insanas. Aqui você encontra as últimas notícias, análises e, claro, muita adrenalina!
-                </p>
-                <p>
-                    Siga nas redes e junte-se à comunidade!
-                </p>
-                <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
-                    <i class="fas fa-user-astronaut"></i> Perfil Completo
-                </a>
+            <div id="back-wall" class="room-face">
+                <div class="content-panel comments-section">
+                    <h2><i class="fas fa-comments"></i> Comentários do Terminal</h2>
+                    <div class="comment">
+                        <p><strong>Daniel Alencar:</strong></p>
+                        <p>Adorei a gameplay, estou apavorado hahaha!</p>
+                    </div>
+                    <div class="comment">
+                        <p><strong>Ana Sophia:</strong></p>
+                        <p>Sempre me divirto com seus vídeos! Continue assim.</p>
+                    </div>
+                    <a href="https://www.youtube.com/channel/gameniano/community" target="_blank"><i class="fas fa-arrow-right"></i> Ver mais comunicações</a>
+                </div>
+                <div class="content-panel" style="margin-top: 20px;">
+                    <h2><i class="fas fa-share-alt"></i> Conexões Sociais</h2>
+                    <a href="https://www.tiktok.com/@gameniano" class="subscribe-button tiktok-button" target="_blank">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                    <a href="https://www.kwai.com/@Gameniano" class="subscribe-button kwai-button" target="_blank">
+                        <i class="fa-solid fa-camera-retro"></i> Kwai
+                    </a>
+                </div>
             </div>
-            <div class="content-panel" style="margin-top: 20px;">
-                <h2><i class="fas fa-clock"></i> Última Sincronização</h2>
-                <p id="last-modified">Carregando...</p>
-            </div>
-        </div>
 
-        <div id="top-ceiling" class="room-face">
-            <div class="content-panel">
-                <h2><i class="fas fa-compass"></i> Painel de Navegação</h2>
-                <nav>
-                    <ul>
-                        <li><a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);"><i class="fas fa-home"></i> INÍCIO</a></li>
-                        <li><a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);"><i class="fas fa-newspaper"></i> NOTÍCIAS</a></li>
-                        <li><a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-terminal-text); color: var(--color-terminal-bg);"><i class="fas fa-info-circle"></i> SOBRE</a></li>
-                    </ul>
-                </nav>
+            <div id="left-wall" class="room-face">
+                <div class="content-panel">
+                    <h2><i class="fas fa-info-circle"></i> Sobre o Operador (Gameniano)</h2>
+                    <p>
+                        Bem-vindo(a) ao meu QG! Sou o Gameniano, seu guia no mundo dos jogos de terror e gameplays insanas. Aqui você encontra as últimas notícias, análises e, claro, muita adrenalina!
+                    </p>
+                    <p>
+                        Siga nas redes e junte-se à comunidade!
+                    </p>
+                    <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
+                        <i class="fas fa-user-astronaut"></i> Perfil Completo
+                    </a>
+                </div>
+                <div class="content-panel" style="margin-top: 20px;">
+                    <h2><i class="fas fa-clock"></i> Última Sincronização</h2>
+                    <p id="last-modified">Carregando...</p>
+                </div>
             </div>
-        </div>
 
-        <div id="bottom-floor" class="room-face">
-            <div class="content-panel">
-                <h2><i class="fas fa-terminal"></i> Log do Sistema</h2>
-                <p>© 2025 Gameniano - Todos os Direitos Reservados. <br>Versão do Sistema: 3.1.4.2</p>
-                <p style="font-size: 0.8em; color: gray;">
-                    (Pista: Tente rolar o mouse para se mover, e segurar o botão esquerdo para olhar ao redor...)
-                </p>
+            <div id="top-ceiling" class="room-face">
+                <div class="content-panel">
+                    <h2><i class="fas fa-compass"></i> Painel de Navegação</h2>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);"><i class="fas fa-home"></i> INÍCIO</a></li>
+                            <li><a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);"><i class="fas fa-newspaper"></i> NOTÍCIAS</a></li>
+                            <li><a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-terminal-text); color: var(--color-terminal-bg);"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div id="bottom-floor" class="room-face">
+                <div class="content-panel">
+                    <h2><i class="fas fa-terminal"></i> Log do Sistema</h2>
+                    <p>© 2025 Gameniano - Todos os Direitos Reservados. <br>Versão do Sistema: 3.1.4.2</p>
+                    <p style="font-size: 0.8em; color: gray;">
+                        (Pista: Use W, A, S, D para andar e o mouse para olhar ao redor.)
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -571,8 +582,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
 
-        // Firebase Config para Curtir (LIKE)
-        const firebaseConfigLike = {
+        // --- Configurações Firebase (Inicializa UMA ÚNICA VEZ) ---
+        const firebaseConfig = {
             apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU",
             authDomain: "curtirbotao.firebaseapp.com",
             databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
@@ -581,22 +592,60 @@
             messagingSenderId: "1090024500334",
             appId: "1:1090024500334:web:a824a9bc42cc5535070a7f"
         };
-        const appLike = initializeApp(firebaseConfigLike, "appLike");
+        const appLike = initializeApp(firebaseConfig, "appLike");
         const databaseLike = getDatabase(appLike);
 
+        const appVisit = initializeApp(firebaseConfig, "appVisit");
+        const databaseVisit = getDatabase(appVisit);
+
+        // --- Declaração global para funções de áudio (para serem acessíveis em outros scripts) ---
+        let acessibilidadeAtivada = false;
+        let audioContext = null;
+        let ambientSound = null; 
+        let synth = null; 
+
+
+        // --- Funções de Áudio e Acessibilidade (Acessíveis globalmente) ---
+        window.initializeAudioAndSounds = function() { 
+            if (!audioContext) { 
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
+                ambientSound.loop = true;
+                ambientSound.volume = 0.3; 
+                ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));
+            }
+        };
+
+        window.playSound = function(filePath, volume = 0.5) { 
+            if (acessibilidadeAtivada && audioContext) { 
+                const audio = new Audio(filePath);
+                audio.volume = volume;
+                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
+            }
+        };
+
+        window.falarTexto = function(texto) { 
+            if (!synth) synth = window.speechSynthesis; 
+            if (acessibilidadeAtivada && synth && !synth.speaking) {
+                const fala = new SpeechSynthesisUtterance(texto);
+                fala.lang = "pt-BR";
+                synth.speak(fala);
+            }
+        };
+
+        // --- Lógica do Botão Curtir ---
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
-        const likeParticlesContainer = document.getElementById('likeParticles'); // Usar o container fixo
+        const likeParticlesContainer = document.getElementById('likeParticles');
 
-        // Estilos para as partículas de curtir
         const particleAnimStyle = document.createElement('style');
         particleAnimStyle.innerHTML = `
             @keyframes particleAnim {
                 0% { transform: scale(1) translate(0, 0); opacity: 1; }
                 100% { 
                     transform: scale(0) translate(
-                        calc((var(--random-x, 0.5) - 0.5) * 200px), /* Random horizontal spread */
-                        calc((var(--random-y, 0.5) - 0.5) * -200px) /* Random vertical spread upwards */
+                        calc((var(--random-x, 0.5) - 0.5) * 200px), 
+                        calc((var(--random-y, 0.5) - 0.5) * -200px) 
                     ); 
                     opacity: 0; 
                 }
@@ -604,12 +653,10 @@
         `;
         document.head.appendChild(particleAnimStyle);
 
-
         function createLikeParticles() {
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement("div");
                 particle.classList.add("like-particle");
-                // Passar variáveis CSS para a animação dinâmica
                 particle.style.setProperty('--random-x', Math.random());
                 particle.style.setProperty('--random-y', Math.random());
                 particle.style.width = `${Math.random() * 10 + 5}px`;
@@ -641,10 +688,7 @@
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            // Som ao curtir
-            if (typeof playSound === 'function') {
-                playSound('seus-sons/like-confirm.mp3'); 
-            }
+            playSound('seus-sons/like-confirm.mp3'); 
         }
 
         likeButton.addEventListener("click", handleLike);
@@ -661,23 +705,11 @@
             likeButton.style.backgroundColor = '#555';
         }
 
-        // Firebase Config para Visitas (VISIT)
-        const firebaseConfigVisit = {
-            apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU",
-            authDomain: "curtirbotao.firebaseapp.com",
-            databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
-            projectId: "curtirbotao",
-            storageBucket: "curtirbotao.firebasestorage.app",
-            messagingSenderId: "1090024500334",
-            appId: "1:1090024500334:web:a824a9bc42cc5535070a7f"
-        };
-
-        const appVisit = initializeApp(firebaseConfigVisit, "appVisit");
-        const databaseVisit = getDatabase(appVisit);
+        // --- Lógica do Contador de Visitas ---
         const visitCountDisplayHud = document.getElementById("visitCountHud");
 
         function handleVisit() {
-            if (sessionStorage.getItem("hasVisitedThisSession")) { // Usa sessionStorage para contagem por sessão
+            if (sessionStorage.getItem("hasVisitedThisSession")) {
                 return;
             }
             const visitCountRef = ref(databaseVisit, 'visits/total');
@@ -703,10 +735,10 @@
             }
         });
 
-        // Script para Última Atualização (GitHub Commit)
+        // --- Lógica da Última Atualização (GitHub Commit) ---
         async function getLastCommitDate() {
             const repoOwner = "MateusZito2024";
-            const repoName = "gameniano.blog"; // Nome do seu repositório no GitHub
+            const repoName = "gameniano.blog";
             try {
                 const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits`);
                 const data = await response.json();
@@ -717,6 +749,7 @@
                     document.getElementById("last-modified").textContent = "Não encontrado";
                 }
             } catch (error) {
+                console.error("Erro ao buscar último commit:", error);
                 document.getElementById("last-modified").textContent = "Erro ao buscar";
             }
         }
@@ -732,165 +765,220 @@
         }
         getLastCommitDate();
 
-    </script>
-    
-    <script>
-        const synth = window.speechSynthesis;
-        let acessibilidadeAtivada = false;
-        let audioContext;
-        let ambientSound; // Variável para o som ambiente
-
-        // Função para inicializar o AudioContext e carregar sons (chamada no primeiro clique do usuário)
-        function initializeAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); // Seu arquivo de som ambiente
-                ambientSound.loop = true;
-                ambientSound.volume = 0.3; // Volume inicial para o som ambiente
-                ambientSound.play().catch(e => console.log("Áudio ambiente não pode ser reproduzido automaticamente sem interação do usuário."));
-            }
-        }
-
-        // Função para tocar efeitos sonoros pontuais
-        function playSound(filePath, volume = 0.5) {
-            if (acessibilidadeAtivada) { // Só toca se a acessibilidade/áudio do sistema estiver ativado
-                const audio = new Audio(filePath);
-                audio.volume = volume;
-                audio.play().catch(e => console.log(`Erro ao reproduzir som: ${e}`));
-            }
-        }
-
+        // --- Scripts de Acessibilidade (DOM Ready) ---
         document.addEventListener("DOMContentLoaded", function () {
-            // Inicializa áudio ao primeiro clique/interação do usuário no documento
-            document.body.addEventListener('click', initializeAudio, { once: true });
+            synth = window.speechSynthesis; 
 
-            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li")) // Inclui itens de lista
-                                           .filter(el => !el.closest('#hud')); // Exclui todo o HUD
+            document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
+            document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
+
+            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
+                                           .filter(el => !el.closest('#hud'));
 
             const botaoToggle = document.getElementById("toggleAcessibilidade");
-            const likeButton = document.getElementById("likeBtn"); 
-
-            // Eventos para feedback de áudio/fala nos elementos
+            
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
-                    falarTexto(elemento.innerText);
-                    playSound('seus-sons/hover-ui.mp3', 0.2); // Som de hover UI com volume mais baixo
+                    if (acessibilidadeAtivada) falarTexto(elemento.innerText);
+                    playSound('seus-sons/hover-ui.mp3', 0.2);
                 });
                 elemento.addEventListener("click", function() {
-                    playSound('seus-sons/click-ui.mp3', 0.3); // Som de clique UI
+                    playSound('seus-sons/click-ui.mp3', 0.3);
                 });
             });
 
-            // Lógica do botão de acessibilidade (ativa/desativa áudio do sistema e fala)
             botaoToggle.addEventListener("click", function () {
                 acessibilidadeAtivada = !acessibilidadeAtivada;
                 botaoToggle.innerText = acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
-                synth.cancel(); // Para qualquer fala em andamento
+                if (synth) synth.cancel(); 
 
-                if (ambientSound) {
-                    ambientSound.muted = !acessibilidadeAtivada; // Mute/unmute o som ambiente
+                if (ambientSound) { 
+                    ambientSound.muted = !acessibilidadeAtivada;
                 }
-                playSound('seus-sons/toggle-ui.mp3', 0.5); // Som de toggle
+                playSound('seus-sons/toggle-ui.mp3', 0.5);
             });
 
-            // Som específico para o botão de curtir
-            likeButton.addEventListener("click", function() {
-                // O som de curtir já é chamado dentro da função handleLike no script Firebase
-            });
-
-            // Adicionar um efeito de glitch aleatório aos painéis (opcional, para mais imersão)
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
-                    if (Math.random() < 0.1) { // 10% chance de glitch
+                    if (Math.random() < 0.1) {
                         panel.classList.add('glitch-effect-active');
                         setTimeout(() => {
                             panel.classList.remove('glitch-effect-active');
-                        }, 500); // Duração do glitch
+                        }, 500);
                     }
-                }, 2000); // Tenta glitch a cada 2 segundos
+                }, 2000);
             });
         });
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const viewportWrapper = document.getElementById('viewport-wrapper'); // Novo wrapper
             const roomContainer = document.getElementById('room-container');
+            const loadingScreen = document.getElementById('loading-screen');
+
             let isDragging = false;
-            let startX, startY;
-            let rotationY = 0; // Rotação Y (olhar para os lados)
-            let rotationX = 0; // Rotação X (olhar para cima/baixo)
+            let lastMouseX, lastMouseY;
 
-            // Limites de rotação vertical para evitar "virar de cabeça para baixo"
-            const maxRotationX = 60; // graus (ajuste se quiser olhar mais para cima/baixo)
-            const minRotationX = -60; // graus
+            let playerX = 0; // Posição do jogador no eixo X
+            let playerY = 0; // Posição do jogador no eixo Y (altura)
+            let playerZ = 0; // Posição do jogador no eixo Z (profundidade)
 
-            const sensitivity = 0.15; // Sensibilidade do mouse. Ajuste para mais rápido ou mais lento.
+            let lookYaw = 0; // Rotação horizontal da câmera (mouse X)
+            let lookPitch = 0; // Rotação vertical da câmera (mouse Y)
 
-            // Eventos de mouse para desktop
-            roomContainer.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                roomContainer.classList.add('grabbing');
-                e.preventDefault(); // Impede o comportamento padrão de arrastar do navegador
+            const rotationSensitivity = 0.15; // Sensibilidade do mouse para olhar
+            const moveSpeed = 5; // Velocidade de movimento WASD (em px)
+
+            const maxLookPitch = 60; // Limite para olhar para cima
+            const minLookPitch = -60; // Limite para olhar para baixo
+
+            const keysPressed = {}; // Mapa para registrar teclas pressionadas
+
+            // Define o tamanho da sala/cubo. Isso deve ser sincronizado com o CSS translateZ para as paredes.
+            // Se as paredes estão a -50vw/-50vh, a sala tem 100vw x 100vh de dimensão.
+            const ROOM_SIZE_VW = 100; 
+            const ROOM_SIZE_VH = 100;
+            const ROOM_CENTER_Z = 50; // O centro da sala está a 50vw da câmera inicial
+
+            // Limites de movimento (para não sair da sala)
+            // Calculados em relação ao centro da sala (0,0,0 é o centro do viewport)
+            const bounds = {
+                xMin: -ROOM_SIZE_VW / 2 * 0.8, // 80% da metade da sala
+                xMax: ROOM_SIZE_VW / 2 * 0.8,
+                zMin: -ROOM_SIZE_VW / 2 * 0.8,
+                zMax: ROOM_SIZE_VW / 2 * 0.8,
+                yMin: -ROOM_SIZE_VH / 2 * 0.8,
+                yMax: ROOM_SIZE_VH / 2 * 0.8
+            };
+
+            // Função para aplicar as transformações no roomContainer
+            function updateRoomTransform() {
+                // As variáveis de CSS são atualizadas, que por sua vez aplicam o transform no roomContainer
+                roomContainer.style.setProperty('--player-x', `${-playerX}px`); // Movimento inverso para a sala
+                roomContainer.style.setProperty('--player-y', `${-playerY}px`);
+                roomContainer.style.setProperty('--player-z', `${playerZ + ROOM_CENTER_Z}vw`); // Ajusta Z para o centro da sala e o movimento
+                roomContainer.style.setProperty('--look-pitch', `${-lookPitch}deg`); // Inverso para o pitch da sala
+                roomContainer.style.setProperty('--look-yaw', `${-lookYaw}deg`);     // Inverso para o yaw da sala
+            }
+
+            // --- Lógica de Movimento WASD ---
+            document.addEventListener('keydown', (e) => {
+                keysPressed[e.key.toLowerCase()] = true;
+            });
+
+            document.addEventListener('keyup', (e) => {
+                keysPressed[e.key.toLowerCase()] = false;
+            });
+
+            function handleMovement() {
+                const moveAmount = moveSpeed;
+
+                // Converte lookYaw para radianos para calcular as direções
+                const yawRad = lookYaw * Math.PI / 180;
+
+                // Movimento W (frente) / S (trás)
+                if (keysPressed['w']) {
+                    playerX += moveAmount * Math.sin(yawRad);
+                    playerZ += moveAmount * Math.cos(yawRad);
+                }
+                if (keysPressed['s']) {
+                    playerX -= moveAmount * Math.sin(yawRad);
+                    playerZ -= moveAmount * Math.cos(yawRad);
+                }
+
+                // Movimento A (esquerda) / D (direita)
+                if (keysPressed['a']) {
+                    playerX += moveAmount * Math.sin(yawRad - Math.PI / 2);
+                    playerZ += moveAmount * Math.cos(yawRad - Math.PI / 2);
+                }
+                if (keysPressed['d']) {
+                    playerX += moveAmount * Math.sin(yawRad + Math.PI / 2);
+                    playerZ += moveAmount * Math.cos(yawRad + Math.PI / 2);
+                }
+
+                // Colisão com as paredes da sala (limitar playerX e playerZ)
+                // Convertendo vw para px para a colisão, usando o tamanho da viewport
+                const roomHalfWidthPx = window.innerWidth * (ROOM_SIZE_VW / 2) / 100;
+                const roomHalfHeightPx = window.innerHeight * (ROOM_SIZE_VH / 2) / 100;
+
+                playerX = Math.max(Math.min(playerX, roomHalfWidthPx * 0.7), -roomHalfWidthPx * 0.7); // 70% da sala
+                playerZ = Math.max(Math.min(playerZ, roomHalfWidthPx * 0.7), -roomHalfWidthPx * 0.7);
+                playerY = Math.max(Math.min(playerY, roomHalfHeightPx * 0.7), -roomHalfHeightPx * 0.7);
+
+                // No momento, não há movimento vertical para Y (subir/descer) com WASD padrão.
+                // Se quiser adicionar, pense em teclas como 'q' e 'e' ou 'space' e 'shift'.
+            }
+
+
+            // --- Lógica de Olhar (Mouse) ---
+            document.addEventListener('mousedown', (e) => {
+                // Só ativa o arrastar do mouse se o botão esquerdo for pressionado
+                if (e.button === 0) { 
+                    isDragging = true;
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+                    roomContainer.classList.add('grabbing');
+                    e.preventDefault(); 
+                }
             });
 
             document.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
 
-                rotationY += deltaX * sensitivity;
-                rotationX -= deltaY * sensitivity; // Subtrair para inverter o movimento do mouse (como em jogos)
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
 
-                // Limitar rotação X para evitar inversão
-                rotationX = Math.max(Math.min(rotationX, maxRotationX), minRotationX);
+                lookYaw += deltaX * rotationSensitivity;
+                lookPitch -= deltaY * rotationSensitivity; 
 
-                roomContainer.style.transform = `
-                    rotateX(${rotationX}deg)
-                    rotateY(${rotationY}deg)
-                `;
+                // Limitar rotação vertical
+                lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
 
-                startX = e.clientX;
-                startY = e.clientY;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
             });
 
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-                roomContainer.classList.remove('grabbing');
-            });
-
-            // Adicionar scroll para "caminhar" para frente/trás (simulando zoom na perspectiva)
-            roomContainer.addEventListener('wheel', (e) => {
-                e.preventDefault(); // Impede rolagem da página
-
-                const zoomSpeed = 0.05; // Velocidade do "caminhar"
-                let currentPerspective = parseFloat(getComputedStyle(document.body).perspective);
-
-                if (e.deltaY < 0) { // Scroll para cima (avançar/zoom in)
-                    currentPerspective -= currentPerspective * zoomSpeed;
-                } else { // Scroll para baixo (recuar/zoom out)
-                    currentPerspective += currentPerspective * zoomSpeed;
+            document.addEventListener('mouseup', (e) => {
+                if (e.button === 0) { // Só desativa se o botão esquerdo for solto
+                    isDragging = false;
+                    roomContainer.classList.remove('grabbing');
                 }
-
-                // Limitar perspectiva para evitar distorção ou sumiço
-                if (currentPerspective < 500) currentPerspective = 500; /* Mínimo para não distorcer muito */
-                if (currentPerspective > 2000) currentPerspective = 2000; /* Máximo para não ficar muito longe */
-
-                document.body.style.perspective = `${currentPerspective}px`;
             });
-            
-            // Iniciar a sala na posição frontal
-            roomContainer.style.transform = `rotateX(0deg) rotateY(0deg)`;
 
-            // Ocultar a tela de carregamento após a animação
+            // --- Game Loop (RequestAnimationFrame) ---
+            function gameLoop() {
+                handleMovement(); // Atualiza a posição do jogador
+                updateRoomTransform(); // Aplica a transformação à sala
+                requestAnimationFrame(gameLoop); // Próximo frame
+            }
+
+            // Iniciar o game loop
+            requestAnimationFrame(gameLoop);
+
+
+            // --- Lógica de Carregamento da Tela (Melhorada para sumir rapidamente) ---
             const loadingScreen = document.getElementById('loading-screen');
-            loadingScreen.addEventListener('animationend', () => {
+
+            function hideLoadingScreenImmediately() {
+                loadingScreen.style.transition = 'none'; 
                 loadingScreen.style.opacity = '0';
                 loadingScreen.style.visibility = 'hidden';
-                // Delay display: none para garantir que a transição de opacidade termine
-                setTimeout(() => loadingScreen.style.display = 'none', 500); 
-            });
+                loadingScreen.style.display = 'none';
+                console.log('Tela de carregamento forçada a sumir.');
+            }
+
+            // Garante que a tela de carregamento suma após um tempo mínimo
+            setTimeout(hideLoadingScreenImmediately, 100); // 100ms: praticamente instantâneo após o DOM
+
+            // Opcional: listener para quando a barra de progresso terminar, se for mais rápido que o timeout
+            const progressBar = loadingScreen.querySelector('.progress');
+            if (progressBar) {
+                progressBar.addEventListener('animationend', () => {
+                    loadingScreen.style.transition = 'opacity 0.5s ease-out, visibility 0.5s ease-out';
+                    hideLoadingScreenImmediately(); 
+                }, { once: true });
+            }
         });
     </script>
 </body>
