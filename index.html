@@ -726,28 +726,26 @@
             let isMouseLookActive = false;
             let lastMouseX, lastMouseY;
             let playerX = 0;
-            let playerY = 0; // Posição Y inicial do jogador (altura)
+            let playerY = 0; 
             let playerZ = 0;
-            let lookYaw = 0;   // Rotação horizontal (guinada)
-            let lookPitch = 0; // Rotação vertical (inclinação)
+            let lookYaw = 0;   
+            let lookPitch = 0; 
             const rotationSensitivity = 0.15;
-            const moveSpeed = 25; // Aumentei um pouco a velocidade para melhor percepção
-            const maxLookPitch = 60;  // Máxima inclinação para cima/baixo
+            const moveSpeed = 25; 
+            const maxLookPitch = 60;  
             const minLookPitch = -60;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000; // Profundidade da sala (igual à largura e altura das faces)
+            const ROOM_DEPTH = 3000; 
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
 
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
-                // Centraliza as faces
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
 
-            // Define a posição inicial das paredes usando ROOM_HALF_DEPTH
             document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
@@ -755,24 +753,19 @@
             document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; // Ajusta perspectiva baseada no tamanho da sala
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
-            // Limites de movimento dentro da sala (para não atravessar paredes)
-            // Ajuste o padding para o quão perto das paredes o jogador pode chegar
-            const paddingFactor = 0.45; // Ex: 0.45 significa que o jogador pode ir até 45% da metade da profundidade
+            const paddingFactor = 0.45; 
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * paddingFactor,
                 xMax: ROOM_HALF_DEPTH * paddingFactor,
-                yMin: -ROOM_HALF_DEPTH * paddingFactor, // Se houver movimento vertical
-                yMax: ROOM_HALF_DEPTH * paddingFactor, // Se houver movimento vertical
+                yMin: -ROOM_HALF_DEPTH * paddingFactor, 
+                yMax: ROOM_HALF_DEPTH * paddingFactor, 
                 zMin: -ROOM_HALF_DEPTH * paddingFactor,
                 zMax: ROOM_HALF_DEPTH * paddingFactor
             };
 
             function updateRoomTransform() {
-                // A ordem é importante: Rotações primeiro, depois Translações
-                // Isso faz com que o mundo gire em torno do jogador e depois se mova com ele.
-                // Se fosse ao contrário, o jogador orbitaria o centro do mundo ao olhar em volta.
                 roomContainer.style.transform = `
                     rotateX(${-lookPitch}deg)
                     rotateY(${-lookYaw}deg)
@@ -792,72 +785,64 @@
 
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
-                const pitchRad = lookPitch * Math.PI / 180; // Usado para escalar o movimento XZ se houver inclinação
+                const pitchRad = lookPitch * Math.PI / 180;
 
-                let dX = 0; // Renomeado para clareza (delta X para este frame)
-                let dZ = 0; // Renomeado para clareza (delta Z para este frame)
-                // playerY não é alterado por WASD neste código, mantendo o movimento no plano horizontal da câmera
-
-                // --- INÍCIO DA CORREÇÃO ---
-                if (keysPressed['w']) { // Mover para frente
-                    dX += moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
+                let dX = 0; 
+                let dZ = 0; 
+                
+                // --- LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO ---
+                if (keysPressed['w']) {
+                    dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
                 }
-                if (keysPressed['s']) { // Mover para trás
-                    dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
+                if (keysPressed['s']) {
+                    dX += moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ += moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
                 }
-                if (keysPressed['a']) { // Mover para a esquerda (strafe)
+                if (keysPressed['a']) {
                     dX -= moveSpeed * Math.cos(yawRad);
-                    dZ -= moveSpeed * Math.sin(yawRad);
-                }
-                if (keysPressed['d']) { // Mover para a direita (strafe)
-                    dX += moveSpeed * Math.cos(yawRad);
                     dZ += moveSpeed * Math.sin(yawRad);
                 }
-                // --- FIM DA CORREÇÃO ---
+                if (keysPressed['d']) {
+                    dX += moveSpeed * Math.cos(yawRad);
+                    dZ -= moveSpeed * Math.sin(yawRad);
+                }
+                // --- FIM DA LÓGICA RESTAURADA ---
 
                 playerX += dX;
                 playerZ += dZ;
 
-                // Aplicar limites para não sair da sala
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
-                // playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax)); // Se houver movimento Y
             }
 
-            // Captura do mouse para controle da câmera
             document.body.addEventListener('click', () => {
-                if (roomContainer.requestPointerLock) { // Verifica se está no body, não no roomContainer diretamente
-                    document.body.requestPointerLock(); // Solicita ao body
+                if (document.body.requestPointerLock) { 
+                    document.body.requestPointerLock(); 
                 }
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body) { // Verifica se o body tem o lock
+                if (document.pointerLockElement === document.body) { 
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
                     lookYaw += deltaXmouse * rotationSensitivity;
                     lookPitch += deltaYmouse * rotationSensitivity;
 
-                    // Limitar a inclinação vertical (pitch)
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
             });
 
             document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === document.body) { // Verifica se o body tem o lock
+                if (document.pointerLockElement === document.body) { 
                     isMouseLookActive = true;
-                    // O cursor já é customizado via CSS, e o pointer lock o esconde.
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
                     isMouseLookActive = false;
-                    // Cursor volta ao normal (definido no CSS do html)
                     console.log('Pointer unlocked.');
                 }
             });
-            // Fallbacks para outros navegadores (opcional, mas bom ter)
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
             document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
 
@@ -867,9 +852,8 @@
                 updateRoomTransform();
                 requestAnimationFrame(gameLoop);
             }
-
-            // Iniciar o loop do jogo e a transformação inicial da sala
-            updateRoomTransform(); // Define a posição/rotação inicial
+            
+            updateRoomTransform(); 
             requestAnimationFrame(gameLoop);
         });
     </script>
