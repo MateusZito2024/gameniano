@@ -38,32 +38,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
-            --color-terminal-bg: #0d0d0f; /* Fundo muito escuro, quase preto */
-            --color-terminal-text: #00ff66; /* Verde terminal brilhante */
-            --color-terminal-accent: #ff00ff; /* Magenta vibrante para destaque */
-            --color-terminal-error: #ff3300; /* Vermelho para "glitch" ou erro */
-            --color-border-scan: #00ffff; /* Ciano para linhas de scan */
+            --color-terminal-bg: #0d0d0f;
+            --color-terminal-text: #00ff66;
+            --color-terminal-accent: #ff00ff;
+            --color-terminal-error: #ff3300;
+            --color-border-scan: #00ffff;
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
             --twitch-color: #9146ff;
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
-            --room-half-depth: 1500px; /* Definido para corresponder a ROOM_HALF_DEPTH */
+            --room-half-depth: 1500px;
         }
-        /* RESET E BASE */
         * {
             box-sizing: border-box;
-            -webkit-user-select: none; /* Desativa seleção de texto */
+            -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         html {
             height: 100%;
-            overflow: hidden; /* Esconde barras de rolagem */
+            overflow: hidden;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
@@ -76,12 +74,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Garante que não haja scrollbar */
+            overflow: hidden;
         }
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
+            perspective: 1500px;
             overflow: hidden;
             position: relative;
         }
@@ -363,7 +361,6 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
-        /* Estilo do Crosshair */
         #crosshair {
             position: fixed;
             top: 50%;
@@ -373,7 +370,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 1001;
-            display: none; /* Oculta até o pointerLock ser ativado */
+            display: none;
         }
         #crosshair::before,
         #crosshair::after {
@@ -506,7 +503,7 @@
                         <i class="fab fa-twitch"></i> Inscreva-se na minha Twitch!
                     </a>
                     <br>
-                    <a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
+                    <a href="Meu-site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
                         <i class="fas fa-newspaper"></i> Mais notícias
                     </a>
                 </div>
@@ -530,7 +527,7 @@
                         <i class="fab fa-tiktok"></i> TikTok
                     </a>
                     <a href="https://www.kwai.com/@gameniano" class="subscribe-button kwai-button" target="_blank">
-                        <i class="fa-solid fa-camera-retro"></i> Kwai
+                        <i class="fas fa-camera-retro"></i> Kwai
                     </a>
                 </div>
             </div>
@@ -543,7 +540,7 @@
                     <p>
                         Siga nas redes e junte-se à comunidade!
                     </p>
-                    <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
+                    <a href="Meu-site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
                         <i class="fas fa-user-astronaut"></i> Perfil Completo
                     </a>
                 </div>
@@ -568,8 +565,8 @@
                     <nav>
                         <ul>
                             <li><a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);"><i class="fas fa-home"></i> INÍCIO</a></li>
-                            <li><a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);"><i class="fas fa-newspaper"></i> NOTÍCIAS</a></li>
-                            <li><a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-terminal-text); color: var(--color-terminal-bg);"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+                            <li><a href="Meu-site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);"><i class="fas fa-newspaper"></i> NOTÍCIAS</a></li>
+                            <li><a href="Meu-site/sobre.html" class="subscribe-button" style="background-color: var(--color-terminal-text); color: var(--color-terminal-bg);"><i class="fas fa-info-circle"></i> SOBRE</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -618,14 +615,14 @@
                 window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
-                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));;
+                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente:", e));
             }
         };
         window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
                 const audio = new Audio(filePath);
                 audio.volume = volume;
-                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));;
+                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
         };
         window.falarTexto = function(texto) {
@@ -633,8 +630,9 @@
             if (window.acessibilidadeAtivada && window.synth && !window.synth.speaking) {
                 const fala = new SpeechSynthesisUtterance(texto);
                 fala.lang = "pt-BR";
-                window.synth.speak(fala.speech);
+                window.synth.speak(fala);
             }
+        };
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
@@ -644,8 +642,8 @@
                 0% { transform: scale(1) translate(0, 0); opacity: 1; }
                 100% {
                     transform: scale(0) translate(
-                        calc((var(--random-x, 0.5) - 0.5)) * 200px),
-                        calc((var(--random-y, 0,5) - 0.5) * -200px)
+                        calc((var(--random-x, 0.5) - 0.5) * 200px),
+                        calc((var(--random-y, 0.5) - 0.5) * -200px)
                     );
                     opacity: 0;
                 }
@@ -668,7 +666,7 @@
         }
         function handleLike() {
             if (localStorage.getItem("hasLiked")) {
-                alert("Você já curtiu este botão nesta sessão.");
+                alert("Você já curtiu esta sessão.");
                 return;
             }
             const likeCountRef = ref(databaseLike, 'likes/total');
@@ -682,7 +680,6 @@
             }).catch((error) => {
                 console.error("Erro ao atualizar contagem de curtidas:", error);
             });
-            }
             localStorage.setItem("hasLiked", "true");
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
@@ -713,10 +710,9 @@
                 } else {
                     set(visitCountRef, 1);
                 }
-                }).catch((error) => {
+            }).catch((error) => {
                 console.error("Erro ao atualizar contagem de visitas:", error);
             });
-            }
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
         handleVisit();
@@ -740,7 +736,7 @@
                 }
             }
             catch (error) {
-                console.warn("Aviso: Erro ao buscar último commit (pode ser limite de API ou repositório privado):", error);
+                console.warn("Aviso: Erro ao buscar último commit:", error);
                 document.getElementById("last-modified").textContent = "Erro ao buscar";
             }
         }
@@ -806,7 +802,7 @@
             let playerZ = 0;
             let lookYaw = 0;
             let lookPitch = 0;
-            let zoomLevel = 1; // Nível de zoom inicial
+            let zoomLevel = 1;
             const rotationSensitivity = 0.15;
             const moveSpeed = 15;
             const zoomSpeed = 0.05;
@@ -873,20 +869,20 @@
                 let dZ = 0;
 
                 if (keysPressed['w']) {
-                    dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
-                    dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
+                    dX += moveSpeed * Math.sin(yawRad);
+                    dZ += moveSpeed * Math.cos(yawRad);
                 }
                 if (keysPressed['s']) {
-                    dX += moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
-                    dZ += moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
+                    dX -= moveSpeed * Math.sin(yawRad);
+                    dZ -= moveSpeed * Math.cos(yawRad);
                 }
                 if (keysPressed['a']) {
-                    dX -= moveSpeed * Math.cos(yawRad);
-                    dZ += moveSpeed * Math.sin(yawRad);
-                }
-                if (keysPressed['d']) {
                     dX += moveSpeed * Math.cos(yawRad);
                     dZ -= moveSpeed * Math.sin(yawRad);
+                }
+                if (keysPressed['d']) {
+                    dX -= moveSpeed * Math.cos(yawRad);
+                    dZ += moveSpeed * Math.sin(yawRad);
                 }
                 if (keysPressed['q']) {
                     zoomLevel = Math.min(maxZoom, zoomLevel + zoomSpeed);
