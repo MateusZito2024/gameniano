@@ -64,7 +64,7 @@
         html {
             height: 100%;
             overflow: hidden; /* Esconde barras de rolagem */
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300ffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" stroke-opacity="0.8"/><line x1="12" y1="8" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="16"/><line x1="8" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="16" y2="12"/></svg>') 12 12, auto;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
             font-family: 'Rajdhani', sans-serif;
@@ -96,7 +96,7 @@
             transform: translateZ(var(--player-z, 0px)) translateX(var(--player-x, 0px)) translateY(var(--player-y, 0px)) rotateX(var(--look-pitch, 0deg)) rotateY(var(--look-yaw, 0deg));
         }
         #room-container.grabbing {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%2300ffff" stroke="%2300ffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" stroke-opacity="0.8"/><line x1="12" y1="8" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="16"/><line x1="8" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="16" y2="12"/></svg>') 12 12, grabbing;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
         .room-face {
             position: absolute;
@@ -356,7 +356,7 @@
         #crosshair {
             position: fixed;
             top: 50%;
-            left: 30%; /* Movido para a esquerda */
+            left: 50%;
             width: 20px;
             height: 20px;
             transform: translate(-50%, -50%);
@@ -872,10 +872,8 @@
                 if (!document.pointerLockElement) {
                     document.body.requestPointerLock();
                 } else {
-                    // Detectar elemento sob o crosshair (30% da largura, 50% da altura)
-                    const x = window.innerWidth * 0.3;
-                    const y = window.innerHeight * 0.5;
-                    const element = document.elementFromPoint(x, y);
+                    // Detectar elemento sob o crosshair
+                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
                     if (element) {
                         if (element.tagName === 'A' && element.href) {
                             window.playSound('seus-sons/click-ui.mp3', 0.3);
@@ -899,9 +897,7 @@
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
 
                     // Verificar se o crosshair está sobre um elemento interativo
-                    const x = window.innerWidth * 0.3;
-                    const y = window.innerHeight * 0.95;
-                    const element = document.elementFromPoint(x, y);
+                    const element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
                     if (element && (element.tagName === 'A' || element.tagName === 'IFRAME')) {
                         crosshair.classList.add('interactive');
                     } else {
@@ -914,13 +910,13 @@
                 if (document.pointerLockElement === document.body) {
                     isMouseLookActive = true;
                     crosshair.classList.add('active');
-                    console.log('Movos do mouse bloqueados. Use WASD para movimentação e o mouse para deslocamento.');
-                  } else {
-                        isMouseLookActive = false;
-                        crosshair.classList.remove('active');
-                        console.log('Movimentos do mouse liberados.');
-                    }
-                });
+                    console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
+                } else {
+                    isMouseLookActive = false;
+                    crosshair.classList.remove('active');
+                    console.log('Pointer unlocked.');
+                }
+            });
             document.addEventListener('mozpointerlockchange', () => {});
             document.addEventListener('webkitpointerlockchange', () => {});
 
