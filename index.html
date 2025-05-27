@@ -35,10 +35,8 @@
         }
     </script>
     <link rel="icon" href="https://i.postimg.cc/2SnKzzCM/OUTROCONTROLE-removebg-preview.png" type="image/png">
-
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <style>
         /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
@@ -49,13 +47,11 @@
             --color-border-scan: #00ffff; /* Ciano para linhas de scan */
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
-
             --twitch-color: #9146ff;
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
         }
-
         /* RESET E BASE */
         * {
             box-sizing: border-box;
@@ -64,14 +60,11 @@
             -ms-user-select: none;
             user-select: none;
         }
-
         html {
             height: 100%;
             overflow: hidden; /* Esconde barras de rolagem */
-            /* NOVO CURSOR: Mão tecnológica, ajustado em JS também */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
-
         body {
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
@@ -84,39 +77,29 @@
             align-items: center;
             overflow: hidden; /* Garante que não haja scrollbar */
         }
-
-        /* NOVO: Wrapper para aplicar a perspectiva e simular a câmera */
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px; /* Perspectiva para uma sala GRANDE. Ajuste conforme necessário */
+            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
             overflow: hidden;
-            position: relative; 
+            position: relative;
         }
-
-        /* Container da Sala 3D - Agora movido e girado para simular o jogador */
         #room-container {
-            width: 100%; /* Será ajustado pelo JS para o ROOM_DEPTH */
-            height: 100%; /* Será ajustado pelo JS para o ROOM_DEPTH */
+            width: 100%;
+            height: 100%;
             position: absolute;
             transform-style: preserve-3d;
             cursor: grab;
             top: 0;
             left: 0;
-            /* Variáveis CSS para o player transform, atualizadas via JS */
-            /* As transformações aqui são inversas ao movimento do jogador */
             transform: translateZ(var(--player-z, 0px)) translateX(var(--player-x, 0px)) translateY(var(--player-y, 0px)) rotateX(var(--look-pitch, 0deg)) rotateY(var(--look-yaw, 0deg));
         }
-
         #room-container.grabbing {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
-
-        /* Faces da Sala */
         .room-face {
             position: absolute;
-            /* Essas dimensões serão definidas pelo JS para corresponder a ROOM_DEPTH */
-            width: 100%; 
+            width: 100%;
             height: 100%;
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
@@ -129,35 +112,28 @@
             padding: 20px;
             overflow: hidden;
             transform-style: preserve-3d;
-            /* CRUCIAL: Esconde a parte de trás da face, resolvendo o problema de sobreposição */
-            backface-visibility: hidden; 
+            backface-visibility: hidden;
         }
-
-        /* Posições das Faces - Ajustadas para serem metade da profundidade da sala */
-        /* Estas transformações são estáticas e o JS ajustará o tamanho e a posição do room-container */
-        #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); } 
+        #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #back-wall { transform: rotateY(180deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #left-wall { transform: rotateY(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
-        #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); } 
+        #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #bottom-floor { transform: rotateX(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
-
-        /* Estilos de Conteúdo */
         .content-panel {
-            background-color: rgba(0, 0, 0, 0.6); 
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--color-terminal-accent);
             box-shadow: 0 0 15px var(--color-terminal-accent);
-            max-width: 80%; 
+            max-width: 80%;
             margin: auto;
             text-align: left;
             position: relative;
-            z-index: 1; 
+            z-index: 1;
             backdrop-filter: blur(2px);
-            pointer-events: auto; /* Garante que os painéis sejam clicáveis */
+            pointer-events: auto;
         }
-
         .content-panel h2 {
             font-family: 'Press Start 2P', cursive;
             color: var(--color-terminal-text);
@@ -165,14 +141,12 @@
             margin-bottom: 10px;
             text-shadow: 0 0 8px var(--color-terminal-text);
         }
-
         .content-panel p {
             font-family: 'Rajdhani', sans-serif;
             color: #ccc;
             font-size: 1em;
             line-height: 1.6;
         }
-        
         .content-panel iframe {
             width: 100%;
             height: auto;
@@ -181,7 +155,6 @@
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
         }
-
         .subscribe-button {
             display: inline-flex;
             align-items: center;
@@ -194,18 +167,16 @@
             text-transform: uppercase;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 10px;
-            margin-left: 5px; 
+            margin-left: 5px;
             margin-right: 5px;
-            pointer-events: auto; /* Garante que os botões dentro do painel sejam clicáveis */
+            pointer-events: auto;
         }
         .subscribe-button i { margin-right: 8px; }
         .subscribe-button:hover { transform: scale(1.05); }
-
         .youtube-button { background-color: var(--youtube-color); color: white; }
         .twitch-button { background-color: var(--twitch-color); color: white; }
         .tiktok-button { background-color: var(--tiktok-color); color: white; }
         .kwai-button { background-color: var(--kwai-color); color: white; }
-
         .comments-section {
             text-align: left;
         }
@@ -228,22 +199,17 @@
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
-            pointer-events: auto; /* Garante que os links sejam clicáveis */
+            pointer-events: auto;
         }
-
-        /* HUD elements */
         #hud {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Permite cliques através do HUD */
+            pointer-events: none;
             z-index: 1000;
         }
-
-        /* Removido #crosshair, pois o cursor personalizado já serve */
-
         #system-status {
             position: absolute;
             top: 20px;
@@ -256,24 +222,21 @@
             border-radius: 5px;
             border: 1px solid var(--color-terminal-text);
             box-shadow: 0 0 10px var(--color-terminal-text);
-            pointer-events: auto; /* Pode ser clicável se necessário */
+            pointer-events: auto;
             animation: flicker 1.5s infinite alternate;
         }
-
         #visitCountHud {
             color: var(--color-terminal-accent);
         }
-
         @keyframes flicker {
             0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
             50% { opacity: 0.8; text-shadow: none; }
-            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); } /* Repeti para garantir ciclo completo */
+            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
         }
-
         .hud-button {
             position: fixed;
             bottom: 20px;
-            pointer-events: auto; /* Botões clicáveis */
+            pointer-events: auto;
             background-color: var(--color-terminal-accent);
             color: var(--color-terminal-bg);
             border: none;
@@ -290,19 +253,15 @@
             transform: translateY(-3px);
             box-shadow: 0 0 25px var(--color-terminal-accent);
         }
-
         #toggleAcessibilidade { left: 20px; }
         #likeBtn { right: 20px; }
-
         #likeBtn:disabled {
             background-color: #555;
             cursor: not-allowed;
             box-shadow: none;
         }
-
-        /* Efeito de glitch para transições (simulado) */
         .glitch-effect-active {
-            animation: glitch 0.1s infinite alternate; 
+            animation: glitch 0.1s infinite alternate;
         }
         @keyframes glitch {
             0% { transform: translate(0); opacity: 1; }
@@ -312,17 +271,14 @@
             80% { transform: translate(2px, -2px); opacity: 0.8; }
             100% { transform: translate(0); opacity: 1; }
         }
-
-        /* Partículas de curtir */
         #likeParticles {
-            position: fixed; 
-            top: 50%; 
+            position: fixed;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); 
+            transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 500;
         }
-
         .like-particle {
             position: absolute;
             background-color: #FF4500;
@@ -332,8 +288,6 @@
             left: 0;
             top: 0;
         }
-
-        /* Efeito de "scanline" para o conteúdo */
         .content-panel::after {
             content: '';
             position: absolute;
@@ -354,8 +308,6 @@
             from { background-position: 0 0; }
             to { background-position: 0 100%; }
         }
-
-        /* Tela de Carregamento (AGORA NO INÍCIO DO HTML, COM ESTILO INLINE E SCRIPT PRÓPRIO) */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -373,8 +325,8 @@
             z-index: 9999;
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; 
-            text-align: center; 
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            text-align: center;
         }
         #loading-screen p { margin-bottom: 20px; text-shadow: 0 0 10px var(--color-terminal-text); }
         .loading-bar {
@@ -397,18 +349,16 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
-
-        /* Responsividade */
         @media (max-width: 768px) {
             #viewport-wrapper {
-                perspective: 800px; 
+                perspective: 800px;
             }
             .room-face {
                 padding: 10px;
                 font-size: 0.9em;
             }
             .content-panel {
-                max-width: 95%; 
+                max-width: 95%;
             }
             .content-panel h2 {
                 font-size: 1.2em;
@@ -419,7 +369,7 @@
             .subscribe-button {
                 padding: 8px 15px;
                 font-size: 0.9em;
-                margin: 5px; 
+                margin: 5px;
             }
             #system-status {
                 font-size: 10px;
@@ -433,25 +383,21 @@
             }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #crosshair { display: none; } 
+            #crosshair { display: none; }
         }
     </style>
     <script>
-        // Função para esconder a tela de carregamento imediatamente
         function hideLoadingScreenImmediately() {
             const loadingScreen = document.getElementById('loading-screen');
             if (loadingScreen) {
-                loadingScreen.style.transition = 'none'; // Desabilita transição
+                loadingScreen.style.transition = 'none';
                 loadingScreen.style.opacity = '0';
                 loadingScreen.style.visibility = 'hidden';
-                loadingScreen.style.display = 'none'; // Remove completamente
+                loadingScreen.style.display = 'none';
                 console.log('Tela de carregamento forçada a sumir (script inline).');
             }
         }
-
-        // Garante que a tela de carregamento suma após um tempo mínimo, SEM DEPENDER DE DOMContentLoaded
-        // Isso é executado assim que o script é lido pelo navegador.
-        setTimeout(hideLoadingScreenImmediately, 100); // Tenta esconder após 100ms
+        setTimeout(hideLoadingScreenImmediately, 100);
     </script>
 </head>
 <body>
@@ -461,7 +407,6 @@
             <div class="progress"></div>
         </div>
     </div>
-
     <div id="viewport-wrapper">
         <div id="room-container">
             <div id="front-wall" class="room-face">
@@ -472,7 +417,7 @@
                     </header>
                     <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
                     <iframe width="560" height="315"
-                        src="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk2" 
+                        src="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk2"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
@@ -483,7 +428,6 @@
                     </a>
                 </div>
             </div>
-
             <div id="right-wall" class="room-face">
                 <div class="content-panel">
                     <h2><i class="fas fa-bell"></i> Notícias e Atualizações</h2>
@@ -503,7 +447,6 @@
                     </a>
                 </div>
             </div>
-
             <div id="back-wall" class="room-face">
                 <div class="content-panel comments-section">
                     <h2><i class="fas fa-comments"></i> Comentários do Terminal</h2>
@@ -527,7 +470,6 @@
                     </a>
                 </div>
             </div>
-
             <div id="left-wall" class="room-face">
                 <div class="content-panel">
                     <h2><i class="fas fa-info-circle"></i> Sobre o Operador (Gameniano)</h2>
@@ -546,7 +488,6 @@
                     <p id="last-modified">Carregando...</p>
                 </div>
             </div>
-
             <div id="top-ceiling" class="room-face">
                 <div class="content-panel">
                     <h2><i class="fas fa-compass"></i> Painel de Navegação</h2>
@@ -559,7 +500,6 @@
                     </nav>
                 </div>
             </div>
-
             <div id="bottom-floor" class="room-face">
                 <div class="content-panel">
                     <h2><i class="fas fa-terminal"></i> Log do Sistema</h2>
@@ -571,20 +511,15 @@
             </div>
         </div>
     </div>
-
     <div id="hud">
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
     </div>
-
     <div id="likeParticles"></div>
-
     <script type="module" async>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
-
-        // --- Configurações Firebase (Inicializa UMA ÚNICA VEZ) ---
         const firebaseConfig = {
             apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU",
             authDomain: "curtirbotao.firebaseapp.com",
@@ -596,63 +531,53 @@
         };
         const appLike = initializeApp(firebaseConfig, "appLike");
         const databaseLike = getDatabase(appLike);
-
-        const appVisit = initializeApp(firebaseConfig, "appVisit"); 
+        const appVisit = initializeApp(firebaseConfig, "appVisit");
         const databaseVisit = getDatabase(appVisit);
-
-        // --- Declaração global para funções de áudio (para serem acessíveis em outros scripts) ---
-        window.acessibilidadeAtivada = false; 
+        window.acessibilidadeAtivada = false;
         window.audioContext = null;
-        window.ambientSound = null; 
-        window.synth = null; 
-
-        window.initializeAudioAndSounds = function() { 
-            if (!window.audioContext) { 
+        window.ambientSound = null;
+        window.synth = null;
+        window.initializeAudioAndSounds = function() {
+            if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
                 window.ambientSound.loop = true;
-                window.ambientSound.volume = 0.3; 
+                window.ambientSound.volume = 0.3;
                 window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));
             }
         };
-
-        window.playSound = function(filePath, volume = 0.5) { 
-            if (window.acessibilidadeAtivada && window.audioContext) { 
+        window.playSound = function(filePath, volume = 0.5) {
+            if (window.acessibilidadeAtivada && window.audioContext) {
                 const audio = new Audio(filePath);
                 audio.volume = volume;
                 audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
         };
-
-        window.falarTexto = function(texto) { 
-            if (!window.synth) window.synth = window.speechSynthesis; 
+        window.falarTexto = function(texto) {
+            if (!window.synth) window.synth = window.speechSynthesis;
             if (window.acessibilidadeAtivada && window.synth && !window.synth.speaking) {
                 const fala = new SpeechSynthesisUtterance(texto);
                 fala.lang = "pt-BR";
                 window.synth.speak(fala);
             }
         };
-
-        // --- Lógica do Botão Curtir ---
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
-
         const particleAnimStyle = document.createElement('style');
         particleAnimStyle.innerHTML = `
             @keyframes particleAnim {
                 0% { transform: scale(1) translate(0, 0); opacity: 1; }
-                100% { 
+                100% {
                     transform: scale(0) translate(
-                        calc((var(--random-x, 0.5) - 0.5) * 200px), 
-                        calc((var(--random-y, 0.5) - 0.5) * -200px) 
-                    ); 
-                    opacity: 0; 
+                        calc((var(--random-x, 0.5) - 0.5) * 200px),
+                        calc((var(--random-y, 0.5) - 0.5) * -200px)
+                    );
+                    opacity: 0;
                 }
             }
         `;
         document.head.appendChild(particleAnimStyle);
-
         function createLikeParticles() {
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement("div");
@@ -667,7 +592,6 @@
                 }, 1000);
             }
         }
-
         function handleLike() {
             if (localStorage.getItem("hasLiked")) {
                 alert("Você já curtiu este botão nesta sessão.");
@@ -688,26 +612,20 @@
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            window.playSound('seus-sons/like-confirm.mp3'); 
+            window.playSound('seus-sons/like-confirm.mp3');
         }
-
         likeButton.addEventListener("click", handleLike);
-
         const likeCountRef = ref(databaseLike, 'likes/total');
         onValue(likeCountRef, (snapshot) => {
             if (snapshot.exists()) {
                 likeCountDisplay.innerText = snapshot.val();
             }
         });
-
         if (localStorage.getItem("hasLiked")) {
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
         }
-
-        // --- Lógica do Contador de Visitas ---
         const visitCountDisplayHud = document.getElementById("visitCountHud");
-
         function handleVisit() {
             if (sessionStorage.getItem("hasVisitedThisSession")) {
                 return;
@@ -725,17 +643,13 @@
             });
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
-
         handleVisit();
-
         const visitCountRef = ref(databaseVisit, 'visits/total');
         onValue(visitCountRef, (snapshot) => {
             if (snapshot.exists()) {
                 visitCountDisplayHud.innerText = snapshot.val();
             }
         });
-
-        // --- Lógica da Última Atualização (GitHub Commit) ---
         async function getLastCommitDate() {
             const repoOwner = "MateusZito2024";
             const repoName = "gameniano.blog";
@@ -749,8 +663,6 @@
                     document.getElementById("last-modified").textContent = "Não encontrado";
                 }
             }
-            // Não logar erro no console se a API do GitHub estiver sendo chamada de forma muito frequente (limite de rate)
-            // ou se o repositório for privado e não acessível.
             catch (error) {
                 console.warn("Aviso: Erro ao buscar último commit (pode ser limite de API ou repositório privado):", error);
                 document.getElementById("last-modified").textContent = "Erro ao buscar";
@@ -767,24 +679,16 @@
             return `${dia} de ${mes} de ${ano}, ${horas}:${minutos}`;
         }
         getLastCommitDate();
-
-        // --- Scripts de Acessibilidade (DOM Ready) ---
         document.addEventListener("DOMContentLoaded", function () {
-            window.synth = window.speechSynthesis; 
-
+            window.synth = window.speechSynthesis;
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
             document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
-
             const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
                                            .filter(el => !el.closest('#hud'));
-
             const botaoToggle = document.getElementById("toggleAcessibilidade");
-            
             elementosParaLer.forEach((elemento) => {
-                // Eventos de mouse só se o ponteiro NÃO estiver bloqueado (para não interferir com a mira)
                 elemento.addEventListener("mouseenter", function () {
-                    // console.log("Mouse enter no elemento:", elemento.innerText); // Debug
-                    if (!document.pointerLockElement) { // Só fala se o ponteiro não estiver bloqueado
+                    if (!document.pointerLockElement) {
                         if (window.acessibilidadeAtivada) window.falarTexto(elemento.innerText);
                         window.playSound('seus-sons/hover-ui.mp3', 0.2);
                     }
@@ -793,18 +697,15 @@
                     window.playSound('seus-sons/click-ui.mp3', 0.3);
                 });
             });
-
             botaoToggle.addEventListener("click", function () {
                 window.acessibilidadeAtivada = !window.acessibilidadeAtivada;
                 botaoToggle.innerText = window.acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
-                if (window.synth) window.synth.cancel(); 
-
-                if (window.ambientSound) { 
+                if (window.synth) window.synth.cancel();
+                if (window.ambientSound) {
                     window.ambientSound.muted = !window.acessibilidadeAtivada;
                 }
                 window.playSound('seus-sons/toggle-ui.mp3', 0.5);
             });
-
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
                     if (Math.random() < 0.1) {
@@ -817,183 +718,126 @@
             });
         });
     </script>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const viewportWrapper = document.getElementById('viewport-wrapper'); 
+            const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
-            const loadingScreen = document.getElementById('loading-screen'); // Para esconder se ainda estiver visível
-
-            let isMouseLookActive = false; // Controla se o mouse está ativo para olhar (via clique)
+            const loadingScreen = document.getElementById('loading-screen');
+            let isMouseLookActive = false;
             let lastMouseX, lastMouseY;
-
-            let playerX = 0; 
-            let playerY = 0; // Vertical position (not controlled by WASD by default)
-            let playerZ = 0; 
-
-            let lookYaw = 0; 
-            let lookPitch = 0; 
-
-            const rotationSensitivity = 0.15; 
-            const moveSpeed = 10; 
-
-            const maxLookPitch = 60; 
-            const minLookPitch = -60; 
-
-            const keysPressed = {}; 
-
-            const ROOM_DEPTH = 3000; // Aumentado significativamente para uma sala GRANDE (em pixels)
-            const ROOM_HALF_DEPTH = ROOM_DEPTH / 2; 
-
-            // Ajusta o tamanho das faces para preencher o ROOM_DEPTH
+            let playerX = 0;
+            let playerY = 0;
+            let playerZ = 0;
+            let lookYaw = 0;
+            let lookPitch = 0;
+            const rotationSensitivity = 0.15;
+            const moveSpeed = 10;
+            const maxLookPitch = 60;
+            const minLookPitch = -60;
+            const keysPressed = {};
+            const ROOM_DEPTH = 3000;
+            const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
-                face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`; 
-                face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`; 
+                face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
+                face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
-            
-            // Define as posições das faces da sala em relação ao ROOM_DEPTH
             document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('left-wall').style.transform = `rotateY(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-
-            // Ajustar a perspectiva do viewport-wrapper para o tamanho da sala
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; // 0.7x a profundidade da sala, para ver mais distorção e profundidade
-
-            // Limites de movimento (para não sair da sala) - Aumentados para preencher a sala maior
-            const padding = 0.4; // 40% de margem das bordas
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`;
+            const padding = 0.4;
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * padding,
                 xMax: ROOM_HALF_DEPTH * padding,
-                yMin: -ROOM_HALF_DEPTH * padding, // Pode adicionar controles para playerY se quiser
+                yMin: -ROOM_HALF_DEPTH * padding,
                 yMax: ROOM_HALF_DEPTH * padding,
                 zMin: -ROOM_HALF_DEPTH * padding,
                 zMax: ROOM_HALF_DEPTH * padding
             };
-
-
             function updateRoomTransform() {
-                // A sala se move na direção INVERSA do jogador
                 roomContainer.style.transform = `
-                    translateZ(${playerZ}px) 
-                    translateX(${playerX}px) 
-                    translateY(${playerY}px) 
-                    rotateX(${lookPitch}deg) 
-                    rotateY(${lookYaw}deg)
+                    translateZ(${-playerZ}px)
+                    translateX(${-playerX}px)
+                    translateY(${-playerY}px)
+                    rotateX(${-lookPitch}deg)
+                    rotateY(${-lookYaw}deg)
                 `;
             }
-
-            // --- Lógica de Movimento WASD ---
             document.addEventListener('keydown', (e) => {
                 keysPressed[e.key.toLowerCase()] = true;
             });
-
             document.addEventListener('keyup', (e) => {
                 keysPressed[e.key.toLowerCase()] = false;
             });
-
             function handleMovement() {
                 const moveAmount = moveSpeed;
-
-                // Converte lookYaw e lookPitch para radianos
                 const yawRad = lookYaw * Math.PI / 180;
-                const pitchRad = lookPitch * Math.PI / 180; // Necessário para movimento vertical
-
-
+                const pitchRad = lookPitch * Math.PI / 180;
                 let deltaX = 0;
                 let deltaZ = 0;
-                let deltaY = 0; // Para movimento vertical se implementado
-
-                // Movimento W (frente) / S (trás)
-                // O movimento agora considera a rotação vertical (lookPitch) também, para andar na direção que está olhando
+                let deltaY = 0;
                 if (keysPressed['w']) {
-                    deltaX += moveAmount * Math.sin(yawRad) * Math.cos(pitchRad);
-                    deltaZ += moveAmount * Math.cos(yawRad) * Math.cos(pitchRad);
-                    // deltaY += moveAmount * Math.sin(pitchRad); // Se quiser que W/S também mova para cima/baixo
-                }
-                if (keysPressed['s']) {
                     deltaX -= moveAmount * Math.sin(yawRad) * Math.cos(pitchRad);
                     deltaZ -= moveAmount * Math.cos(yawRad) * Math.cos(pitchRad);
-                    // deltaY -= moveAmount * Math.sin(pitchRad); // Se quiser que W/S também mova para cima/baixo
                 }
-
-                // Movimento A (esquerda) / D (direita)
+                if (keysPressed['s']) {
+                    deltaX += moveAmount * Math.sin(yawRad) * Math.cos(pitchRad);
+                    deltaZ += moveAmount * Math.cos(yawRad) * Math.cos(pitchRad);
+                }
                 if (keysPressed['a']) {
-                    deltaX += moveAmount * Math.sin(yawRad - Math.PI / 2);
-                    deltaZ += moveAmount * Math.cos(yawRad - Math.PI / 2);
+                    deltaX -= moveAmount * Math.cos(yawRad);
+                    deltaZ += moveAmount * Math.sin(yawRad);
                 }
                 if (keysPressed['d']) {
-                    deltaX += moveAmount * Math.sin(yawRad + Math.PI / 2);
-                    deltaZ += moveAmount * Math.cos(yawRad + Math.PI / 2);
+                    deltaX += moveAmount * Math.cos(yawRad);
+                    deltaZ -= moveAmount * Math.sin(yawRad);
                 }
-
-                playerX -= deltaX; // Invertido para o movimento da sala
-                playerZ -= deltaZ; // Invertido para o movimento da sala
-                playerY -= deltaY; // Invertido, se deltaY for usado
-
-                // Colisão com as paredes da sala (limitar playerX, playerY, playerZ)
+                playerX += deltaX;
+                playerZ += deltaZ;
+                playerY += deltaY;
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
-                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax)); 
+                playerY = Math.max(bounds.yMin, Math.min(playerY, bounds.yMax));
             }
-
-
-            // --- Lógica de Olhar (Mouse) ---
-            // Adicionado evento click para ativar o pointer lock
             document.body.addEventListener('click', () => {
                 if (roomContainer.requestPointerLock) {
                     roomContainer.requestPointerLock();
                 }
             });
-
             document.addEventListener('mousemove', (e) => {
-                // Checa se o ponteiro está bloqueado
-                if (document.pointerLockElement === roomContainer) { 
-                    const deltaX = e.movementX; // movementX/Y são mais precisos para pointer lock
+                if (document.pointerLockElement === roomContainer) {
+                    const deltaX = e.movementX;
                     const deltaY = e.movementY;
-
                     lookYaw += deltaX * rotationSensitivity;
-                    lookPitch += deltaY * rotationSensitivity; // Use '+' aqui para movimento mais natural para cima/baixo
-
-                    // Limitar rotação vertical
+                    lookPitch += deltaY * rotationSensitivity;
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
             });
-
-            // Evento para PointerLockChange (se o ponteiro for bloqueado/desbloqueado)
             document.addEventListener('pointerlockchange', () => {
                 if (document.pointerLockElement === roomContainer) {
                     isMouseLookActive = true;
-                    // Mudar o cursor para "none" quando o ponteiro está bloqueado
-                    document.documentElement.style.cursor = 'none'; 
+                    document.documentElement.style.cursor = 'none';
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
                     isMouseLookActive = false;
-                    // Restaurar o cursor personalizado quando o ponteiro é desbloqueado
                     document.documentElement.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto`;
                     console.log('Pointer unlocked.');
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { /* For Firefox */ });
-            document.addEventListener('webkitpointerlockchange', () => { /* For Chrome/Safari */ });
-
-
-            // --- Game Loop (RequestAnimationFrame) ---
+            document.addEventListener('mozpointerlockchange', () => {});
+            document.addEventListener('webkitpointerlockchange', () => {});
             function gameLoop() {
-                handleMovement(); 
-                updateRoomTransform(); 
-                requestAnimationFrame(gameLoop); 
+                handleMovement();
+                updateRoomTransform();
+                requestAnimationFrame(gameLoop);
             }
-
-            // Iniciar o game loop
             requestAnimationFrame(gameLoop);
-
-            // Ajustar o transform inicial da sala para o centro e olhar para frente
-            updateRoomTransform(); 
+            updateRoomTransform();
         });
     </script>
 </body>
