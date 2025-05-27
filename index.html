@@ -92,15 +92,15 @@
             top: 0;
             left: 0;
             /* A variável CSS --zoom-level é definida pelo JS */
-            transform: translateZ(var(--player-z, 0px)) translateX(var(--player-x, 0px)) translateY(var(--player-y, 0px)) rotateX(var(--look-pitch, 0deg)) rotateY(var(--look-yaw, 0deg)) scale(var(--zoom-level, 1));
+            /* A ordem das transformações aqui será definida pelo JavaScript em updateRoomTransform */
         }
         #room-container.grabbing {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
         .room-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; /* Será ajustado pelo JS para ROOM_DEPTH */
+            height: 100%; /* Será ajustado pelo JS para ROOM_DEPTH */
             background-color: rgba(13, 13, 15, 0.9);
             border: 2px solid var(--color-border-scan);
             box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
@@ -110,7 +110,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            overflow: hidden;
+            overflow: hidden; /* Mantenha, mas pode precisar de ajuste dependendo do conteúdo */
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
@@ -128,10 +128,10 @@
             border: 1px solid var(--color-terminal-accent);
             box-shadow: 0 0 15px var(--color-terminal-accent);
             max-width: 80%;
-            margin: 10px auto; /* Ajustado de 'auto' para ter margem no topo/baixo também */
+            margin: 10px auto; 
             text-align: left;
             position: relative;
-            z-index: 1; /* Mantido do seu código */
+            z-index: 1; 
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
@@ -148,16 +148,16 @@
             font-size: 1em;
             line-height: 1.6;
         }
-         .content-panel ul { /* Adicionado para estilizar listas */
+         .content-panel ul { 
             list-style: none;
             padding: 0;
         }
-        .content-panel li { /* Adicionado para estilizar itens de lista */
+        .content-panel li { 
             margin-bottom: 8px;
             font-size: 1em;
             line-height: 1.5;
         }
-        .content-panel li strong { /* Adicionado para estilizar strong em listas */
+        .content-panel li strong { 
             color: var(--color-border-scan);
         }
         .content-panel iframe {
@@ -167,7 +167,7 @@
             border: 2px solid var(--color-border-scan);
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
-            cursor: pointer; /* Adicionado para iframes */
+            cursor: pointer; 
         }
         .subscribe-button {
             display: inline-flex;
@@ -208,7 +208,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
             pointer-events: auto;
-            cursor: pointer; /* Adicionado para links de comentários */
+            cursor: pointer; 
         }
 
         #hud {
@@ -325,15 +325,14 @@
         }
         @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
         
-        /* Estilos da Mira (Crosshair) do seu código */
         #crosshair {
             position: fixed;
             top: 50%; left: 50%;
             width: 20px; height: 20px;
             transform: translate(-50%, -50%);
             pointer-events: none; z-index: 1001;
-            display: none; /* Começa escondido */
-             animation: crosshair-pulse 1.5s infinite; /* Mantido do seu código */
+            display: none; 
+             animation: crosshair-pulse 1.5s infinite; 
         }
         #crosshair::before,
         #crosshair::after {
@@ -357,7 +356,7 @@
             transform: scale(1.2);
             box-shadow: 0 0 10px var(--color-terminal-accent);
         }
-         @keyframes crosshair-pulse { /* Mantido do seu código */
+         @keyframes crosshair-pulse { 
             0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
             50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -375,7 +374,7 @@
             .hud-button { font-size: 14px; padding: 10px 15px; }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #crosshair { display: none !important; } /* Garante que a mira não apareça em mobile */
+            #crosshair { display: none !important; } 
         }
     </style>
     <script>
@@ -386,7 +385,6 @@
                 loadingScreen.style.opacity = '0';
                 loadingScreen.style.visibility = 'hidden';
                 loadingScreen.style.display = 'none';
-                // console.log('Tela de carregamento forçada a sumir (script inline).');
             }
         }
         setTimeout(hideLoadingScreenImmediately, 100);
@@ -505,17 +503,10 @@
         window.ambientSound = null;
         window.synth = null;
 
-        window.initializeAudioAndSounds = function() { /* ... seu código ... */ };
-        window.playSound = function(filePath, volume = 0.5) { /* ... seu código ... */ };
-        window.falarTexto = function(texto) { /* ... seu código ... */ };
-        // Coloquei o conteúdo das funções de áudio e fala como comentários para encurtar,
-        // mas no seu código real, elas devem estar completas como antes.
-        // Exemplo:
         window.initializeAudioAndSounds = function() {
             if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                // Certifique-se que o caminho do áudio está correto
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); // Certifique-se que o caminho está correto
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
                 window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente:", e));
@@ -523,8 +514,7 @@
         };
          window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
-                // Certifique-se que o caminho do áudio está correto
-                const audio = new Audio(filePath);
+                const audio = new Audio(filePath); // Certifique-se que o caminho está correto
                 audio.volume = volume;
                 audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
@@ -538,16 +528,13 @@
             }
         };
 
-
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
         const particleAnimStyle = document.createElement('style');
         particleAnimStyle.innerHTML = `@keyframes particleAnim { 0% { transform: scale(1) translate(0,0); opacity: 1; } 100% { transform: scale(0) translate(calc((var(--random-x,.5) - .5) * 200px), calc((var(--random-y,.5) - .5) * -200px)); opacity: 0; }}`;
         document.head.appendChild(particleAnimStyle);
-        function createLikeParticles() { /* ... seu código ... */ }
-        function handleLike() { /* ... seu código ... */ }
-        // Exemplo (conteúdo das funções de like omitido para brevidade, use o seu original)
+        
         function createLikeParticles() {
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement("div");
@@ -561,16 +548,15 @@
             }
         }
         function handleLike() {
-            if (localStorage.getItem("hasLiked")) { /* alert("Você já curtiu esta sessão."); */ return; }
+            if (localStorage.getItem("hasLiked")) { return; }
             const likeCountRefDb = ref(databaseLike, 'likes/total');
             get(likeCountRefDb).then((snapshot) => set(likeCountRefDb, (snapshot.exists() ? snapshot.val() : 0) + 1)).catch(console.error);
             localStorage.setItem("hasLiked", "true");
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3');
+            if(window.playSound) window.playSound('seus-sons/like-confirm.mp3'); // Certifique-se que o caminho está correto
         }
-
 
         likeButton.addEventListener("click", handleLike);
         const likeCountRef = ref(databaseLike, 'likes/total');
@@ -578,23 +564,17 @@
         if (localStorage.getItem("hasLiked")) { likeButton.disabled = true; likeButton.style.backgroundColor = '#555'; }
 
         const visitCountDisplayHud = document.getElementById("visitCountHud");
-        function handleVisit() { /* ... seu código ... */ }
-        // Exemplo (conteúdo da função de visita omitido, use o seu original)
-         function handleVisit() {
+        function handleVisit() {
             if (sessionStorage.getItem("hasVisitedThisSession")) { return; }
             const visitCountRefDb = ref(databaseVisit, 'visits/total');
             get(visitCountRefDb).then((snapshot) => set(visitCountRefDb, (snapshot.exists() ? snapshot.val() : 0) + 1)).catch(console.error);
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
 
-
         handleVisit();
         const visitCountRef = ref(databaseVisit, 'visits/total');
         onValue(visitCountRef, (snapshot) => { if (snapshot.exists()) { visitCountDisplayHud.innerText = snapshot.val(); }});
 
-        async function getLastCommitDate() { /* ... seu código ... */ }
-        function formatarDataHora(data) { /* ... seu código ... */ }
-        // Exemplo (conteúdo das funções de data omitido, use o seu original)
         async function getLastCommitDate() {
             const repoOwner = "MateusZito2024"; const repoName = "gameniano.blog";
             try {
@@ -611,8 +591,6 @@
 
         getLastCommitDate();
 
-        document.addEventListener("DOMContentLoaded", function () { /* ... seu código de acessibilidade e glitch de painel ... */ });
-        // Exemplo (conteúdo do DOMContentLoaded de acessibilidade omitido, use o seu original)
         document.addEventListener("DOMContentLoaded", function () {
             window.synth = window.speechSynthesis;
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
@@ -623,17 +601,17 @@
                 elemento.addEventListener("mouseenter", function () {
                     if (!document.pointerLockElement) {
                         if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto(elemento.innerText);
-                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2);
+                        if (window.playSound) window.playSound('seus-sons/hover-ui.mp3', 0.2); // Certifique-se que o caminho está correto
                     }
                 });
-                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); });
+                elemento.addEventListener("click", function() { if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); }); // Certifique-se que o caminho está correto
             });
             botaoToggle.addEventListener("click", function () {
                 window.acessibilidadeAtivada = !window.acessibilidadeAtivada;
                 botaoToggle.innerText = window.acessibilidadeAtivada ? "🔇 Áudio Desativado" : "🔊 Áudio Sistema";
                 if (window.synth) window.synth.cancel();
                 if (window.ambientSound) { window.ambientSound.muted = !window.acessibilidadeAtivada; }
-                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5);
+                if (window.playSound) window.playSound('seus-sons/toggle-ui.mp3', 0.5); // Certifique-se que o caminho está correto
             });
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
@@ -649,60 +627,58 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
-            const crosshair = document.getElementById('crosshair'); // Usando a mira do seu código
+            const crosshair = document.getElementById('crosshair');
             
             let isMouseLookActive = false;
             let playerX = 0, playerY = 0, playerZ = 0;
             let lookYaw = 0, lookPitch = 0;
-            let zoomLevel = 1; // Mantido do seu código
+            let zoomLevel = 1;
             
             const rotationSensitivity = 0.15;
-            const moveSpeed = 20; // Ajustado para um valor mais comum, pode ser 15 ou 25 como antes
-            const zoomSpeed = 0.05; // Mantido do seu código
-            const maxLookPitch = 60; // Aumentado um pouco para mais liberdade vertical
+            const moveSpeed = 20;
+            const zoomSpeed = 0.05;
+            const maxLookPitch = 60;
             const minLookPitch = -60;
-            const minZoom = 0.5; // Mantido
-            const maxZoom = 2.0; // Mantido
+            const minZoom = 0.5;
+            const maxZoom = 2.0;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000;
+            const ROOM_DEPTH = 3000; // Profundidade da sala (usada para dimensionar as faces)
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
-            // A variável CSS --room-half-depth é usada no CSS, o JS usa ROOM_HALF_DEPTH
+            
+            // Ajusta o tamanho e posição das faces da sala dinamicamente
+            // Isso é importante para que --room-half-depth usado no CSS corresponda ao JS
+            document.documentElement.style.setProperty('--room-half-depth', `${ROOM_HALF_DEPTH}px`);
 
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
+                // Centraliza as faces em relação ao roomContainer
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
-
-            // As transformações das paredes usam a variável CSS --room-half-depth
-            // que foi definida como 1500px. Se ROOM_HALF_DEPTH no JS for diferente,
-            // ajuste a variável CSS ou use o valor JS para consistência.
-            // Vou assumir que o JS é a fonte da verdade para ROOM_HALF_DEPTH aqui.
-            document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('left-wall').style.transform = `rotateY(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             
             viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
-            const paddingFactor = 0.45;
+            const paddingFactor = 0.45; // Quão perto das "bordas" da sala o jogador pode chegar
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * paddingFactor, xMax: ROOM_HALF_DEPTH * paddingFactor,
-                yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor, // yMin/yMax não são usados se não houver movimento vertical
+                yMin: -ROOM_HALF_DEPTH * paddingFactor, yMax: ROOM_HALF_DEPTH * paddingFactor, // yMin/yMax não são usados ativamente sem movimento vertical
                 zMin: -ROOM_HALF_DEPTH * paddingFactor, zMax: ROOM_HALF_DEPTH * paddingFactor
             };
 
             function updateRoomTransform() {
+                // ORDEM CORRIGIDA: Translações primeiro, depois rotações, depois escala.
+                // Isso garante que playerX/Y/Z sejam coordenadas no sistema global do mundo,
+                // e as rotações da câmera são aplicadas a esse mundo já posicionado.
                 roomContainer.style.transform = `
-                    rotateX(${-lookPitch}deg) rotateY(${-lookYaw}deg)
-                    translateX(${-playerX}px) translateY(${-playerY}px) translateZ(${playerZ}px)
+                    translateX(${-playerX}px) 
+                    translateY(${-playerY}px) 
+                    translateZ(${playerZ}px) 
+                    rotateX(${-lookPitch}deg) 
+                    rotateY(${-lookYaw}deg) 
                     scale(${zoomLevel})
                 `;
-                // Define a variável CSS --zoom-level para ser usada por outros elementos se necessário
                 roomContainer.style.setProperty('--zoom-level', zoomLevel);
             }
 
@@ -716,37 +692,36 @@
                 let dZ_world = 0;
 
                 // W: Mover para frente (na direção da câmera)
+                // Usa a matemática padrão/original que é correta para movimento relativo à câmera.
                 if (keysPressed['w']) {
                     dX_world += moveSpeed * Math.sin(yawRad);
-                    dZ_world += moveSpeed * Math.cos(yawRad); // CORRIGIDO de -= para +=
+                    dZ_world -= moveSpeed * Math.cos(yawRad); 
                 }
                 // S: Mover para trás
                 if (keysPressed['s']) {
                     dX_world -= moveSpeed * Math.sin(yawRad);
-                    dZ_world -= moveSpeed * Math.cos(yawRad); // CORRIGIDO de += para -=
+                    dZ_world += moveSpeed * Math.cos(yawRad); 
                 }
 
-                // Vetor para a direita da câmera no plano XZ do mundo: (cos(yawRad), sin(yawRad))
-                // A: Mover para a esquerda (oposto do vetor "direita")
+                // A: Mover para a esquerda (strafe)
                 if (keysPressed['a']) {
                     dX_world -= moveSpeed * Math.cos(yawRad);
-                    dZ_world -= moveSpeed * Math.sin(yawRad);
+                    dZ_world -= moveSpeed * Math.sin(yawRad); 
                 }
-                // D: Mover para a direita
+                // D: Mover para a direita (strafe)
                 if (keysPressed['d']) {
                     dX_world += moveSpeed * Math.cos(yawRad);
-                    dZ_world += moveSpeed * Math.sin(yawRad);
+                    dZ_world += moveSpeed * Math.sin(yawRad); 
                 }
 
-                // Lógica de Zoom (do seu código)
                 if (keysPressed['q']) {
                     zoomLevel = Math.min(maxZoom, zoomLevel + zoomSpeed);
-                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2);
+                    if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); // Certifique-se que o caminho está correto
                     if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom aumentado");
                 }
                 if (keysPressed['e']) {
                     zoomLevel = Math.max(minZoom, zoomLevel - zoomSpeed);
-                     if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2);
+                     if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.2); // Certifique-se que o caminho está correto
                      if (window.acessibilidadeAtivada && window.falarTexto) window.falarTexto("Zoom reduzido");
                 }
 
@@ -755,10 +730,8 @@
 
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
-                // playerY não é modificado ou limitado aqui, assumindo movimento no plano XZ
             }
             
-            // Lógica de clique (do seu código)
             document.body.addEventListener('click', (e) => {
                 if (!document.pointerLockElement) {
                     document.body.requestPointerLock();
@@ -767,16 +740,14 @@
                     const centerY = window.innerHeight / 2;
                     const element = document.elementFromPoint(centerX, centerY);
                     if (element) {
-                        // Tentar encontrar um ancestral clicável se o elemento direto não for
                         const clickableTarget = element.closest('a, button, .subscribe-button, iframe');
                         if (clickableTarget) {
-                             if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3);
+                             if (window.playSound) window.playSound('seus-sons/click-ui.mp3', 0.3); // Certifique-se que o caminho está correto
                             if (clickableTarget.tagName === 'A' && clickableTarget.href) {
                                 window.open(clickableTarget.href, clickableTarget.target || '_self');
                             } else if (clickableTarget.tagName === 'BUTTON' || clickableTarget.classList.contains('subscribe-button')) {
-                                clickableTarget.click(); // Para botões ou elementos com manipuladores JS
+                                clickableTarget.click(); 
                             } else if (clickableTarget.tagName === 'IFRAME' && clickableTarget.src) {
-                                // Abrir src do iframe em nova aba pode ser uma opção, mas interagir é complexo
                                 window.open(clickableTarget.src, '_blank');
                             }
                         }
@@ -792,11 +763,10 @@
                     lookPitch += deltaYmouse * rotationSensitivity;
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
 
-                    // Lógica da mira interativa (do seu código)
                     const centerX = window.innerWidth / 2;
                     const centerY = window.innerHeight / 2;
                     const element = document.elementFromPoint(centerX, centerY);
-                    if (crosshair) { // Verifica se crosshair existe
+                    if (crosshair) { 
                         if (element && element.closest('a, button, .subscribe-button, iframe')) {
                             crosshair.classList.add('interactive');
                         } else {
@@ -808,13 +778,12 @@
             
             document.addEventListener('pointerlockchange', () => {
                 isMouseLookActive = (document.pointerLockElement === document.body);
-                if (crosshair) { // Verifica se crosshair existe
+                if (crosshair) { 
                     crosshair.classList.toggle('active', isMouseLookActive);
                 }
-                // console.log(isMouseLookActive ? 'Pointer locked.' : 'Pointer unlocked.');
             });
-            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active'); /* console.log('Pointer unlocked (Firefox).'); */ } });
-            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active'); /* console.log('Pointer unlocked (WebKit).'); */ } });
+            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active'); } });
+            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && isMouseLookActive) {isMouseLookActive = false; if(crosshair) crosshair.classList.remove('active');} });
             
             function gameLoop() {
                 handleMovement();
