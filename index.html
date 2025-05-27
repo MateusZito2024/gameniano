@@ -126,27 +126,39 @@
             padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--color-terminal-accent);
-            box-shadow: 0 0 15px var(--color-border-scan);
+            box-shadow: 0 0 15px var(--color-terminal-accent);
             max-width: 80%;
-            margin: auto;
+            margin: 10px auto;
             text-align: left;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
             pointer-events: auto;
         }
         .content-panel h2 {
             font-family: 'Press Start 2P', cursive;
             color: var(--color-terminal-text);
             font-size: 1.5em;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-shadow: 0 0 8px var(--color-terminal-text);
         }
         .content-panel p {
             font-family: 'Rajdhani', sans-serif;
             color: #ccc;
-            font-size: 1.1em;
+            font-size: 1em;
             line-height: 1.6;
+        }
+        .content-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+        .content-panel li {
+            margin-bottom: 8px;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        .content-panel li strong {
+            color: var(--color-border-scan);
         }
         .content-panel iframe {
             width: 100%;
@@ -204,7 +216,7 @@
             pointer-events: auto;
             cursor: pointer;
         }
-        #hudd {
+        #hud {
             position: fixed;
             top: 0;
             left: 0;
@@ -228,15 +240,14 @@
             pointer-events: auto;
             animation: flicker 1.5s infinite alternate;
         }
-        #visitCount {
+        #visitCountHud {
             color: var(--color-terminal-accent);
         }
         @keyframes flicker {
-            0% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
+            0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
             50% { opacity: 0.8; text-shadow: none; }
-            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
         }
-        .hudd-button {
+        .hud-button {
             position: fixed;
             bottom: 20px;
             pointer-events: auto;
@@ -245,35 +256,33 @@
             border: none;
             padding: 12px 20px;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 16px;
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             cursor: pointer;
             box-shadow: 0 0 15px var(--color-terminal-accent);
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
-        .hudd-button:hover {
+        .hud-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 0 25px var(--color-terminal-accent);
         }
         #toggleAcessibilidade { left: 20px; }
         #likeBtn { right: 20px; }
-        #toggleCommands { left: 150px; } /* Novo botão */
-        #likeBtn {
-:disabled {
+        #likeBtn:disabled {
             background-color: #555;
             cursor: not-allowed;
             box-shadow: none;
         }
-        .glitch-effect {
+        .glitch-effect-active {
             animation: glitch 0.1s infinite alternate;
         }
         @keyframes glitch {
             0% { transform: translate(0); opacity: 1; }
-            20% { transform: translate(-2px, 2px); opacity: 0.8;}
-            40% { transform: translate(-2px, -2px); opacity: 1;}
-            60% { transform: translate(2px, 2px); opacity: 0.9px;}
-            80% { transform: translate(2px, -2px); opacity: 0.8px;}
+            20% { transform: translate(-2px, 2px); opacity: 0.8; }
+            40% { transform: translate(-2px, -2px); opacity: 1; }
+            60% { transform: translate(2px, 2px); opacity: 0.9; }
+            80% { transform: translate(2px, -2px); opacity: 0.8; }
             100% { transform: translate(0); opacity: 1; }
         }
         #likeParticles {
@@ -289,7 +298,7 @@
             background-color: #FF4500;
             border-radius: 50%;
             animation: particleAnim 1s ease-out forwards;
-            box-shadow: 0 0 8px rgba(255,69,0,0).7);
+            box-shadow: 0 0 8px rgba(255,69,0,0.7);
             left: 0;
             top: 0;
         }
@@ -303,15 +312,15 @@
             background: linear-gradient(
                 to bottom,
                 transparent 50%,
-                rgba(0, 0, 0, 0).3);
-            ) 50%;
+                rgba(0, 0, 0, 0.3) 50%
+            );
             background-size: 100% 4px;
             pointer-events: none;
             animation: scanlineMove 2s linear infinite;
         }
         @keyframes scanlineMove {
-            from { background-position: 0 0px; }
-            to { background-position: 0 100px; }
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
         }
         #loading-screen {
             position: fixed;
@@ -323,8 +332,8 @@
             color: var(--color-terminal-text);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             font-family: 'Press Start 2P', cursive;
             font-size: 2em;
             z-index: 9999;
@@ -364,7 +373,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 1001;
-            display: none; /* Oculta até o pointerLock ser ativo */
+            display: none; /* Oculta até o pointerLock ser ativado */
         }
         #crosshair::before,
         #crosshair::after {
@@ -403,48 +412,6 @@
         #crosshair {
             animation: crosshair-pulse 1.5s infinite;
         }
-        /* Estilo do Painel de Comandos */
-        #commands-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid var(--color-border-scan);
-            box-shadow: 0 0 15px var(--color-border-scan);
-            max-width: 400px;
-            font-family: 'Rajdhani', sans-serif;
-            color: var(--color-terminal-text);
-            z-index: 1002;
-            display: none;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        #commands-panel.active {
-            display: block;
-            opacity: 1;
-        }
-        #commands-panel h3 {
-            font-family: 'Press Start 2P', cursive;
-            color: var(--color-terminal-accent);
-            margin-bottom: 15px;
-            text-align: center;
-            text-shadow: 0 0 8px var(--color-terminal-accent);
-        }
-        #commands-panel ul {
-            list-style: none;
-            padding: 0;
-        }
-        #commands-panel li {
-            margin-bottom: 10px;
-            font-size: 1em;
-            line-height: 1.5;
-        }
-        #commands-panel li strong {
-            color: var(--color-border-scan);
-        }
         @media (max-width: 768px) {
             #viewport-wrapper {
                 perspective: 800px;
@@ -459,7 +426,8 @@
             .content-panel h2 {
                 font-size: 1.2em;
             }
-            .content-panel p {
+            .content-panel p,
+            .content-panel li {
                 font-size: 0.9em;
             }
             .subscribe-button {
@@ -474,24 +442,12 @@
                 padding: 5px 10px;
             }
             .hud-button {
-                font-size: 12px;
-                padding: 8px 12px;
+                font-size: 14px;
+                padding: 10px 15px;
             }
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
-            #toggleCommands { left: 100px; bottom: 10px; }
             #crosshair { display: none; }
-            #commands-panel {
-                max-width: 90%;
-                padding: 15px;
-                font-size: 0.9em;
-            }
-            #commands-panel h3 {
-                font-size: 1em;
-            }
-            #commands-panel li {
-                font-size: 0.85em;
-            }
         }
     </style>
     <script>
@@ -551,7 +507,7 @@
                     </a>
                     <br>
                     <a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
-                        <i class="fas fa-newspaper"></i> Mais Notícias
+                        <i class="fas fa-newspaper"></i> Mais notícias
                     </a>
                 </div>
             </div>
@@ -591,9 +547,19 @@
                         <i class="fas fa-user-astronaut"></i> Perfil Completo
                     </a>
                 </div>
-                <div class="content-panel" style="margin-top: 20px;">
+                <div class="content-panel">
                     <h2><i class="fas fa-clock"></i> Última Sincronização</h2>
                     <p id="last-modified">Carregando...</p>
+                </div>
+                <div class="content-panel">
+                    <h2><i class="fas fa-keyboard"></i> Comandos de Navegação</h2>
+                    <ul>
+                        <li><strong>W, A, S, D:</strong> Mover-se pela sala</li>
+                        <li><strong>Mouse:</strong> Olhar ao redor (clique para ativar)</li>
+                        <li><strong>Clique Esquerdo:</strong> Interagir com links ou vídeos</li>
+                        <li><strong>Q:</strong> Aproximar (Zoom In)</li>
+                        <li><strong>E:</strong> Afastar (Zoom Out)</li>
+                    </ul>
                 </div>
             </div>
             <div id="top-ceiling" class="room-face">
@@ -622,28 +588,15 @@
     <div id="hud">
         <div id="system-status">[STATUS] ONLINE // VISITANTES: <span id="visitCountHud">0</span></div>
         <button id="toggleAcessibilidade" class="hud-button">🔊 Áudio Sistema</button>
-        <button id="toggleCommands" class="hud-button"><i class="fas fa-keyboard"></i> Comandos</button>
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
         <div id="crosshair"></div>
-        <div id="commands-panel">
-            <h3>PAINEL DE COMANDOS</h3>
-            <ul>
-                <li><strong>W, A, S, D:</strong> Mover-se pela sala</li>
-                <li><strong>Mouse:</strong> Olhar ao redor (clique para ativar)</li>
-                <li><strong>Clique Esquerdo:</strong> Interagir com links ou vídeos</li>
-                <li><strong>Q:</strong> Aproximar (Zoom In)</li>
-                <li><strong>E:</strong> Afastar (Zoom Out)</li>
-                <li><strong>Botão Áudio Sistema:</strong> Ativar/desativar acessibilidade</li>
-                <li><strong>Botão Curtir:</strong> Registrar curtida</li>
-            </ul>
-        </div>
     </div>
     <div id="likeParticles"></div>
     <script type="module" async>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
         const firebaseConfig = {
-            apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU",
+            apiKey: "AIzaSyAB7D9_tOjAZQPomQ1ldpkM-PPxQzYukMGU",
             authDomain: "curtirbotao.firebaseapp.com",
             databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
             projectId: "curtirbotao",
@@ -665,14 +618,14 @@
                 window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
-                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));
+                window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));;
             }
         };
         window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
                 const audio = new Audio(filePath);
                 audio.volume = volume;
-                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
+                audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));;
             }
         };
         window.falarTexto = function(texto) {
@@ -680,9 +633,8 @@
             if (window.acessibilidadeAtivada && window.synth && !window.synth.speaking) {
                 const fala = new SpeechSynthesisUtterance(texto);
                 fala.lang = "pt-BR";
-                window.synth.speak(fala);
+                window.synth.speak(fala.speech);
             }
-        };
         const likeButton = document.getElementById("likeBtn");
         const likeCountDisplay = document.getElementById("likeCount");
         const likeParticlesContainer = document.getElementById('likeParticles');
@@ -692,8 +644,8 @@
                 0% { transform: scale(1) translate(0, 0); opacity: 1; }
                 100% {
                     transform: scale(0) translate(
-                        calc((var(--random-x, 0.5) - 0.5) * 200px),
-                        calc((var(--random-y, 0.5) - 0.5) * -200px)
+                        calc((var(--random-x, 0.5) - 0.5)) * 200px),
+                        calc((var(--random-y, 0,5) - 0.5) * -200px)
                     );
                     opacity: 0;
                 }
@@ -716,7 +668,7 @@
         }
         function handleLike() {
             if (localStorage.getItem("hasLiked")) {
-                alert("Você já curtiu esta sessão.");
+                alert("Você já curtiu este botão nesta sessão.");
                 return;
             }
             const likeCountRef = ref(databaseLike, 'likes/total');
@@ -730,6 +682,7 @@
             }).catch((error) => {
                 console.error("Erro ao atualizar contagem de curtidas:", error);
             });
+            }
             localStorage.setItem("hasLiked", "true");
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
@@ -760,9 +713,10 @@
                 } else {
                     set(visitCountRef, 1);
                 }
-            }).catch((error) => {
+                }).catch((error) => {
                 console.error("Erro ao atualizar contagem de visitas:", error);
             });
+            }
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
         handleVisit();
@@ -805,8 +759,8 @@
             window.synth = window.speechSynthesis;
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
             document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
-            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li, #commands-panel"))
-                                        .filter(el => !el.closest('#hud') || el.id === 'commands-panel');
+            const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
+                                        .filter(el => !el.closest('#hud'));
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
@@ -827,16 +781,6 @@
                     window.ambientSound.muted = !window.acessibilidadeAtivada;
                 }
                 window.playSound('seus-sons/toggle-ui.mp3', 0.5);
-            });
-            const toggleCommandsBtn = document.getElementById("toggleCommands");
-            const commandsPanel = document.getElementById("commands-panel");
-            toggleCommandsBtn.addEventListener("click", function() {
-                const isActive = commandsPanel.classList.toggle("active");
-                toggleCommandsBtn.textContent = isActive ? "✕ Fechar Comandos" : "⌨ Comandos";
-                window.playSound('seus-sons/toggle-ui.mp3', 0.5);
-                if (isActive && window.acessibilidadeAtivada) {
-                    window.falarTexto("Painel de comandos aberto. Use WASD para mover, mouse para olhar, Q para aproximar, E para afastar, clique para interagir.");
-                }
             });
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
@@ -910,7 +854,6 @@
                     translateZ(${playerZ}px)
                     scale(${zoomLevel})
                 `;
-                // Update CSS variable for zoomLevel
                 roomContainer.style.setProperty('--zoom-level', zoomLevel);
             }
 
