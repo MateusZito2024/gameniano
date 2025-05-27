@@ -716,16 +716,14 @@
                 let dZ_world = 0;
 
                 // W: Mover para frente (na direção da câmera)
-                // Para frente no sistema de coordenadas do jogador (playerZ diminuindo)
-                // Vetor para frente da câmera no plano XZ do mundo: (sin(yawRad), -cos(yawRad))
                 if (keysPressed['w']) {
                     dX_world += moveSpeed * Math.sin(yawRad);
-                    dZ_world -= moveSpeed * Math.cos(yawRad); // Z negativo é para frente
+                    dZ_world += moveSpeed * Math.cos(yawRad); // CORRIGIDO de -= para +=
                 }
                 // S: Mover para trás
                 if (keysPressed['s']) {
                     dX_world -= moveSpeed * Math.sin(yawRad);
-                    dZ_world += moveSpeed * Math.cos(yawRad); // Z positivo é para trás
+                    dZ_world -= moveSpeed * Math.cos(yawRad); // CORRIGIDO de += para -=
                 }
 
                 // Vetor para a direita da câmera no plano XZ do mundo: (cos(yawRad), sin(yawRad))
