@@ -790,7 +790,7 @@
                 let dX = 0; 
                 let dZ = 0; 
                 
-                // --- LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO ---
+                // LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO (C0)
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -807,7 +807,6 @@
                     dX += moveSpeed * Math.cos(yawRad);
                     dZ -= moveSpeed * Math.sin(yawRad);
                 }
-                // --- FIM DA LÓGICA RESTAURADA ---
 
                 playerX += dX;
                 playerZ += dZ;
@@ -827,13 +826,15 @@
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
-                    lookYaw += deltaXmouse * rotationSensitivity;
-                    lookPitch += deltaYmouse * rotationSensitivity;
+                    // --- CORREÇÃO DO MOUSE HORIZONTAL ---
+                    lookYaw -= deltaXmouse * rotationSensitivity; // Invertido para corrigir o eixo horizontal do mouse
+                    // --- FIM DA CORREÇÃO DO MOUSE HORIZONTAL ---
+                    lookPitch += deltaYmouse * rotationSensitivity; // Vertical permanece como estava (correto)
 
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
             });
-
+            
             document.addEventListener('pointerlockchange', () => {
                 if (document.pointerLockElement === document.body) { 
                     isMouseLookActive = true;
