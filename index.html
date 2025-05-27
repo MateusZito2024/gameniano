@@ -659,8 +659,11 @@
                 zMin: -ROOM_HALF_DEPTH * paddingFactor, zMax: ROOM_HALF_DEPTH * paddingFactor
             };
 
+            // FUNÇÃO CORRIGIDA: updateRoomTransform
             function updateRoomTransform() {
-                // ORDEM CORRIGIDA: Translações primeiro, depois Rotações, depois Escala.
+                // Ordem: Translações primeiro, depois Rotações, depois Escala.
+                // Isso garante que playerX/Y/Z sejam coordenadas no sistema global do mundo,
+                // e as rotações da câmera são aplicadas a esse mundo já posicionado.
                 roomContainer.style.transform = `
                     translateX(${-playerX}px) 
                     translateY(${-playerY}px) 
@@ -675,6 +678,7 @@
             document.addEventListener('keydown', (e) => { keysPressed[e.key.toLowerCase()] = true; });
             document.addEventListener('keyup', (e) => { keysPressed[e.key.toLowerCase()] = false; });
 
+            // FUNÇÃO CORRIGIDA: handleMovement
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
                 
@@ -694,15 +698,14 @@
 
                 // A: Mover para ESQUERDA (strafe)
                 if (keysPressed['a']) {
-                    // Vetor "direita" da câmera: (cos(yawRad), sin(yawRad))
-                    // Vetor "esquerda" é o oposto: (-cos(yawRad), -sin(yawRad))
-                    dX_world -= moveSpeed * Math.cos(yawRad);
-                    dZ_world -= moveSpeed * Math.sin(yawRad); 
+                    dX_world -= moveSpeed * Math.cos(yawRad); // Componente X do vetor "direita" da câmera é cos(yawRad)
+                    dZ_world -= moveSpeed * Math.sin(yawRad); // Componente Z do vetor "direita" da câmera é sin(yawRad)
+                                                              // Para "esquerda", invertemos os sinais dos componentes do vetor "direita"
                 }
                 // D: Mover para DIREITA (strafe)
                 if (keysPressed['d']) {
                     dX_world += moveSpeed * Math.cos(yawRad);
-                    dZ_world += moveSpeed * Math.sin(yawRad); 
+                    dZ_world += moveSpeed * Math.sin(yawRad);
                 }
 
                 if (keysPressed['q']) {
@@ -773,8 +776,8 @@
                     crosshair.classList.toggle('active', isMouseLookActive);
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.mozPointerLockElement !== null ) { if(crosshair) crosshair.classList.remove('active'); } }); 
-            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.webkitPointerLockElement !== null) { if(crosshair) crosshair.classList.remove('active');} });
+            document.addEventListener('mozpointerlockchange', () => { if(document.mozPointerLockElement === null && document.pointerLockElement !== document.body) { if(crosshair) crosshair.classList.remove('active'); } }); 
+            document.addEventListener('webkitpointerlockchange', () => { if(document.webkitPointerLockElement === null && document.pointerLockElement !== document.body) { if(crosshair) crosshair.classList.remove('active');} });
             
             function gameLoop() {
                 handleMovement();
