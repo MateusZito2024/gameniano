@@ -625,8 +625,8 @@
             const roomContainer = document.getElementById('room-container');
             const crosshair = document.getElementById('crosshair');
             
-            let playerX = 0, playerY = 0, playerZ = 0; // Coordenadas da câmera no mundo
-            let lookYaw = 0, lookPitch = 0; // Orientação da câmera
+            let playerX = 0, playerY = 0, playerZ = 0; 
+            let lookYaw = 0, lookPitch = 0; 
             let zoomLevel = 1;
             
             const rotationSensitivity = 0.15;
@@ -660,10 +660,7 @@
             };
 
             function updateRoomTransform() {
-                // Ordem CORRIGIDA: Translações primeiro, depois Rotações, depois Escala.
-                // As translações (-playerX, -playerY, playerZ) movem o mundo para que
-                // a posição do jogador (playerX, playerY, playerZ) fique na origem da tela.
-                // As rotações (-lookPitch, -lookYaw) então orientam o mundo em volta dessa origem.
+                // ORDEM CORRIGIDA: Translações primeiro, depois Rotações, depois Escala.
                 roomContainer.style.transform = `
                     translateX(${-playerX}px) 
                     translateY(${-playerY}px) 
@@ -684,29 +681,25 @@
                 let dX_world = 0;
                 let dZ_world = 0;
 
-                // W: Mover para frente (direção da câmera)
+                // W: Mover para FRENTE (direção da câmera)
                 if (keysPressed['w']) {
                     dX_world += moveSpeed * Math.sin(yawRad);
-                    // Para W ir para frente (aproximar):
-                    // Se playerZ diminuindo aproxima (padrão translateZ), então dZ_world deve ser -cos.
-                    // Se playerZ aumentando aproxima (translateZ invertido), então dZ_world deve ser +cos.
-                    // Vamos testar com a lógica que faz playerZ aumentar, assumindo que isso aproxima
-                    // devido ao problema original de "W ia para trás".
-                    dZ_world += moveSpeed * Math.cos(yawRad); 
+                    dZ_world -= moveSpeed * Math.cos(yawRad); // Lógica padrão: -cos para Z frente
                 }
-                // S: Mover para trás (oposto da câmera)
+                // S: Mover para TRÁS (oposto da câmera)
                 if (keysPressed['s']) {
                     dX_world -= moveSpeed * Math.sin(yawRad);
-                    // Correspondentemente, para S ir para trás (afastar), playerZ deve diminuir.
-                    dZ_world -= moveSpeed * Math.cos(yawRad);
+                    dZ_world += moveSpeed * Math.cos(yawRad); // Lógica padrão: +cos para Z trás
                 }
 
-                // A: Mover para a esquerda (strafe)
+                // A: Mover para ESQUERDA (strafe)
                 if (keysPressed['a']) {
+                    // Vetor "direita" da câmera: (cos(yawRad), sin(yawRad))
+                    // Vetor "esquerda" é o oposto: (-cos(yawRad), -sin(yawRad))
                     dX_world -= moveSpeed * Math.cos(yawRad);
                     dZ_world -= moveSpeed * Math.sin(yawRad); 
                 }
-                // D: Mover para a direita (strafe)
+                // D: Mover para DIREITA (strafe)
                 if (keysPressed['d']) {
                     dX_world += moveSpeed * Math.cos(yawRad);
                     dZ_world += moveSpeed * Math.sin(yawRad); 
@@ -775,13 +768,13 @@
             });
             
             document.addEventListener('pointerlockchange', () => {
-                const isMouseLookActive = (document.pointerLockElement === document.body); // Removido 'let' para usar a variável do escopo superior se existir, ou cria global
+                const isMouseLookActive = (document.pointerLockElement === document.body);
                 if (crosshair) { 
                     crosshair.classList.toggle('active', isMouseLookActive);
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.pointerLockElement !== null) { /*isMouseLookActive = false;*/ if(crosshair) crosshair.classList.remove('active'); } }); // Ajustado para verificar se é null também
-            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.pointerLockElement !== null) { /*isMouseLookActive = false;*/ if(crosshair) crosshair.classList.remove('active');} }); // Ajustado
+            document.addEventListener('mozpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.mozPointerLockElement !== null ) { if(crosshair) crosshair.classList.remove('active'); } }); 
+            document.addEventListener('webkitpointerlockchange', () => { if(document.pointerLockElement !== document.body && document.webkitPointerLockElement !== null) { if(crosshair) crosshair.classList.remove('active');} });
             
             function gameLoop() {
                 handleMovement();
