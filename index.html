@@ -38,13 +38,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
-            --color-terminal-bg: #0d0d0f; /* Fundo muito escuro, quase preto */
-            --color-terminal-text: #00ff66; /* Verde terminal brilhante */
-            --color-terminal-accent: #ff00ff; /* Magenta vibrante para destaque */
-            --color-terminal-error: #ff3300; /* Vermelho para "glitch" ou erro */
-            --color-border-scan: #00ffff; /* Ciano para linhas de scan */
+            --color-terminal-bg: #0d0d0f;
+            --color-terminal-text: #00ff66;
+            --color-terminal-accent: #ff00ff;
+            --color-terminal-error: #ff3300;
+            --color-border-scan: #00ffff;
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
             --twitch-color: #9146ff;
@@ -52,17 +51,16 @@
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
         }
-        /* RESET E BASE */
         * {
             box-sizing: border-box;
-            -webkit-user-select: none; /* Desativa seleção de texto */
+            -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         html {
             height: 100%;
-            overflow: hidden; /* Esconde barras de rolagem */
+            overflow: hidden;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
@@ -75,12 +73,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Garante que não haja scrollbar */
+            overflow: hidden;
         }
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
+            perspective: 1500px;
             overflow: hidden;
             position: relative;
         }
@@ -113,6 +111,84 @@
             overflow: hidden;
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            /* Efeito de glitch nas paredes */
+            position: relative;
+            z-index: 1;
+        }
+        /* Efeito de glitch sistêmico nas paredes */
+        .room-face.glitch-effect {
+            animation: wall-glitch 0.3s ease-in-out infinite alternate;
+            background: linear-gradient(
+                to bottom,
+                rgba(13, 13, 15, 0.9),
+                rgba(255, 0, 255, 0.2) 50%,
+                rgba(0, 255, 102, 0.2)
+            );
+            background-size: 100% 10px;
+            filter: hue-rotate(10deg);
+        }
+        @keyframes wall-glitch {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.9;
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+                opacity: 0.7;
+                filter: hue-rotate(20deg) brightness(0.8);
+            }
+            40% {
+                transform: translate(5px, -5px);
+                opacity: 0.85;
+                filter: hue-rotate(-20deg) brightness(1.1);
+            }
+            60% {
+                transform: translate(-3px, 3px);
+                opacity: 0.75;
+                filter: hue-rotate(30deg) brightness(0.9);
+            }
+            80% {
+                transform: translate(3px, -3px);
+                opacity: 0.8;
+                filter: hue-rotate(-10deg) brightness(1);
+            }
+            100% {
+                transform: translate(0, 0);
+                opacity: 0.9;
+                filter: hue-rotate(0deg) brightness(1);
+            }
+        }
+        /* Efeito de estática (fora do ar) */
+        #static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVR42mP8z8AARAwMjIyM4A8Y4AEY5AEY6QEV6gAAAABJRU5ErkJggg==');
+            background-size: 10px 10px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transition: opacity 0.3s ease;
+        }
+        #static-overlay.static-active {
+            opacity: 0.7;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVR42mP8z8AARAwMjIyM4A8Y4AEY5AEY6QEV6gAAAABJRU5ErkJggg=='), linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+            background-size: 10px 10px, 100% 100%;
+        }
+        #static-overlay.static-active::after {
+            content: 'SINAL PERDIDO';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', cursive;
+            color: var(--color-terminal-error);
+            font-size: 2em;
+            text-shadow: 0 0 10px var(--color-terminal-error);
+            animation: flicker 0.2s infinite alternate;
         }
         #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
@@ -517,6 +593,7 @@
         <button id="likeBtn" class="hud-button"><i class="fas fa-thumbs-up"></i> CURTIR <span id="likeCount">0</span></button>
     </div>
     <div id="likeParticles"></div>
+    <div id="static-overlay"></div>
     <script type="module" async>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
@@ -684,7 +761,7 @@
             document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
             document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
             const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
-                                        .filter(el => !el.closest('#hud'));
+                                           .filter(el => !el.closest('#hud'));
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
@@ -723,20 +800,21 @@
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
             const loadingScreen = document.getElementById('loading-screen');
+            const staticOverlay = document.getElementById('static-overlay');
             let isMouseLookActive = false;
             let lastMouseX, lastMouseY;
             let playerX = 0;
-            let playerY = 0; 
+            let playerY = 0;
             let playerZ = 0;
-            let lookYaw = 0;   
-            let lookPitch = 0; 
+            let lookYaw = 0;
+            let lookPitch = 0;
             const rotationSensitivity = 0.15;
-            const moveSpeed = 25; 
-            const maxLookPitch = 60;  
+            const moveSpeed = 25;
+            const maxLookPitch = 60;
             const minLookPitch = -60;
             const keysPressed = {};
 
-            const ROOM_DEPTH = 3000; 
+            const ROOM_DEPTH = 3000;
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
 
             document.querySelectorAll('.room-face').forEach(face => {
@@ -753,14 +831,14 @@
             document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
             
-            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
+            viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`;
 
-            const paddingFactor = 0.45; 
+            const paddingFactor = 0.45;
             const bounds = {
                 xMin: -ROOM_HALF_DEPTH * paddingFactor,
                 xMax: ROOM_HALF_DEPTH * paddingFactor,
-                yMin: -ROOM_HALF_DEPTH * paddingFactor, 
-                yMax: ROOM_HALF_DEPTH * paddingFactor, 
+                yMin: -ROOM_HALF_DEPTH * paddingFactor,
+                yMax: ROOM_HALF_DEPTH * paddingFactor,
                 zMin: -ROOM_HALF_DEPTH * paddingFactor,
                 zMax: ROOM_HALF_DEPTH * paddingFactor
             };
@@ -787,10 +865,9 @@
                 const yawRad = lookYaw * Math.PI / 180;
                 const pitchRad = lookPitch * Math.PI / 180;
 
-                let dX = 0; 
-                let dZ = 0; 
-                
-                // --- LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO ---
+                let dX = 0;
+                let dZ = 0;
+
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -807,7 +884,6 @@
                     dX += moveSpeed * Math.cos(yawRad);
                     dZ -= moveSpeed * Math.sin(yawRad);
                 }
-                // --- FIM DA LÓGICA RESTAURADA ---
 
                 playerX += dX;
                 playerZ += dZ;
@@ -817,13 +893,13 @@
             }
 
             document.body.addEventListener('click', () => {
-                if (document.body.requestPointerLock) { 
-                    document.body.requestPointerLock(); 
+                if (document.body.requestPointerLock) {
+                    document.body.requestPointerLock();
                 }
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (document.pointerLockElement === document.body) { 
+                if (document.pointerLockElement === document.body) {
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
@@ -835,7 +911,7 @@
             });
 
             document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === document.body) { 
+                if (document.pointerLockElement === document.body) {
                     isMouseLookActive = true;
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar.');
                 } else {
@@ -843,9 +919,33 @@
                     console.log('Pointer unlocked.');
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
-            document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
 
+            document.addEventListener('mozpointerlockchange', () => {});
+            document.addEventListener('webkitpointerlockchange', () => {});
+
+            // Efeito de glitch nas paredes
+            document.querySelectorAll('.room-face').forEach(wall => {
+                setInterval(() => {
+                    if (Math.random() < 0.15) { // 15% de chance a cada 1,5s
+                        wall.classList.add('glitch-effect');
+                        setTimeout(() => {
+                            wall.classList.remove('glitch-effect');
+                        }, 600);
+                    }
+                }, 1500);
+            });
+
+            // Efeito de estática (fora do ar)
+            function triggerStaticEffect() {
+                if (Math.random() < 0.05) { // 5% de chance a cada 3s
+                    staticOverlay.classList.add('static-active');
+                    window.playSound('seus-sons/static-noise.mp3', 0.4);
+                    setTimeout(() => {
+                        staticOverlay.classList.remove('static-active');
+                    }, 800);
+                }
+            }
+            setInterval(triggerStaticEffect, 3000);
 
             function gameLoop() {
                 handleMovement();
@@ -853,7 +953,7 @@
                 requestAnimationFrame(gameLoop);
             }
             
-            updateRoomTransform(); 
+            updateRoomTransform();
             requestAnimationFrame(gameLoop);
         });
     </script>
