@@ -113,6 +113,66 @@
             overflow: hidden;
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            /* Adicionando efeitos de glitch */
+            position: relative;
+        }
+        /* Efeitos de erro de sistema nas paredes */
+        .room-face::before,
+        .room-face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+        }
+        .room-face::before {
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(255, 0, 0, 0.2) 50%
+            );
+            background-size: 100% 6px;
+            animation: glitch-error-before 0.3s infinite reverse;
+            mix-blend-mode: overlay;
+        }
+        .room-face::after {
+            background: linear-gradient(
+                to right,
+                transparent 50%,
+                rgba(0, 255, 255, 0.2) 50%
+            );
+            background-size: 8px 100%;
+            animation: glitch-error-after 0.2s infinite;
+            mix-blend-mode: screen;
+        }
+        .room-face.glitch-error-active::before,
+        .room-face.glitch-error-active::after {
+            opacity: 0.7;
+        }
+        .room-face.glitch-error-active {
+            animation: glitch-error 0.2s infinite alternate;
+        }
+        @keyframes glitch-error {
+            0% { transform: translate(0); opacity: 1; }
+            20% { transform: translate(-5px, 5px); opacity: 0.9; }
+            40% { transform: translate(5px, -5px); opacity: 0.8; }
+            60% { transform: translate(-3px, 3px); opacity: 0.9; }
+            80% { transform: translate(3px, -3px); opacity: 0.8; }
+            100% { transform: translate(0); opacity: 1; }
+        }
+        @keyframes glitch-error-before {
+            0% { transform: skew(0deg); opacity: 0.7; }
+            50% { transform: skew(2deg); opacity: 0.5; }
+            100% { transform: skew(-2deg); opacity: 0.7; }
+        }
+        @keyframes glitch-error-after {
+            0% { transform: skew(0deg); opacity: 0.6; }
+            50% { transform: skew(-3deg); opacity: 0.4; }
+            100% { transform: skew(3deg); opacity: 0.6; }
         }
         #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
@@ -706,6 +766,7 @@
                 }
                 window.playSound('seus-sons/toggle-ui.mp3', 0.5);
             });
+            // Glitch effect para content-panel (mantido como estava)
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
                     if (Math.random() < 0.1) {
@@ -715,6 +776,17 @@
                         }, 500);
                     }
                 }, 2000);
+            });
+            // Novo efeito de glitch para as paredes
+            document.querySelectorAll('.room-face').forEach(face => {
+                setInterval(() => {
+                    if (Math.random() < 0.15) { // 15% de chance a cada 3 segundos
+                        face.classList.add('glitch-error-active');
+                        setTimeout(() => {
+                            face.classList.remove('glitch-error-active');
+                        }, 300); // Duração curta para o efeito
+                    }
+                }, 3000);
             });
         });
     </script>
@@ -790,7 +862,6 @@
                 let dX = 0; 
                 let dZ = 0; 
                 
-                // LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO (C0)
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -826,10 +897,8 @@
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
-                    // --- CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookYaw -= deltaXmouse * rotationSensitivity; // Invertido para corrigir o eixo horizontal do mouse
-                    // --- FIM DA CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookPitch += deltaYmouse * rotationSensitivity; // Vertical permanece como estava (correto)
+                    lookYaw -= deltaXmouse * rotationSensitivity;
+                    lookPitch += deltaYmouse * rotationSensitivity;
 
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
@@ -846,7 +915,6 @@
             });
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
             document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
-
 
             function gameLoop() {
                 handleMovement();
