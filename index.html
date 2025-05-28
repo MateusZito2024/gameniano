@@ -38,13 +38,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis de Cores Temáticas */
+        /* Variáveis de Cores Temáticas - Agora mais sci-fi/terror */
         :root {
-            --color-terminal-bg: #0d0d0f;
-            --color-terminal-text: #00ff66;
-            --color-terminal-accent: #ff00ff;
-            --color-terminal-error: #ff3300;
-            --color-border-scan: #00ffff;
+            --color-terminal-bg: #0d0d0f; /* Fundo muito escuro, quase preto */
+            --color-terminal-text: #00ff66; /* Verde terminal brilhante */
+            --color-terminal-accent: #ff00ff; /* Magenta vibrante para destaque */
+            --color-terminal-error: #ff3300; /* Vermelho para "glitch" ou erro */
+            --color-border-scan: #00ffff; /* Ciano para linhas de scan */
             --color-glitch-primary: rgba(0, 255, 102, 0.6);
             --color-glitch-secondary: rgba(255, 0, 255, 0.6);
             --twitch-color: #9146ff;
@@ -55,15 +55,15 @@
         /* RESET E BASE */
         * {
             box-sizing: border-box;
-            -webkit-user-select: none;
+            -webkit-user-select: none; /* Desativa seleção de texto */
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         html {
             height: 100%;
-            overflow: hidden;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="%2300ffff" stroke-width="2" stroke-opacity="0.8"/><circle cx="16" cy="16" r="4" fill="%2300ffff" fill-opacity="0.6"/><path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="%2300ff66" stroke-width="2" stroke-opacity="0.8"/><path d="M16 8l-4 4M16 24l-4-4M8 16l4-4M24 16l-4-4" stroke="%23ff00ff" stroke-width="1.5" stroke-opacity="0.7"/></svg>') 16 16, auto;
+            overflow: hidden; /* Esconde barras de rolagem */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, auto;
         }
         body {
             font-family: 'Rajdhani', sans-serif;
@@ -75,12 +75,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* Garante que não haja scrollbar */
         }
         #viewport-wrapper {
             width: 100%;
             height: 100%;
-            perspective: 1500px;
+            perspective: 1500px; /* Perspectiva para uma sala GRANDE */
             overflow: hidden;
             position: relative;
         }
@@ -89,13 +89,13 @@
             height: 100%;
             position: absolute;
             transform-style: preserve-3d;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="%2300ffff" stroke-width="2" stroke-opacity="0.8"/><circle cx="16" cy="16" r="4" fill="%2300ffff" fill-opacity="0.6"/><path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="%2300ff66" stroke-width="2" stroke-opacity="0.8"/><path d="M16 8l-4 4M16 24l-4-4M8 16l4-4M24 16l-4-4" stroke="%23ff00ff" stroke-width="1.5" stroke-opacity="0.7"/></svg>') 16 16, grab;
+            cursor: grab;
             top: 0;
             left: 0;
             transform: translateZ(var(--player-z, 0px)) translateX(var(--player-x, 0px)) translateY(var(--player-y, 0px)) rotateX(var(--look-pitch, 0deg)) rotateY(var(--look-yaw, 0deg));
         }
         #room-container.grabbing {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" fill="%2300ffff" fill-opacity="0.4"/><circle cx="16" cy="16" r="6" fill="%23ff00ff" fill-opacity="0.7"/><path d="M16 4v6M16 26v6M4 16h6M26 16h6" stroke="%2300ff66" stroke-width="2" stroke-opacity="0.9"/></svg>') 16 16, grabbing;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
         .room-face {
             position: absolute;
@@ -134,14 +134,6 @@
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
-        .content-panel h1, .content-panel h2, .content-panel p, .comment, .content-panel li {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="%23ff00ff" stroke-width="2.5" stroke-opacity="0.9"/><circle cx="16" cy="16" r="5" fill="%2300ffff" fill-opacity="0.8"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="%2300ff66" stroke-width="2.5" stroke-opacity="0.9"/><path d="M16 8l-5 5M16 24l-5-5M8 16l5-5M24 16l-5-5" stroke="%23ff00ff" stroke-width="2" stroke-opacity="0.8"/></svg>') 16 16, pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-        .content-panel h1:hover, .content-panel h2:hover, .content-panel p:hover, .comment:hover, .content-panel li:hover {
-            transform: scale(1.02);
-            color: var(--color-border-scan);
-        }
         .content-panel h2 {
             font-family: 'Press Start 2P', cursive;
             color: var(--color-terminal-text);
@@ -162,7 +154,6 @@
             border: 2px solid var(--color-border-scan);
             box-shadow: 0 0 10px var(--color-border-scan);
             margin-bottom: 15px;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="%23ff00ff" stroke-width="2.5" stroke-opacity="0.9"/><circle cx="16" cy="16" r="5" fill="%2300ffff" fill-opacity="0.8"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="%2300ff66" stroke-width="2.5" stroke-opacity="0.9"/><path d="M16 8l-5 5M16 24l-5-5M8 16l5-5M24 16l-5-5" stroke="%23ff00ff" stroke-width="2" stroke-opacity="0.8"/></svg>') 16 16, pointer;
         }
         .subscribe-button {
             display: inline-flex;
@@ -171,7 +162,7 @@
             border-radius: 5px;
             font-weight: bold;
             text-decoration: none;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="%23ff00ff" stroke-width="2.5" stroke-opacity="0.9"/><circle cx="16" cy="16" r="5" fill="%2300ffff" fill-opacity="0.8"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="%2300ff66" stroke-width="2.5" stroke-opacity="0.9"/><path d="M16 8l-5 5M16 24l-5-5M8 16l5-5M24 16l-5-5" stroke="%23ff00ff" stroke-width="2" stroke-opacity="0.8"/></svg>') 16 16, pointer;
+            cursor: pointer;
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -195,7 +186,6 @@
             border-radius: 5px;
             margin-bottom: 10px;
             border-left: 3px solid var(--color-terminal-accent);
-            pointer-events: auto;
         }
         .comment p {
             font-size: 0.9em;
@@ -233,7 +223,6 @@
             border: 1px solid var(--color-terminal-text);
             box-shadow: 0 0 10px var(--color-terminal-text);
             pointer-events: auto;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="%23ff00ff" stroke-width="2.5" stroke-opacity="0.9"/><circle cx="16" cy="16" r="5" fill="%2300ffff" fill-opacity="0.8"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="%2300ff66" stroke-width="2.5" stroke-opacity="0.9"/><path d="M16 8l-5 5M16 24l-5-5M8 16l5-5M24 16l-5-5" stroke="%23ff00ff" stroke-width="2" stroke-opacity="0.8"/></svg>') 16 16, pointer;
             animation: flicker 1.5s infinite alternate;
         }
         #visitCountHud {
@@ -242,6 +231,7 @@
         @keyframes flicker {
             0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
             50% { opacity: 0.8; text-shadow: none; }
+            100% { opacity: 1; text-shadow: 0 0 5px var(--color-terminal-text); }
         }
         .hud-button {
             position: fixed;
@@ -255,7 +245,7 @@
             font-size: 16px;
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="%23ff00ff" stroke-width="2.5" stroke-opacity="0.9"/><circle cx="16" cy="16" r="5" fill="%2300ffff" fill-opacity="0.8"/><path d="M16 3v5M16 24v5M3 16h5M24 16h5" stroke="%2300ff66" stroke-width="2.5" stroke-opacity="0.9"/><path d="M16 8l-5 5M16 24l-5-5M8 16l5-5M24 16l-5-5" stroke="%23ff00ff" stroke-width="2" stroke-opacity="0.8"/></svg>') 16 16, pointer;
+            cursor: pointer;
             box-shadow: 0 0 15px var(--color-terminal-accent);
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
@@ -394,9 +384,6 @@
             #toggleAcessibilidade { left: 10px; bottom: 10px; }
             #likeBtn { right: 10px; bottom: 10px; }
             #crosshair { display: none; }
-            .content-panel h1, .content-panel h2, .content-panel p, .comment, .content-panel li {
-                cursor: pointer;
-            }
         }
     </style>
     <script>
@@ -425,25 +412,17 @@
             <div id="front-wall" class="room-face">
                 <div class="content-panel">
                     <header>
-                        <a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);">
-                            <h1>GAMENIANO <span style="color: var(--color-terminal-accent);">HUB</span></h1>
-                        </a>
-                        <a href="index.html" class="subscribe-button" style="background-color: transparent; color: #ccc;">
-                            <p>Seu portal imersivo no universo do streaming e games!</p>
-                        </a>
+                        <h1>GAMENIANO <span style="color: var(--color-terminal-accent);">HUB</span></h1>
+                        <p>Seu portal imersivo no universo do streaming e games!</p>
                     </header>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk2" target="_blank" class="subscribe-button youtube-button">
-                        <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
-                    </a>
+                    <h2><i class="fab fa-youtube"></i> Última Gameplay</h2>
                     <iframe width="560" height="315"
                         src="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk2"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk3" target="_blank" class="subscribe-button youtube-button">
-                        <p>Confira minha última gameplay cheia de sustos e adrenalina!</p>
-                    </a>
+                    <p>Confira minha última gameplay cheia de sustos e adrenalina!</p>
                     <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk3" class="subscribe-button youtube-button" target="_blank">
                         <i class="fab fa-youtube"></i> Inscreva-se no meu canal!
                     </a>
@@ -451,15 +430,14 @@
             </div>
             <div id="right-wall" class="room-face">
                 <div class="content-panel">
-                    <a href="Meu Site/noticias.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
-                        <h2><i class="fas fa-bell"></i> Notícias e Atualizações</h2>
-                    </a>
-                    <a href="https://www.twitch.tv/gameniano_" target="_blank" class="subscribe-button twitch-button">
-                        <p>🎮 Agora todos os dias tem <strong style="color: var(--color-terminal-accent);">Live na Twitch às 21:00!</strong> Fique ligado para as novidades.</p>
-                    </a>
-                    <a href="https://www.twitch.tv/gameniano_" target="_blank" class="subscribe-button twitch-button">
-                        <p>🔔 Acompanhe para não perder as lives!</p>
-                    </a>
+                    <h2><i class="fas fa-bell"></i> Notícias e Atualizações</h2>
+                    <p>
+                        🎮 Agora todos os dias tem <strong style="color: var(--color-terminal-accent);">Live na Twitch às 21:00!</strong>
+                        Fique ligado para as novidades.
+                    </p>
+                    <p>
+                        🔔 Acompanhe para não perder as lives!
+                    </p>
                     <a href="https://www.twitch.tv/gameniano_" class="subscribe-button twitch-button" target="_blank">
                         <i class="fab fa-twitch"></i> Inscreva-se na minha Twitch!
                     </a>
@@ -471,25 +449,19 @@
             </div>
             <div id="back-wall" class="room-face">
                 <div class="content-panel comments-section">
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank" class="subscribe-button youtube-button">
-                        <h2><i class="fas fa-comments"></i> Comentários do Terminal</h2>
-                    </a>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank" class="comment">
+                    <h2><i class="fas fa-comments"></i> Comentários do Terminal</h2>
+                    <div class="comment">
                         <p><strong>Daniel Alencar:</strong></p>
                         <p>Adorei a gameplay, estou apavorado hahaha!</p>
-                    </a>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank" class="comment">
+                    </div>
+                    <div class="comment">
                         <p><strong>Ana Sophia:</strong></p>
                         <p>Sempre me divirto com seus vídeos! Continue assim.</p>
-                    </a>
-                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank" class="subscribe-button youtube-button">
-                        <i class="fas fa-arrow-right"></i> Ver mais comunicações
-                    </a>
+                    </div>
+                    <a href="https://youtu.be/fP9o4Wfl6zY?si=jpYuRgmAlWepa_Vk4" target="_blank"><i class="fas fa-arrow-right"></i> Ver mais comunicações</a>
                 </div>
                 <div class="content-panel" style="margin-top: 20px;">
-                    <a href="https://www.tiktok.com/@gameniano" target="_blank" class="subscribe-button tiktok-button">
-                        <h2><i class="fas fa-share-alt"></i> Conexões Sociais</h2>
-                    </a>
+                    <h2><i class="fas fa-share-alt"></i> Conexões Sociais</h2>
                     <a href="https://www.tiktok.com/@gameniano" class="subscribe-button tiktok-button" target="_blank">
                         <i class="fab fa-tiktok"></i> TikTok
                     </a>
@@ -500,15 +472,13 @@
             </div>
             <div id="left-wall" class="room-face">
                 <div class="content-panel">
-                    <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
-                        <h2><i class="fas fa-info-circle"></i> Sobre o Operador (Gameniano)</h2>
-                    </a>
-                    <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: transparent; color: #ccc;">
-                        <p>Bem-vindo(a) ao meu QG! Sou o Gameniano, seu guia no mundo dos jogos de terror e gameplays insanas. Aqui você encontra as últimas notícias, análises e, claro, muita adrenalina!</p>
-                    </a>
-                    <a href="https://www.tiktok.com/@gameniano" class="subscribe-button tiktok-button" target="_blank">
-                        <p>Siga nas redes e junte-se à comunidade!</p>
-                    </a>
+                    <h2><i class="fas fa-info-circle"></i> Sobre o Operador (Gameniano)</h2>
+                    <p>
+                        Bem-vindo(a) ao meu QG! Sou o Gameniano, seu guia no mundo dos jogos de terror e gameplays insanas. Aqui você encontra as últimas notícias, análises e, claro, muita adrenalina!
+                    </p>
+                    <p>
+                        Siga nas redes e junte-se à comunidade!
+                    </p>
                     <a href="Meu Site/sobre.html" class="subscribe-button" style="background-color: var(--color-border-scan); color: var(--color-terminal-bg);">
                         <i class="fas fa-user-astronaut"></i> Perfil Completo
                     </a>
@@ -520,9 +490,7 @@
             </div>
             <div id="top-ceiling" class="room-face">
                 <div class="content-panel">
-                    <a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);">
-                        <h2><i class="fas fa-compass"></i> Painel de Navegação</h2>
-                    </a>
+                    <h2><i class="fas fa-compass"></i> Painel de Navegação</h2>
                     <nav>
                         <ul>
                             <li><a href="index.html" class="subscribe-button" style="background-color: var(--color-terminal-accent); color: var(--color-terminal-bg);"><i class="fas fa-home"></i> INÍCIO</a></li>
@@ -822,6 +790,7 @@
                 let dX = 0; 
                 let dZ = 0; 
                 
+                // LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO (C0)
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -857,8 +826,10 @@
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
-                    lookYaw -= deltaXmouse * rotationSensitivity;
-                    lookPitch += deltaYmouse * rotationSensitivity;
+                    // --- CORREÇÃO DO MOUSE HORIZONTAL ---
+                    lookYaw -= deltaXmouse * rotationSensitivity; // Invertido para corrigir o eixo horizontal do mouse
+                    // --- FIM DA CORREÇÃO DO MOUSE HORIZONTAL ---
+                    lookPitch += deltaYmouse * rotationSensitivity; // Vertical permanece como estava (correto)
 
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
@@ -873,8 +844,9 @@
                     console.log('Pointer unlocked.');
                 }
             });
-            document.addEventListener('mozpointerlockchange', () => {});
-            document.addEventListener('webkitpointerlockchange', () => {});
+            document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
+            document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
+
 
             function gameLoop() {
                 handleMovement();
