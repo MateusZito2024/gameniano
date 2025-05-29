@@ -51,7 +51,6 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
-            --texture-glow: rgba(0, 255, 255, 0.2); /* Ciano suave para brilho da textura */
         }
         /* RESET E BASE */
         * {
@@ -98,73 +97,61 @@
         #room-container.grabbing {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
+
+        /* NOVA ANIMAÇÃO PARA AS PAREDES */
+        @keyframes wallHum {
+            0% {
+                box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3),
+                            0 0 5px rgba(0, 255, 102, 0.5),
+                            inset 0 0 40px rgba(10, 10, 12, 0.7); 
+            }
+            50% {
+                box-shadow: inset 0 0 18px rgba(0, 255, 102, 0.45), 
+                            0 0 8px rgba(0, 255, 102, 0.65),
+                            inset 0 0 70px rgba(10, 10, 12, 0.9); 
+            }
+            100% {
+                box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3),
+                            0 0 5px rgba(0, 255, 102, 0.5),
+                            inset 0 0 40px rgba(10, 10, 12, 0.7);
+            }
+        }
+
+        /* REGRA .room-face MODIFICADA */
         .room-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(13, 13, 15, 0.9);
+            width: 100%; 
+            height: 100%; 
+            
+            /* Propriedades da textura e fundo */
+            background-image: url('https://www.transparenttextures.com/patterns/subtle-carbon.png'); 
+            background-color: var(--color-terminal-bg); 
+            /* background-blend-mode: overlay; */ 
+            background-repeat: repeat; 
+            background-size: auto; 
+
             border: 2px solid var(--color-border-scan);
-            box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3), 0 0 5px rgba(0, 255, 102, 0.5);
+            
+            animation: wallHum 4s ease-in-out infinite; /* Aplica a animação de pulsação */
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
-            overflow: hidden;
+            padding: 20px; 
+            overflow: hidden; 
             transform-style: preserve-3d;
             backface-visibility: hidden;
-            /* Adicionando textura sci-fi */
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.1)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M10,10 H90 V90 H10 Z M20,20 H80 V80 H20 Z" stroke="rgba(0,255,255,0.3)" stroke-width="2"/><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><line x1="10" y1="50" x2="90" y2="50" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><line x1="50" y1="10" x2="50" y2="90" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><path d="M30,30 L70,70 M70,30 L30,70" stroke="rgba(0,255,255,0.2)" stroke-width="1"/></svg>');
-            background-size: cover, 100px 100px;
-            background-blend-mode: overlay;
-            position: relative;
         }
-        .room-face::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                transparent 50%,
-                var(--texture-glow) 50%
-            );
-            background-size: 100% 6px;
-            pointer-events: none;
-            animation: textureScan 3s linear infinite;
-            opacity: 0.6;
-        }
-        .room-face::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--texture-glow) 10%, transparent 70%);
-            opacity: 0.3;
-            animation: pulseGlow 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes textureScan {
-            from { background-position: 0 0; }
-            to { background-position: 0 100%; }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.05); }
-        }
+
         #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #back-wall { transform: rotateY(180deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #left-wall { transform: rotateY(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #top-ceiling { transform: rotateX(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #bottom-floor { transform: rotateX(-90deg) translateZ(calc(-1 * var(--room-half-depth))); }
+        
         .content-panel {
             background-color: rgba(0, 0, 0, 0.6);
             padding: 15px;
@@ -175,7 +162,7 @@
             margin: auto;
             text-align: left;
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Garante que o painel de conteúdo fique sobre a textura da parede */
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
@@ -348,6 +335,7 @@
             background-size: 100% 4px;
             pointer-events: none;
             animation: scanlineMove 2s linear infinite;
+            z-index: -1; /* Para garantir que fique atrás do conteúdo do painel mas sobre o fundo do painel */
         }
         @keyframes scanlineMove {
             from { background-position: 0 0; }
@@ -784,6 +772,10 @@
             const ROOM_DEPTH = 3000; 
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
 
+            // Define ROOM_HALF_DEPTH como uma variável CSS para ser usada nos transform das paredes
+            document.documentElement.style.setProperty('--room-half-depth', `${ROOM_HALF_DEPTH}px`);
+
+
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
                 face.style.height = `${ROOM_DEPTH}px`;
@@ -791,12 +783,10 @@
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
 
-            document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('right-wall').style.transform = `rotateY(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('back-wall').style.transform = `rotateY(180deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('left-wall').style.transform = `rotateY(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('top-ceiling').style.transform = `rotateX(90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            document.getElementById('bottom-floor').style.transform = `rotateX(-90deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
+            // As transforms das paredes agora usam a variável CSS --room-half-depth
+            // (já definido no CSS, mas o JS pode precisar ajustar se ROOM_DEPTH for dinâmico)
+            // document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
+            // ... e assim por diante para as outras paredes (já está no CSS)
             
             viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
@@ -835,7 +825,6 @@
                 let dX = 0; 
                 let dZ = 0; 
                 
-                // LÓGICA DE MOVIMENTO RESTAURADA PARA A VERSÃO ORIGINAL DO SEU CÓDIGO (C0)
                 if (keysPressed['w']) {
                     dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
                     dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
@@ -871,10 +860,8 @@
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
 
-                    // --- CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookYaw -= deltaXmouse * rotationSensitivity; // Invertido para corrigir o eixo horizontal do mouse
-                    // --- FIM DA CORREÇÃO DO MOUSE HORIZONTAL ---
-                    lookPitch += deltaYmouse * rotationSensitivity; // Vertical permanece como estava (correto)
+                    lookYaw -= deltaXmouse * rotationSensitivity; 
+                    lookPitch += deltaYmouse * rotationSensitivity; 
 
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
@@ -891,6 +878,7 @@
             });
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
             document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
+
 
             function gameLoop() {
                 handleMovement();
