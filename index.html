@@ -98,7 +98,6 @@
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="%2300ff66" stroke="%2300ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg);"><path d="M2 13.5V10c0-.85.34-1.66 1-.58L6 14.5c.67.58 1.5.9 2.5.9h3c.83 0 1.66-.45 2.14-1.28L17.5 7.5l3-2.5c.8-.66 1.3-1.57 1.5-2.5h-10c-1.5 0-3 1-4 2.5L2 13.5zM2 13.5L5 16.5M10 20c-1.5 0-3-.5-4.5-1.5L2 13.5m19-2.5c0-.5-.5-.5-1-1m-10 10c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1m-4 4c0-.5.5-.5 1-1"></path></svg>') 15 15, grabbing;
         }
 
-        /* NOVA ANIMAÇÃO PARA AS PAREDES */
         @keyframes wallHum {
             0% {
                 box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.3),
@@ -117,22 +116,20 @@
             }
         }
 
-        /* REGRA .room-face MODIFICADA */
         .room-face {
             position: absolute;
             width: 100%; 
             height: 100%; 
             
-            /* Propriedades da textura e fundo */
-            background-image: url('https://www.transparenttextures.com/patterns/subtle-carbon.png'); 
+            /* Textura tecnológica leve e modo de mesclagem */
+            background-image: url('https://www.transparenttextures.com/patterns/integrated.png'); /* Textura de circuito leve */
             background-color: var(--color-terminal-bg); 
-            /* background-blend-mode: overlay; */ 
+            background-blend-mode: overlay; /* Faz a textura interagir com a cor de fundo */
             background-repeat: repeat; 
-            background-size: auto; 
+            background-size: auto; /* Ou um tamanho específico como '150px 150px' se preferir um padrão menor */
 
             border: 2px solid var(--color-border-scan);
-            
-            animation: wallHum 4s ease-in-out infinite; /* Aplica a animação de pulsação */
+            animation: wallHum 4s ease-in-out infinite;
 
             display: flex;
             flex-direction: column;
@@ -162,7 +159,7 @@
             margin: auto;
             text-align: left;
             position: relative;
-            z-index: 1; /* Garante que o painel de conteúdo fique sobre a textura da parede */
+            z-index: 1;
             backdrop-filter: blur(2px);
             pointer-events: auto;
         }
@@ -335,7 +332,7 @@
             background-size: 100% 4px;
             pointer-events: none;
             animation: scanlineMove 2s linear infinite;
-            z-index: -1; /* Para garantir que fique atrás do conteúdo do painel mas sobre o fundo do painel */
+            z-index: -1; 
         }
         @keyframes scanlineMove {
             from { background-position: 0 0; }
@@ -554,7 +551,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
         import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
         const firebaseConfig = {
-            apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU",
+            apiKey: "AIzaSyAB7D9_tOjAZqpomQ1ldpkM-PPxzvukMGU", // Substitua pela sua chave de API real
             authDomain: "curtirbotao.firebaseapp.com",
             databaseURL: "https://curtirbotao-default-rtdb.firebaseio.com",
             projectId: "curtirbotao",
@@ -564,7 +561,7 @@
         };
         const appLike = initializeApp(firebaseConfig, "appLike");
         const databaseLike = getDatabase(appLike);
-        const appVisit = initializeApp(firebaseConfig, "appVisit");
+        const appVisit = initializeApp(firebaseConfig, "appVisit"); // Use a mesma config ou outra se necessário
         const databaseVisit = getDatabase(appVisit);
         window.acessibilidadeAtivada = false;
         window.audioContext = null;
@@ -573,7 +570,8 @@
         window.initializeAudioAndSounds = function() {
             if (!window.audioContext) {
                 window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3');
+                // Certifique-se que o caminho para o áudio está correto
+                window.ambientSound = new Audio('seus-sons/ambient-gamer-loop.mp3'); 
                 window.ambientSound.loop = true;
                 window.ambientSound.volume = 0.3;
                 window.ambientSound.play().catch(e => console.error("Erro ao iniciar áudio ambiente (pode ser bloqueio do navegador):", e));
@@ -581,7 +579,7 @@
         };
         window.playSound = function(filePath, volume = 0.5) {
             if (window.acessibilidadeAtivada && window.audioContext) {
-                const audio = new Audio(filePath);
+                const audio = new Audio(filePath); // Certifique-se que os caminhos estão corretos
                 audio.volume = volume;
                 audio.play().catch(e => console.error(`Erro ao reproduzir som '${filePath}':`, e));
             }
@@ -645,11 +643,11 @@
             likeButton.disabled = true;
             likeButton.style.backgroundColor = '#555';
             createLikeParticles();
-            window.playSound('seus-sons/like-confirm.mp3');
+            window.playSound('seus-sons/like-confirm.mp3'); // Certifique-se que o caminho está correto
         }
         likeButton.addEventListener("click", handleLike);
-        const likeCountRef = ref(databaseLike, 'likes/total');
-        onValue(likeCountRef, (snapshot) => {
+        const likeCountRefDB = ref(databaseLike, 'likes/total'); // Renomeado para evitar conflito com a constante já declarada
+        onValue(likeCountRefDB, (snapshot) => {
             if (snapshot.exists()) {
                 likeCountDisplay.innerText = snapshot.val();
             }
@@ -663,13 +661,13 @@
             if (sessionStorage.getItem("hasVisitedThisSession")) {
                 return;
             }
-            const visitCountRef = ref(databaseVisit, 'visits/total');
-            get(visitCountRef).then((snapshot) => {
+            const visitCountRefDB_visits = ref(databaseVisit, 'visits/total'); // Renomeado para evitar conflito
+            get(visitCountRefDB_visits).then((snapshot) => {
                 if (snapshot.exists()) {
                     const currentVisits = snapshot.val();
-                    set(visitCountRef, currentVisits + 1);
+                    set(visitCountRefDB_visits, currentVisits + 1);
                 } else {
-                    set(visitCountRef, 1);
+                    set(visitCountRefDB_visits, 1);
                 }
             }).catch((error) => {
                 console.error("Erro ao atualizar contagem de visitas:", error);
@@ -677,8 +675,8 @@
             sessionStorage.setItem("hasVisitedThisSession", "true");
         }
         handleVisit();
-        const visitCountRef = ref(databaseVisit, 'visits/total');
-        onValue(visitCountRef, (snapshot) => {
+        const visitCountRefDB_onValue = ref(databaseVisit, 'visits/total'); // Renomeado para evitar conflito
+        onValue(visitCountRefDB_onValue, (snapshot) => {
             if (snapshot.exists()) {
                 visitCountDisplayHud.innerText = snapshot.val();
             }
@@ -689,11 +687,11 @@
             try {
                 const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits`);
                 const data = await response.json();
-                if (data.length > 0) {
+                if (data && data.length > 0 && data[0].commit && data[0].commit.committer) {
                     const lastCommitDate = new Date(data[0].commit.committer.date);
                     document.getElementById("last-modified").textContent = formatarDataHora(lastCommitDate);
                 } else {
-                    document.getElementById("last-modified").textContent = "Não encontrado";
+                     document.getElementById("last-modified").textContent = "Não encontrado";
                 }
             }
             catch (error) {
@@ -714,20 +712,27 @@
         getLastCommitDate();
         document.addEventListener("DOMContentLoaded", function () {
             window.synth = window.speechSynthesis;
-            document.body.addEventListener('click', window.initializeAudioAndSounds, { once: true });
-            document.body.addEventListener('keydown', window.initializeAudioAndSounds, { once: true });
+            // Inicializar áudio ao interagir com a página
+            const initAudioHandler = () => {
+                window.initializeAudioAndSounds();
+                document.body.removeEventListener('click', initAudioHandler);
+                document.body.removeEventListener('keydown', initAudioHandler);
+            };
+            document.body.addEventListener('click', initAudioHandler, { once: true });
+            document.body.addEventListener('keydown', initAudioHandler, { once: true });
+
             const elementosParaLer = Array.from(document.querySelectorAll("h1, h2, p, a, strong, li"))
-                                        .filter(el => !el.closest('#hud'));
+                                        .filter(el => !el.closest('#hud')); // Não ler elementos do HUD
             const botaoToggle = document.getElementById("toggleAcessibilidade");
             elementosParaLer.forEach((elemento) => {
                 elemento.addEventListener("mouseenter", function () {
-                    if (!document.pointerLockElement) {
+                    if (!document.pointerLockElement) { // Só ler se o ponteiro não estiver travado (modo jogo)
                         if (window.acessibilidadeAtivada) window.falarTexto(elemento.innerText);
-                        window.playSound('seus-sons/hover-ui.mp3', 0.2);
+                        window.playSound('seus-sons/hover-ui.mp3', 0.2); // Certifique-se que o caminho está correto
                     }
                 });
                 elemento.addEventListener("click", function() {
-                    window.playSound('seus-sons/click-ui.mp3', 0.3);
+                    window.playSound('seus-sons/click-ui.mp3', 0.3); // Certifique-se que o caminho está correto
                 });
             });
             botaoToggle.addEventListener("click", function () {
@@ -736,18 +741,21 @@
                 if (window.synth) window.synth.cancel();
                 if (window.ambientSound) {
                     window.ambientSound.muted = !window.acessibilidadeAtivada;
+                     if (window.acessibilidadeAtivada && window.ambientSound.paused) { // Se ativado e pausado, tentar tocar
+                        window.ambientSound.play().catch(e => console.error("Erro ao retomar áudio ambiente:", e));
+                    }
                 }
-                window.playSound('seus-sons/toggle-ui.mp3', 0.5);
+                window.playSound('seus-sons/toggle-ui.mp3', 0.5); // Certifique-se que o caminho está correto
             });
             document.querySelectorAll('.content-panel').forEach(panel => {
                 setInterval(() => {
-                    if (Math.random() < 0.1) {
+                    if (Math.random() < 0.1) { // Chance de 10% de aplicar o glitch
                         panel.classList.add('glitch-effect-active');
                         setTimeout(() => {
                             panel.classList.remove('glitch-effect-active');
-                        }, 500);
+                        }, 500); // Duração do glitch
                     }
-                }, 2000);
+                }, 2000); // Verificar a cada 2 segundos
             });
         });
     </script>
@@ -755,9 +763,9 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
-            const loadingScreen = document.getElementById('loading-screen');
-            let isMouseLookActive = false;
-            let lastMouseX, lastMouseY;
+            // const loadingScreen = document.getElementById('loading-screen'); // Já tratado no script inline
+            // let isMouseLookActive = false; // Não parece ser usado globalmente, apenas no listener
+            // let lastMouseX, lastMouseY; // Não parecem ser usados
             let playerX = 0;
             let playerY = 0; 
             let playerZ = 0;
@@ -772,9 +780,7 @@
             const ROOM_DEPTH = 3000; 
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
 
-            // Define ROOM_HALF_DEPTH como uma variável CSS para ser usada nos transform das paredes
             document.documentElement.style.setProperty('--room-half-depth', `${ROOM_HALF_DEPTH}px`);
-
 
             document.querySelectorAll('.room-face').forEach(face => {
                 face.style.width = `${ROOM_DEPTH}px`;
@@ -782,11 +788,6 @@
                 face.style.left = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
                 face.style.top = `calc(50% - ${ROOM_HALF_DEPTH}px)`;
             });
-
-            // As transforms das paredes agora usam a variável CSS --room-half-depth
-            // (já definido no CSS, mas o JS pode precisar ajustar se ROOM_DEPTH for dinâmico)
-            // document.getElementById('front-wall').style.transform = `rotateY(0deg) translateZ(-${ROOM_HALF_DEPTH}px)`;
-            // ... e assim por diante para as outras paredes (já está no CSS)
             
             viewportWrapper.style.perspective = `${ROOM_DEPTH * 0.7}px`; 
 
@@ -820,20 +821,21 @@
 
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
-                const pitchRad = lookPitch * Math.PI / 180;
+                const pitchRad = lookPitch * Math.PI / 180; // Usar pitchRad pode ser opcional para movimento no plano XZ
 
                 let dX = 0; 
                 let dZ = 0; 
                 
+                // Movimento relativo à direção da câmera no plano XZ
                 if (keysPressed['w']) {
-                    dX -= moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
-                    dZ -= moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
+                    dX -= moveSpeed * Math.sin(yawRad); // Movimento para frente/trás não deve ser afetado por Math.cos(pitchRad) se for movimento no chão
+                    dZ -= moveSpeed * Math.cos(yawRad);
                 }
                 if (keysPressed['s']) {
-                    dX += moveSpeed * Math.sin(yawRad) * Math.cos(pitchRad);
-                    dZ += moveSpeed * Math.cos(yawRad) * Math.cos(pitchRad);
+                    dX += moveSpeed * Math.sin(yawRad);
+                    dZ += moveSpeed * Math.cos(yawRad);
                 }
-                if (keysPressed['a']) {
+                if (keysPressed['a']) { // Strafe (movimento lateral)
                     dX -= moveSpeed * Math.cos(yawRad);
                     dZ += moveSpeed * Math.sin(yawRad);
                 }
@@ -845,12 +847,15 @@
                 playerX += dX;
                 playerZ += dZ;
 
+                // Restringir movimento aos limites da sala
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
             }
 
-            document.body.addEventListener('click', () => {
-                if (document.body.requestPointerLock) { 
+            document.body.addEventListener('click', (event) => {
+                // Só travar o ponteiro se o clique não for em um botão ou link interativo
+                const targetElement = event.target.closest('a, button, iframe');
+                if (!targetElement && document.body.requestPointerLock) { 
                     document.body.requestPointerLock(); 
                 }
             });
@@ -867,6 +872,7 @@
                 }
             });
             
+            let isMouseLookActive = false; // Declarada aqui para ser acessível
             document.addEventListener('pointerlockchange', () => {
                 if (document.pointerLockElement === document.body) { 
                     isMouseLookActive = true;
@@ -876,6 +882,7 @@
                     console.log('Pointer unlocked.');
                 }
             });
+            // Fallbacks para outros navegadores (já presentes)
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
             document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
 
