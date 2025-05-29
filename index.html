@@ -51,6 +51,7 @@
             --youtube-color: #ff0000;
             --tiktok-color: #69C9D0;
             --kwai-color: #FFA500;
+            --texture-glow: rgba(0, 255, 255, 0.2); /* Ciano suave para brilho da textura */
         }
         /* RESET E BASE */
         * {
@@ -113,6 +114,50 @@
             overflow: hidden;
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            /* Adicionando textura sci-fi */
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.1)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M10,10 H90 V90 H10 Z M20,20 H80 V80 H20 Z" stroke="rgba(0,255,255,0.3)" stroke-width="2"/><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><line x1="10" y1="50" x2="90" y2="50" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><line x1="50" y1="10" x2="50" y2="90" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><path d="M30,30 L70,70 M70,30 L30,70" stroke="rgba(0,255,255,0.2)" stroke-width="1"/></svg>');
+            background-size: cover, 100px 100px;
+            background-blend-mode: overlay;
+            position: relative;
+        }
+        .room-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                var(--texture-glow) 50%
+            );
+            background-size: 100% 6px;
+            pointer-events: none;
+            animation: textureScan 3s linear infinite;
+            opacity: 0.6;
+        }
+        .room-face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--texture-glow) 10%, transparent 70%);
+            opacity: 0.3;
+            animation: pulseGlow 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes textureScan {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
         }
         #front-wall { transform: rotateY(0deg) translateZ(calc(-1 * var(--room-half-depth))); }
         #right-wall { transform: rotateY(90deg) translateZ(calc(-1 * var(--room-half-depth))); }
@@ -846,7 +891,6 @@
             });
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
             document.addEventListener('webkitpointerlockchange', () => { /* similar a pointerlockchange */ });
-
 
             function gameLoop() {
                 handleMovement();
