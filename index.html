@@ -157,7 +157,7 @@
             border-radius: 5px;
             font-weight: bold;
             text-decoration: none;
-            /* cursor: pointer;  Será sobrescrito pela regra mais específica abaixo */
+            /* cursor: pointer;  Esta propriedade será sobrescrita abaixo para o cursor tecnológico */
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -189,13 +189,13 @@
         .comment strong {
             color: var(--color-terminal-accent);
         }
-        .comments-section a {
+        .comments-section a { /* Links dentro da seção de comentários, como "Ver mais comunicações" */
             color: var(--color-border-scan);
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9em;
             pointer-events: auto;
-             /* cursor: pointer;  Será sobrescrito pela regra mais específica abaixo */
+             /* cursor: pointer;  Esta propriedade será sobrescrita abaixo para o cursor tecnológico */
         }
         #hud {
             position: fixed;
@@ -241,7 +241,7 @@
             font-size: 16px;
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
-            cursor: pointer; /* HUD buttons mantêm o cursor pointer padrão, a menos que queira alterá-los também */
+            cursor: pointer; 
             box-shadow: 0 0 15px var(--color-terminal-accent);
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
@@ -347,15 +347,16 @@
         }
 
         /* --- INÍCIO: NOVO CURSOR PARA ELEMENTOS INTERATIVOS NAS PAREDES --- */
+        /* Esta regra define o cursor tecnológico para botões e links específicos nas paredes. */
         .subscribe-button,
-        .content-panel a:not(.subscribe-button) {
+        .content-panel a:not(.subscribe-button) { /* Seleciona botões e links nos painéis de conteúdo que não sejam já .subscribe-button */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300ff66" stroke-width="1.5"><circle cx="12" cy="12" r="2.5"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></svg>') 12 12, pointer;
         }
         /* --- FIM: NOVO CURSOR PARA ELEMENTOS INTERATIVOS NAS PAREDES --- */
 
         @media (max-width: 768px) {
             #viewport-wrapper {
-                /* perspective: 800px; // Será atualizada por JS */
+                /* perspective: 800px; // Será atualizada por JS dinamicamente com o zoom */
             }
             .room-face {
                 padding: 10px;
@@ -370,7 +371,7 @@
             .content-panel p {
                 font-size: 0.9em;
             }
-            .subscribe-button {
+            .subscribe-button { /* Ajustes para mobile */
                 padding: 8px 15px;
                 font-size: 0.9em;
                 margin: 5px;
@@ -726,9 +727,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewportWrapper = document.getElementById('viewport-wrapper');
             const roomContainer = document.getElementById('room-container');
-            // const loadingScreen = document.getElementById('loading-screen'); // Não é usado diretamente aqui, mas existe
-            let isMouseLookActive = false; // Mantido para referência, caso queira condicionar o zoom
-            // let lastMouseX, lastMouseY; // Não usado diretamente para zoom
+            let isMouseLookActive = false; 
             let playerX = 0;
             let playerY = 0; 
             let playerZ = 0;
@@ -743,12 +742,12 @@
             const ROOM_DEPTH = 3000; 
             const ROOM_HALF_DEPTH = ROOM_DEPTH / 2;
 
-            // Zoom Functionality Variables
+            // Variáveis para a funcionalidade de Zoom
             const initialPerspectiveValue = ROOM_DEPTH * 0.7; 
             let currentPerspective = initialPerspectiveValue;
-            const minPerspective = 800;  
-            const maxPerspective = 7000; 
-            const zoomFactor = 1.1;     
+            const minPerspective = 800;  // Limite para zoom out (FOV mais largo)
+            const maxPerspective = 7000; // Limite para zoom in (FOV mais estreito)
+            const zoomFactor = 1.1;     // Fator de multiplicação para cada passo de zoom
 
             // Aplica a perspectiva inicial ao viewport-wrapper
             viewportWrapper.style.perspective = `${currentPerspective}px`;
@@ -799,7 +798,6 @@
             function handleMovement() {
                 const yawRad = lookYaw * Math.PI / 180;
                 const pitchRad = lookPitch * Math.PI / 180;
-
                 let dX = 0; 
                 let dZ = 0; 
                 
@@ -819,10 +817,8 @@
                     dX += moveSpeed * Math.cos(yawRad);
                     dZ -= moveSpeed * Math.sin(yawRad);
                 }
-
                 playerX += dX;
                 playerZ += dZ;
-
                 playerX = Math.max(bounds.xMin, Math.min(playerX, bounds.xMax));
                 playerZ = Math.max(bounds.zMin, Math.min(playerZ, bounds.zMax));
             }
@@ -837,10 +833,8 @@
                 if (document.pointerLockElement === document.body) { 
                     const deltaXmouse = e.movementX;
                     const deltaYmouse = e.movementY;
-
                     lookYaw -= deltaXmouse * rotationSensitivity;
                     lookPitch += deltaYmouse * rotationSensitivity;
-
                     lookPitch = Math.max(minLookPitch, Math.min(lookPitch, maxLookPitch));
                 }
             });
@@ -851,7 +845,7 @@
                     console.log('Pointer locked. Use WASD e mova o mouse para olhar. Roda do mouse para zoom.');
                 } else {
                     isMouseLookActive = false;
-                    console.log('Pointer unlocked.');
+                    console.log('Pointer unlocked. Cursor personalizado ativo sobre elementos clicáveis.');
                 }
             });
             document.addEventListener('mozpointerlockchange', () => { /* similar a pointerlockchange */ });
@@ -860,13 +854,11 @@
             // Event Listener para Zoom com a roda do mouse
             document.body.addEventListener('wheel', (e) => {
                 e.preventDefault(); 
-
                 if (e.deltaY < 0) { 
                     currentPerspective *= zoomFactor;
                 } else { 
                     currentPerspective /= zoomFactor;
                 }
-
                 currentPerspective = Math.max(minPerspective, Math.min(currentPerspective, maxPerspective));
                 viewportWrapper.style.perspective = `${currentPerspective}px`;
             }, { passive: false }); 
