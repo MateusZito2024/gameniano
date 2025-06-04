@@ -306,7 +306,7 @@
                     <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
                     <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
                     <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
-                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
+                    <label><input type="radio" name=Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
                     <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Sem pressa"> Sem pressa, flexível</label>
                 </div>
                 <button type="submit" class="submit-button">Enviar Respostas</button>
@@ -398,46 +398,10 @@
             document.getElementById('projectCard').classList.remove('show-card');
         });
 
-        // Validação de formulário para garantir que todas as perguntas tenham pelo menos uma resposta
+        // Envio via AJAX para feedback ao usuário
         document.querySelectorAll('.question-card form').forEach(form => {
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-
-                // Verificar grupos de checkboxes
-                const checkboxGroups = [
-                    // Projeto form
-                    'Quais_elementos_naturais_você_gostaria_de_incorporar?',
-                    'Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?',
-                    // Consultoria form
-                    'Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?',
-                    'Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?',
-                    'Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?'
-                ];
-
-                let isValid = true;
-                let errorMessage = '';
-
-                checkboxGroups.forEach(groupName => {
-                    const checkboxes = form.querySelectorAll(`input[name="${groupName}"]`);
-                    const groupChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                    const otherInputId = checkboxes[checkboxes.length - 1].value === 'Outro' ? checkboxes[checkboxes.length - 1].nextElementSibling.id : null;
-                    const otherInput = otherInputId ? document.getElementById(otherInputId) : null;
-
-                    if (!groupChecked) {
-                        isValid = false;
-                        errorMessage = `Por favor, selecione pelo menos uma opção para a pergunta: "${form.querySelector(`input[name="${groupName}"]`).closest('div').querySelector('h3').textContent}"`;
-                    } else if (checkboxes[checkboxes.length - 1].checked && otherInput && !otherInput.value.trim()) {
-                        isValid = false;
-                        errorMessage = `Por favor, preencha o campo "Outro" para a pergunta: "${form.querySelector(`input[name="${groupName}"]`).closest('div').querySelector('h3').textContent}"`;
-                    }
-                });
-
-                if (!isValid) {
-                    alert(errorMessage);
-                    return;
-                }
-
-                // Se a validação passar, enviar o formulário via AJAX
                 const formData = new FormData(form);
                 fetch(form.action, {
                     method: 'POST',
