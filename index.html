@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(45deg, #A0A0A0, #F0F0F0, #A0A0A0);
+            background: linear-gradient(45deg, #A0Economia, #F0F0F0, #A0A0A0);
             background-size: 400% 400%;
             animation: backgroundGradient 15s ease infinite;
         }
@@ -90,9 +90,10 @@
             border-radius: 12px;
             text-align: center;
             display: block;
-            width: 100%;
+            width: 80%;
+            margin: 0 auto;
             transition: background-color 0.3s ease, color 0.3s ease;
-            z-index: 3; /* Garante que os botões estejam acima das imagens */
+            z-index: 3;
         }
 
         .button:hover {
@@ -208,13 +209,12 @@
             display: flex;
         }
 
-        /* Classe atualizada para a imagem da esquerda */
         .bottom-left-image {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 350px; /* Aumentei para 350px */
-            height: 350px; /* Aumentei para 350px */
+            width: 350px;
+            height: 350px;
             background-image: url('https://i.postimg.cc/JhyQf3QX/Captura-de-tela-2025-06-03-224720-removebg-preview.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -226,8 +226,8 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 200px; /* Mantido em 200px */
-            height: 200px; /* Mantido em 200px */
+            width: 200px;
+            height: 200px;
             background-image: url('https://i.postimg.cc/RVjypFmX/Captura-de-tela-2025-06-03-224735-removebg-preview.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -381,7 +381,7 @@
             const input = document.getElementById(inputId);
             input.disabled = !radioOrCheckbox.checked;
             if (!radioOrCheckbox.checked) {
-                input.value = ''; // Limpa o campo quando não selecionado
+                input.value = '';
             }
         }
 
