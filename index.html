@@ -1,405 +1,405 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link in Bio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            padding-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(45deg, #A0A0A0, #F0F0F0, #A0A0A0);
-            background-size: 400% 400%;
-            animation: backgroundGradient 15s ease infinite;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link in Bio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            padding-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #A0A0A0, #F0F0F0, #A0A0A0);
+            background-size: 400% 400%;
+            animation: backgroundGradient 15s ease infinite;
+        }
 
-        @keyframes backgroundGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        .card-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 870px;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15);
-        }
-        .header-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 400px;
-            background-image: url('https://i.postimg.cc/RhDnDbgj/capa.png');
-            background-size: cover;
-            background-position: center top;
-            z-index: 2;
-        }
-        .new-profile-pic {
-            position: absolute;
-            top: 305px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background-image: url('https://i.postimg.cc/cJzhVKYr/1-A1-BF3-E5-3-CB5-4278-9480-63056-EF357-D9.jpg');
-            background-size: 150%;
-            background-position: center 25%;
-            z-index: 4;
-        }
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 870px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        .header-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            background-image: url('https://i.postimg.cc/RhDnDbgj/capa.png');
+            background-size: cover;
+            background-position: center top;
+            z-index: 2;
+        }
+        .new-profile-pic {
+            position: absolute;
+            top: 305px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background-image: url('https://i.postimg.cc/cJzhVKYr/1-A1-BF3-E5-3-CB5-4278-9480-63056-EF357-D9.jpg');
+            background-size: 150%;
+            background-position: center 25%;
+            z-index: 4;
+        }
 
-        .bottom-section {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, #EDEDED 0%, #F5F5F5 100%);
-            z-index: 1;
-        }
-        .logo-nome {
-            position: absolute;
-            top: 430px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 100px;
-            background-image: url('https://i.postimg.cc/9fDggrcM/logo-nome.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 5;
-        }
-        .button {
-            background-color: #A1958C;
-            color: white;
-            font-weight: 600;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            display: block;
-            width: 100%;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            z-index: 1;
-        }
+        .bottom-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, #EDEDED 0%, #F5F5F5 100%);
+            z-index: 1;
+        }
+        .logo-nome {
+            position: absolute;
+            top: 430px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 100px;
+            background-image: url('https://i.postimg.cc/9fDggrcM/logo-nome.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 5;
+        }
+        .button {
+            background-color: #A1958C;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            z-index: 1;
+        }
 
-        .button:hover {
-            background-color: #8C827A;
-            cursor: pointer;
-        }
+        .button:hover {
+            background-color: #8C827A;
+            cursor: pointer;
+        }
 
-        .footer {
-            margin-top: 0.8rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #A1958C;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            text-align: center;
-        }
+        .footer {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #A1958C;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-align: center;
+        }
 
-        .question-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(248, 248, 248, 0.95);
-            border-radius: 1rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-            padding: 2rem;
-            overflow-y: auto;
-            z-index: 999;
-            display: none;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .question-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 248, 248, 0.95);
+            border-radius: 1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            padding: 2rem;
+            overflow-y: auto;
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-        .question-card h3 {
-            font-weight: 700;
-            color: #A1958C;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
+        .question-card h3 {
+            font-weight: 700;
+            color: #A1958C;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
 
-        .question-card label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: #4A4A4A;
-        }
-        .question-card .contact-input {
-            margin-bottom: 1rem;
-        }
-        .question-card .contact-input input {
-            border: 1px solid #D0D0D0;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            width: 100%;
-            margin-top: 0.25rem;
-            font-size: 1rem;
-        }
+        .question-card label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4A4A4A;
+        }
+        .question-card .contact-input {
+            margin-bottom: 1rem;
+        }
+        .question-card .contact-input input {
+            border: 1px solid #D0D0D0;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+        }
 
-        .question-card input[type="radio"],
-        .question-card input[type="checkbox"] {
-            margin-right: 0.5rem;
-        }
+        .question-card input[type="radio"],
+        .question-card input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
 
-        .question-card input[type="text"] {
-            border: 1px solid #D0D0D0;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            width: 100%;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
+        .question-card input[type="text"] {
+            border: 1px solid #D0D0D0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
 
-        .question-card .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333333;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+        .question-card .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
 
-        .question-card .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #A1958C;
-            cursor: pointer;
-            z-index: 11;
-        }
+        .question-card .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #A1958C;
+            cursor: pointer;
+            z-index: 11;
+        }
 
-        .question-card .submit-button {
-            background-color: #A1958C;
-            color: white;
-            font-weight: 600;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            display: block;
-            width: 100%;
-            margin-top: 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .question-card .submit-button:hover {
-            background-color: #8C827A;
-        }
+        .question-card .submit-button {
+            background-color: #A1958C;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .question-card .submit-button:hover {
+            background-color: #8C827A;
+        }
 
-        .show-card {
-            display: flex;
-        }
-    </style>
+        .show-card {
+            display: flex;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
-    <div class="card-container">
-        <div class="header-image"></div>
-        <div class="bottom-section"></div>
-        <div class="logo-nome"></div>
-        <div class="new-profile-pic"></div>
-        <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
-            <path d="M0,2 C90,32 180,47 225,32 C270,17 360,32 450,47" stroke="#A1958C" stroke-width="2" fill="none" />
-        </svg>
-        <svg style="position: absolute; bottom: 0; right: 0; width: 150px; height: 150px; z-index: 3;">
-            <path d="M150,0 C100,50 50,150 0,150" stroke="#A1958C" stroke-width="2" fill="none" />
-        </svg>
-        <div class="relative z-20 flex flex-col items-center justify-start h-full p-6 pt-12 pb-12">
-            <div class="w-full space-y-3 mt-auto">
-                <a href="https://wa.me/5551998296951" target="_blank" class="button">WHATSAPP</a>
-                <a href="mailto:contato@citaarquitetura.com.br" target="_blank" class="button">E-MAIL</a>
-                <a href="#" id="projetoButton" class="button">ORÇAMENTO PARA PROJETO</a>
-                <a href="#" id="consultoriaButton" class="button">ORÇAMENTO PARA CONSULTORIA</a>
-            </div>
-        </div>
-        <div id="projectCard" class="question-card">
-            <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">×</button>
-            <h2 class="card-title">Projeto</h2>
-            <form action="https://formspree.io/f/mgvolbyv" method="POST">
-                <input type="hidden" name="_subject" value="Orçamento para Projeto">
-                <div class="contact-input">
-                    <label for="nomeProjeto">Nome:</label>
-                    <input type="text" id="nomeProjeto" name="Nome_Projeto" required>
-                </div>
-                <div class="contact-input">
-                    <label for="emailProjeto">E-mail:</label>
-                    <input type="email" id="emailProjeto" name="Email_Projeto" required>
-                </div>
-                <div class="contact-input">
-                    <label for="whatsappProjeto">WhatsApp (com DDD):</label>
-                    <input type="tel" id="whatsappProjeto" name="WhatsApp_Projeto">
-                </div>
-                <div>
-                    <h3>Qual é o tipo de espaço que você deseja projetar?</h3>
-                    <label><input type="radio" name="Tipo_Espaco_Projeto" value="Residencial" required> Residencial (casa, apartamento)</label>
-                    <label><input type="radio" name="Tipo_Espaco_Projeto" value="Comercial"> Comercial (escritório, loja, restaurante)</label>
-                    <label><input type="radio" name="Tipo_Espaco_Projeto" value="Público"> Público (parque, praça, espaço comunitário)</label>
-                    <label><input type="radio" name="Tipo_Espaco_Projeto" value="Outro" onchange="toggleOutro('tipoEspacoOutro', this)"> Outro: <input type="text" id="tipoEspacoOutro" name="Tipo_Espaco_Projeto_Outro"></label>
-                </div>
-                <div>
-                    <h3>Qual é o principal objetivo do seu projeto?</h3>
-                    <label><input type="radio" name="Objetivo_Projeto" value="Bem-estar" required> Melhorar o bem-estar e a saúde dos ocupantes</label>
-                    <label><input type="radio" name="Objetivo_Projeto" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
-                    <label><input type="radio" name="Objetivo_Projeto" value="Estético"> Criar um ambiente esteticamente agradável e acolhedor</label>
-                    <label><input type="radio" name="Objetivo_Projeto" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
-                    <label><input type="radio" name="Objetivo_Projeto" value="Outro" onchange="toggleOutro('objetivoProjetoOutro', this)"> Outro: <input type="text" id="objetivoProjetoOutro" name="Objetivo_Projeto_Outro"></label>
-                </div>
-                <div>
-                    <h3>Quais elementos naturais você gostaria de incorporar?</h3>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Plantas"> Plantas e vegetação</label>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Água"> Água (fontes, espelhos d'água)</label>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Luz natural"> Luz natural</label>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Materiais orgânicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Sons da natureza"> Sons da natureza (água correndo, canto de pássaros)</label>
-                    <label><input type="checkbox" name="Elementos_Naturais_Projeto[]" value="Outros" onchange="toggleOutro('elementosNaturaisOutros', this)"> Outros: <input type="text" id="elementosNaturaisOutros" name="Elementos_Naturais_Projeto_Outros"></label>
-                </div>
-                <div>
-                    <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
-                    <label><input type="checkbox" name="Restricoes_Desafios_Projeto[]" value="Limitações de espaço"> Limitações de espaço ou layout</label>
-                    <label><input type="checkbox" name="Restricoes_Desafios_Projeto[]" value="Restrições orçamentárias"> Restrições orçamentárias</label>
-                    <label><input type="checkbox" name="Restricoes_Desafios_Projeto[]" value="Normas de construção"> Normas de construção ou regulamentações locais</label>
-                    <label><input type="checkbox" name="Restricoes_Desafios_Projeto[]" value="Necessidades especiais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
-                    <label><input type="checkbox" name="Restricoes_Desafios_Projeto[]" value="Outro" onchange="toggleOutro('restricoesDesafiosOutro', this)"> Outro: <input type="text" id="restricoesDesafiosOutro" name="Restricoes_Desafios_Projeto_Outro"></label>
-                </div>
-                <div>
-                    <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
-                    <label><input type="radio" name="Prazo_Projeto" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
-                    <label><input type="radio" name="Prazo_Projeto" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
-                    <label><input type="radio" name="Prazo_Projeto" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
-                    <label><input type="radio" name="Prazo_Projeto" value="Sem pressa"> Sem pressa, flexível</label>
-                </div>
-                <button type="submit" class="submit-button">Enviar Respostas</button>
-            </form>
-        </div>
-        <div id="consultoriaCard" class="question-card">
-            <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">×</button>
-            <h2 class="card-title">Consultoria</h2>
-            <form action="https://formspree.io/f/mgvolbyv" method="POST">
-                <input type="hidden" name="_subject" value="Orçamento para Consultoria">
-                <div class="contact-input">
-                    <label for="nomeConsultoria">Nome:</label>
-                    <input type="text" id="nomeConsultoria" name="Nome_Consultoria" required>
-                </div>
-                <div class="contact-input">
-                    <label for="emailConsultoria">E-mail:</label>
-                    <input type="email" id="emailConsultoria" name="Email_Consultoria" required>
-                </div>
-                <div class="contact-input">
-                    <label for="whatsappConsultoria">WhatsApp (com DDD):</label>
-                    <input type="tel" id="whatsappConsultoria" name="WhatsApp_Consultoria">
-                </div>
-                <div>
-                    <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
-                    <label><input type="checkbox" name="Desafios_Espaco_Consultoria[]" value="Falta de conexão com a natureza"> Falta de conexão com a natureza</label>
-                    <label><input type="checkbox" name="Desafios_Espaco_Consultoria[]" value="Ambientes estressantes"> Ambientes estressantes ou pouco acolhedores</label>
-                    <label><input type="checkbox" name="Desafios_Espaco_Consultoria[]" value="Baixa produtividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
-                    <label><input type="checkbox" name="Desafios_Espaco_Consultoria[]" value="Problemas de sustentabilidade"> Problemas de sustentabilidade ou eficiência energética</label>
-                    <label><input type="checkbox" name="Desafios_Espaco_Consultoria[]" value="Outro" onchange="toggleOutro('desafiosEspacoOutro', this)"> Outro: <input type="text" id="desafiosEspacoOutro" name="Desafios_Espaco_Consultoria_Outro"></label>
-                </div>
-                <div>
-                    <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
-                    <label><input type="checkbox" name="Aspectos_Biofilicos_Consultoria[]" value="Integração de elementos naturais"> Integração de elementos naturais no design</label>
-                    <label><input type="checkbox" name="Aspectos_Biofilicos_Consultoria[]" value="Melhoria da qualidade do ar"> Melhoria da qualidade do ar e do ambiente interno</label>
-                    <label><input type="checkbox" name="Aspectos_Biofilicos_Consultoria[]" value="Materiais sustentáveis"> Uso de materiais sustentáveis e ecológicos</label>
-                    <label><input type="checkbox" name="Aspectos_Biofilicos_Consultoria[]" value="Espaços de relaxamento"> Criação de espaços de relaxamento e bem-estar</label>
-                    <label><input type="checkbox" name="Aspectos_Biofilicos_Consultoria[]" value="Outro" onchange="toggleOutro('aspectosBiofilicosOutro', this)"> Outro: <input type="text" id="aspectosBiofilicosOutro" name="Aspectos_Biofilicos_Consultoria_Outro"></label>
-                </div>
-                <div>
-                    <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
-                    <label><input type="checkbox" name="Preocupacoes_Biofilico_Consultoria[]" value="Orçamento limitado"> Orçamento limitado</label>
-                    <label><input type="checkbox" name="Preocupacoes_Biofilico_Consultoria[]" value="Manutenção de elementos naturais"> Manutenção dos elementos naturais (plantas, água)</label>
-                    <label><input type="checkbox" name="Preocupacoes_Biofilico_Consultoria[]" value="Compatibilidade com o estilo arquitetônico"> Compatibilidade com o estilo arquitetônico existente</label>
-                    <label><input type="checkbox" name="Preocupacoes_Biofilico_Consultoria[]" value="Impacto ambiental"> Impacto ambiental e sustentabilidade</label>
-                    <label><input type="checkbox" name="Preocupacoes_Biofilico_Consultoria[]" value="Outro" onchange="toggleOutro('preocupacoesBiofilicoOutro', this)"> Outro: <input type="text" id="preocupacoesBiofilicoOutro" name="Preocupacoes_Biofilico_Consultoria_Outro"></label>
-                </div>
-                <div>
-                    <h3>Já implementou alguma solução biofílica anteriormente?</h3>
-                    <label><input type="radio" name="Solucao_Biofilica_Anterior_Consultoria" value="Sim, e gostaria de expandir ou melhorar" required> Sim, e gostaria de expandir ou melhorar</label>
-                    <label><input type="radio" name="Solucao_Biofilica_Anterior_Consultoria" value="Sim, mas não obtive os resultados esperados"> Sim, mas não obtive os resultados esperados</label>
-                    <label><input type="radio" name="Solucao_Biofilica_Anterior_Consultoria" value="Não, mas estou interessado em começar"> Não, mas estou interessado em começar</label>
-                    <label><input type="radio" name="Solucao_Biofilica_Anterior_Consultoria" value="Não, e gostaria de entender melhor os benefícios"> Não, e gostaria de entender melhor os benefícios</label>
-                </div>
-                <div>
-                    <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
-                    <label><input type="radio" name="Objetivo_Consultoria" value="Receber orientação para um projeto futuro" required> Receber orientação para um projeto futuro</label>
-                    <label><input type="radio" name="Objetivo_Consultoria" value="Melhorar um espaço existente"> Melhorar um espaço existente</label>
-                    <label><input type="radio" name="Objetivo_Consultoria" value="Aprender mais sobre os princípios do design biofílico"> Aprender mais sobre os princípios do design biofílico</label>
-                    <label><input type="radio" name="Objetivo_Consultoria" value="Avaliar a viabilidade de implementar elementos biofílicos"> Avaliar a viabilidade de implementar elementos biofílicos</label>
-                    <label><input type="radio" name="Objetivo_Consultoria" value="Outro" onchange="toggleOutro('objetivoConsultoriaOutro', this)"> Outro: <input type="text" id="objetivoConsultoriaOutro" name="Objetivo_Consultoria_Outro"></label>
-                </div>
-                <button type="submit" class="submit-button">Enviar Respostas</button>
-            </form>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>© 2025 Cità Arquitetura. Todos os direitos reservados.</p>
-    </footer>
-    <script>
-        // Função para ativar/desativar campos "Outro"
-        function toggleOutro(inputId, radioOrCheckbox) {
-            const input = document.getElementById(inputId);
-            input.disabled = !radioOrCheckbox.checked;
-            if (!radioOrCheckbox.checked) {
-                input.value = ''; // Limpa o campo quando não selecionado
-            }
-        }
+    <div class="card-container">
+        <div class="header-image"></div>
+        <div class="bottom-section"></div>
+        <div class="logo-nome"></div>
+        <div class="new-profile-pic"></div>
+        <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
+            <path d="M0,2 C90,32 180,47 225,32 C270,17 360,32 450,47" stroke="#A1958C" stroke-width="2" fill="none" />
+        </svg>
+        <svg style="position: absolute; bottom: 0; right: 0; width: 150px; height: 150px; z-index: 3;">
+            <path d="M150,0 C100,50 50,150 0,150" stroke="#A1958C" stroke-width="2" fill="none" />
+        </svg>
+        <div class="relative z-20 flex flex-col items-center justify-start h-full p-6 pt-12 pb-12">
+            <div class="w-full space-y-3 mt-auto">
+                <a href="https://wa.me/5551998296951" target="_blank" class="button">WHATSAPP</a>
+                <a href="mailto:contato@citaarquitetura.com.br" target="_blank" class="button">E-MAIL</a>
+                <a href="#" id="projetoButton" class="button">ORÇAMENTO PARA PROJETO</a>
+                <a href="#" id="consultoriaButton" class="button">ORÇAMENTO PARA CONSULTORIA</a>
+            </div>
+        </div>
+        <div id="projectCard" class="question-card">
+            <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">×</button>
+            <h2 class="card-title">Projeto</h2>
+            <form action="https://formspree.io/f/mgvolbyv" method="POST">
+                <input type="hidden" name="_subject" value="Orçamento para Projeto">
+                <div class="contact-input">
+                    <label for="nomeProjeto">Nome:</label>
+                    <input type="text" id="nomeProjeto" name="Nome do Cliente (Projeto)" required>
+                </div>
+                <div class="contact-input">
+                    <label for="emailProjeto">E-mail:</label>
+                    <input type="email" id="emailProjeto" name="E-mail (Projeto)" required>
+                </div>
+                <div class="contact-input">
+                    <label for="whatsappProjeto">WhatsApp (com DDD):</label>
+                    <input type="tel" id="whatsappProjeto" name="WhatsApp (Projeto)">
+                </div>
+                <div>
+                    <h3>Qual é o tipo de espaço que você deseja projetar?</h3>
+                    <label><input type="radio" name="Tipo de Espaço (Projeto)" value="Residencial" required> Residencial (casa, apartamento)</label>
+                    <label><input type="radio" name="Tipo de Espaço (Projeto)" value="Comercial"> Comercial (escritório, loja, restaurante)</label>
+                    <label><input type="radio" name="Tipo de Espaço (Projeto)" value="Público"> Público (parque, praça, espaço comunitário)</label>
+                    <label><input type="radio" name="Tipo de Espaço (Projeto)" value="Outro" onchange="toggleOutro('tipoEspacoOutro', this)"> Outro: <input type="text" id="tipoEspacoOutro" name="Tipo de Espaço (Projeto) - Outro"></label>
+                </div>
+                <div>
+                    <h3>Qual é o principal objetivo do seu projeto?</h3>
+                    <label><input type="radio" name="Objetivo do Projeto" value="Bem-estar" required> Melhorar o bem-estar e a saúde dos ocupantes</label>
+                    <label><input type="radio" name="Objetivo do Projeto" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
+                    <label><input type="radio" name="Objetivo do Projeto" value="Estético"> Criar um ambiente esteticamente agradável e acolhedor</label>
+                    <label><input type="radio" name="Objetivo do Projeto" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
+                    <label><input type="radio" name="Objetivo do Projeto" value="Outro" onchange="toggleOutro('objetivoProjetoOutro', this)"> Outro: <input type="text" id="objetivoProjetoOutro" name="Objetivo do Projeto - Outro"></label>
+                </div>
+                <div>
+                    <h3>Quais elementos naturais você gostaria de incorporar?</h3>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Plantas"> Plantas e vegetação</label>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Água"> Água (fontes, espelhos d'água)</label>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Luz natural"> Luz natural</label>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Materiais orgânicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Sons da natureza"> Sons da natureza (água correndo, canto de pássaros)</label>
+                    <label><input type="checkbox" name="Elementos Naturais no Projeto[]" value="Outros" onchange="toggleOutro('elementosNaturaisOutros', this)"> Outros: <input type="text" id="elementosNaturaisOutros" name="Elementos Naturais no Projeto - Outros"></label>
+                </div>
+                <div>
+                    <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
+                    <label><input type="checkbox" name="Restrições ou Desafios no Projeto[]" value="Limitações de espaço"> Limitações de espaço ou layout</label>
+                    <label><input type="checkbox" name="Restrições ou Desafios no Projeto[]" value="Restrições orçamentárias"> Restrições orçamentárias</label>
+                    <label><input type="checkbox" name="Restrições ou Desafios no Projeto[]" value="Normas de construção"> Normas de construção ou regulamentações locais</label>
+                    <label><input type="checkbox" name="Restrições ou Desafios no Projeto[]" value="Necessidades especiais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
+                    <label><input type="checkbox" name="Restrições ou Desafios no Projeto[]" value="Outro" onchange="toggleOutro('restricoesDesafiosOutro', this)"> Outro: <input type="text" id="restricoesDesafiosOutro" name="Restrições ou Desafios no Projeto - Outro"></label>
+                </div>
+                <div>
+                    <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
+                    <label><input type="radio" name="Prazo para Conclusão do Projeto" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
+                    <label><input type="radio" name="Prazo para Conclusão do Projeto" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
+                    <label><input type="radio" name="Prazo para Conclusão do Projeto" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
+                    <label><input type="radio" name="Prazo para Conclusão do Projeto" value="Sem pressa"> Sem pressa, flexível</label>
+                </div>
+                <button type="submit" class="submit-button">Enviar Respostas</button>
+            </form>
+        </div>
+        <div id="consultoriaCard" class="question-card">
+            <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">×</button>
+            <h2 class="card-title">Consultoria</h2>
+            <form action="https://formspree.io/f/mgvolbyv" method="POST">
+                <input type="hidden" name="_subject" value="Orçamento para Consultoria">
+                <div class="contact-input">
+                    <label for="nomeConsultoria">Nome:</label>
+                    <input type="text" id="nomeConsultoria" name="Nome do Cliente (Consultoria)" required>
+                </div>
+                <div class="contact-input">
+                    <label for="emailConsultoria">E-mail:</label>
+                    <input type="email" id="emailConsultoria" name="E-mail (Consultoria)" required>
+                </div>
+                <div class="contact-input">
+                    <label for="whatsappConsultoria">WhatsApp (com DDD):</label>
+                    <input type="tel" id="whatsappConsultoria" name="WhatsApp (Consultoria)">
+                </div>
+                <div>
+                    <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
+                    <label><input type="checkbox" name="Desafios do Espaço (Consultoria)[]" value="Falta de conexão com a natureza"> Falta de conexão com a natureza</label>
+                    <label><input type="checkbox" name="Desafios do Espaço (Consultoria)[]" value="Ambientes estressantes"> Ambientes estressantes ou pouco acolhedores</label>
+                    <label><input type="checkbox" name="Desafios do Espaço (Consultoria)[]" value="Baixa produtividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
+                    <label><input type="checkbox" name="Desafios do Espaço (Consultoria)[]" value="Problemas de sustentabilidade"> Problemas de sustentabilidade ou eficiência energética</label>
+                    <label><input type="checkbox" name="Desafios do Espaço (Consultoria)[]" value="Outro" onchange="toggleOutro('desafiosEspacoOutro', this)"> Outro: <input type="text" id="desafiosEspacoOutro" name="Desafios do Espaço (Consultoria) - Outro"></label>
+                </div>
+                <div>
+                    <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
+                    <label><input type="checkbox" name="Aspectos do Design Biofílico (Consultoria)[]" value="Integração de elementos naturais"> Integração de elementos naturais no design</label>
+                    <label><input type="checkbox" name="Aspectos do Design Biofílico (Consultoria)[]" value="Melhoria da qualidade do ar"> Melhoria da qualidade do ar e do ambiente interno</label>
+                    <label><input type="checkbox" name="Aspectos do Design Biofílico (Consultoria)[]" value="Materiais sustentáveis"> Uso de materiais sustentáveis e ecológicos</label>
+                    <label><input type="checkbox" name="Aspectos do Design Biofílico (Consultoria)[]" value="Espaços de relaxamento"> Criação de espaços de relaxamento e bem-estar</label>
+                    <label><input type="checkbox" name="Aspectos do Design Biofílico (Consultoria)[]" value="Outro" onchange="toggleOutro('aspectosBiofilicosOutro', this)"> Outro: <input type="text" id="aspectosBiofilicosOutro" name="Aspectos do Design Biofílico (Consultoria) - Outro"></label>
+                </div>
+                <div>
+                    <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
+                    <label><input type="checkbox" name="Preocupações com Design Biofílico (Consultoria)[]" value="Orçamento limitado"> Orçamento limitado</label>
+                    <label><input type="checkbox" name="Preocupações com Design Biofílico (Consultoria)[]" value="Manutenção de elementos naturais"> Manutenção dos elementos naturais (plantas, água)</label>
+                    <label><input type="checkbox" name="Preocupações com Design Biofílico (Consultoria)[]" value="Compatibilidade com o estilo arquitetônico"> Compatibilidade com o estilo arquitetônico existente</label>
+                    <label><input type="checkbox" name="Preocupações com Design Biofílico (Consultoria)[]" value="Impacto ambiental"> Impacto ambiental e sustentabilidade</label>
+                    <label><input type="checkbox" name="Preocupações com Design Biofílico (Consultoria)[]" value="Outro" onchange="toggleOutro('preocupacoesBiofilicoOutro', this)"> Outro: <input type="text" id="preocupacoesBiofilicoOutro" name="Preocupações com Design Biofílico (Consultoria) - Outro"></label>
+                </div>
+                <div>
+                    <h3>Já implementou alguma solução biofílica anteriormente?</h3>
+                    <label><input type="radio" name="Implementou Solução Biofílica Anteriormente (Consultoria)" value="Sim, e gostaria de expandir ou melhorar" required> Sim, e gostaria de expandir ou melhorar</label>
+                    <label><input type="radio" name="Implementou Solução Biofílica Anteriormente (Consultoria)" value="Sim, mas não obtive os resultados esperados"> Sim, mas não obtive os resultados esperados</label>
+                    <label><input type="radio" name="Implementou Solução Biofílica Anteriormente (Consultoria)" value="Não, mas estou interessado em começar"> Não, mas estou interessado em começar</label>
+                    <label><input type="radio" name="Implementou Solução Biofílica Anteriormente (Consultoria)" value="Não, e gostaria de entender melhor os benefícios"> Não, e gostaria de entender melhor os benefícios</label>
+                </div>
+                <div>
+                    <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
+                    <label><input type="radio" name="Objetivo da Consultoria" value="Receber orientação para um projeto futuro" required> Receber orientação para um projeto futuro</label>
+                    <label><input type="radio" name="Objetivo da Consultoria" value="Melhorar um espaço existente"> Melhorar um espaço existente</label>
+                    <label><input type="radio" name="Objetivo da Consultoria" value="Aprender mais sobre os princípios do design biofílico"> Aprender mais sobre os princípios do design biofílico</label>
+                    <label><input type="radio" name="Objetivo da Consultoria" value="Avaliar a viabilidade de implementar elementos biofílicos"> Avaliar a viabilidade de implementar elementos biofílicos</label>
+                    <label><input type="radio" name="Objetivo da Consultoria" value="Outro" onchange="toggleOutro('objetivoConsultoriaOutro', this)"> Outro: <input type="text" id="objetivoConsultoriaOutro" name="Objetivo da Consultoria - Outro"></label>
+                </div>
+                <button type="submit" class="submit-button">Enviar Respostas</button>
+            </form>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>© 2025 Cità Arquitetura. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        // Função para ativar/desativar campos "Outro"
+        function toggleOutro(inputId, radioOrCheckbox) {
+            const input = document.getElementById(inputId);
+            input.disabled = !radioOrCheckbox.checked;
+            if (!radioOrCheckbox.checked) {
+                input.value = ''; // Limpa o campo quando não selecionado
+            }
+        }
 
-        // Controle de visibilidade dos cards
-        document.getElementById('projetoButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('projectCard').classList.add('show-card');
-            document.getElementById('consultoriaCard').classList.remove('show-card');
-        });
+        // Controle de visibilidade dos cards
+        document.getElementById('projetoButton').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('projectCard').classList.add('show-card');
+            document.getElementById('consultoriaCard').classList.remove('show-card');
+        });
 
-        document.getElementById('consultoriaButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('consultoriaCard').classList.add('show-card');
-            document.getElementById('projectCard').classList.remove('show-card');
-        });
+        document.getElementById('consultoriaButton').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('consultoriaCard').classList.add('show-card');
+            document.getElementById('projectCard').classList.remove('show-card');
+        });
 
-        // Envio via AJAX para feedback ao usuário
-        document.querySelectorAll('.question-card form').forEach(form => {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(form);
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Formulário enviado com sucesso!');
-                        form.reset();
-                        form.closest('.question-card').classList.remove('show-card');
-                    } else {
-                        alert('Erro ao enviar o formulário. Verifique o endpoint do Formspree ou tente novamente.');
-                    }
-                })
-                .catch(error => {
-                    alert('Erro ao enviar o formulário: ' + error.message);
-                });
-            });
-        });
-    </script>
+        // Envio via AJAX para feedback ao usuário
+        document.querySelectorAll('.question-card form').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Formulário enviado com sucesso!');
+                        form.reset();
+                        form.closest('.question-card').classList.remove('show-card');
+                    } else {
+                        alert('Erro ao enviar o formulário. Verifique o endpoint do Formspree ou tente novamente.');
+                    }
+                })
+                .catch(error => {
+                    alert('Erro ao enviar o formulário: ' + error.message);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
