@@ -62,9 +62,8 @@
             height: 170px;
             border-radius: 50%;
             background-image: url('https://i.postimg.cc/cJzhVKYr/1-A1-BF3-E5-3-CB5-4278-9480-63056-EF357-D9.jpg');
-            background-size: cover;
-            background-position: center;
-            /* box-shadow: 0 4px 8px rgba(0,0,0,0.3); <-- Sombra removida */
+            background-size: 150%;
+            background-position: center 30%; /* Ajustado para mostrar mais da parte inferior */
             z-index: 4;
         }
 
@@ -107,7 +106,7 @@
             background-color: #8C827A;
             cursor: pointer;
         }
-        
+
         .footer {
             margin-top: 0.8rem;
             font-size: 0.75rem;
@@ -153,9 +152,7 @@
         .question-card .contact-input {
             margin-bottom: 1rem;
         }
-        .question-card .contact-input input[type="text"],
-        .question-card .contact-input input[type="email"],
-        .question-card .contact-input input[type="tel"] {
+        .question-card .contact-input input {
             border: 1px solid #D0D0D0;
             border-radius: 0.5rem;
             padding: 0.75rem;
@@ -163,7 +160,6 @@
             margin-top: 0.25rem;
             font-size: 1rem;
         }
-
 
         .question-card input[type="radio"],
         .question-card input[type="checkbox"] {
@@ -220,7 +216,6 @@
         .show-card {
             display: flex;
         }
-
     </style>
 </head>
 <body class="bg-gray-100">
@@ -228,14 +223,13 @@
         <div class="header-image"></div>
         <div class="bottom-section"></div>
         <div class="logo-nome"></div>
-        <div class="new-profile-pic"></div> <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
+        <div class="new-profile-pic"></div>
+        <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
             <path d="M0,2 C90,32 180,47 225,32 C270,17 360,32 450,47" stroke="#A1958C" stroke-width="2" fill="none" />
         </svg>
-
         <svg style="position: absolute; bottom: 0; right: 0; width: 150px; height: 150px; z-index: 3;">
             <path d="M150,0 C100,50 50,150 0,150" stroke="#A1958C" stroke-width="2" fill="none" />
         </svg>
-
         <div class="relative z-20 flex flex-col items-center justify-start h-full p-6 pt-12 pb-12">
             <div class="w-full space-y-3 mt-auto">
                 <a href="https://wa.me/your-number" target="_blank" class="button">WHATSAPP</a>
@@ -244,11 +238,9 @@
                 <a href="#" id="consultoriaButton" class="button">ORÇAMENTO PARA CONSULTORIA</a>
             </div>
         </div>
-
         <div id="projectCard" class="question-card">
-            <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">&times;</button>
+            <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">×</button>
             <h2 class="card-title">Projeto</h2>
-
             <form>
                 <div class="contact-input">
                     <label for="nomeProjeto">Nome:</label>
@@ -262,7 +254,6 @@
                     <label for="whatsappProjeto">WhatsApp (com DDD):</label>
                     <input type="tel" id="whatsappProjeto" name="whatsappProjeto">
                 </div>
-
                 <div>
                     <h3>Qual é o tipo de espaço que você deseja projetar?</h3>
                     <label><input type="radio" name="tipoEspaco" value="Residencial"> Residencial (casa, apartamento)</label>
@@ -270,7 +261,6 @@
                     <label><input type="radio" name="tipoEspaco" value="Publico"> Público (parque, praça, espaço comunitário)</label>
                     <label><input type="radio" name="tipoEspaco" value="Outro"> Outro: <input type="text" name="tipoEspacoOutro"></label>
                 </div>
-
                 <div>
                     <h3>Qual é o principal objetivo do seu projeto?</h3>
                     <label><input type="radio" name="objetivoProjeto" value="Bem-estar"> Melhorar o bem-estar e a saúde dos ocupantes</label>
@@ -279,7 +269,6 @@
                     <label><input type="radio" name="objetivoProjeto" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
                     <label><input type="radio" name="objetivoProjeto" value="Outro"> Outro: <input type="text" name="objetivoProjetoOutro"></label>
                 </div>
-
                 <div>
                     <h3>Quais elementos naturais você gostaria de incorporar?</h3>
                     <label><input type="checkbox" name="elementosNaturais" value="Plantas"> Plantas e vegetação</label>
@@ -289,7 +278,6 @@
                     <label><input type="checkbox" name="elementosNaturais" value="SonsNatureza"> Sons da natureza (água correndo, canto de pássaros)</label>
                     <label><input type="checkbox" name="elementosNaturais" value="Outros"> Outros: <input type="text" name="elementosNaturaisOutros"></label>
                 </div>
-
                 <div>
                     <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
                     <label><input type="checkbox" name="restricoesDesafios" value="LimitacoesEspaco"> Limitações de espaço ou layout</label>
@@ -298,7 +286,6 @@
                     <label><input type="checkbox" name="restricoesDesafios" value="NecessidadesEspeciais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
                     <label><input type="checkbox" name="restricoesDesafios" value="Outro"> Outro: <input type="text" name="restricoesDesafiosOutro"></label>
                 </div>
-
                 <div>
                     <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
                     <label><input type="radio" name="prazoProjeto" value="Curto"> Curto prazo (menos de 3 meses)</label>
@@ -306,15 +293,12 @@
                     <label><input type="radio" name="prazoProjeto" value="Longo"> Longo prazo (mais de 6 meses)</label>
                     <label><input type="radio" name="prazoProjeto" value="SemPressa"> Sem pressa, flexível</label>
                 </div>
-
                 <button type="submit" class="submit-button">Enviar Respostas</button>
             </form>
         </div>
-
         <div id="consultoriaCard" class="question-card">
-            <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">&times;</button>
+            <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">×</button>
             <h2 class="card-title">Consultoria</h2>
-
             <form>
                 <div class="contact-input">
                     <label for="nomeConsultoria">Nome:</label>
@@ -328,7 +312,6 @@
                     <label for="whatsappConsultoria">WhatsApp (com DDD):</label>
                     <input type="tel" id="whatsappConsultoria" name="whatsappConsultoria">
                 </div>
-
                 <div>
                     <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
                     <label><input type="checkbox" name="desafiosEspaco" value="FaltaNatureza"> Falta de conexão com a natureza</label>
@@ -337,7 +320,6 @@
                     <label><input type="checkbox" name="desafiosEspaco" value="SustentabilidadeProblemas"> Problemas de sustentabilidade ou eficiência energética</label>
                     <label><input type="checkbox" name="desafiosEspaco" value="Outro"> Outro: <input type="text" name="desafiosEspacoOutro"></label>
                 </div>
-
                 <div>
                     <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
                     <label><input type="checkbox" name="aspectosBiofilicos" value="ElementosNaturais"> Integração de elementos naturais no design</label>
@@ -346,7 +328,6 @@
                     <label><input type="checkbox" name="aspectosBiofilicos" value="EspacosRelaxamento"> Criação de espaços de relaxamento e bem-estar</label>
                     <label><input type="checkbox" name="aspectosBiofilicos" value="Outro"> Outro: <input type="text" name="aspectosBiofilicosOutro"></label>
                 </div>
-
                 <div>
                     <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
                     <label><input type="checkbox" name="preocupacoesBiofilico" value="OrcamentoLimitado"> Orçamento limitado</label>
@@ -355,7 +336,6 @@
                     <label><input type="checkbox" name="preocupacoesBiofilico" value="ImpactoAmbiental"> Impacto ambiental e sustentabilidade</label>
                     <label><input type="checkbox" name="preocupacoesBiofilico" value="Outro"> Outro: <input type="text" name="preocupacoesBiofilicoOutro"></label>
                 </div>
-
                 <div>
                     <h3>Já implementou alguma solução biofílica anteriormente?</h3>
                     <label><input type="radio" name="solucaoBiofilicaAnterior" value="SimExpandir"> Sim, e gostaria de expandir ou melhorar</label>
@@ -363,26 +343,21 @@
                     <label><input type="radio" name="solucaoBiofilicaAnterior" value="NaoComecar"> Não, mas estou interessado em começar</label>
                     <label><input type="radio" name="solucaoBiofilicaAnterior" value="NaoEntender"> Não, e gostaria de entender melhor os benefícios</label>
                 </div>
-
                 <div>
                     <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
                     <label><input type="radio" name="objetivoConsultoria" value="OrientacaoFuturo"> Receber orientação para um projeto futuro</label>
-                    <label><input type="radio" name="objetivoConsultoria" value="MelhorarExistente"> Melhorar um espaço existente</label>
+                    <label><input type="radio" name="objetivoConsultoria" value pulpit://localhost:3000/melhorarExistente"> Melhorar um espaço existente</label>
                     <label><input type="radio" name="objetivoConsultoria" value="AprenderPrincipios"> Aprender mais sobre os princípios do design biofílico</label>
                     <label><input type="radio" name="objetivoConsultoria" value="AvaliarViabilidade"> Avaliar a viabilidade de implementar elementos biofílicos</label>
                     <label><input type="radio" name="objetivoConsultoria" value="Outro"> Outro: <input type="text" name="objetivoConsultoriaOutro"></label>
                 </div>
-
                 <button type="submit" class="submit-button">Enviar Respostas</button>
             </form>
         </div>
-
     </div>
-
     <footer class="footer">
-        <p>&copy; 2025 Cità Arquitetura. Todos os direitos reservados.</p>
+        <p>© 2025 Cità Arquitetura. Todos os direitos reservados.</p>
     </footer>
-
     <script>
         // --- JavaScript para controlar a visibilidade dos cards ---
         document.getElementById('projetoButton').addEventListener('click', function(event) {
