@@ -15,10 +15,9 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            /* Degradê animado para o fundo do site - AGORA MAIS EVIDENTE */
-            background: linear-gradient(45deg, #E0E0E0, #F5F5F5, #D0D0D0, #E0E0E0); /* Cores e direção mais marcantes */
-            background-size: 400% 400%; /* Permite o movimento suave */
-            animation: backgroundGradient 25s ease infinite; /* Animação lenta e suave */
+            background: linear-gradient(45deg, #A0A0A0, #F0F0F0, #A0A0A0);
+            background-size: 400% 400%;
+            animation: backgroundGradient 15s ease infinite;
         }
 
         @keyframes backgroundGradient {
@@ -42,7 +41,6 @@
             overflow: hidden;
             box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15);
         }
-        /* Nova seção para a imagem de cabeçalho combinada */
         .header-image {
             position: absolute;
             top: 0;
@@ -54,19 +52,34 @@
             background-position: center top;
             z-index: 2;
         }
+        /* Classe para a imagem de perfil circular sobreposta */
+        .new-profile-pic {
+            position: absolute;
+            top: 305px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background-image: url('https://i.postimg.cc/cJzhVKYr/1-A1-BF3-E5-3-CB5-4278-9480-63056-EF357-D9.jpg');
+            background-size: cover;
+            background-position: center;
+            /* box-shadow: 0 4px 8px rgba(0,0,0,0.3); <-- Sombra removida */
+            z-index: 4;
+        }
+
         .bottom-section {
             position: absolute;
-            top: 400px;
+            top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 400px);
+            height: 100%;
             background: linear-gradient(to top, #EDEDED 0%, #F5F5F5 100%);
             z-index: 1;
         }
-        /* Nova seção para a imagem logo-nome.png */
         .logo-nome {
             position: absolute;
-            top: 400px;
+            top: 485px;
             left: 50%;
             transform: translateX(-50%);
             width: 120px;
@@ -75,10 +88,10 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            z-index: 3;
+            z-index: 5;
         }
         .button {
-            background-color: #A1958C; /* Cor dos botões da imagem */
+            background-color: #A1958C;
             color: white;
             font-weight: 600;
             padding: 12px;
@@ -86,20 +99,128 @@
             text-align: center;
             display: block;
             width: 100%;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            z-index: 1;
         }
+
         .button:hover {
             background-color: #8C827A;
+            cursor: pointer;
         }
+        
         .footer {
             margin-top: 0.8rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #A1958C; /* Cor mais forte, a mesma dos botões */
+            color: #A1958C;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             text-align: center;
         }
+
+        /* --- Estilos para os Novos Cards de Questionário --- */
+        .question-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 248, 248, 0.95);
+            border-radius: 1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            padding: 2rem;
+            overflow-y: auto;
+            z-index: 999;
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .question-card h3 {
+            font-weight: 700;
+            color: #A1958C;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .question-card label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #4A4A4A;
+        }
+        .question-card .contact-input {
+            margin-bottom: 1rem;
+        }
+        .question-card .contact-input input[type="text"],
+        .question-card .contact-input input[type="email"],
+        .question-card .contact-input input[type="tel"] {
+            border: 1px solid #D0D0D0;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+        }
+
+
+        .question-card input[type="radio"],
+        .question-card input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+
+        .question-card input[type="text"] {
+            border: 1px solid #D0D0D0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .question-card .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-card .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #A1958C;
+            cursor: pointer;
+            z-index: 11;
+        }
+
+        .question-card .submit-button {
+            background-color: #A1958C;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .question-card .submit-button:hover {
+            background-color: #8C827A;
+        }
+
+        /* Classes para controle de visibilidade via JavaScript */
+        .show-card {
+            display: flex;
+        }
+
     </style>
 </head>
 <body class="bg-gray-100">
@@ -107,8 +228,7 @@
         <div class="header-image"></div>
         <div class="bottom-section"></div>
         <div class="logo-nome"></div>
-
-        <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
+        <div class="new-profile-pic"></div> <svg style="position: absolute; top: 410px; left: 0; width: 100%; height: 20px; z-index: 3;">
             <path d="M0,2 C90,32 180,47 225,32 C270,17 360,32 450,47" stroke="#A1958C" stroke-width="2" fill="none" />
         </svg>
 
@@ -120,14 +240,162 @@
             <div class="w-full space-y-3 mt-auto">
                 <a href="https://wa.me/your-number" target="_blank" class="button">WHATSAPP</a>
                 <a href="mailto:your-email@example.com" target="_blank" class="button">E-MAIL</a>
-                <a href="#" target="_blank" class="button">PROJETO</a>
-                <a href="https://instagram.com/your-profile" target="_blank" class="button">CONSULTORIA</a>
+                <a href="#" id="projetoButton" class="button">PROJETO</a>
+                <a href="#" id="consultoriaButton" class="button">CONSULTORIA</a>
             </div>
         </div>
+
+        <div id="projectCard" class="question-card">
+            <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">&times;</button>
+            <h2 class="card-title">Projeto</h2>
+
+            <form>
+                <div class="contact-input">
+                    <label for="nomeProjeto">Nome:</label>
+                    <input type="text" id="nomeProjeto" name="nomeProjeto" required>
+                </div>
+                <div class="contact-input">
+                    <label for="emailProjeto">E-mail:</label>
+                    <input type="email" id="emailProjeto" name="emailProjeto" required>
+                </div>
+                <div class="contact-input">
+                    <label for="whatsappProjeto">WhatsApp (com DDD):</label>
+                    <input type="tel" id="whatsappProjeto" name="whatsappProjeto">
+                </div>
+
+                <div>
+                    <h3>Qual é o tipo de espaço que você deseja projetar?</h3>
+                    <label><input type="radio" name="tipoEspaco" value="Residencial"> Residencial (casa, apartamento)</label>
+                    <label><input type="radio" name="tipoEspaco" value="Comercial"> Comercial (escritório, loja, restaurante)</label>
+                    <label><input type="radio" name="tipoEspaco" value="Publico"> Público (parque, praça, espaço comunitário)</label>
+                    <label><input type="radio" name="tipoEspaco" value="Outro"> Outro: <input type="text" name="tipoEspacoOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Qual é o principal objetivo do seu projeto?</h3>
+                    <label><input type="radio" name="objetivoProjeto" value="Bem-estar"> Melhorar o bem-estar e a saúde dos ocupantes</label>
+                    <label><input type="radio" name="objetivoProjeto" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
+                    <label><input type="radio" name="objetivoProjeto" value="Estetico"> Criar um ambiente esteticamente agradável e acolhedor</label>
+                    <label><input type="radio" name="objetivoProjeto" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
+                    <label><input type="radio" name="objetivoProjeto" value="Outro"> Outro: <input type="text" name="objetivoProjetoOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Quais elementos naturais você gostaria de incorporar?</h3>
+                    <label><input type="checkbox" name="elementosNaturais" value="Plantas"> Plantas e vegetação</label>
+                    <label><input type="checkbox" name="elementosNaturais" value="Agua"> Água (fontes, espelhos d'água)</label>
+                    <label><input type="checkbox" name="elementosNaturais" value="LuzNatural"> Luz natural</label>
+                    <label><input type="checkbox" name="elementosNaturais" value="MateriaisOrganicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
+                    <label><input type="checkbox" name="elementosNaturais" value="SonsNatureza"> Sons da natureza (água correndo, canto de pássaros)</label>
+                    <label><input type="checkbox" name="elementosNaturais" value="Outros"> Outros: <input type="text" name="elementosNaturaisOutros"></label>
+                </div>
+
+                <div>
+                    <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
+                    <label><input type="checkbox" name="restricoesDesafios" value="LimitacoesEspaco"> Limitações de espaço ou layout</label>
+                    <label><input type="checkbox" name="restricoesDesafios" value="Orcamento"> Restrições orçamentárias</label>
+                    <label><input type="checkbox" name="restricoesDesafios" value="Normas"> Normas de construção ou regulamentações locais</label>
+                    <label><input type="checkbox" name="restricoesDesafios" value="NecessidadesEspeciais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
+                    <label><input type="checkbox" name="restricoesDesafios" value="Outro"> Outro: <input type="text" name="restricoesDesafiosOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
+                    <label><input type="radio" name="prazoProjeto" value="Curto"> Curto prazo (menos de 3 meses)</label>
+                    <label><input type="radio" name="prazoProjeto" value="Medio"> Médio prazo (3 a 6 meses)</label>
+                    <label><input type="radio" name="prazoProjeto" value="Longo"> Longo prazo (mais de 6 meses)</label>
+                    <label><input type="radio" name="prazoProjeto" value="SemPressa"> Sem pressa, flexível</label>
+                </div>
+
+                <button type="submit" class="submit-button">Enviar Respostas</button>
+            </form>
+        </div>
+
+        <div id="consultoriaCard" class="question-card">
+            <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">&times;</button>
+            <h2 class="card-title">Consultoria</h2>
+
+            <form>
+                <div class="contact-input">
+                    <label for="nomeConsultoria">Nome:</label>
+                    <input type="text" id="nomeConsultoria" name="nomeConsultoria" required>
+                </div>
+                <div class="contact-input">
+                    <label for="emailConsultoria">E-mail:</label>
+                    <input type="email" id="emailConsultoria" name="emailConsultoria" required>
+                </div>
+                <div class="contact-input">
+                    <label for="whatsappConsultoria">WhatsApp (com DDD):</label>
+                    <input type="tel" id="whatsappConsultoria" name="whatsappConsultoria">
+                </div>
+
+                <div>
+                    <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
+                    <label><input type="checkbox" name="desafiosEspaco" value="FaltaNatureza"> Falta de conexão com a natureza</label>
+                    <label><input type="checkbox" name="desafiosEspaco" value="AmbientesEstressantes"> Ambientes estressantes ou pouco acolhedores</label>
+                    <label><input type="checkbox" name="desafiosEspaco" value="BaixaProdutividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
+                    <label><input type="checkbox" name="desafiosEspaco" value="SustentabilidadeProblemas"> Problemas de sustentabilidade ou eficiência energética</label>
+                    <label><input type="checkbox" name="desafiosEspaco" value="Outro"> Outro: <input type="text" name="desafiosEspacoOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
+                    <label><input type="checkbox" name="aspectosBiofilicos" value="ElementosNaturais"> Integração de elementos naturais no design</label>
+                    <label><input type="checkbox" name="aspectosBiofilicos" value="QualidadeAr"> Melhoria da qualidade do ar e do ambiente interno</label>
+                    <label><input type="checkbox" name="aspectosBiofilicos" value="MateriaisSustentaveis"> Uso de materiais sustentáveis e ecológicos</label>
+                    <label><input type="checkbox" name="aspectosBiofilicos" value="EspacosRelaxamento"> Criação de espaços de relaxamento e bem-estar</label>
+                    <label><input type="checkbox" name="aspectosBiofilicos" value="Outro"> Outro: <input type="text" name="aspectosBiofilicosOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
+                    <label><input type="checkbox" name="preocupacoesBiofilico" value="OrcamentoLimitado"> Orçamento limitado</label>
+                    <label><input type="checkbox" name="preocupacoesBiofilico" value="ManutencaoElements"> Manutenção dos elementos naturais (plantas, água)</label>
+                    <label><input type="checkbox" name="preocupacoesBiofilico" value="CompatibilidadeEstilo"> Compatibilidade com o estilo arquitetônico existente</label>
+                    <label><input type="checkbox" name="preocupacoesBiofilico" value="ImpactoAmbiental"> Impacto ambiental e sustentabilidade</label>
+                    <label><input type="checkbox" name="preocupacoesBiofilico" value="Outro"> Outro: <input type="text" name="preocupacoesBiofilicoOutro"></label>
+                </div>
+
+                <div>
+                    <h3>Já implementou alguma solução biofílica anteriormente?</h3>
+                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="SimExpandir"> Sim, e gostaria de expandir ou melhorar</label>
+                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="SimSemResultado"> Sim, mas não obtive os resultados esperados</label>
+                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="NaoComecar"> Não, mas estou interessado em começar</label>
+                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="NaoEntender"> Não, e gostaria de entender melhor os benefícios</label>
+                </div>
+
+                <div>
+                    <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
+                    <label><input type="radio" name="objetivoConsultoria" value="OrientacaoFuturo"> Receber orientação para um projeto futuro</label>
+                    <label><input type="radio" name="objetivoConsultoria" value="MelhorarExistente"> Melhorar um espaço existente</label>
+                    <label><input type="radio" name="objetivoConsultoria" value="AprenderPrincipios"> Aprender mais sobre os princípios do design biofílico</label>
+                    <label><input type="radio" name="objetivoConsultoria" value="AvaliarViabilidade"> Avaliar a viabilidade de implementar elementos biofílicos</label>
+                    <label><input type="radio" name="objetivoConsultoria" value="Outro"> Outro: <input type="text" name="objetivoConsultoriaOutro"></label>
+                </div>
+
+                <button type="submit" class="submit-button">Enviar Respostas</button>
+            </form>
+        </div>
+
     </div>
 
     <footer class="footer">
         <p>&copy; 2025 Cità Arquitetura. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        // --- JavaScript para controlar a visibilidade dos cards ---
+        document.getElementById('projetoButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            document.getElementById('projectCard').classList.add('show-card');
+            document.getElementById('consultoriaCard').classList.remove('show-card'); // Esconde o outro card
+        });
+
+        document.getElementById('consultoriaButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            document.getElementById('consultoriaCard').classList.add('show-card');
+            document.getElementById('projectCard').classList.remove('show-card'); // Esconde o outro card
+        });
+    </script>
 </body>
 </html>
