@@ -257,7 +257,7 @@
             <button class="close-button" onclick="document.getElementById('projectCard').classList.remove('show-card')">×</button>
             <h2 class="card-title">Projeto</h2>
             <form action="https://formspree.io/f/mgvolbyv" method="POST">
-                <input type="hidden" name="_subject" value="Orçamento para Projeto">
+                <input type="hidden" name="Tipo" value="Orçamento para Projeto">
                 <div class="contact-input">
                     <label for="nomeProjeto">Nome:</label>
                     <input type="text" id="nomeProjeto" name="nome" required>
@@ -275,39 +275,39 @@
                     <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Residencial" required> Residencial (casa, apartamento)</label>
                     <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Comercial"> Comercial (escritório, loja, restaurante)</label>
                     <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Público"> Público (parque, praça, espaço comunitário)</label>
-                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Outro" onchange="toggleOutro('tipoEspacoOutro', this)"> Outro: <input type="text" id="tipoEspacoOutro" name="tipoEspacoOutro"></label>
+                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Outro" onchange="toggleOutro('Tipo_de_Espaço_(Outro)', this)"> Outro: <input type="text" id="tipoEspacoOutro" name="tipoEspacoOutro"></label>
                 </div>
                 <div>
                     <h3>Qual é o principal objetivo do seu projeto?</h3>
-                    <label><input type="radio" name="objetivoProjeto" value="Bem-estar" required> Melhorar o bem-estar e a saúde dos ocupantes</label>
-                    <label><input type="radio" name="objetivoProjeto" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
-                    <label><input type="radio" name="objetivoProjeto" value="Estético"> Criar um ambiente esteticamente agradável e acolhedor</label>
-                    <label><input type="radio" name="objetivoProjeto" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
-                    <label><input type="radio" name="objetivoProjeto" value="Outro" onchange="toggleOutro('objetivoProjetoOutro', this)"> Outro: <input type="text" id="objetivoProjetoOutro" name="objetivoProjetoOutro"></label>
+                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Bem-estar" required> Melhorar o bem-estar e a saúde dos ocupantes</label>
+                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
+                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Estético"> Criar um ambiente esteticamente agradável e acolhedor</label>
+                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
+                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Outro" onchange="toggleOutro('Objetivo_do_Projeto_(Outro)', this)"> Outro: <input type="text" id="objetivoProjetoOutro" name="objetivoProjetoOutro"></label>
                 </div>
                 <div>
                     <h3>Quais elementos naturais você gostaria de incorporar?</h3>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Plantas"> Plantas e vegetação</label>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Água"> Água (fontes, espelhos d'água)</label>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Luz natural"> Luz natural</label>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Materiais orgânicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Sons da natureza"> Sons da natureza (água correndo, canto de pássaros)</label>
-                    <label><input type="checkbox" name="elementosNaturais[]" value="Outros" onchange="toggleOutro('elementosNaturaisOutros', this)"> Outros: <input type="text" id="elementosNaturaisOutros" name="elementosNaturaisOutros"></label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Plantas"> Plantas e vegetação</label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Água"> Água (fontes, espelhos d'água)</label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Luz natural"> Luz natural</label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Materiais orgânicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Sons da natureza"> Sons da natureza (água correndo, canto de pássaros)</label>
+                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Outros" onchange="toggleOutro('Elementos_Naturais_(Outros)', this)"> Outros: <input type="text" id="elementosNaturaisOutros" name="elementosNaturaisOutros"></label>
                 </div>
                 <div>
                     <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
-                    <label><input type="checkbox" name="restricoesDesafios[]" value="Limitações de espaço"> Limitações de espaço ou layout</label>
-                    <label><input type="checkbox" name="restricoesDesafios[]" value="Restrições orçamentárias"> Restrições orçamentárias</label>
-                    <label><input type="checkbox" name="restricoesDesafios[]" value="Normas de construção"> Normas de construção ou regulamentações locais</label>
-                    <label><input type="checkbox" name="restricoesDesafios[]" value="Necessidades especiais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
-                    <label><input type="checkbox" name="restricoesDesafios[]" value="Outro" onchange="toggleOutro('restricoesDesafiosOutro', this)"> Outro: <input type="text" id="restricoesDesafiosOutro" name="restricoesDesafiosOutro"></label>
+                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Limitações de espaço"> Limitações de espaço ou layout</label>
+                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Restrições orçamentárias"> Restrições orçamentárias</label>
+                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Normas de construção"> Normas de construção ou regulamentações locais</label>
+                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Necessidades especiais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
+                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Outro" onchange="toggleOutro('Restrições_ou_Desafios_(Outro)', this)"> Outro: <input type="text" id="restricoesDesafiosOutro" name="restricoesDesafiosOutro"></label>
                 </div>
                 <div>
                     <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
-                    <label><input type="radio" name="prazoProjeto" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
-                    <label><input type="radio" name="prazoProjeto" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
-                    <label><input type="radio" name="prazoProjeto" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
-                    <label><input type="radio" name="prazoProjeto" value="Sem pressa"> Sem pressa, flexível</label>
+                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
+                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
+                    <label><input type="radio" name=Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
+                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Sem pressa"> Sem pressa, flexível</label>
                 </div>
                 <button type="submit" class="submit-button">Enviar Respostas</button>
             </form>
@@ -316,7 +316,7 @@
             <button class="close-button" onclick="document.getElementById('consultoriaCard').classList.remove('show-card')">×</button>
             <h2 class="card-title">Consultoria</h2>
             <form action="https://formspree.io/f/mgvolbyv" method="POST">
-                <input type="hidden" name="_subject" value="Orçamento para Consultoria">
+                <input type="hidden" name="Tipo" value="Orçamento para Consultoria">
                 <div class="contact-input">
                     <label for="nomeConsultoria">Nome:</label>
                     <input type="text" id="nomeConsultoria" name="nome" required>
@@ -331,42 +331,42 @@
                 </div>
                 <div>
                     <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
-                    <label><input type="checkbox" name="desafiosEspaco[]" value="Falta de conexão com a natureza"> Falta de conexão com a natureza</label>
-                    <label><input type="checkbox" name="desafiosEspaco[]" value="Ambientes estressantes"> Ambientes estressantes ou pouco acolhedores</label>
-                    <label><input type="checkbox" name="desafiosEspaco[]" value="Baixa produtividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
-                    <label><input type="checkbox" name="desafiosEspaco[]" value="Problemas de sustentabilidade"> Problemas de sustentabilidade ou eficiência energética</label>
-                    <label><input type="checkbox" name="desafiosEspaco[]" value="Outro" onchange="toggleOutro('desafiosEspacoOutro', this)"> Outro: <input type="text" id="desafiosEspacoOutro" name="desafiosEspacoOutro"></label>
+                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Falta de conexão com a natureza"> Falta de conexão com a natureza</label>
+                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Ambientes estressantes"> Ambientes estressantes ou pouco acolhedores</label>
+                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Baixa produtividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
+                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Problemas de sustentabilidade"> Problemas de sustentabilidade ou eficiência energética</label>
+                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Outro" onchange="toggleOutro('Desafios_no_Espaço_atual_(Outro)', this)"> Outro: <input type="text" id="desafiosEspacoOutro" name="desafiosEspacoOutro"></label>
                 </div>
                 <div>
                     <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
-                    <label><input type="checkbox" name="aspectosBiofilicos[]" value="Integração de elementos naturais"> Integração de elementos naturais no design</label>
-                    <label><input type="checkbox" name="aspectosBiofilicos[]" value="Melhoria da qualidade do ar"> Melhoria da qualidade do ar e do ambiente interno</label>
-                    <label><input type="checkbox" name="aspectosBiofilicos[]" value="Materiais sustentáveis"> Uso de materiais sustentáveis e ecológicos</label>
-                    <label><input type="checkbox" name="aspectosBiofilicos[]" value="Espaços de relaxamento"> Criação de espaços de relaxamento e bem-estar</label>
-                    <label><input type="checkbox" name="aspectosBiofilicos[]" value="Outro" onchange="toggleOutro('aspectosBiofilicosOutro', this)"> Outro: <input type="text" id="aspectosBiofilicosOutro" name="aspectosBiofilicosOutro"></label>
+                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Integração de elementos naturais"> Integração de elementos naturais no design</label>
+                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Melhoria da qualidade do ar"> Melhoria da qualidade do ar e do ambiente interno</label>
+                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Materiais sustentáveis"> Uso de materiais sustentáveis e ecológicos</label>
+                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Espaços de relaxamento"> Criação de espaços de relaxamento e bem-estar</label>
+                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Outro" onchange="toggleOutro('Aspectos_Biofilicos_interessado_(Outro)', this)"> Outro: <input type="text" id="aspectosBiofilicosOutro" name="aspectosBiofilicosOutro"></label>
                 </div>
                 <div>
                     <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
-                    <label><input type="checkbox" name="preocupacoesBiofilico[]" value="Orçamento limitado"> Orçamento limitado</label>
-                    <label><input type="checkbox" name="preocupacoesBiofilico[]" value="Manutenção de elementos naturais"> Manutenção dos elementos naturais (plantas, água)</label>
-                    <label><input type="checkbox" name="preocupacoesBiofilico[]" value="Compatibilidade com o estilo arquitetônico"> Compatibilidade com o estilo arquitetônico existente</label>
-                    <label><input type="checkbox" name="preocupacoesBiofilico[]" value="Impacto ambiental"> Impacto ambiental e sustentabilidade</label>
-                    <label><input type="checkbox" name="preocupacoesBiofilico[]" value="Outro" onchange="toggleOutro('preocupacoesBiofilicoOutro', this)"> Outro: <input type="text" id="preocupacoesBiofilicoOutro" name="preocupacoesBiofilicoOutro"></label>
+                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Orçamento limitado"> Orçamento limitado</label>
+                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Manutenção de elementos naturais"> Manutenção dos elementos naturais (plantas, água)</label>
+                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Compatibilidade com o estilo arquitetônico"> Compatibilidade com o estilo arquitetônico existente</label>
+                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Impacto ambiental"> Impacto ambiental e sustentabilidade</label>
+                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Outro" onchange="toggleOutro('Preocupações_com_design_Biofilico_(Outro)', this)"> Outro: <input type="text" id="preocupacoesBiofilicoOutro" name="preocupacoesBiofilicoOutro"></label>
                 </div>
                 <div>
                     <h3>Já implementou alguma solução biofílica anteriormente?</h3>
-                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="Sim, e gostaria de expandir ou melhorar" required> Sim, e gostaria de expandir ou melhorar</label>
-                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="Sim, mas não obtive os resultados esperados"> Sim, mas não obtive os resultados esperados</label>
-                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="Não, mas estou interessado em começar"> Não, mas estou interessado em começar</label>
-                    <label><input type="radio" name="solucaoBiofilicaAnterior" value="Não, e gostaria de entender melhor os benefícios"> Não, e gostaria de entender melhor os benefícios</label>
+                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Sim, e gostaria de expandir ou melhorar" required> Sim, e gostaria de expandir ou melhorar</label>
+                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Sim, mas não obtive os resultados esperados"> Sim, mas não obtive os resultados esperados</label>
+                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Não, mas estou interessado em começar"> Não, mas estou interessado em começar</label>
+                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Não, e gostaria de entender melhor os benefícios"> Não, e gostaria de entender melhor os benefícios</label>
                 </div>
                 <div>
                     <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
-                    <label><input type="radio" name="objetivoConsultoria" value="Receber orientação para um projeto futuro" required> Receber orientação para um projeto futuro</label>
-                    <label><input type="radio" name="objetivoConsultoria" value="Melhorar um espaço existente"> Melhorar um espaço existente</label>
-                    <label><input type="radio" name="radio" value="Aprender mais sobre os princípios do design biofílico"> Aprender mais sobre os princípios do design biofílico</label>
-                    <label><input type="radio" name="objetivoConsultoria" value="Avaliar a viabilidade de implementar elementos biofílicos"> Avaliar a viabilidade de implementar elementos biofílicos</label>
-                    <label><input type="radio" name="objetivoConsultoria" value="Outro" onchange="toggleOutro('objetivoConsultoriaOutro', this)"> Outro: <input type="text" id="objetivoConsultoriaOutro" name="objetivoConsultoriaOutro"></label>
+                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Receber orientação para um projeto futuro" required> Receber orientação para um projeto futuro</label>
+                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Melhorar um espaço existente"> Melhorar um espaço existente</label>
+                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Aprender mais sobre os princípios do design biofílico"> Aprender mais sobre os princípios do design biofílico</label>
+                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Avaliar a viabilidade de implementar elementos biofílicos"> Avaliar a viabilidade de implementar elementos biofílicos</label>
+                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Outro" onchange="toggleOutro('Objetivo_com_Consultoria_Design_biofilico_(Outro)', this)"> Outro: <input type="text" id="objetivoConsultoriaOutro" name="objetivoConsultoriaOutro"></label>
                 </div>
                 <button type="submit" class="submit-button">Enviar Respostas</button>
             </form>
