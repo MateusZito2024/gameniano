@@ -112,6 +112,7 @@
             display: flex;
             transition: transform 0.5s ease;
             width: 100%;
+            height: 350px; /* Altura fixa para consistência */
         }
 
         .hero-card {
@@ -123,6 +124,11 @@
             box-sizing: border-box;
             text-align: center;
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
 
         .hero-card:hover {
@@ -133,16 +139,23 @@
         .hero-card h2 {
             font-family: var(--font-cinzel);
             font-size: 3.5em;
-            margin-bottom: 25px;
+            margin: 0 0 20px 0; /* Margem fixa */
             color: var(--gold);
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            line-height: 1.2; /* Consistência na altura da linha */
         }
 
         .hero-card p {
             font-size: 1.25em;
-            margin-bottom: 40px;
+            margin: 0 0 20px 0; /* Margem fixa */
             font-weight: 400;
             opacity: 0.9;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Limita a 2 linhas */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 40px; /* Altura mínima para consistência */
         }
 
         .hero-button {
@@ -157,6 +170,8 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             display: inline-block;
+            width: 200px; /* Largura fixa para consistência */
+            text-align: center;
         }
 
         .hero-button.youtube {
@@ -302,7 +317,7 @@
         }
 
         .play-button:hover {
-            background-color: #cc0000;
+ cinq            background-color: #cc0000;
             transform: translate(-50%, -50%) scale(1.05);
         }
 
@@ -707,6 +722,10 @@
             }
             .hero-card p {
                 font-size: 1.1em;
+                min-height: 36px; /* Ajuste para responsividade */
+            }
+            .hero-carousel-container {
+                height: 300px; /* Ajuste para telas menores */
             }
         }
 
@@ -736,11 +755,16 @@
             }
             .hero-card p {
                 font-size: 1em;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
+                min-height: 32px; /* Ajuste para responsividade */
             }
             .hero-button {
                 padding: 14px 30px;
                 font-size: 1em;
+                width: 180px; /* Ajuste para responsividade */
+            }
+            .hero-carousel-container {
+                height: 250px; /* Ajuste para telas menores */
             }
         }
     </style>
