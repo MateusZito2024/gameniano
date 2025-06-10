@@ -317,7 +317,7 @@
         }
 
         .play-button:hover {
- cinq            background-color: #cc0000;
+            background-color: #cc0000;
             transform: translate(-50%, -50%) scale(1.05);
         }
 
@@ -497,32 +497,42 @@
         .carousel-card-content a:hover {
             background-color: var(--button-gold-hover);
         }
-
-        .carousel-nav {
+        
+        /* NOVOS ESTILOS PARA AS SETAS DO CARROSSEL */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(44, 44, 44, 0.7); /* var(--medium-gray) com transparência */
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 10;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
-        .carousel-nav button {
-            background-color: var(--medium-gray);
-            color: var(--text-light);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .carousel-nav button:hover {
+        .carousel-arrow:hover {
             background-color: var(--gold);
             color: var(--dark-background);
-            transform: translateY(-2px);
+            transform: translateY(-50%) scale(1.05);
         }
 
+        .prev-arrow {
+            left: 20px;
+        }
+
+        .next-arrow {
+            right: 20px;
+        }
+        
         /* Member Section */
         .member-section {
             padding: 80px 5%;
@@ -710,6 +720,18 @@
             }
         }
 
+        @media (max-width: 900px) {
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+                left: 10px;
+            }
+            .next-arrow {
+                right: 10px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .card-thumbnail-wrapper {
                 width: 300px;
@@ -812,9 +834,9 @@
                 </div>
             </div>
             <div class="slider-nav">
-                <span class="dot active" onclick="moveHeroCarousel(0)"></span>
-                <span class="dot" onclick="moveHeroCarousel(1)"></span>
-                <span class="dot" onclick="moveHeroCarousel(2)"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </section>
 
@@ -822,7 +844,7 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <div class="video-thumbnail-container" onclick="this.style.display='none'; document.getElementById('liveVideoIframe').src='https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0';">
+                    <div class="video-thumbnail-container">
                         <img src="https://i.imgur.com/K3f2m1H.png" alt="Live Tarot Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
@@ -834,14 +856,6 @@
                         </div>
                     </div>
                     <iframe id="liveVideoIframe" src="" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%; display: none;"></iframe>
-                    <script>
-                        document.querySelector('.video-thumbnail-container').addEventListener('click', function() {
-                            this.style.display = 'none';
-                            const iframe = document.getElementById('liveVideoIframe');
-                            iframe.src = 'https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0';
-                            iframe.style.display = 'block';
-                        });
-                    </script>
                 </div>
                 <div class="live-chat">
                     O chat está desativado para esta transmissão ao vivo.
@@ -894,10 +908,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-nav">
-                    <button onclick="moveCarousel(-1)">Anterior</button>
-                    <button onclick="moveCarousel(1)">Próximo</button>
-                </div>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
 
@@ -946,10 +958,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-nav">
-                    <button onclick="moveCarousel(-1)">Anterior</button>
-                    <button onclick="moveCarousel(1)">Próximo</button>
-                </div>
+                 <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
     </main>
@@ -993,6 +1003,14 @@
     </footer>
 
     <script>
+        // Live Video Player
+        document.querySelector('.video-thumbnail-container').addEventListener('click', function() {
+            this.style.display = 'none';
+            const iframe = document.getElementById('liveVideoIframe');
+            iframe.src = 'https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0?autoplay=1'; // Added autoplay
+            iframe.style.display = 'block';
+        });
+
         // Hero Carousel
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -1007,48 +1025,63 @@
             });
         }
 
-        function moveHeroCarousel(index) {
-            currentHeroIndex = index;
-            updateHeroCarousel();
-        }
-
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => moveHeroCarousel(index));
+            dot.addEventListener('click', () => {
+                currentHeroIndex = index;
+                updateHeroCarousel();
+            });
         });
-
-        // Auto-play for hero carousel (5 seconds)
-        setInterval(() => {
+        
+        let heroAutoPlay = setInterval(() => {
             currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
             updateHeroCarousel();
         }, 5000);
 
-        // Carousels for Últimos Vídeos and Mais Vistos
-        const carousels = document.querySelectorAll('.carousel');
-        carousels.forEach(carousel => {
+        // Carousels for Últimos Vídeos and Mais Vistos (SCRIPT ATUALIZADO)
+        document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
+            if (!container) return;
+            
             const cards = container.querySelectorAll('.carousel-card');
+            const prevButton = carousel.querySelector('.prev-arrow');
+            const nextButton = carousel.querySelector('.next-arrow');
             let currentIndex = 0;
+            
+            if (cards.length <= 1) {
+                if(prevButton) prevButton.style.display = 'none';
+                if(nextButton) nextButton.style.display = 'none';
+                return; 
+            }
 
-            function updateCarousel() {
+            function updateCarouselPosition() {
                 container.style.transform = `translateX(-${currentIndex * 100}%)`;
             }
 
             function moveCarousel(direction) {
                 currentIndex += direction;
-                if (currentIndex >= cards.length) currentIndex = 0;
-                if (currentIndex < 0) currentIndex = cards.length - 1;
-                updateCarousel();
+                if (currentIndex >= cards.length) {
+                    currentIndex = 0;
+                }
+                if (currentIndex < 0) {
+                    currentIndex = cards.length - 1;
+                }
+                updateCarouselPosition();
+            }
+            
+            let autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
+
+            function setupNavAction(button, direction) {
+                 if (button) {
+                    button.addEventListener('click', () => {
+                        moveCarousel(direction);
+                        clearInterval(autoPlayInterval);
+                        autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
+                    });
+                }
             }
 
-            carousel.querySelectorAll('.carousel-nav button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const direction = button.textContent === 'Próximo' ? 1 : -1;
-                    moveCarousel(direction);
-                });
-            });
-
-            // Auto-play (5 seconds)
-            setInterval(() => moveCarousel(1), 5000);
+            setupNavAction(prevButton, -1);
+            setupNavAction(nextButton, 1);
         });
     </script>
 </body>
