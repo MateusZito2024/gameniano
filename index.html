@@ -89,7 +89,7 @@
         .hero-section {
             position: relative;
             height: 520px;
-            background-image: url('ADICIONAR BANNER DE CABEÇALHO');
+            background-image: url('https://i.imgur.com/gK2T32E.png');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -112,7 +112,7 @@
             display: flex;
             transition: transform 0.5s ease;
             width: 100%;
-            height: 350px; /* Altura fixa para consistência */
+            height: 350px;
         }
 
         .hero-card {
@@ -139,23 +139,23 @@
         .hero-card h2 {
             font-family: var(--font-cinzel);
             font-size: 3.5em;
-            margin: 0 0 20px 0; /* Margem fixa */
+            margin: 0 0 20px 0;
             color: var(--gold);
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-            line-height: 1.2; /* Consistência na altura da linha */
+            line-height: 1.2;
         }
 
         .hero-card p {
             font-size: 1.25em;
-            margin: 0 0 20px 0; /* Margem fixa */
+            margin: 0 0 20px 0;
             font-weight: 400;
             opacity: 0.9;
             display: -webkit-box;
-            -webkit-line-clamp: 2; /* Limita a 2 linhas */
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            min-height: 40px; /* Altura mínima para consistência */
+            min-height: 40px;
         }
 
         .hero-button {
@@ -170,7 +170,7 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             display: inline-block;
-            width: 200px; /* Largura fixa para consistência */
+            width: 200px;
             text-align: center;
         }
 
@@ -372,7 +372,7 @@
             background-color: var(--medium-gray);
             padding: 30px;
             border-radius: 8px;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -497,13 +497,12 @@
         .carousel-card-content a:hover {
             background-color: var(--button-gold-hover);
         }
-        
-        /* NOVOS ESTILOS PARA AS SETAS DO CARROSSEL */
+
         .carousel-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(44, 44, 44, 0.7); /* var(--medium-gray) com transparência */
+            background-color: rgba(44, 44, 44, 0.7);
             color: var(--text-light);
             border: 1px solid var(--border-color);
             width: 45px;
@@ -532,7 +531,7 @@
         .next-arrow {
             right: 20px;
         }
-        
+
         /* Member Section */
         .member-section {
             padding: 80px 5%;
@@ -551,7 +550,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+            background-image: url('https://i.imgur.com/8Q0P2QW.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center;
@@ -731,7 +730,7 @@
                 right: 10px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .card-thumbnail-wrapper {
                 width: 300px;
@@ -744,10 +743,10 @@
             }
             .hero-card p {
                 font-size: 1.1em;
-                min-height: 36px; /* Ajuste para responsividade */
+                min-height: 36px;
             }
             .hero-carousel-container {
-                height: 300px; /* Ajuste para telas menores */
+                height: 300px;
             }
         }
 
@@ -778,15 +777,15 @@
             .hero-card p {
                 font-size: 1em;
                 margin-bottom: 20px;
-                min-height: 32px; /* Ajuste para responsividade */
+                min-height: 32px;
             }
             .hero-button {
                 padding: 14px 30px;
                 font-size: 1em;
-                width: 180px; /* Ajuste para responsividade */
+                width: 180px;
             }
             .hero-carousel-container {
-                height: 250px; /* Ajuste para telas menores */
+                height: 250px;
             }
         }
     </style>
@@ -829,7 +828,7 @@
                     <div class="hero-card">
                         <h2>Live Tarot</h2>
                         <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p>
-                        <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
+                        <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
                     </div>
                 </div>
             </div>
@@ -844,25 +843,25 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <div class="video-thumbnail-container">
-                        <img src="https://i.imgur.com/K3f2m1H.png" alt="Live Tarot Thumbnail">
+                    <div class="video-thumbnail-container" id="liveThumbnail">
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title">Live Tarot - Quinta 05/06 às 21h</div>
-                                <div class="time">05/06 | 21h</div>
+                                <div class="title">Live Tarot - Em Breve</div>
+                                <div class="time">Próxima live em breve</div>
                             </div>
-                            <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
                     </div>
-                    <iframe id="liveVideoIframe" src="" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%; display: none;"></iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
                 </div>
-                <div class="live-chat">
-                    O chat está desativado para esta transmissão ao vivo.
+                <div class="live-chat" id="liveChat">
+                    <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
                 </div>
             </div>
             <div class="social-share">
-                <p>Compartilhe Live Tarot – Quinta 05/06</p>
+                <p>Compartilhe Live Tarot – Próxima Transmissão</p>
                 <div class="share-icons">
                     <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://twitter.com/intent/tweet?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
@@ -958,7 +957,7 @@
                         </div>
                     </div>
                 </div>
-                 <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
@@ -971,7 +970,7 @@
             <div class="footer-social-icons">
                 <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://youtube.com/user/lendariotv" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://youtube.com/@Gameniano-x" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
@@ -1003,13 +1002,31 @@
     </footer>
 
     <script>
-        // Live Video Player
-        document.querySelector('.video-thumbnail-container').addEventListener('click', function() {
-            this.style.display = 'none';
-            const iframe = document.getElementById('liveVideoIframe');
-            iframe.src = 'https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0?autoplay=1'; // Added autoplay
-            iframe.style.display = 'block';
-        });
+        // Live Video Player and Chat Integration
+        const liveThumbnail = document.getElementById('liveThumbnail');
+        const liveVideoIframe = document.getElementById('liveVideoIframe');
+        const liveChat = document.getElementById('liveChat');
+        const channelUrl = 'https://www.youtube.com/@Gameniano-x';
+
+        // Função para verificar o estado da live usando o embed
+        function checkLiveStatus() {
+            // O embed do YouTube atualiza automaticamente quando há uma live ativa
+            // Aqui usamos um intervalo para verificar visualmente se o iframe está carregando uma live
+            const iframeDoc = liveVideoIframe.contentDocument || liveVideoIframe.contentWindow.document;
+            if (iframeDoc && iframeDoc.body && iframeDoc.body.innerHTML.includes('live')) {
+                liveThumbnail.style.display = 'none';
+                liveChat.style.display = 'block';
+                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelUrl)}&embed_domain=mateuszito2024.github.io/gameniano/`;
+            } else {
+                liveThumbnail.style.display = 'flex';
+                liveChat.style.display = 'none';
+                liveChat.querySelector('iframe').src = '';
+            }
+        }
+
+        // Verifica o status da live a cada 30 segundos
+        setInterval(checkLiveStatus, 30000);
+        checkLiveStatus(); // Verifica imediatamente ao carregar a página
 
         // Hero Carousel
         const heroCarousel = document.querySelector('.hero-carousel');
@@ -1031,26 +1048,26 @@
                 updateHeroCarousel();
             });
         });
-        
+
         let heroAutoPlay = setInterval(() => {
             currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
             updateHeroCarousel();
         }, 5000);
 
-        // Carousels for Últimos Vídeos and Mais Vistos (SCRIPT ATUALIZADO)
+        // Carousels for Últimos Vídeos and Mais Vistos
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
-            
+
             const cards = container.querySelectorAll('.carousel-card');
             const prevButton = carousel.querySelector('.prev-arrow');
             const nextButton = carousel.querySelector('.next-arrow');
             let currentIndex = 0;
-            
+
             if (cards.length <= 1) {
                 if(prevButton) prevButton.style.display = 'none';
                 if(nextButton) nextButton.style.display = 'none';
-                return; 
+                return;
             }
 
             function updateCarouselPosition() {
@@ -1067,11 +1084,11 @@
                 }
                 updateCarouselPosition();
             }
-            
+
             let autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
 
             function setupNavAction(button, direction) {
-                 if (button) {
+                if (button) {
                     button.addEventListener('click', () => {
                         moveCarousel(direction);
                         clearInterval(autoPlayInterval);
@@ -1084,5 +1101,3 @@
             setupNavAction(nextButton, 1);
         });
     </script>
-</body>
-</html>
