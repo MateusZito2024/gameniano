@@ -283,7 +283,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
+            display: none; /* Inicialmente oculto, pois o embed cuida da exibição */
             justify-content: center;
             align-items: center;
             background-color: black;
@@ -372,7 +372,7 @@
             background-color: var(--medium-gray);
             padding: 30px;
             border-radius: 8px;
-            display: none;
+            display: none; /* Inicialmente oculto */
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -1006,17 +1006,15 @@
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveVideoIframe = document.getElementById('liveVideoIframe');
         const liveChat = document.getElementById('liveChat');
-        const channelUrl = 'https://www.youtube.com/@Gameniano-x';
+        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do canal @Gameniano-x
 
-        // Função para verificar o estado da live usando o embed
+        // Função para verificar o estado da live (baseada no comportamento do embed)
         function checkLiveStatus() {
-            // O embed do YouTube atualiza automaticamente quando há uma live ativa
-            // Aqui usamos um intervalo para verificar visualmente se o iframe está carregando uma live
             const iframeDoc = liveVideoIframe.contentDocument || liveVideoIframe.contentWindow.document;
             if (iframeDoc && iframeDoc.body && iframeDoc.body.innerHTML.includes('live')) {
                 liveThumbnail.style.display = 'none';
                 liveChat.style.display = 'block';
-                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelUrl)}&embed_domain=mateuszito2024.github.io/gameniano/`;
+                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelId)}&embed_domain=yourdomain.com`;
             } else {
                 liveThumbnail.style.display = 'flex';
                 liveChat.style.display = 'none';
