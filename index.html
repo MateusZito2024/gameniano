@@ -277,50 +277,6 @@
             display: block;
         }
 
-        .video-thumbnail-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none; /* Inicialmente oculto, pois o embed cuida da exibição */
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-thumbnail-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 0, 0, 0.9);
-            border-radius: 10px;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            color: white;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        .play-button:hover {
-            background-color: #cc0000;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-
         .video-info-overlay {
             position: absolute;
             bottom: 0;
@@ -372,7 +328,7 @@
             background-color: var(--medium-gray);
             padding: 30px;
             border-radius: 8px;
-            display: none; /* Inicialmente oculto */
+            display: block; /* Sempre exibido */
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -843,21 +799,17 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                        <div class="video-info-overlay">
-                            <div>
-                                <div class="title">Live Tarot - Em Breve</div>
-                                <div class="time">Próxima live em breve</div>
-                            </div>
-                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+                    <iframe src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+                    <div class="video-info-overlay">
+                        <div>
+                            <div class="title">Live Tarot - Em Breve</div>
+                            <div class="time">Atualize a página quando a live começar</div>
                         </div>
+                        <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                     </div>
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
                 </div>
-                <div class="live-chat" id="liveChat">
-                    <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
+                <div class="live-chat">
+                    <iframe src="https://www.youtube.com/live_chat?channel=UC4qMNZEr7SPOcPyitB8VAhw&embed_domain=yourdomain.com" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
                 </div>
             </div>
             <div class="social-share">
@@ -1002,30 +954,6 @@
     </footer>
 
     <script>
-        // Live Video Player and Chat Integration
-        const liveThumbnail = document.getElementById('liveThumbnail');
-        const liveVideoIframe = document.getElementById('liveVideoIframe');
-        const liveChat = document.getElementById('liveChat');
-        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do canal @Gameniano-x
-
-        // Função para verificar o estado da live (baseada no comportamento do embed)
-        function checkLiveStatus() {
-            const iframeDoc = liveVideoIframe.contentDocument || liveVideoIframe.contentWindow.document;
-            if (iframeDoc && iframeDoc.body && iframeDoc.body.innerHTML.includes('live')) {
-                liveThumbnail.style.display = 'none';
-                liveChat.style.display = 'block';
-                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelId)}&embed_domain=yourdomain.com`;
-            } else {
-                liveThumbnail.style.display = 'flex';
-                liveChat.style.display = 'none';
-                liveChat.querySelector('iframe').src = '';
-            }
-        }
-
-        // Verifica o status da live a cada 30 segundos
-        setInterval(checkLiveStatus, 30000);
-        checkLiveStatus(); // Verifica imediatamente ao carregar a página
-
         // Hero Carousel
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
