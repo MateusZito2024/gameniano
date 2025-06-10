@@ -3,555 +3,1028 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link in Bio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Lendário TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Variáveis CSS para cores e fontes */
+        :root {
+            --dark-background: #0d0d0d;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2c2c2c;
+            --text-light: #f0f0f0;
+            --gold: #D4AF37;
+            --button-gold: #9e843c;
+            --button-gold-hover: #c4a148;
+            --red-youtube: #ff0000;
+            --border-color: #333;
+            --font-cinzel: 'Cinzel', serif;
+            --font-montserrat: 'Montserrat', sans-serif;
+        }
+
+        /* Reset básico e estilos gerais */
         body {
-            font-family: 'Roboto', sans-serif;
-            padding-bottom: 2rem;
+            font-family: var(--font-montserrat);
+            background-color: var(--dark-background);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--gold);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-gray);
+            padding: 15px 5%;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(45deg, #EDEDED, #F5F5F5, #D8D2CE, #A1958C);
-            background-size: 300% 300%;
-            animation: backgroundGradient 25s ease infinite;
-            overflow: hidden; /* Evita scroll quando o overlay estiver ativo */
+            border-bottom: 1px solid var(--border-color);
         }
 
-        @keyframes backgroundGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .logo img {
+            height: 45px;
+            margin-right: 10px;
         }
 
-        .card-container {
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 35px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 22px;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+        }
+
+        /* Hero Section */
+        .hero-section {
             position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 870px;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15);
-        }
-        .header-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 400px;
-            background-image: url('https://i.postimg.cc/RhDnDbgj/capa.png');
+            height: 520px;
+            background-image: url('https://i.imgur.com/gK2T32E.png');
             background-size: cover;
-            background-position: center top;
-            z-index: 2;
-        }
-        .new-profile-pic {
-            position: absolute;
-            top: 305px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background-image: url('https://i.postimg.cc/cJzhVKYr/1-A1-BF3-E5-3-CB5-4278-9480-63056-EF357-D9.jpg');
-            background-size: 150%;
-            background-position: center 25%;
-            z-index: 4;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            overflow: hidden;
         }
 
-        .bottom-section {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-carousel {
+            position: relative;
+            max-width: 700px;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, #EDEDED 0%, #F5F5F5 100%);
-            z-index: 1;
+            overflow: hidden;
         }
-        .logo-nome {
+
+        .hero-carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+
+        .hero-card {
+            min-width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 50px 70px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-card h2 {
+            font-family: var(--font-cinzel);
+            font-size: 3.5em;
+            margin-bottom: 25px;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-card p {
+            font-size: 1.25em;
+            margin-bottom: 40px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .hero-button {
+            background-color: var(--button-gold);
+            color: var(--dark-background);
+            padding: 18px 45px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+        }
+
+        .hero-button.youtube {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .hero-button.youtube:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+
+        .hero-button:hover {
+            background-color: var(--button-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .slider-nav {
             position: absolute;
-            top: 430px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 100px;
-            background-image: url('https://i.postimg.cc/9fDggrcM/logo-nome.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 5;
-        }
-        .button {
-            background-color: #A1958C;
-            color: white;
-            font-weight: 600;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            display: block;
-            width: 80%;
-            margin: 0 auto;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            z-index: 3;
-        }
-
-        .button:hover {
-            background-color: #8C827A;
-            cursor: pointer;
-        }
-
-        .footer {
-            margin-top: 0.8rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #A1958C;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .question-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(248, 248, 248, 0.95);
-            border-radius: 1rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-            padding: 2rem;
-            overflow-y: auto;
-            z-index: 999;
-            display: none;
-            flex-direction: column;
-            gap: 1.5rem;
-            animation: slideIn 0.3s forwards; /* Animação de entrada */
-        }
-
-        .question-card h3 {
-            font-weight: 700;
-            color: #A1958C;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .question-card label {
             display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: #4A4A4A;
-        }
-        .question-card .contact-input {
-            margin-bottom: 1rem;
-        }
-        .question-card .contact-input input {
-            border: 1px solid #D0D0D0;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            width: 100%;
-            margin-top: 0.25rem;
-            font-size: 1rem;
+            gap: 10px;
         }
 
-        .question-card input[type="radio"],
-        .question-card input[type="checkbox"] {
-            margin-right: 0.5rem;
-        }
-
-        .question-card input[type="text"] {
-            border: 1px solid #D0D0D0;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            width: 100%;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .question-card .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333333;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-card .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #A1958C;
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
             cursor: pointer;
-            z-index: 11;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        .question-card .submit-button {
-            background-color: #A1958C;
-            color: white;
-            font-weight: 600;
-            padding: 12px;
-            border-radius: 12px;
+        .dot.active {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* Títulos de Seção */
+        .section-title {
             text-align: center;
-            display: block;
-            width: 100%;
-            margin-top: 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .question-card .submit-button:hover {
-            background-color: #8C827A;
-        }
-
-        .show-card {
+            font-family: var(--font-cinzel);
+            font-size: 2.8em;
+            margin-bottom: 50px;
             display: flex;
-        }
-
-        .bottom-left-image {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 350px;
-            height: 350px;
-            background-image: url('https://i.postimg.cc/JhyQf3QX/Captura-de-tela-2025-06-03-224720-removebg-preview.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: bottom left;
-            z-index: 2;
-        }
-
-        .bottom-right-image {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-            background-image: url('https://i.postimg.cc/RVjypFmX/Captura-de-tela-2025-06-03-224735-removebg-preview.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: bottom right;
-            z-index: 2;
-        }
-
-        /* Novas regras para o overlay de sucesso */
-        #successOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+            position: relative;
         }
 
-        #successOverlay.show-overlay {
-            opacity: 1;
-            visibility: visible;
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 20px;
         }
 
-        #successOverlay .success-content {
-            background-color: #A1958C;
-            color: white;
-            padding: 3rem;
-            border-radius: 1rem;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transform: scale(0.8);
-            opacity: 0;
-            animation: popIn 0.4s forwards;
+        .section-title img {
+            height: 45px;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+
+        /* Live Section */
+        .live-section {
+            padding: 50px 5%;
+            margin-top: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
         }
 
-        #successOverlay .success-content.hide-content {
-            animation: popOut 0.3s forwards;
+        .live-content-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
-        #successOverlay .success-icon {
-            font-size: 4rem;
-            color: #d4edda; /* Um verde claro para o ícone de sucesso */
-            animation: bounceIn 0.6s forwards;
+        .live-video-player {
+            flex: 2;
+            background-color: #000;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
 
-        #successOverlay .success-message {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .live-video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
         }
 
-        #successOverlay .close-overlay-button {
-            background-color: white;
-            color: #A1958C;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
+        .video-thumbnail-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
             cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.9);
+            border-radius: 10px;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .play-button:hover {
+            background-color: #cc0000;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .video-info-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 1.1em;
+        }
+
+        .video-info-overlay .title {
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .video-info-overlay .time {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .video-info-overlay .youtube-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        .video-info-overlay .youtube-link i {
+            margin-right: 8px;
+            font-size: 1.4em;
+            color: var(--red-youtube);
+        }
+
+        .video-info-overlay .youtube-link:hover {
+            color: var(--gold);
+        }
+
+        .live-chat {
+            flex: 1;
+            background-color: var(--medium-gray);
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.15em;
+            color: #aaa;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-share {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .social-share p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .share-icons a {
+            color: var(--text-light);
+            background-color: var(--medium-gray);
+            font-size: 26px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
             transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        #successOverlay .close-overlay-button:hover {
-            background-color: #f0f0f0;
-            color: #8C827A;
+        .share-icons a:hover {
+            background-color: var(--gold);
+            color: var(--dark-background);
         }
 
-        /* Animações */
-        @keyframes slideIn {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+        /* Carousel Styles for Últimos Vídeos and Mais Vistos */
+        .carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
         }
 
-        @keyframes popOut {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: scale(0.8); opacity: 0; }
+        .carousel-card {
+            min-width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            height: 300px;
+            display: flex;
+            align-items: center;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
+        .carousel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
         }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <div class="card-container">
-        <div class="header-image"></div>
-        <div class="bottom-section"></div>
-        <div class="logo-nome"></div>
-        <div class="new-profile-pic"></div>
-        <div class="bottom-left-image"></div>
-        <div class="bottom-right-image"></div>
-        
-        <div class="relative z-20 flex flex-col items-center justify-start h-full p-6 pt-12 pb-12">
-            <div class="w-full space-y-3 mt-auto">
-                <a href="https://wa.me/5551998296951" target="_blank" class="button">WHATSAPP</a>
-                <a href="mailto:contato@citaarquitetura.com.br" target="_blank" class="button">E-MAIL</a>
-                <a href="#" id="projetoButton" class="button">ORÇAMENTO PARA PROJETO</a>
-                <a href="#" id="consultoriaButton" class="button">ORÇAMENTO PARA CONSULTORIA</a>
-            </div>
-        </div>
-        <div id="projectCard" class="question-card">
-            <button class="close-button" onclick="closeCard('projectCard')">×</button>
-            <h2 class="card-title">Projeto</h2>
-            <form action="https://formspree.io/f/mgvolbyv" method="POST" data-form-type="projeto">
-                <input type="hidden" name="Tipo" value="Orçamento para Projeto">
-                <div class="contact-input">
-                    <label for="nomeProjeto">Nome:</label>
-                    <input type="text" id="nomeProjeto" name="nome" required>
-                </div>
-                <div class="contact-input">
-                    <label for="emailProjeto">E-mail:</label>
-                    <input type="email" id="emailProjeto" name="email" required>
-                </div>
-                <div class="contact-input">
-                    <label for="whatsappProjeto">WhatsApp (com DDD):</label>
-                    <input type="tel" id="whatsappProjeto" name="whatsapp">
-                </div>
-                <div>
-                    <h3>Qual é o tipo de espaço que você deseja projetar?</h3>
-                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Residencial" required> Residencial (casa, apartamento)</label>
-                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Comercial"> Comercial (escritório, loja, restaurante)</label>
-                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Público"> Público (parque, praça, espaço comunitário)</label>
-                    <label><input type="radio" name="Qual_é_o_tipo_de_espaço_que_você_deseja_projetar?" value="Outro" onchange="toggleOutro('Tipo_de_Espaço_(Outro)', this)"> Outro: <input type="text" id="Tipo_de_Espaço_(Outro)" name="Tipo_de_Espaço_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Qual é o principal objetivo do seu projeto?</h3>
-                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Bem-estar" required> Melhorar o bem-estar e a saúde dos ocupantes</label>
-                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Produtividade"> Aumentar a produtividade e a criatividade</label>
-                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Estético"> Criar um ambiente esteticamente agradável e acolhedor</label>
-                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Sustentabilidade"> Promover a sustentabilidade e a conexão com a natureza</label>
-                    <label><input type="radio" name="Qual_é_o_principal_objetivo_do_seu_projeto?" value="Outro" onchange="toggleOutro('Objetivo_do_Projeto_(Outro)', this)"> Outro: <input type="text" id="Objetivo_do_Projeto_(Outro)" name="Objetivo_do_Projeto_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Quais elementos naturais você gostaria de incorporar?</h3>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Plantas"> Plantas e vegetação</label>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Água"> Água (fontes, espelhos d'água)</label>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Luz natural"> Luz natural</label>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Materiais orgânicos"> Materiais orgânicos (madeira, pedra, fibras naturais)</label>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Sons da natureza"> Sons da natureza (água correndo, canto de pássaros)</label>
-                    <label><input type="checkbox" name="Quais_elementos_naturais_você_gostaria_de_incorporar?" value="Outros" onchange="toggleOutro('Elementos_Naturais_(Outros)', this)"> Outros: <input type="text" id="Elementos_Naturais_(Outros)" name="Elementos_Naturais_(Outros)" disabled></label>
-                </div>
-                <div>
-                    <h3>Há alguma restrição ou desafio específico no espaço que devemos considerar?</h3>
-                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Limitações de espaço"> Limitações de espaço ou layout</label>
-                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Restrições orçamentárias"> Restrições orçamentárias</label>
-                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Normas de construção"> Normas de construção ou regulamentações locais</label>
-                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Necessidades especiais"> Necessidades especiais dos ocupantes (acessibilidade, alergias)</label>
-                    <label><input type="checkbox" name="Há_alguma_restrição_ou_desafio_específico_no_espaço_que_devemos_considerar?" value="Outro" onchange="toggleOutro('Restrições_ou_Desafios_(Outro)', this)"> Outro: <input type="text" id="Restrições_ou_Desafios_(Outro)" name="Restrições_ou_Desafios_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Qual é o prazo desejado para a conclusão do projeto?</h3>
-                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Curto prazo" required> Curto prazo (menos de 3 meses)</label>
-                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Médio prazo"> Médio prazo (3 a 6 meses)</label>
-                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Longo prazo"> Longo prazo (mais de 6 meses)</label>
-                    <label><input type="radio" name="Qual_é_o_prazo_desejado_para_a_conclusão_do_projeto?" value="Sem pressa"> Sem pressa, flexível</label>
-                </div>
-                <button type="submit" class="submit-button">Enviar Respostas</button>
-            </form>
-        </div>
-        <div id="consultoriaCard" class="question-card">
-            <button class="close-button" onclick="closeCard('consultoriaCard')">×</button>
-            <h2 class="card-title">Consultoria</h2>
-            <form action="https://formspree.io/f/mgvolbyv" method="POST" data-form-type="consultoria">
-                <input type="hidden" name="Tipo" value="Orçamento para Consultoria">
-                <div class="contact-input">
-                    <label for="nomeConsultoria">Nome:</label>
-                    <input type="text" id="nomeConsultoria" name="nome" required>
-                </div>
-                <div class="contact-input">
-                    <label for="emailConsultoria">E-mail:</label>
-                    <input type="email" id="emailConsultoria" name="email" required>
-                </div>
-                <div class="contact-input">
-                    <label for="whatsappConsultoria">WhatsApp (com DDD):</label>
-                    <input type="tel" id="whatsappConsultoria" name="whatsapp">
-                </div>
-                <div>
-                    <h3>Quais são os principais desafios ou problemas no seu espaço atual?</h3>
-                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Falta de conexão com a natureza"> Falta de conexão com a natureza</label>
-                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Ambientes estressantes"> Ambientes estressantes ou pouco acolhedores</label>
-                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Baixa produtividade"> Baixa produtividade ou bem-estar dos ocupantes</label>
-                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Problemas de sustentabilidade"> Problemas de sustentabilidade ou eficiência energética</label>
-                    <label><input type="checkbox" name="Quais_são_os_principais_desafios_ou_problemas_no_seu_espaço_atual?" value="Outro" onchange="toggleOutro('Desafios_no_Espaço_atual_(Outro)', this)"> Outro: <input type="text" id="Desafios_no_Espaço_atual_(Outro)" name="Desafios_no_Espaço_atual_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Que aspectos do design biofílico você está mais interessado em explorar?</h3>
-                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Integração de elementos naturais"> Integração de elementos naturais no design</label>
-                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Melhoria da qualidade do ar"> Melhoria da qualidade do ar e do ambiente interno</label>
-                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Materiais sustentáveis"> Uso de materiais sustentáveis e ecológicos</label>
-                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Espaços de relaxamento"> Criação de espaços de relaxamento e bem-estar</label>
-                    <label><input type="checkbox" name="Que_aspectos_do_design_biofílico_você_está_mais_interessado_em_explorar?" value="Outro" onchange="toggleOutro('Aspectos_Biofilicos_interessado_(Outro)', this)"> Outro: <input type="text" id="Aspectos_Biofilicos_interessado_(Outro)" name="Aspectos_Biofilicos_interessado_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Você tem alguma preocupação específica ao considerar o design biofílico?</h3>
-                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Orçamento limitado"> Orçamento limitado</label>
-                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Manutenção de elementos naturais"> Manutenção dos elementos naturais (plantas, água)</label>
-                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Compatibilidade com o estilo arquitetônico"> Compatibilidade com o estilo arquitetônico existente</label>
-                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Impacto ambiental"> Impacto ambiental e sustentabilidade</label>
-                    <label><input type="checkbox" name="Você_tem_alguma_preocupação_específica_ao_considerar_o_design_biofílico?" value="Outro" onchange="toggleOutro('Preocupações_com_design_Biofilico_(Outro)', this)"> Outro: <input type="text" id="Preocupações_com_design_Biofilico_(Outro)" name="Preocupações_com_design_Biofilico_(Outro)" disabled></label>
-                </div>
-                <div>
-                    <h3>Já implementou alguma solução biofílica anteriormente?</h3>
-                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Sim, e gostaria de expandir ou melhorar" required> Sim, e gostaria de expandir ou melhorar</label>
-                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Sim, mas não obtive os resultados esperados"> Sim, mas não obtive os resultados esperados</label>
-                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Não, mas estou interessado em começar"> Não, mas estou interessado em começar</label>
-                    <label><input type="radio" name="Já_implementou_alguma_solução_biofílica_anteriormente?" value="Não, e gostaria de entender melhor os benefícios"> Não, e gostaria de entender melhor os benefícios</label>
-                </div>
-                <div>
-                    <h3>Qual é o seu objetivo principal ao buscar consultoria em design biofílico?</h3>
-                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Receber orientação para um projeto futuro" required> Receber orientação para um projeto futuro</label>
-                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Melhorar um espaço existente"> Melhorar um espaço existente</label>
-                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Aprender mais sobre os princípios do design biofílico"> Aprender mais sobre os princípios do design biofílico</label>
-                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Avaliar a viabilidade de implementar elementos biofílicos"> Avaliar a viabilidade de implementar elementos biofílicos</label>
-                    <label><input type="radio" name="Qual_é_o_seu_objetivo_principal_ao_buscar_consultoria_em_design_biofílico?" value="Outro" onchange="toggleOutro('Objetivo_com_Consultoria_Design_biofilico_(Outro)', this)"> Outro: <input type="text" id="Objetivo_com_Consultoria_Design_biofilico_(Outro)" name="Objetivo_com_Consultoria_Design_biofilico_(Outro)" disabled></label>
-                </div>
-                <button type="submit" class="submit-button">Enviar Respostas</button>
-            </form>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>© 2025 Cità Arquitetura. Todos os direitos reservados.</p>
-    </footer>
 
-    <div id="successOverlay">
-        <div class="success-content">
-            <span class="success-icon">&#10003;</span> <p class="success-message">Mensagem enviada com sucesso!</p>
-            <button class="close-overlay-button" onclick="hideSuccessOverlay()">Fechar</button>
-        </div>
-    </div>
+        .card-thumbnail-wrapper {
+            width: 400px;
+            height: 100%;
+            margin-right: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
 
-    <script>
-        // Função para ativar/desativar campos "Outro"
-        function toggleOutro(inputId, radioOrCheckbox) {
-            const input = document.getElementById(inputId);
-            input.disabled = !radioOrCheckbox.checked;
-            if (!radioOrCheckbox.checked) {
-                input.value = '';
+        .carousel-card img {
+            flex-shrink: 0;
+            width: 100%;
+            height: 135%;
+        }
+
+        .carousel-card-content {
+            flex: 1;
+        }
+
+        .carousel-card-content h3 {
+            font-family: var(--font-cinzel);
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .carousel-card-content p {
+            font-size: 1.1em;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .carousel-card-content a {
+            background-color: var(--button-gold);
+            color: var(--dark-background);
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-card-content a:hover {
+            background-color: var(--button-gold-hover);
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .carousel-nav button {
+            background-color: var(--medium-gray);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .carousel-nav button:hover {
+            background-color: var(--gold);
+            color: var(--dark-background);
+            transform: translateY(-2px);
+        }
+
+        /* Member Section */
+        .member-section {
+            padding: 80px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            position: relative;
+            background-color: var(--dark-background);
+            overflow: hidden;
+        }
+
+        .decorative-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgur.com/8Q0P2QW.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .member-card {
+            background-color: var(--dark-gray);
+            padding: 50px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .member-card .youtube-logo {
+            font-size: 4em;
+            color: var(--red-youtube);
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .member-card h3 {
+            font-family: var(--font-cinzel);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .member-card p {
+            font-size: 1.15em;
+            margin-bottom: 35px;
+            color: #ccc;
+        }
+
+        .member-button {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .member-button:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+
+        .member-button .icon {
+            font-size: 1.3em;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--text-light);
+            padding: 60px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+
+        .footer-logo-section {
+            flex: 1;
+            min-width: 280px;
+            margin-right: 40px;
+        }
+
+        .footer-logo-section img {
+            height: 55px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-section p {
+            font-size: 0.95em;
+            color: #bbb;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .footer-social-icons a {
+            color: var(--text-light);
+            font-size: 24px;
+            margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-icons a:hover {
+            color: var(--gold);
+        }
+
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-around;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            font-size: 0.98em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column ul li a .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--gold);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.88em;
+            color: #888;
+            font-weight: 400;
+        }
+
+        /* Design Responsivo para o wrapper da thumbnail */
+        @media (max-width: 1200px) {
+            .card-thumbnail-wrapper {
+                width: 350px;
             }
         }
 
-        // Função para fechar os cards de formulário
-        function closeCard(cardId) {
-            document.getElementById(cardId).classList.remove('show-card');
+        @media (max-width: 768px) {
+            .card-thumbnail-wrapper {
+                width: 300px;
+            }
+            .carousel-card {
+                height: 250px;
+            }
+            .hero-card h2 {
+                font-size: 2.8em;
+            }
+            .hero-card p {
+                font-size: 1.1em;
+            }
         }
 
-        // Controle de visibilidade dos cards
-        document.getElementById('projetoButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('projectCard').classList.add('show-card');
-            document.getElementById('consultoriaCard').classList.remove('show-card');
-        });
-
-        document.getElementById('consultoriaButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('consultoriaCard').classList.add('show-card');
-            document.getElementById('projectCard').classList.remove('show-card');
-        });
-
-        // Função para mostrar o overlay de sucesso
-        function showSuccessOverlay() {
-            const overlay = document.getElementById('successOverlay');
-            const successContent = overlay.querySelector('.success-content');
-            
-            overlay.classList.add('show-overlay');
-            successContent.classList.remove('hide-content'); // Garante que a animação de entrada seja aplicada
+        @media (max-width: 480px) {
+            .card-thumbnail-wrapper {
+                width: 200px;
+            }
+            .carousel-card {
+                flex-direction: column;
+                height: auto;
+                align-items: flex-start;
+            }
+            .card-thumbnail-wrapper {
+                width: 100%;
+                height: 180px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .carousel-card-content {
+                width: 100%;
+            }
+            .hero-card {
+                padding: 30px;
+            }
+            .hero-card h2 {
+                font-size: 2em;
+            }
+            .hero-card p {
+                font-size: 1em;
+                margin-bottom: 30px;
+            }
+            .hero-button {
+                padding: 14px 30px;
+                font-size: 1em;
+            }
         }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Sorteio</a></li>
+                <li><a href="#">Vídeos</a></li>
+                <li><a href="#">Doação</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Consulta</a></li>
+            </ul>
+        </nav>
+        <div class="social-icons">
+            <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </header>
 
-        // Função para esconder o overlay de sucesso
-        function hideSuccessOverlay() {
-            const overlay = document.getElementById('successOverlay');
-            const successContent = overlay.querySelector('.success-content');
+    <main>
+        <section class="hero-section">
+            <div class="hero-carousel">
+                <div class="hero-carousel-container">
+                    <div class="hero-card">
+                        <h2>Agendar Consulta</h2>
+                        <p>Está em busca de clareza, direcionamento ou respostas?</p>
+                        <a href="#" class="hero-button">Agendar</a>
+                    </div>
+                    <div class="hero-card">
+                        <h2>Sorteio Semanal</h2>
+                        <p>Participe do nosso sorteio semanal para ganhar prêmios incríveis!</p>
+                        <a href="#" class="hero-button">Participar</a>
+                    </div>
+                    <div class="hero-card">
+                        <h2>Live Tarot</h2>
+                        <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p>
+                        <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <span class="dot active" onclick="moveHeroCarousel(0)"></span>
+                <span class="dot" onclick="moveHeroCarousel(1)"></span>
+                <span class="dot" onclick="moveHeroCarousel(2)"></span>
+            </div>
+        </section>
 
-            successContent.classList.add('hide-content'); // Ativa a animação de saída
-            successContent.addEventListener('animationend', function handler() {
-                overlay.classList.remove('show-overlay');
-                successContent.classList.remove('hide-content'); // Remove a classe para futuras exibições
-                successContent.removeEventListener('animationend', handler);
+        <section class="live-section">
+            <h2 class="section-title"><img src="https://i.imgur.com/vH1N9f9.png" alt="Estrela">LENDARIO LIVE</h2>
+            <div class="live-content-wrapper">
+                <div class="live-video-player">
+                    <div class="video-thumbnail-container" onclick="this.style.display='none'; document.getElementById('liveVideoIframe').src='https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0';">
+                        <img src="https://i.imgur.com/K3f2m1H.png" alt="Live Tarot Thumbnail">
+                        <div class="play-button"><i class="fas fa-play"></i></div>
+                        <div class="video-info-overlay">
+                            <div>
+                                <div class="title">Live Tarot - Quinta 05/06 às 21h</div>
+                                <div class="time">05/06 | 21h</div>
+                            </div>
+                            <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+                        </div>
+                    </div>
+                    <iframe id="liveVideoIframe" src="" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%; display: none;"></iframe>
+                    <script>
+                        document.querySelector('.video-thumbnail-container').addEventListener('click', function() {
+                            this.style.display = 'none';
+                            const iframe = document.getElementById('liveVideoIframe');
+                            iframe.src = 'https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0';
+                            iframe.style.display = 'block';
+                        });
+                    </script>
+                </div>
+                <div class="live-chat">
+                    O chat está desativado para esta transmissão ao vivo.
+                </div>
+            </div>
+            <div class="social-share">
+                <p>Compartilhe Live Tarot – Quinta 05/06</p>
+                <div class="share-icons">
+                    <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/intent/tweet?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://telegram.me/share/url?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20YOUR_VIDEO_URL" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20YOUR_VIDEO_URL"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="video-gallery">
+            <h2 class="section-title"><img src="https://i.imgur.com/0f6vF2d.png" alt="Mão">ÚLTIMOS VÍDEOS</h2>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" alt="Live Tarot - Quinta 10/06 às 21h">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Live Tarot - Quinta 10/06 às 21h</h3>
+                            <p>Transmissão ao vivo de tarot com leitura e interação ao vivo. Participe agora!</p>
+                            <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg" alt="Meditação Guiada - Conexão com a Água">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Meditação Guiada - Conexão com a Água</h3>
+                            <p>Uma meditação guiada para se conectar com o elemento água e encontrar equilíbrio.</p>
+                            <a href="https://youtu.be/OOXhnm_SA-0?si=5hfcpFlqA9Xgr0bU" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Entrevista - Bruxaria Moderna</h3>
+                            <p>Conversa com um especialista sobre as práticas da bruxaria moderna nos dias atuais.</p>
+                            <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button onclick="moveCarousel(-1)">Anterior</button>
+                    <button onclick="moveCarousel(1)">Próximo</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="member-section">
+            <div class="decorative-border"></div>
+            <div class="member-card">
+                <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
+                <h3>Torne-se membro do canal</h3>
+                <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor.</p>
+                <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+            </div>
+        </section>
+
+        <section class="most-viewed-section">
+            <h2 class="section-title"><img src="https://i.imgur.com/4WJ9r5T.png" alt="Olho">MAIS VISTOS</h2>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Traumas do Passado e o Elemento Água</h3>
+                            <p>Exploração dos traumas emocionais e como o elemento água pode ajudar na cura.</p>
+                            <a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/1Vt8p8JvifI/hqdefault.jpg" alt="Meditação Guiada - Mestre na Floresta">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Meditação Guiada - Mestre na Floresta</h3>
+                            <p>Uma jornada guiada para encontrar um mestre espiritual na floresta.</p>
+                            <a href="https://youtu.be/1Vt8p8JvifI?si=IFwwXKwp8v2GwHaW" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                    <div class="carousel-card">
+                        <div class="card-thumbnail-wrapper">
+                            <img src="https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg" alt="Sabedoria das Árvores">
+                        </div>
+                        <div class="carousel-card-content">
+                            <h3>Sabedoria das Árvores</h3>
+                            <p>Meditação para conectar com a sabedoria ancestral das árvores.</p>
+                            <a href="https://youtu.be/4BTOHbBTLq0?si=hRiDa6yX2Y5U5h1L" target="_blank">Assistir Agora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button onclick="moveCarousel(-1)">Anterior</button>
+                    <button onclick="moveCarousel(1)">Próximo</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo-section">
+            <img src="https://i.imgur.com/kP1oR24.png" alt="Lendário TV Logo">
+            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
+            <div class="footer-social-icons">
+                <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://youtube.com/user/lendariotv" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <ul>
+                    <li><a href="#"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul>
+                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
+        </div>
+    </footer>
+
+    <script>
+        // Hero Carousel
+        const heroCarousel = document.querySelector('.hero-carousel');
+        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+        const heroCards = heroContainer.querySelectorAll('.hero-card');
+        const dots = document.querySelectorAll('.dot');
+        let currentHeroIndex = 0;
+
+        function updateHeroCarousel() {
+            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentHeroIndex);
             });
         }
 
-        // Envio via AJAX para feedback ao usuário
-        document.querySelectorAll('.question-card form').forEach(form => {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(form);
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        showSuccessOverlay(); // Exibe o overlay de sucesso
-                        form.reset();
-                        form.closest('.question-card').classList.remove('show-card');
-                    } else {
-                        alert('Erro ao enviar o formulário. Verifique o endpoint do Formspree ou tente novamente.');
-                    }
-                })
-                .catch(error => {
-                    alert('Erro ao enviar o formulário: ' + error.message);
+        function moveHeroCarousel(index) {
+            currentHeroIndex = index;
+            updateHeroCarousel();
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => moveHeroCarousel(index));
+        });
+
+        // Auto-play for hero carousel (5 seconds)
+        setInterval(() => {
+            currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+            updateHeroCarousel();
+        }, 5000);
+
+        // Carousels for Últimos Vídeos and Mais Vistos
+        const carousels = document.querySelectorAll('.carousel');
+        carousels.forEach(carousel => {
+            const container = carousel.querySelector('.carousel-container');
+            const cards = container.querySelectorAll('.carousel-card');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            function moveCarousel(direction) {
+                currentIndex += direction;
+                if (currentIndex >= cards.length) currentIndex = 0;
+                if (currentIndex < 0) currentIndex = cards.length - 1;
+                updateCarousel();
+            }
+
+            carousel.querySelectorAll('.carousel-nav button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const direction = button.textContent === 'Próximo' ? 1 : -1;
+                    moveCarousel(direction);
                 });
             });
+
+            // Auto-play (5 seconds)
+            setInterval(() => moveCarousel(1), 5000);
         });
     </script>
 </body>
