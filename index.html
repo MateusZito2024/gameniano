@@ -297,89 +297,55 @@
             object-fit: cover;
             display: block;
         }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 0, 0, 0.9);
-            border-radius: 10px;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            color: white;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        .play-button:hover {
-            background-color: #cc0000;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-
-        .video-info-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-            padding: 20px;
-            box-sizing: border-box;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-size: 1.1em;
-        }
-
-        .video-info-overlay .title {
-            font-weight: 700;
-            font-size: 1.3em;
-            margin-bottom: 5px;
-            color: var(--text-light);
-        }
-
-        .video-info-overlay .time {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        .video-info-overlay .youtube-link {
-            display: flex;
-            align-items: center;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1em;
-        }
-
-        .video-info-overlay .youtube-link i {
-            margin-right: 8px;
-            font-size: 1.4em;
-            color: var(--red-youtube);
-        }
-
-        .video-info-overlay .youtube-link:hover {
-            color: var(--gold);
-        }
-
+        
         .live-chat {
             flex: 1;
             background-color: var(--medium-gray);
-            padding: 30px;
             border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        #live-chat-container{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+        }
+
+        .chat-offline-message {
             font-size: 1.15em;
             color: #aaa;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
+        
+        .chat-button {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-button:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+            color: white;
+        }
+
 
         .social-share {
             text-align: center;
@@ -829,7 +795,7 @@
                     <div class="hero-card">
                         <h2>Live Tarot</h2>
                         <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p>
-                        <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
+                        <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
                     </div>
                 </div>
             </div>
@@ -845,30 +811,24 @@
             <div class="live-content-wrapper">
                 <div class="live-video-player">
                     <div class="video-thumbnail-container">
-                        <img src="https://i.imgur.com/K3f2m1H.png" alt="Live Tarot Thumbnail">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                        <div class="video-info-overlay">
-                            <div>
-                                <div class="title">Live Tarot - Quinta 05/06 às 21h</div>
-                                <div class="time">05/06 | 21h</div>
-                            </div>
-                            <a href="https://www.youtube.com/user/lendariotv" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
-                        </div>
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live de Tarot - Offline">
                     </div>
                     <iframe id="liveVideoIframe" src="" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%; display: none;"></iframe>
                 </div>
                 <div class="live-chat">
-                    O chat está desativado para esta transmissão ao vivo.
+                     <div id="live-chat-container">
+                         <div class="chat-offline-message">A live está offline. <br>Clique na imagem ao lado para ativar o vídeo.</div>
+                    </div>
                 </div>
             </div>
             <div class="social-share">
-                <p>Compartilhe Live Tarot – Quinta 05/06</p>
+                <p>Compartilhe a Live do Lendário!</p>
                 <div class="share-icons">
-                    <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/intent/tweet?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://telegram.me/share/url?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20YOUR_VIDEO_URL" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20YOUR_VIDEO_URL"><i class="fas fa-envelope"></i></a>
+                    <a href="https://facebook.com/sharer/sharer.php?u=https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/intent/tweet?url=https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://telegram.me/share/url?url=https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0&text=Live%20Tarot" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </section>
@@ -1003,12 +963,32 @@
     </footer>
 
     <script>
-        // Live Video Player
+        // --- SCRIPT ATUALIZADO PARA LIVE 100% AUTOMÁTICA ---
         document.querySelector('.video-thumbnail-container').addEventListener('click', function() {
+            const YOUTUBE_CHANNEL_ID = 'UCd4d5h5nEo-ou-s3Y360J7w'; // ID do seu canal (Lendario TV)
+
+            const liveVideoIframe = document.getElementById('liveVideoIframe');
+            const chatContainer = document.getElementById('live-chat-container');
+            
+            // Link que sempre funciona para a live do seu canal
+            const liveStreamUrl = `https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=09`;
+            const livePageUrl = `https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS0`;
+
+            // 1. Esconde a thumbnail
             this.style.display = 'none';
-            const iframe = document.getElementById('liveVideoIframe');
-            iframe.src = 'https://www.youtube.com/embed/S_B7R1L92pM?autoplay=1&controls=0&modestbranding=1&rel=0?autoplay=1'; // Added autoplay
-            iframe.style.display = 'block';
+            
+            // 2. Carrega e exibe o player de vídeo automático
+            liveVideoIframe.src = liveStreamUrl;
+            liveVideoIframe.style.display = 'block';
+            
+            // 3. Atualiza a área de chat com um botão para abrir o chat no YouTube
+            chatContainer.innerHTML = `
+                <p style="color: #ccc; margin-bottom: 20px;">O chat está disponível na página do YouTube.</p>
+                <a href="${livePageUrl}" target="_blank" class="chat-button">
+                    <i class="fab fa-youtube"></i>
+                    Abrir Chat
+                </a>
+            `;
         });
 
         // Hero Carousel
@@ -1037,7 +1017,7 @@
             updateHeroCarousel();
         }, 5000);
 
-        // Carousels for Últimos Vídeos and Mais Vistos (SCRIPT ATUALIZADO)
+        // Carousels for Últimos Vídeos and Mais Vistos
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
