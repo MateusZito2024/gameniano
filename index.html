@@ -51,7 +51,8 @@
         }
 
         .logo img {
-            height: 45px;
+            /* 1. Logotipo do cabeçalho aumentado */
+            height: 55px;
             margin-right: 10px;
         }
 
@@ -248,15 +249,14 @@
 
         .live-content-wrapper {
             display: flex;
-            justify-content: center; /* Centraliza o player */
             width: 100%;
             max-width: 1200px;
+            gap: 40px;
             margin-bottom: 40px;
         }
 
         .live-video-player {
-            width: 100%; /* Ocupa toda a largura disponível */
-            max-width: 960px; /* Limita a largura máxima para não ficar gigante */
+            flex: 2;
             background-color: #000;
             aspect-ratio: 16 / 9;
             position: relative;
@@ -366,6 +366,14 @@
 
         .video-info-overlay .youtube-link:hover {
             color: var(--gold);
+        }
+
+        .live-chat {
+            flex: 1;
+            background-color: var(--medium-gray);
+            padding: 30px;
+            border-radius: 8px;
+            display: none;
         }
 
         .social-share {
@@ -622,7 +630,7 @@
         }
 
         .footer-logo-section img {
-            height: 55px;
+            height: 65px; 
             margin-bottom: 20px;
         }
 
@@ -731,9 +739,6 @@
             .hero-carousel-container {
                 height: 300px;
             }
-            .video-thumbnail-container {
-                width: 100%;
-            }
         }
 
         @media (max-width: 480px) {
@@ -794,6 +799,7 @@
         <div class="social-icons">
             <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Lendario/" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
     </header>
 
@@ -894,7 +900,6 @@
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
-
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
@@ -904,7 +909,6 @@
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
             </div>
         </section>
-
         <section class="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
             <div class="carousel">
@@ -945,7 +949,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -983,35 +986,34 @@
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
     </footer>
-
+    
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Load YouTube Player API
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // Video player state
+        const liveThumbnail = document.getElementById('liveThumbnail');
+        const liveChat = document.getElementById('liveChat');
         let player;
+
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('liveVideoIframe', {
                 events: {
+                    'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 }
             });
         };
-
-        function onPlayerStateChange(event) {
-            const thumbnailContainer = document.getElementById('liveThumbnail');
-            const liveChat = document.getElementById('liveChat');
-            if (event.data === YT.PlayerState.PLAYING) {
-                thumbnailContainer.classList.add('hidden');
-            } else {
-                thumbnailContainer.classList.remove('hidden');
-            }
+        
+        function onPlayerReady(event) {
+            event.target.playVideo();
         }
 
-        // Hero Carousel
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                liveThumbnail.classList.add('hidden');
+            } else {
+                liveThumbnail.classList.remove('hidden');
+            }
+        }
+        
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
         const heroCards = heroContainer.querySelectorAll('.hero-card');
@@ -1042,7 +1044,6 @@
             updateHeroCarousel();
         }, 5000);
 
-        // Carousels for Últimos Vídeos and Mais Vistos
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
