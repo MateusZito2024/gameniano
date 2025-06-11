@@ -184,14 +184,14 @@
         .video-card-vertical .watch-button:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
 
         .video-carousel-section .carousel-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
+            position: absolute; top: 50%; transform: translateY(calc(-50% + 25px)); background-color: rgba(44, 44, 44, 0.8);
             color: var(--text-light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%;
             font-size: 1.5em; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
         }
         .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
         .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
         .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
-        .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+        .video-carousel-section .carousel-arrow.disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
         
         .member-section {
             padding: 80px 5%; display: flex; justify-content: center; align-items: center;
@@ -318,15 +318,17 @@
                 <button class="filter-btn" data-filter="elementos">Elementos</button>
             </div>
             <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <div class="video-carousel-container">
                     <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" alt="Poder espiritual do tigre" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" alt="Poderoso Desbloqueio com as Águas" class="thumbnail"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" class="thumbnail" alt="Entrevista - Bruxaria Moderna"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" class="thumbnail" alt="O poder espiritual do lobo"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" class="thumbnail" alt="Poderoso Desbloqueio com as Águas"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Meditação guiada para usar a energia da água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" class="thumbnail" alt="Poder espiritual do tigre"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/762/hqdefault.jpg" class="thumbnail" alt="Evento Tarot Arthuriano"> <div class="video-info"> <h3>Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma conversa especial sobre as lendas do Rei Arthur e sua conexão com o Tarot.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" class="thumbnail" alt="Traumas e o Elemento Água"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" class="thumbnail" alt="O poder espiritual do cavalo"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/37707/hqdefault.jpg" class="thumbnail" alt="O poder espiritual da borboleta"> <div class="video-info"> <h3>O poder espiritual da borboleta</h3> <p class="description">Descubra a magia da transformação e renovação através do totem da borboleta.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
@@ -352,20 +354,23 @@
                 <button class="filter-btn" data-filter="eventos">Eventos</button>
             </div>
             <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <div class="video-carousel-container">
                     <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/193603/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" alt="Meditação Guiada - Projeção Astral" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Explore outros planos e expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" alt="Como aprender a ler Tarot" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">Entenda a jornada do iniciado na espiritualidade e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/4450/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/762/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/193603/hqdefault.jpg" class="thumbnail" alt="Descubra seu animal de poder"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Jornada de desbloqueio espiritual para encontrar seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" class="thumbnail" alt="Como aprender a ler Tarot"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">A jornada do iniciado e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" class="thumbnail" alt="Meditação Guiada - Projeção Astral"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" class="thumbnail" alt="Live de Tarot"> <div class="video-info"> <h3>Live de Tarot (Evento)</h3> <p class="description">Gravação de evento ao vivo de tarot com leitura e interação com o público.</p> <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/4450/hqdefault.jpg" class="thumbnail" alt="Quantos animais de poder temos?"> <div class="video-info"> <h3>Quantos animais de poder temos?</h3> <p class="description">Ensinamentos sobre os diferentes guias que nos acompanham na vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/30744/hqdefault.jpg" class="thumbnail" alt="Meditação - Encontrando Um Mestre"> <div class="video-info"> <h3>Meditação - Encontrando Um Mestre</h3> <p class="description">Uma jornada guiada para se conectar com um mestre espiritual na floresta.</p> <a href="http://www.youtube.com/watch?v=HDM4PWRs7aA" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" class="thumbnail" alt="Meditação - Conexão Espiritual"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17260/hqdefault.jpg" class="thumbnail" alt="Limpando o karma de vidas passadas"> <div class="video-info"><h3>Limpando o karma de vidas passadas</h3><p class="description">Ensinamentos sobre como entender e purificar o karma de existências anteriores.</p><a href="http://www.youtube.com/watch?v=oc36aFCPcTQ" target="_blank" class="watch-button">Assistir</a></div></div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
+        
     </main>
     
     <footer>
@@ -415,51 +420,51 @@
 
     let player;
     window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('liveVideoIframe', {
-            events: { 'onStateChange': onPlayerStateChange }
-        });
+        if (document.getElementById('liveVideoIframe')) {
+            player = new YT.Player('liveVideoIframe', {
+                events: { 'onStateChange': onPlayerStateChange }
+            });
+        }
     };
 
     function onPlayerStateChange(event) {
         const thumbnailContainer = document.getElementById('liveThumbnail');
-        if(!thumbnailContainer) return;
-        if (event.data === YT.PlayerState.PLAYING) {
-            thumbnailContainer.classList.add('hidden');
-        } else {
-            thumbnailContainer.classList.remove('hidden');
-        }
-    }
-    
-    const heroCarousel = document.querySelector('.hero-carousel');
-    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-    const heroCards = heroContainer.querySelectorAll('.hero-card');
-    const dots = document.querySelectorAll('.dot');
-    let currentHeroIndex = 0;
-
-    function updateHeroCarousel() {
-        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentHeroIndex);
-        });
+        if (!thumbnailContainer) return;
+        thumbnailContainer.classList.toggle('hidden', event.data === YT.PlayerState.PLAYING);
     }
 
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentHeroIndex = index;
-            updateHeroCarousel();
-            clearInterval(heroAutoPlay);
+    const heroContainer = document.querySelector('.hero-carousel-container');
+    if (heroContainer) {
+        const dots = document.querySelectorAll('.dot');
+        const heroCards = heroContainer.querySelectorAll('.hero-card');
+        let currentHeroIndex = 0;
+        let heroAutoPlay;
+
+        const updateHeroCarousel = () => {
+            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentHeroIndex));
+        };
+
+        const startHeroAutoplay = () => {
+            stopHeroAutoplay();
             heroAutoPlay = setInterval(() => {
                 currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
                 updateHeroCarousel();
             }, 5000);
+        };
+
+        const stopHeroAutoplay = () => clearInterval(heroAutoPlay);
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentHeroIndex = index;
+                updateHeroCarousel();
+                startHeroAutoplay();
+            });
         });
-    });
-
-    let heroAutoPlay = setInterval(() => {
-        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-        updateHeroCarousel();
-    }, 5000);
-
+        
+        startHeroAutoplay();
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
         function setupFilterableCarousel(sectionId) {
@@ -478,30 +483,38 @@
 
             const moveNext = () => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                const totalVisible = visibleCards.length;
+                if (visibleCards.length === 0) return;
+                
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                const cardWidth = visibleCards.length > 0 ? visibleCards[0].offsetWidth : 0;
-                const gap = cardWidth > 0 ? parseInt(window.getComputedStyle(track).gap) || 25 : 0;
-                const cardsInView = cardWidth > 0 ? Math.floor(containerWidth / (cardWidth + gap)) : 0;
-                
-                const maxIndex = Math.max(0, totalVisible - cardsInView);
-                
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
+                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
+
                 if (totalVisible > cardsInView) {
-                    currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
-                    updateCarouselState();
+                     currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
+                     updateCarouselState(false); 
                 }
             };
             
             const startAutoplay = () => {
                 stopAutoplay();
-                autoplayInterval = setInterval(moveNext, 5000);
+                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                const cardWidth = visibleCards.length > 0 ? visibleCards[0].offsetWidth : 0;
+                const gap = cardWidth > 0 ? parseInt(window.getComputedStyle(track).gap) || 25 : 0;
+                const cardsInView = cardWidth > 0 ? Math.floor((containerWidth + gap) / (cardWidth + gap)) : 0;
+
+                if (visibleCards.length > cardsInView) {
+                    autoplayInterval = setInterval(moveNext, 5000);
+                }
             };
 
             const stopAutoplay = () => {
                 clearInterval(autoplayInterval);
             };
 
-            const updateCarouselState = () => {
+            const updateCarouselState = (resetAutoplay = true) => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
                 const totalVisible = visibleCards.length;
                 
@@ -516,7 +529,7 @@
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
                 
                 const maxIndex = Math.max(0, totalVisible - cardsInView);
 
@@ -524,15 +537,13 @@
                 if (currentIndex < 0) currentIndex = 0;
 
                 prevBtn.classList.toggle('disabled', currentIndex === 0);
-                nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
+                nextBtn.classList.toggle('disabled', currentIndex >= maxIndex || totalVisible <= cardsInView);
                 
                 const offset = currentIndex * (cardWidth + gap);
                 track.style.transform = `translateX(-${offset}px)`;
 
-                if (totalVisible > cardsInView) {
-                    startAutoplay();
-                } else {
-                    stopAutoplay();
+                if (resetAutoplay) {
+                   startAutoplay();
                 }
             };
 
@@ -561,9 +572,10 @@
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
+                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
                 
-                if (currentIndex < visibleCards.length - cardsInView) {
+                if (currentIndex < maxIndex) {
                     currentIndex++;
                     updateCarouselState();
                 }
