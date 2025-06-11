@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* CSS com as alterações para implementar a sua ideia de "camadas" */
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
@@ -60,26 +61,28 @@
         .live-content-wrapper { display: flex; width: 100%; max-width: 1200px; gap: 40px; margin-bottom: 40px; }
         .live-video-player { flex: 2; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
         
-        /* O iframe começa escondido */
-        #liveVideoIframe { display: none; }
+        /* O vídeo fica na camada de baixo */
+        .live-video-player iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            z-index: 1;
+        }
         
-        /* A thumbnail começa visível */
-        .video-thumbnail-container { display: flex; }
-
-        .live-video-player iframe { width: 100%; height: 100%; border: none; }
+        /* A thumbnail fica na camada de cima, como um "pop-up" */
         .video-thumbnail-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; 
+            justify-content: center; align-items: center;
             background-color: black;
-            cursor: default;
-            transition: opacity 0.3s ease;
-            z-index: 10;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            z-index: 2;
         }
+
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -265,7 +268,6 @@
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
-
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
@@ -275,7 +277,6 @@
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
             </div>
         </section>
-
         <section class="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
             <div class="carousel">
@@ -316,7 +317,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -354,51 +354,40 @@
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
     </footer>
-
+    
     <script src="https://www.youtube.com/iframe_api"></script>
     
     <script>
-        // Bloco 1: Lógica do Player (a única parte que realmente precisa ser diferente do seu original)
+        // Bloco 1: Lógica do Player
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveVideoIframe = document.getElementById('liveVideoIframe');
         const liveChat = document.getElementById('liveChat');
         let player;
 
-        // Esta função é o "interfone" que o YouTube chama quando está pronto
+        // Esta função é o "interfone" que o YouTube chama.
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('liveVideoIframe', {
                 events: {
                     'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange,
-                    'onError': onPlayerError
+                    'onStateChange': onPlayerStateChange
                 }
             });
         };
-
-        // Quando o player carrega, ele tenta tocar o vídeo
+        
+        // Quando o player carrega, ele tenta tocar o vídeo.
         function onPlayerReady(event) {
             event.target.playVideo();
         }
 
         // Quando o status do vídeo muda...
         function onPlayerStateChange(event) {
-            // Se o vídeo começar a tocar...
+            // Se o vídeo começar a tocar, escondemos a thumbnail.
             if (event.data === YT.PlayerState.PLAYING) {
-                // Escondemos a thumbnail e mostramos o vídeo.
                 liveThumbnail.style.display = 'none';
-                liveVideoIframe.style.display = 'block';
                 liveChat.style.display = 'block';
             }
         }
-
-        // Se o YouTube der um erro (live offline)...
-        function onPlayerError(event) {
-            // Escondemos o vídeo e garantimos que a thumbnail apareça.
-            liveVideoIframe.style.display = 'none';
-            liveThumbnail.style.display = 'flex';
-            liveChat.style.display = 'none';
-        }
-
+        
         // Bloco 2: Lógica dos Carrosséis (SEU CÓDIGO ORIGINAL, 100% INTACTO)
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
