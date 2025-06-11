@@ -248,14 +248,15 @@
 
         .live-content-wrapper {
             display: flex;
+            justify-content: center; /* Centraliza o player */
             width: 100%;
             max-width: 1200px;
-            gap: 40px;
             margin-bottom: 40px;
         }
 
         .live-video-player {
-            flex: 2;
+            width: 100%; /* Ocupa toda a largura disponível */
+            max-width: 960px; /* Limita a largura máxima para não ficar gigante */
             background-color: #000;
             aspect-ratio: 16 / 9;
             position: relative;
@@ -269,27 +270,26 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             border: none;
-            z-index: 1; 
+            z-index: 1;
         }
-        
+
         .video-thumbnail-container {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: black;
-            cursor: default;
-            z-index: 2; 
-            opacity: 1;
-            transition: opacity 0.5s ease;
-            pointer-events: none; /* Deixa o clique "atravessar" para o vídeo */
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.3s ease;
         }
 
-        /* Classe que faz a thumbnail desaparecer */
         .video-thumbnail-container.hidden {
-            opacity: 0;
+            display: none;
         }
 
         .video-thumbnail-container img {
@@ -366,20 +366,6 @@
 
         .video-info-overlay .youtube-link:hover {
             color: var(--gold);
-        }
-
-        .live-chat {
-            flex: 1;
-            background-color: var(--medium-gray);
-            padding: 30px;
-            border-radius: 8px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 1.15em;
-            color: #aaa;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         .social-share {
@@ -843,13 +829,7 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" 
-                            src="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS2" 
-                            title="Live Tarot" 
-                            frameborder="0" 
-                            allow="autoplay; encrypted-media" 
-                            allowfullscreen>
-                    </iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -861,9 +841,6 @@
                             <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
                     </div>
-                </div>
-                <div class="live-chat" id="liveChat">
-                    <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
                 </div>
             </div>
             <div class="social-share">
@@ -1006,53 +983,35 @@
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
     </footer>
-    
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        // Bloco 1: Lógica do Player e do Chat
-        const liveThumbnail = document.getElementById('liveThumbnail');
-        const liveChat = document.getElementById('liveChat');
-        let player;
 
+    <script>
+        // Load YouTube Player API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Video player state
+        let player;
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('liveVideoIframe', {
                 events: {
-                    'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 }
             });
         };
-        
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
 
         function onPlayerStateChange(event) {
-            const chatIframe = liveChat.querySelector('iframe');
-            
+            const thumbnailContainer = document.getElementById('liveThumbnail');
+            const liveChat = document.getElementById('liveChat');
             if (event.data === YT.PlayerState.PLAYING) {
-                liveThumbnail.classList.add('hidden');
-                
-                const videoId = event.target.getVideoData().video_id;
-                if (videoId) {
-                    // ATENÇÃO: Se o chat não funcionar, pode ser necessário trocar
-                    // "mateuszito2024.github.io" pelo seu domínio final.
-                    const embedDomain = "mateuszito2024.github.io"; 
-                    const chatUrl = `https://www.youtube.com/live_chat?v=VIDEO_ID&embed_domain={videoId}&embed_domain=${embedDomain}`;
-                    
-                    if (chatIframe.src !== chatUrl) {
-                        chatIframe.src = chatUrl;
-                    }
-                }
-                liveChat.style.display = 'block';
-
+                thumbnailContainer.classList.add('hidden');
             } else {
-                liveThumbnail.classList.remove('hidden');
-                liveChat.style.display = 'none';
+                thumbnailContainer.classList.remove('hidden');
             }
         }
-        
-        // Bloco 2: Lógica dos Carrosséis (SEU CÓDIGO ORIGINAL, 100% INTACTO)
+
+        // Hero Carousel
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
         const heroCards = heroContainer.querySelectorAll('.hero-card');
@@ -1083,6 +1042,7 @@
             updateHeroCarousel();
         }, 5000);
 
+        // Carousels for Últimos Vídeos and Mais Vistos
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
