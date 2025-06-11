@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS original, com as únicas linhas alteradas para garantir o resultado */
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
@@ -60,20 +59,26 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; width: 100%; max-width: 1200px; gap: 40px; margin-bottom: 40px; }
         .live-video-player { flex: 2; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .live-video-player iframe { width: 100%; height: 100%; border: none; display: block; position: absolute; top: 0; left: 0; z-index: 1; /* Posição do vídeo no fundo */ }
+        
+        /* O iframe começa escondido */
+        #liveVideoIframe { display: none; }
+        
+        /* A thumbnail começa visível */
+        .video-thumbnail-container { display: flex; }
+
+        .live-video-player iframe { width: 100%; height: 100%; border: none; }
         .video-thumbnail-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex; /* Garante que está visível */
             justify-content: center;
             align-items: center;
             background-color: black;
-            cursor: pointer;
+            cursor: default;
             transition: opacity 0.3s ease;
-            z-index: 2; /* Posição da thumbnail por cima do vídeo */
+            z-index: 10;
         }
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
@@ -186,7 +191,13 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" 
+                            src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1?enablejsapi=1&origin=https://lendario.tv?enablejsapi=1&autoplay=1&mute=1" 
+                            title="Live Tarot" 
+                            frameborder="0" 
+                            allow="autoplay; encrypted-media" 
+                            allowfullscreen>
+                    </iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -343,74 +354,96 @@
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
     </footer>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
     
     <script>
-        // ÚNICA ALTERAÇÃO NO JAVASCRIPT: Adicionando uma linha para fazer a thumbnail desaparecer com um clique.
-        // Sua lógica original está 100% intacta abaixo.
-        document.getElementById('liveThumbnail').addEventListener('click', function() {
-            this.style.display = 'none';
-        });
-
-        // SEU CÓDIGO ORIGINAL - 100% INTACTO
+        // Bloco 1: Lógica do Player (a única parte que realmente precisa ser diferente do seu original)
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveVideoIframe = document.getElementById('liveVideoIframe');
         const liveChat = document.getElementById('liveChat');
-        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do canal @Gameniano-x
-        function checkLiveStatus() {
-            const iframeDoc = liveVideoIframe.contentDocument || liveVideoIframe.contentWindow.document;
-            if (iframeDoc && iframeDoc.body && iframeDoc.body.innerHTML.includes('live')) {
-                liveThumbnail.style.display = 'none';
-                liveChat.style.display = 'block';
-                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelId)}&embed_domain=mateuszito2024.github.io`;
-                const src = liveVideoIframe.src;
-                if (!src.includes('mute=1')) {
-                    liveVideoIframe.src = `${src}&mute=1`;
+        let player;
+
+        // Esta função é o "interfone" que o YouTube chama quando está pronto
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('liveVideoIframe', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
                 }
-                liveVideoIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            } else {
-                liveThumbnail.style.display = 'flex';
-                liveChat.style.display = 'none';
-                liveChat.querySelector('iframe').src = '';
+            });
+        };
+
+        // Quando o player carrega, ele tenta tocar o vídeo
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // Quando o status do vídeo muda...
+        function onPlayerStateChange(event) {
+            // Se o vídeo começar a tocar...
+            if (event.data === YT.PlayerState.PLAYING) {
+                // Escondemos a thumbnail e mostramos o vídeo.
+                liveThumbnail.style.display = 'none';
+                liveVideoIframe.style.display = 'block';
+                liveChat.style.display = 'block';
             }
         }
-        setInterval(checkLiveStatus, 30000);
-        checkLiveStatus();
+
+        // Se o YouTube der um erro (live offline)...
+        function onPlayerError(event) {
+            // Escondemos o vídeo e garantimos que a thumbnail apareça.
+            liveVideoIframe.style.display = 'none';
+            liveThumbnail.style.display = 'flex';
+            liveChat.style.display = 'none';
+        }
+
+        // Bloco 2: Lógica dos Carrosséis (SEU CÓDIGO ORIGINAL, 100% INTACTO)
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
         const heroCards = heroContainer.querySelectorAll('.hero-card');
         const dots = document.querySelectorAll('.dot');
         let currentHeroIndex = 0;
+
         function updateHeroCarousel() {
             heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentHeroIndex);
             });
         }
+
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 currentHeroIndex = index;
                 updateHeroCarousel();
             });
         });
+
         let heroAutoPlay = setInterval(() => {
             currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
             updateHeroCarousel();
         }, 5000);
+
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
+
             const cards = container.querySelectorAll('.carousel-card');
             const prevButton = carousel.querySelector('.prev-arrow');
             const nextButton = carousel.querySelector('.next-arrow');
             let currentIndex = 0;
+
             if (cards.length <= 1) {
                 if(prevButton) prevButton.style.display = 'none';
                 if(nextButton) nextButton.style.display = 'none';
                 return;
             }
+
             function updateCarouselPosition() {
                 container.style.transform = `translateX(-${currentIndex * 100}%)`;
             }
+
             function moveCarousel(direction) {
                 currentIndex += direction;
                 if (currentIndex >= cards.length) {
@@ -421,7 +454,9 @@
                 }
                 updateCarouselPosition();
             }
+
             let autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
+
             function setupNavAction(button, direction) {
                 if (button) {
                     button.addEventListener('click', () => {
@@ -431,6 +466,7 @@
                     });
                 }
             }
+
             setupNavAction(prevButton, -1);
             setupNavAction(nextButton, 1);
         });
