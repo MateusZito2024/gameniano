@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Variáveis CSS para cores e fontes */
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
@@ -20,6 +21,8 @@
             --font-cinzel: 'Cinzel', serif;
             --font-montserrat: 'Montserrat', sans-serif;
         }
+
+        /* Reset básico e estilos gerais */
         body {
             font-family: var(--font-montserrat);
             background-color: var(--dark-background);
@@ -29,42 +32,249 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-        a { color: var(--text-light); text-decoration: none; transition: color 0.3s ease; }
-        a:hover { color: var(--gold); }
-        header { background-color: var(--dark-gray); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
-        .logo img { height: 45px; margin-right: 10px; }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { margin-left: 35px; }
-        nav ul li a { font-weight: 500; font-size: 0.95em; }
-        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
-        .social-icons a:hover { color: var(--gold); }
-        .hero-section { position: relative; height: 520px; background-image: url('https://i.postimg.cc/SNw7PQKP/capa-3.png'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; text-align: center; color: var(--text-light); margin-bottom: 60px; overflow: hidden; }
-        .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
-        .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
-        .hero-card { min-width: 100%; background-color: rgba(0, 0, 0, 0.6); padding: 50px 70px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); box-sizing: border-box; text-align: center; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; }
-        .hero-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); }
-        .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
-        .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; min-height: 40px; }
-        .hero-button { background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); display: inline-block; width: 200px; text-align: center; }
-        .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .hero-button.youtube:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .hero-button:hover { background-color: var(--button-gold-hover); transform: translateY(-2px); }
-        .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
-        .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .dot.active { background-color: var(--gold); border-color: var(--gold); }
-        .section-title { text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative; }
-        .section-title::before, .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
-        .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
-        .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
-        .live-content-wrapper { display: flex; width: 100%; max-width: 1200px; gap: 40px; margin-bottom: 40px; }
-        .live-video-player { flex: 2; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        
-        /* A única alteração no CSS é aqui, para o iframe começar escondido */
+
+        a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--gold);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-gray);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo img {
+            height: 45px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 35px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 22px;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 520px;
+            background-image: url('https://i.postimg.cc/SNw7PQKP/capa-3.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            position: relative;
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero-carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 350px;
+        }
+
+        .hero-card {
+            min-width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 50px 70px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-card h2 {
+            font-family: var(--font-cinzel);
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            line-height: 1.2;
+        }
+
+        .hero-card p {
+            font-size: 1.25em;
+            margin: 0 0 20px 0;
+            font-weight: 400;
+            opacity: 0.9;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 40px;
+        }
+
+        .hero-button {
+            background-color: var(--button-gold);
+            color: var(--dark-background);
+            padding: 18px 45px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .hero-button.youtube {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .hero-button.youtube:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+
+        .hero-button:hover {
+            background-color: var(--button-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* Títulos de Seção */
+        .section-title {
+            text-align: center;
+            font-family: var(--font-cinzel);
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+            position: relative;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0 20px;
+        }
+
+        .section-title img {
+            height: 45px;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+
+        /* Live Section */
+        .live-section {
+            padding: 50px 5%;
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .live-content-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .live-video-player {
+            flex: 2;
+            background-color: #000;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
         .live-video-player iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: none; /* Começa oculto */
+            display: block;
         }
 
         .video-thumbnail-container {
@@ -73,8 +283,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Alterado de 'none' para 'flex' para que a thumbnail seja o padrão */
-            display: flex; 
+            display: none; /* Inicialmente oculto, pois o embed cuida da exibição */
             justify-content: center;
             align-items: center;
             background-color: black;
@@ -82,62 +291,503 @@
             transition: opacity 0.3s ease;
         }
 
-        .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
-        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; box-sizing: border-box; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
-        .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
-        .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
-        .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
-        .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
-        .video-info-overlay .youtube-link:hover { color: var(--gold); }
-        .live-chat { flex: 1; background-color: var(--medium-gray); padding: 30px; border-radius: 8px; display: none; justify-content: center; align-items: center; text-align: center; font-size: 1.15em; color: #aaa; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); }
-        .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
-        .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
-        .share-icons a { color: var(--text-light); background-color: var(--medium-gray); font-size: 26px; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin: 0 10px; transition: background-color 0.3s ease, color 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-        .share-icons a:hover { background-color: var(--gold); color: var(--dark-background); }
-        .carousel { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; }
-        .carousel-container { display: flex; transition: transform 0.5s ease; }
-        .carousel-card { min-width: 100%; box-sizing: border-box; background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 20px; text-align: left; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease; height: 300px; display: flex; align-items: center; }
-        .carousel-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); }
-        .card-thumbnail-wrapper { width: 400px; height: 100%; margin-right: 20px; border-radius: 5px; overflow: hidden; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .carousel-card img { flex-shrink: 0; width: 100%; height: 135%; }
-        .carousel-card-content { flex: 1; }
-        .carousel-card-content h3 { font-family: var(--font-cinzel); font-size: 1.6em; margin-top: 0; margin-bottom: 15px; color: var(--gold); }
-        .carousel-card-content p { font-size: 1.1em; color: #bbb; margin-bottom: 20px; }
-        .carousel-card-content a { background-color: var(--button-gold); color: var(--dark-background); padding: 12px 25px; border-radius: 5px; font-weight: 600; font-size: 1em; transition: background-color 0.3s ease; }
-        .carousel-card-content a:hover { background-color: var(--button-gold-hover); }
-        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.7); color: var(--text-light); border: 1px solid var(--border-color); width: 45px; height: 45px; border-radius: 50%; font-size: 1.2em; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); transform: translateY(-50%) scale(1.05); }
-        .prev-arrow { left: 20px; }
-        .next-arrow { right: 20px; }
-        .member-section { padding: 80px 5%; display: flex; justify-content: center; align-items: center; min-height: 400px; position: relative; background-color: var(--dark-background); overflow: hidden; }
-        .decorative-border { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png'); background-size: contain; background-repeat: no-repeat; background-position: center center; opacity: 0.08; z-index: 0; pointer-events: none; }
-        .member-card { background-color: var(--dark-gray); padding: 50px; border-radius: 12px; text-align: center; max-width: 600px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); position: relative; z-index: 1; border: 1px solid rgba(255, 255, 255, 0.08); }
-        .member-card .youtube-logo { font-size: 4em; color: var(--red-youtube); margin-bottom: 25px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
-        .member-card h3 { font-family: var(--font-cinzel); font-size: 2.2em; margin-bottom: 20px; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
-        .member-card p { font-size: 1.15em; margin-bottom: 35px; color: #ccc; }
-        .member-button { background-color: var(--red-youtube); color: var(--text-light); padding: 18px 40px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .member-button:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .member-button .icon { font-size: 1.3em; color: white; }
-        footer { background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px; }
-        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
-        .footer-logo-section img { height: 55px; margin-bottom: 20px; }
-        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
-        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
-        .footer-social-icons a:hover { color: var(--gold); }
-        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
-        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
-        .footer-column ul { list-style: none; padding: 0; margin: 0; }
-        .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
-        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
-        .footer-column ul li a:hover { color: var(--gold); }
-        .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
-        @media (max-width: 1200px) { .card-thumbnail-wrapper { width: 350px; } }
-        @media (max-width: 900px) { .carousel-arrow { width: 40px; height: 40px; font-size: 1em; left: 10px; } .next-arrow { right: 10px; } }
-        @media (max-width: 768px) { .card-thumbnail-wrapper { width: 300px; } .carousel-card { height: 250px; } .hero-card h2 { font-size: 2.8em; } .hero-card p { font-size: 1.1em; min-height: 36px; } .hero-carousel-container { height: 300px; } }
-        @media (max-width: 480px) { .card-thumbnail-wrapper { width: 200px; } .carousel-card { flex-direction: column; height: auto; align-items: flex-start; } .card-thumbnail-wrapper { width: 100%; height: 180px; margin-right: 0; margin-bottom: 15px; } .carousel-card-content { width: 100%; } .hero-card { padding: 30px; } .hero-card h2 { font-size: 2em; } .hero-card p { font-size: 1em; margin-bottom: 20px; min-height: 32px; } .hero-button { padding: 14px 30px; font-size: 1em; width: 180px; } .hero-carousel-container { height: 250px; } }
+        .video-thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.9);
+            border-radius: 10px;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .play-button:hover {
+            background-color: #cc0000;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .video-info-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 1.1em;
+        }
+
+        .video-info-overlay .title {
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .video-info-overlay .time {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .video-info-overlay .youtube-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        .video-info-overlay .youtube-link i {
+            margin-right: 8px;
+            font-size: 1.4em;
+            color: var(--red-youtube);
+        }
+
+        .video-info-overlay .youtube-link:hover {
+            color: var(--gold);
+        }
+
+        .live-chat {
+            flex: 1;
+            background-color: var(--medium-gray);
+            padding: 30px;
+            border-radius: 8px;
+            display: none; /* Inicialmente oculto */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.15em;
+            color: #aaa;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-share {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .social-share p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .share-icons a {
+            color: var(--text-light);
+            background-color: var(--medium-gray);
+            font-size: 26px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .share-icons a:hover {
+            background-color: var(--gold);
+            color: var(--dark-background);
+        }
+
+        /* Carousel Styles for Últimos Vídeos and Mais Vistos */
+        .carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-card {
+            min-width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            height: 300px;
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-thumbnail-wrapper {
+            width: 400px;
+            height: 100%;
+            margin-right: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .carousel-card img {
+            flex-shrink: 0;
+            width: 100%;
+            height: 135%;
+        }
+
+        .carousel-card-content {
+            flex: 1;
+        }
+
+        .carousel-card-content h3 {
+            font-family: var(--font-cinzel);
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .carousel-card-content p {
+            font-size: 1.1em;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .carousel-card-content a {
+            background-color: var(--button-gold);
+            color: var(--dark-background);
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-card-content a:hover {
+            background-color: var(--button-gold-hover);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(44, 44, 44, 0.7);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .carousel-arrow:hover {
+            background-color: var(--gold);
+            color: var(--dark-background);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .prev-arrow {
+            left: 20px;
+        }
+
+        .next-arrow {
+            right: 20px;
+        }
+
+        /* Member Section */
+        .member-section {
+            padding: 80px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            position: relative;
+            background-color: var(--dark-background);
+            overflow: hidden;
+        }
+
+        .decorative-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .member-card {
+            background-color: var(--dark-gray);
+            padding: 50px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .member-card .youtube-logo {
+            font-size: 4em;
+            color: var(--red-youtube);
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .member-card h3 {
+            font-family: var(--font-cinzel);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .member-card p {
+            font-size: 1.15em;
+            margin-bottom: 35px;
+            color: #ccc;
+        }
+
+        .member-button {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .member-button:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+
+        .member-button .icon {
+            font-size: 1.3em;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--text-light);
+            padding: 60px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+
+        .footer-logo-section {
+            flex: 1;
+            min-width: 280px;
+            margin-right: 40px;
+        }
+
+        .footer-logo-section img {
+            height: 55px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-section p {
+            font-size: 0.95em;
+            color: #bbb;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .footer-social-icons a {
+            color: var(--text-light);
+            font-size: 24px;
+            margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-icons a:hover {
+            color: var(--gold);
+        }
+
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-around;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            font-size: 0.98em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column ul li a .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--gold);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.88em;
+            color: #888;
+            font-weight: 400;
+        }
+
+        /* Design Responsivo para o wrapper da thumbnail */
+        @media (max-width: 1200px) {
+            .card-thumbnail-wrapper {
+                width: 350px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+                left: 10px;
+            }
+            .next-arrow {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-thumbnail-wrapper {
+                width: 300px;
+            }
+            .carousel-card {
+                height: 250px;
+            }
+            .hero-card h2 {
+                font-size: 2.8em;
+            }
+            .hero-card p {
+                font-size: 1.1em;
+                min-height: 36px;
+            }
+            .hero-carousel-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-thumbnail-wrapper {
+                width: 200px;
+            }
+            .carousel-card {
+                flex-direction: column;
+                height: auto;
+                align-items: flex-start;
+            }
+            .card-thumbnail-wrapper {
+                width: 100%;
+                height: 180px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .carousel-card-content {
+                width: 100%;
+            }
+            .hero-card {
+                padding: 30px;
+            }
+            .hero-card h2 {
+                font-size: 2em;
+            }
+            .hero-card p {
+                font-size: 1em;
+                margin-bottom: 20px;
+                min-height: 32px;
+            }
+            .hero-button {
+                padding: 14px 30px;
+                font-size: 1em;
+                width: 180px;
+            }
+            .hero-carousel-container {
+                height: 250px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -199,12 +849,12 @@
                         <div class="video-info-overlay">
                             <div>
                                 <div class="title">Live Tarot - Em Breve</div>
-                                <div class="time">A transmissão está offline.</div>
+                                <div class="time">Próxima live em breve</div>
                             </div>
                             <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
                     </div>
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1?enablejsapi=1&origin=https://lendario.tv?enablejsapi=1&autoplay=1&mute=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
                 </div>
                 <div class="live-chat" id="liveChat">
                     <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
@@ -261,6 +911,7 @@
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
+
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
@@ -270,6 +921,7 @@
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
             </div>
         </section>
+
         <section class="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
             <div class="carousel">
@@ -310,6 +962,7 @@
             </div>
         </section>
     </main>
+
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -348,52 +1001,39 @@
         </div>
     </footer>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Bloco 1: Lógica do Player de Vídeo (única parte alterada)
+        // Live Video Player and Chat Integration
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveVideoIframe = document.getElementById('liveVideoIframe');
         const liveChat = document.getElementById('liveChat');
-        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do seu canal
+        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do canal @Gameniano-x
 
-        let player;
+        // Função para verificar o estado da live e tentar forçar autoplay
+        function checkLiveStatus() {
+            const iframeDoc = liveVideoIframe.contentDocument || liveVideoIframe.contentWindow.document;
+            if (iframeDoc && iframeDoc.body && iframeDoc.body.innerHTML.includes('live')) {
+                liveThumbnail.style.display = 'none';
+                liveChat.style.display = 'block';
+                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(channelId)}&embed_domain=mateuszito2024.github.io`;
 
-        // Função que a API do YouTube chama quando está pronta.
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('liveVideoIframe', {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange,
-                    'onError': onPlayerError
+                // Tenta forçar o autoplay adicionando parâmetros dinamicamente
+                const src = liveVideoIframe.src;
+                if (!src.includes('mute=1')) {
+                    liveVideoIframe.src = `${src}&mute=1`; // Mute pode ajudar em alguns casos
                 }
-            });
-        };
-
-        // Quando o player carregar, ele tenta tocar o vídeo.
-        // O autoplay já é incentivado pelos parâmetros na URL do iframe.
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
-
-        // Quando o status do vídeo muda...
-        function onPlayerStateChange(event) {
-            // YT.PlayerState.PLAYING significa que a live está ONLINE e tocando.
-            if (event.data === YT.PlayerState.PLAYING) {
-                liveVideoIframe.style.display = 'block'; // Mostra o player
-                liveThumbnail.style.display = 'none';   // Esconde a thumbnail
-                liveChat.style.display = 'block';       // Mostra o chat
-                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?v=$${encodeURIComponent(channelId)}&embed_domain=${window.location.hostname}`;
+                liveVideoIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            } else {
+                liveThumbnail.style.display = 'flex';
+                liveChat.style.display = 'none';
+                liveChat.querySelector('iframe').src = '';
             }
         }
 
-        // Se ocorrer qualquer erro ao carregar o vídeo (ex: offline)...
-        function onPlayerError(event) {
-            liveVideoIframe.style.display = 'none';   // Esconde o player
-            liveThumbnail.style.display = 'flex';   // Mostra a thumbnail
-            liveChat.style.display = 'none';        // Esconde o chat
-        }
+        // Verifica o status da live a cada 30 segundos
+        setInterval(checkLiveStatus, 30000);
+        checkLiveStatus(); // Verifica imediatamente ao carregar a página
 
-        // Bloco 2: Lógica dos Carrosséis (seu código original, intacto)
+        // Hero Carousel
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
         const heroCards = heroContainer.querySelectorAll('.hero-card');
@@ -419,6 +1059,7 @@
             updateHeroCarousel();
         }, 5000);
 
+        // Carousels for Últimos Vídeos and Mais Vistos
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
@@ -465,5 +1106,3 @@
             setupNavAction(nextButton, 1);
         });
     </script>
-</body>
-</html>
