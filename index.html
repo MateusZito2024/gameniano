@@ -21,6 +21,19 @@
             --font-montserrat: 'Montserrat', sans-serif;
         }
 
+        /* Keyframes para a animação de pulsação dos botões */
+        @keyframes pulse-gold {
+            50% {
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+            }
+        }
+
+        @keyframes pulse-youtube {
+            50% {
+                box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+            }
+        }
+
         body {
             font-family: var(--font-montserrat);
             background-color: var(--dark-background);
@@ -97,6 +110,7 @@
             overflow: hidden;
         }
 
+        /* Mantém o overflow:hidden para o carrossel funcionar */
         .hero-carousel {
             position: relative;
             max-width: 700px;
@@ -111,25 +125,87 @@
             height: 350px;
         }
 
+        /* --- ESTILOS DO CARD COM A NOVA ANIMAÇÃO --- */
         .hero-card {
             min-width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 50px 70px;
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             box-sizing: border-box;
             text-align: center;
-            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .hero-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            /* Simula a inclinação com skewY, que não é cortado pelo overflow */
+            transform: translateY(-10px) scale(1.03) skewY(-3deg);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.25);
+        }
+
+        .hero-card h2,
+        .hero-card p,
+        .hero-card .hero-button {
+            /* Adiciona transição suave aos filhos do card */
+            transition: transform 0.4s ease, text-shadow 0.4s ease;
+        }
+
+        .hero-card:hover h2,
+        .hero-card:hover p,
+        .hero-card:hover .hero-button {
+            /* Desfaz a inclinação nos filhos para que não pareçam distorcidos */
+            transform: skewY(3deg);
+        }
+        
+        .hero-card:hover h2 {
+            /* Combina a inclinação contrária com um zoom para destaque */
+            transform: skewY(3deg) scale(1.02);
+            /* Aumenta o brilho do texto */
+            text-shadow: 0 0 20px var(--gold), 0 0 10px rgba(255, 235, 179, 0.5);
+        }
+
+        .hero-button {
+            background-color: var(--button-gold);
+            color: var(--dark-background);
+            padding: 18px 45px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .hero-button.youtube {
+            background-color: var(--red-youtube);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .hero-button:hover {
+            background-color: var(--button-gold-hover);
+        }
+        
+        .hero-button.youtube:hover {
+            background-color: #cc0000;
+        }
+        
+        /* Aplica a animação de pulso quando o card está em hover */
+        .hero-card:hover .hero-button {
+            animation: pulse-gold 1.5s infinite ease-in-out;
+        }
+
+        .hero-card:hover .hero-button.youtube {
+            animation: pulse-youtube 1.5s infinite ease-in-out;
         }
 
         .hero-card h2 {
@@ -153,38 +229,7 @@
             text-overflow: ellipsis;
             min-height: 40px;
         }
-
-        .hero-button {
-            background-color: var(--button-gold);
-            color: var(--dark-background);
-            padding: 18px 45px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1em;
-            letter-spacing: 0.5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            width: 200px;
-            text-align: center;
-        }
-
-        .hero-button.youtube {
-            background-color: var(--red-youtube);
-            color: var(--text-light);
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-        }
-
-        .hero-button.youtube:hover {
-            background-color: #cc0000;
-            transform: translateY(-2px);
-        }
-
-        .hero-button:hover {
-            background-color: var(--button-gold-hover);
-            transform: translateY(-2px);
-        }
+        /* --- FIM DA SEÇÃO MODIFICADA --- */
 
         .slider-nav {
             position: absolute;
@@ -805,9 +850,9 @@
                         <a href="#" class="hero-button">Agendar</a>
                     </div>
                     <div class="hero-card">
-                        <h2>Sorteio Semanal</h2>
-                        <p>Participe do nosso sorteio semanal para ganhar prêmios incríveis!</p>
-                        <a href="#" class="hero-button">Participar</a>
+                        <h2>Sorteios Especiais</h2>
+                        <p>Fique de olho! Nossos sorteios são anunciados aqui.</p>
+                        <a href="#" class="hero-button">Verificar</a>
                     </div>
                     <div class="hero-card">
                         <h2>Live Tarot</h2>
