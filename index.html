@@ -417,7 +417,7 @@
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        if(firstScriptTag) firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         let player;
         window.onYouTubeIframeAPIReady = function() {
@@ -442,7 +442,7 @@
             let heroAutoPlay;
 
             const updateHeroCarousel = () => {
-                heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+                if(heroContainer) heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
                 dots.forEach((dot, index) => dot.classList.toggle('active', index === currentHeroIndex));
             };
 
@@ -467,7 +467,7 @@
             startHeroAutoplay();
         }
 
-        // --- NOVO SCRIPT PARA CARROSSÉIS COM FILTRO E AUTOPLAY ---
+        // --- SCRIPT ATUALIZADO PARA CARROSSÉIS COM FILTRO E AUTOPLAY INFINITO ---
         function setupFilterableCarousel(sectionId) {
             const section = document.getElementById(sectionId);
             if (!section) return;
@@ -482,7 +482,7 @@
             let currentIndex = 0;
             let autoplayInterval;
 
-            const moveNext = (isAutoplay = false) => {
+            const moveNext = () => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
                 if (visibleCards.length === 0) return;
                 
@@ -492,12 +492,10 @@
                 const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
                 const maxIndex = Math.max(0, visibleCards.length - cardsInView);
 
-                if (currentIndex >= maxIndex) {
-                    currentIndex = 0; // Loop back to the start
-                } else {
-                    currentIndex++;
+                if (visibleCards.length > cardsInView) {
+                     currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
+                     updateCarouselState(false);
                 }
-                updateCarouselState(isAutoplay);
             };
             
             const startAutoplay = () => {
@@ -510,7 +508,7 @@
                     const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
 
                     if (visibleCards.length > cardsInView) {
-                       autoplayInterval = setInterval(() => moveNext(true), 5000);
+                       autoplayInterval = setInterval(moveNext, 3000); // Autoplay mais rápido
                     }
                 }
             };
@@ -519,9 +517,9 @@
                 clearInterval(autoplayInterval);
             };
 
-            const updateCarouselState = (isAutoplayAction = false) => {
-                if (!isAutoplayAction) { // Reset autoplay if user interacts
-                    startAutoplay();
+            const updateCarouselState = (resetAutoplay = true) => {
+                if (resetAutoplay) {
+                   startAutoplay();
                 }
 
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
@@ -544,8 +542,7 @@
 
                 if (currentIndex > maxIndex) currentIndex = maxIndex;
                 if (currentIndex < 0) currentIndex = 0;
-                
-                // For infinite loop, arrows are only disabled if all items are visible
+
                 const canScroll = totalVisible > cardsInView;
                 prevBtn.classList.toggle('disabled', !canScroll);
                 nextBtn.classList.toggle('disabled', !canScroll);
@@ -574,7 +571,21 @@
                 });
             });
 
-            nextBtn.addEventListener('click', () => moveNext(false));
+            nextBtn.addEventListener('click', () => {
+                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
+                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
+                
+                if (currentIndex >= maxIndex) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex++;
+                }
+                updateCarouselState();
+            });
 
             prevBtn.addEventListener('click', () => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
@@ -584,8 +595,8 @@
                 const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
                 const maxIndex = Math.max(0, visibleCards.length - cardsInView);
 
-                if (currentIndex === 0) {
-                    currentIndex = maxIndex; // Loop to the end
+                if (currentIndex <= 0) {
+                    currentIndex = maxIndex;
                 } else {
                     currentIndex--;
                 }
