@@ -67,6 +67,16 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .logo img { height: 55px; margin-right: 10px; }
@@ -276,7 +286,7 @@
         
         .video-card-vertical:hover {
             box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 
-                        0 0 5px 1px rgba(255, 100, 100, 0.6);
+                          0 0 5px 1px rgba(255, 100, 100, 0.6);
         }
 
         .video-card-vertical:hover::after {
@@ -319,7 +329,6 @@
             min-height: 450px;
             position: relative;
             background-color: var(--dark-background);
-            /* overflow: hidden; foi removido para não cortar a animação */
         }
 
         .decorative-border {
@@ -335,7 +344,6 @@
             width: 100%;
             height: 380px;
             perspective: 1500px;
-            /* Estilos de layout originais foram movidos para o .member-card-inner */
             padding: 0;
             border: none;
             box-shadow: none;
@@ -364,7 +372,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px; /* Padding ajustado */
+            padding: 40px;
             text-align: center;
             background-color: var(--dark-gray);
             border-radius: 12px;
@@ -379,7 +387,7 @@
         .member-card .youtube-logo { 
             font-size: 4em; 
             color: var(--red-youtube); 
-            margin-bottom: 20px; /* Margem ajustada */
+            margin-bottom: 20px;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); 
         }
         
@@ -387,7 +395,7 @@
             font-family: var(--font-cinzel); 
             font-size: 2.2em; 
             margin-top: 0;
-            margin-bottom: 15px; /* Margem ajustada */
+            margin-bottom: 15px;
             color: var(--gold); 
             text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); 
         }
@@ -405,11 +413,11 @@
             color: #ccc; 
             max-width: 95%;
             margin-top: 0;
-            margin-bottom: 0; /* Margem removida da frente para centralizar */
+            margin-bottom: 0;
         }
         
         .member-card-back p {
-            margin-bottom: 30px; /* Adiciona margem no verso para espaçar o botão */
+            margin-bottom: 30px;
         }
 
         .member-button {
@@ -887,6 +895,29 @@
 
             setupInfiniteCarousel('latest-videos-section');
             setupInfiniteCarousel('most-viewed-section');
+            
+            // --- CÓDIGO PARA O CABEÇALHO ---
+            const header = document.querySelector('header');
+            if (header) {
+                let lastScrollTop = 0;
+                // O ponto em que o cabeçalho irá sumir/aparecer. Ajuste se necessário.
+                const scrollThreshold = 150; 
+
+                window.addEventListener('scroll', () => {
+                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                    // Se rolar para baixo e passar do ponto definido, esconde o cabeçalho.
+                    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                        header.classList.add('header-hidden');
+                    } 
+                    // Se rolar para cima e entrar na zona de aparição (acima do ponto definido), mostra o cabeçalho.
+                    else if (scrollTop < lastScrollTop && scrollTop < scrollThreshold) {
+                       header.classList.remove('header-hidden');
+                    }
+                    
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                });
+            }
         });
     </script>
 </body>
