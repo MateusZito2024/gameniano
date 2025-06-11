@@ -21,17 +21,12 @@
             --font-montserrat: 'Montserrat', sans-serif;
         }
 
-        /* Keyframes para a animação de pulsação dos botões */
         @keyframes pulse-gold {
-            50% {
-                box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-            }
+            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); }
         }
 
         @keyframes pulse-youtube {
-            50% {
-                box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
-            }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
         }
 
         body {
@@ -50,9 +45,7 @@
             transition: color 0.3s ease;
         }
 
-        a:hover {
-            color: var(--gold);
-        }
+        a:hover { color: var(--gold); }
 
         header {
             background-color: var(--dark-gray);
@@ -63,37 +56,14 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .logo img {
-            height: 55px;
-            margin-right: 10px;
-        }
+        .logo img { height: 55px; margin-right: 10px; }
 
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        nav ul li { margin-left: 35px; }
+        nav ul li a { font-weight: 500; font-size: 0.95em; }
 
-        nav ul li {
-            margin-left: 35px;
-        }
-
-        nav ul li a {
-            font-weight: 500;
-            font-size: 0.95em;
-        }
-
-        .social-icons a {
-            color: var(--text-light);
-            font-size: 22px;
-            margin-left: 25px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--gold);
-        }
+        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
+        .social-icons a:hover { color: var(--gold); }
 
         .hero-section {
             position: relative;
@@ -110,22 +80,9 @@
             overflow: hidden;
         }
 
-        /* Mantém o overflow:hidden para o carrossel funcionar */
-        .hero-carousel {
-            position: relative;
-            max-width: 700px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .hero-carousel-container {
-            display: flex;
-            transition: transform 0.5s ease;
-            width: 100%;
-            height: 350px;
-        }
-
-        /* --- ESTILOS DO CARD COM A NOVA ANIMAÇÃO --- */
+        .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
+        .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
+        
         .hero-card {
             min-width: 100%;
             background-color: rgba(0, 0, 0, 0.7);
@@ -143,679 +100,147 @@
         }
 
         .hero-card:hover {
-            /* Simula a inclinação com skewY, que não é cortado pelo overflow */
             transform: translateY(-10px) scale(1.03) skewY(-3deg);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.25);
         }
 
-        .hero-card h2,
-        .hero-card p,
-        .hero-card .hero-button {
-            /* Adiciona transição suave aos filhos do card */
-            transition: transform 0.4s ease, text-shadow 0.4s ease;
-        }
-
-        .hero-card:hover h2,
-        .hero-card:hover p,
-        .hero-card:hover .hero-button {
-            /* Desfaz a inclinação nos filhos para que não pareçam distorcidos */
-            transform: skewY(3deg);
-        }
+        .hero-card h2, .hero-card p, .hero-card .hero-button { transition: transform 0.4s ease, text-shadow 0.4s ease; }
+        .hero-card:hover h2, .hero-card:hover p, .hero-card:hover .hero-button { transform: skewY(3deg); }
         
         .hero-card:hover h2 {
-            /* Combina a inclinação contrária com um zoom para destaque */
             transform: skewY(3deg) scale(1.02);
-            /* Aumenta o brilho do texto */
             text-shadow: 0 0 20px var(--gold), 0 0 10px rgba(255, 235, 179, 0.5);
         }
 
         .hero-button {
-            background-color: var(--button-gold);
-            color: var(--dark-background);
-            padding: 18px 45px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1em;
-            letter-spacing: 0.5px;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            width: 200px;
-            text-align: center;
+            background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none;
+            border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px;
+            transition: background-color 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: inline-block; width: 200px; text-align: center;
         }
 
-        .hero-button.youtube {
-            background-color: var(--red-youtube);
-            color: var(--text-light);
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-        }
-        
-        .hero-button:hover {
-            background-color: var(--button-gold-hover);
-        }
-        
-        .hero-button.youtube:hover {
-            background-color: #cc0000;
-        }
-        
-        /* Aplica a animação de pulso quando o card está em hover */
-        .hero-card:hover .hero-button {
-            animation: pulse-gold 1.5s infinite ease-in-out;
-        }
+        .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
+        .hero-button:hover { background-color: var(--button-gold-hover); }
+        .hero-button.youtube:hover { background-color: #cc0000; }
+        .hero-card:hover .hero-button { animation: pulse-gold 1.5s infinite ease-in-out; }
+        .hero-card:hover .hero-button.youtube { animation: pulse-youtube 1.5s infinite ease-in-out; }
 
-        .hero-card:hover .hero-button.youtube {
-            animation: pulse-youtube 1.5s infinite ease-in-out;
-        }
+        .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
+        .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; min-height: 40px; }
 
-        .hero-card h2 {
-            font-family: var(--font-cinzel);
-            font-size: 3.5em;
-            margin: 0 0 20px 0;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-            line-height: 1.2;
-        }
-
-        .hero-card p {
-            font-size: 1.25em;
-            margin: 0 0 20px 0;
-            font-weight: 400;
-            opacity: 0.9;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-height: 40px;
-        }
-        /* --- FIM DA SEÇÃO MODIFICADA --- */
-
-        .slider-nav {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot {
-            height: 12px;
-            width: 12px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: var(--gold);
-            border-color: var(--gold);
-        }
+        .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+        .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .dot.active { background-color: var(--gold); border-color: var(--gold); }
 
         .section-title {
-            text-align: center;
-            font-family: var(--font-cinzel);
-            font-size: 2.8em;
-            margin-bottom: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
-            position: relative;
+            text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;
+            color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative;
         }
+        .section-title::before, .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
+        .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
 
-        .section-title::before,
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 0 20px;
-        }
+        .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
+        .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
+        .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
+        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
+        .video-thumbnail-container.hidden { display: none; }
+        .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
+        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; box-sizing: border-box; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
+        .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
+        .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
+        .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
+        .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
+        .video-info-overlay .youtube-link:hover { color: var(--gold); }
+        .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
+        .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
+        .share-icons a { color: var(--text-light); background-color: var(--medium-gray); font-size: 26px; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin: 0 10px; transition: background-color 0.3s ease, color 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+        .share-icons a:hover { background-color: var(--gold); color: var(--dark-background); }
 
-        .section-title img {
-            height: 45px;
-            margin-right: 15px;
-            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
-        }
-
-        .live-section {
-            padding: 50px 5%;
-            margin-top: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .live-content-wrapper {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 40px;
-        }
-
-        .live-video-player {
-            width: 100%;
-            max-width: 960px;
-            background-color: #000;
-            aspect-ratio: 16 / 9;
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .live-video-player iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: none;
-            z-index: 1;
-        }
+        /* --- NOVOS ESTILOS PARA CARROSSÉIS DE VÍDEOS COM FILTRO --- */
+        .video-carousel-section { padding: 80px 0; }
+        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; padding: 0 5%; }
+        .filter-btn { background-color: var(--medium-gray); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 500; transition: all 0.3s ease; }
+        .filter-btn:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
+        .filter-btn.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
         
-        .video-thumbnail-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            cursor: pointer;
-            z-index: 10;
-            transition: opacity 0.3s ease;
+        .video-carousel-wrapper { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 60px; }
+        .video-carousel-container { overflow: hidden; }
+        .video-carousel-track { display: flex; gap: 25px; transition: transform 0.5s ease-in-out; }
+        
+        .video-card-vertical {
+            background-color: var(--dark-gray); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 0 0 calc(25% - 20px); min-width: 280px; display: flex; flex-direction: column;
         }
+        .video-card-vertical.hidden { display: none; }
+        .video-card-vertical:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .video-card-vertical .thumbnail { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 2px solid var(--gold); background-color: #000; }
+        .video-card-vertical .video-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .video-card-vertical h3 { font-family: var(--font-cinzel); font-size: 1.2em; margin: 0 0 10px 0; height: 50px; overflow: hidden; }
+        .video-card-vertical .description { font-size: 0.9em; color: #aaa; line-height: 1.5; height: 65px; margin: 0 0 20px 0; overflow: hidden; }
+        .video-card-vertical .watch-button { display: inline-block; background-color: var(--button-gold); color: var(--dark-background); padding: 10px 20px; border-radius: 5px; font-weight: 600; text-align: center; margin-top: auto; }
+        .video-card-vertical .watch-button:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
 
-        .video-thumbnail-container.hidden {
-            display: none;
+        .video-carousel-section .carousel-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
+            color: var(--text-light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%;
+            font-size: 1.5em; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
         }
-
-        .video-thumbnail-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 0, 0, 0.9);
-            border-radius: 10px;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            color: white;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        .play-button:hover {
-            background-color: #cc0000;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-
-        .video-info-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-            padding: 20px;
-            box-sizing: border-box;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-size: 1.1em;
-        }
-
-        .video-info-overlay .title {
-            font-weight: 700;
-            font-size: 1.3em;
-            margin-bottom: 5px;
-            color: var(--text-light);
-        }
-
-        .video-info-overlay .time {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        .video-info-overlay .youtube-link {
-            display: flex;
-            align-items: center;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1em;
-        }
-
-        .video-info-overlay .youtube-link i {
-            margin-right: 8px;
-            font-size: 1.4em;
-            color: var(--red-youtube);
-        }
-
-        .video-info-overlay .youtube-link:hover {
-            color: var(--gold);
-        }
-
-        .social-share {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .social-share p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .share-icons a {
-            color: var(--text-light);
-            background-color: var(--medium-gray);
-            font-size: 26px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 10px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .share-icons a:hover {
-            background-color: var(--gold);
-            color: var(--dark-background);
-        }
-
-        .carousel {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .carousel-container {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .carousel-card {
-            min-width: 100%;
-            box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: left;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-            height: 300px;
-            display: flex;
-            align-items: center;
-        }
-
-        .carousel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-        }
-
-        .card-thumbnail-wrapper {
-            width: 400px;
-            height: 100%;
-            margin-right: 20px;
-            border-radius: 5px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .carousel-card img {
-            flex-shrink: 0;
-            width: 100%;
-            height: 135%;
-        }
-
-        .carousel-card-content {
-            flex: 1;
-        }
-
-        .carousel-card-content h3 {
-            font-family: var(--font-cinzel);
-            font-size: 1.6em;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: var(--gold);
-        }
-
-        .carousel-card-content p {
-            font-size: 1.1em;
-            color: #bbb;
-            margin-bottom: 20px;
-        }
-
-        .carousel-card-content a {
-            background-color: var(--button-gold);
-            color: var(--dark-background);
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-
-        .carousel-card-content a:hover {
-            background-color: var(--button-gold-hover);
-        }
-
-        .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(44, 44, 44, 0.7);
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            font-size: 1.2em;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        .carousel-arrow:hover {
-            background-color: var(--gold);
-            color: var(--dark-background);
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        .prev-arrow {
-            left: 20px;
-        }
-
-        .next-arrow {
-            right: 20px;
-        }
-
+        .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
+        .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
+        .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
+        .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+        /* --- FIM DOS NOVOS ESTILOS --- */
+        
         .member-section {
-            padding: 80px 5%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 400px;
-            position: relative;
-            background-color: var(--dark-background);
-            overflow: hidden;
+            padding: 80px 5%; display: flex; justify-content: center; align-items: center;
+            min-height: 400px; position: relative; background-color: var(--dark-background); overflow: hidden;
         }
-
         .decorative-border {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center center;
-            opacity: 0.08;
-            z-index: 0;
-            pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+            background-size: contain; background-repeat: no-repeat; background-position: center center; opacity: 0.08; z-index: 0; pointer-events: none;
         }
-
         .member-card {
-            background-color: var(--dark-gray);
-            padding: 50px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-            position: relative;
-            z-index: 1;
+            background-color: var(--dark-gray); padding: 50px; border-radius: 12px; text-align: center;
+            max-width: 600px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); position: relative; z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .member-card .youtube-logo {
-            font-size: 4em;
-            color: var(--red-youtube);
-            margin-bottom: 25px;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-        }
-
-        .member-card h3 {
-            font-family: var(--font-cinzel);
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            color: var(--gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
-        }
-
-        .member-card p {
-            font-size: 1.15em;
-            margin-bottom: 35px;
-            color: #ccc;
-        }
-
+        .member-card .youtube-logo { font-size: 4em; color: var(--red-youtube); margin-bottom: 25px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+        .member-card h3 { font-family: var(--font-cinzel); font-size: 2.2em; margin-bottom: 20px; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
+        .member-card p { font-size: 1.15em; margin-bottom: 35px; color: #ccc; }
         .member-button {
-            background-color: var(--red-youtube);
-            color: var(--text-light);
-            padding: 18px 40px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            background-color: var(--red-youtube); color: var(--text-light); padding: 18px 40px; text-decoration: none; border-radius: 30px;
+            font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
         }
-
-        .member-button:hover {
-            background-color: #cc0000;
-            transform: translateY(-2px);
-        }
-
-        .member-button .icon {
-            font-size: 1.3em;
-            color: white;
-        }
+        .member-button:hover { background-color: #cc0000; transform: translateY(-2px); }
+        .member-button .icon { font-size: 1.3em; color: white; }
 
         footer {
-            background-color: var(--dark-gray);
-            color: var(--text-light);
-            padding: 60px 5%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-top: 1px solid var(--border-color);
-            margin-top: 80px;
+            background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px;
         }
+        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
+        .footer-logo-section img { height: 65px; margin-bottom: 20px; }
+        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
+        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
+        .footer-social-icons a:hover { color: var(--gold); }
+        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
+        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
+        .footer-column ul { list-style: none; padding: 0; margin: 0; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
+        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
+        .footer-column ul li a:hover { color: var(--gold); }
+        .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
 
-        .footer-logo-section {
-            flex: 1;
-            min-width: 280px;
-            margin-right: 40px;
-        }
-
-        .footer-logo-section img {
-            height: 65px;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo-section p {
-            font-size: 0.95em;
-            color: #bbb;
-            margin-bottom: 25px;
-            line-height: 1.8;
-        }
-
-        .footer-social-icons a {
-            color: var(--text-light);
-            font-size: 24px;
-            margin-right: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-social-icons a:hover {
-            color: var(--gold);
-        }
-
-        .footer-links {
-            flex: 2;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            justify-content: space-around;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 180px;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-column ul li a {
-            font-size: 0.98em;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-column ul li a .icon {
-            margin-right: 10px;
-            font-size: 1.2em;
-            color: var(--gold);
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--gold);
-        }
-
-        .copyright {
-            width: 100%;
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 25px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.88em;
-            color: #888;
-            font-weight: 400;
-        }
-
-        @media (max-width: 1200px) {
-            .card-thumbnail-wrapper {
-                width: 350px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .carousel-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1em;
-                left: 10px;
-            }
-            .next-arrow {
-                right: 10px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .card-thumbnail-wrapper {
-                width: 300px;
-            }
-            .carousel-card {
-                height: 250px;
-            }
-            .hero-card h2 {
-                font-size: 2.8em;
-            }
-            .hero-card p {
-                font-size: 1.1em;
-                min-height: 36px;
-            }
-            .hero-carousel-container {
-                height: 300px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-thumbnail-wrapper {
-                width: 200px;
-            }
-            .carousel-card {
-                flex-direction: column;
-                height: auto;
-                align-items: flex-start;
-            }
-            .card-thumbnail-wrapper {
-                width: 100%;
-                height: 180px;
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            .carousel-card-content {
-                width: 100%;
-            }
-            .hero-card {
-                padding: 30px;
-            }
-            .hero-card h2 {
-                font-size: 2em;
-            }
-            .hero-card p {
-                font-size: 1em;
-                margin-bottom: 20px;
-                min-height: 32px;
-            }
-            .hero-button {
-                padding: 14px 30px;
-                font-size: 1em;
-                width: 180px;
-            }
-            .hero-carousel-container {
-                height: 250px;
-            }
-        }
+        @media (max-width: 1200px) { .video-card-vertical { flex-basis: calc(33.33% - 20px); } }
+        @media (max-width: 992px) { .video-card-vertical { flex-basis: calc(50% - 15px); } }
+        @media (max-width: 768px) { .video-carousel-wrapper { padding: 0 50px; } }
+        @media (max-width: 600px) { .video-card-vertical { min-width: 70%; } }
     </style>
 </head>
 <body>
@@ -836,7 +261,7 @@
         <div class="social-icons">
             <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Lendario/" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
     </header>
 
@@ -844,21 +269,9 @@
         <section class="hero-section">
             <div class="hero-carousel">
                 <div class="hero-carousel-container">
-                    <div class="hero-card">
-                        <h2>Agendar Consulta</h2>
-                        <p>Está em busca de direcionamento ou respostas?</p>
-                        <a href="#" class="hero-button">Agendar</a>
-                    </div>
-                    <div class="hero-card">
-                        <h2>Sorteios Especiais</h2>
-                        <p>Fique de olho! Nossos sorteios são anunciados aqui.</p>
-                        <a href="#" class="hero-button">Verificar</a>
-                    </div>
-                    <div class="hero-card">
-                        <h2>Live Tarot</h2>
-                        <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p>
-                        <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
-                    </div>
+                    <div class="hero-card"> <h2>Agendar Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="#" class="hero-button">Agendar</a> </div>
+                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="#" class="hero-button">Verificar</a> </div>
+                    <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p> <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a> </div>
                 </div>
             </div>
             <div class="slider-nav">
@@ -897,46 +310,31 @@
                 </div>
             </div>
         </section>
-
-        <section class="video-gallery">
+        
+        <section class="video-carousel-section" id="latest-videos-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/fgqwgqwghwh.png" alt="Mão">ÚLTIMOS VÍDEOS</h2>
-            <div class="carousel">
-                <div class="carousel-container">
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" alt="Live Tarot - Quinta 10/06 às 21h">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Live Tarot - Quinta 10/06 às 21h</h3>
-                            <p>Transmissão ao vivo de tarot com leitura e interação ao vivo. Participe agora!</p>
-                            <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS" target="_blank">Assistir Agora</a>
-                        </div>
-                    </div>
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg" alt="Meditação Guiada - Conexão com a Água">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Meditação Guiada - Conexão com a Água</h3>
-                            <p>Uma meditação guiada para se conectar com o elemento água e encontrar equilíbrio.</p>
-                            <a href="https://youtu.be/OOXhnm_SA-0?si=5hfcpFlqA9Xgr0bU" target="_blank">Assistir Agora</a>
-                        </div>
-                    </div>
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Entrevista - Bruxaria Moderna</h3>
-                            <p>Conversa com um especialista sobre as práticas da bruxaria moderna nos dias atuais.</p>
-                            <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank">Assistir Agora</a>
-                        </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="entrevistas">Entrevistas</button>
+                <button class="filter-btn" data-filter="totem">Totem</button>
+                <button class="filter-btn" data-filter="elementos">Elementos</button>
+            </div>
+            <div class="video-carousel-wrapper">
+                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <div class="video-carousel-container">
+                    <div class="video-carousel-track">
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" alt="Poder espiritual do tigre" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" alt="Poderoso Desbloqueio com as Águas" class="thumbnail"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
                     </div>
                 </div>
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
+
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
@@ -946,46 +344,32 @@
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
             </div>
         </section>
-        <section class="most-viewed-section">
+
+        <section class="video-carousel-section" id="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
-            <div class="carousel">
-                <div class="carousel-container">
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Traumas do Passado e o Elemento Água</h3>
-                            <p>Exploração dos traumas emocionais e como o elemento água pode ajudar na cura.</p>
-                            <a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank">Assistir Agora</a>
-                        </div>
-                    </div>
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/1Vt8p8JvifI/hqdefault.jpg" alt="Meditação Guiada - Mestre na Floresta">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Meditação Guiada - Mestre na Floresta</h3>
-                            <p>Uma jornada guiada para encontrar um mestre espiritual na floresta.</p>
-                            <a href="https://youtu.be/1Vt8p8JvifI?si=IFwwXKwp8v2GwHaW" target="_blank">Assistir Agora</a>
-                        </div>
-                    </div>
-                    <div class="carousel-card">
-                        <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg" alt="Sabedoria das Árvores">
-                        </div>
-                        <div class="carousel-card-content">
-                            <h3>Sabedoria das Árvores</h3>
-                            <p>Meditação para conectar com a sabedoria ancestral das árvores.</p>
-                            <a href="https://youtu.be/4BTOHbBTLq0?si=hRiDa6yX2Y5U5h1L" target="_blank">Assistir Agora</a>
-                        </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="meditacao">Meditação</button>
+                <button class="filter-btn" data-filter="ensinamentos">Ensinamentos</button>
+                <button class="filter-btn" data-filter="eventos">Eventos</button>
+            </div>
+            <div class="video-carousel-wrapper">
+                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <div class="video-carousel-container">
+                    <div class="video-carousel-track">
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/193603/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" alt="Meditação Guiada - Projeção Astral" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Explore outros planos e expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" alt="Como aprender a ler Tarot" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">Entenda a jornada do iniciado na espiritualidade e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/4450/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/762/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
                     </div>
                 </div>
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
     </main>
+    
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -993,7 +377,7 @@
             <div class="footer-social-icons">
                 <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://youtube.com/@Gameniano-x" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
@@ -1025,104 +409,154 @@
     </footer>
     
     <script>
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // SCRIPT ORIGINAL DA PÁGINA (INTOCADO)
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        let player;
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('liveVideoIframe', {
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        };
-
-        function onPlayerStateChange(event) {
-            const thumbnailContainer = document.getElementById('liveThumbnail');
-            if (event.data === YT.PlayerState.PLAYING) {
-                thumbnailContainer.classList.add('hidden');
-            } else {
-                thumbnailContainer.classList.remove('hidden');
-            }
-        }
-        
-        const heroCarousel = document.querySelector('.hero-carousel');
-        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-        const heroCards = heroContainer.querySelectorAll('.hero-card');
-        const dots = document.querySelectorAll('.dot');
-        let currentHeroIndex = 0;
-
-        function updateHeroCarousel() {
-            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentHeroIndex);
-            });
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentHeroIndex = index;
-                updateHeroCarousel();
-                clearInterval(heroAutoPlay);
-                heroAutoPlay = setInterval(() => {
-                    currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                    updateHeroCarousel();
-                }, 5000);
-            });
+    let player;
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('liveVideoIframe', {
+            events: { 'onStateChange': onPlayerStateChange }
         });
+    };
 
-        let heroAutoPlay = setInterval(() => {
-            currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+    function onPlayerStateChange(event) {
+        const thumbnailContainer = document.getElementById('liveThumbnail');
+        if(!thumbnailContainer) return;
+        if (event.data === YT.PlayerState.PLAYING) {
+            thumbnailContainer.classList.add('hidden');
+        } else {
+            thumbnailContainer.classList.remove('hidden');
+        }
+    }
+    
+    const heroCarousel = document.querySelector('.hero-carousel');
+    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+    const heroCards = heroContainer.querySelectorAll('.hero-card');
+    const dots = document.querySelectorAll('.dot');
+    let currentHeroIndex = 0;
+
+    function updateHeroCarousel() {
+        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentHeroIndex);
+        });
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentHeroIndex = index;
             updateHeroCarousel();
-        }, 5000);
+            clearInterval(heroAutoPlay);
+            heroAutoPlay = setInterval(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                updateHeroCarousel();
+            }, 5000);
+        });
+    });
 
-        document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
-            const container = carousel.querySelector('.carousel-container');
-            if (!container) return;
+    let heroAutoPlay = setInterval(() => {
+        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+        updateHeroCarousel();
+    }, 5000);
 
-            const cards = container.querySelectorAll('.carousel-card');
-            const prevButton = carousel.querySelector('.prev-arrow');
-            const nextButton = carousel.querySelector('.next-arrow');
+    // SCRIPT ORIGINAL DOS CARROSSÉIS ANTIGOS FOI REMOVIDO PARA EVITAR CONFLITO
+
+    // NOVO SCRIPT PARA CARROSSÉIS COM FILTRO
+    document.addEventListener('DOMContentLoaded', () => {
+        function setupFilterableCarousel(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+
+            const track = section.querySelector('.video-carousel-track');
+            const prevBtn = section.querySelector('.prev-arrow');
+            const nextBtn = section.querySelector('.next-arrow');
+            const filterButtons = section.querySelectorAll('.filter-btn');
+            const allCards = Array.from(track.children);
+            
             let currentIndex = 0;
 
-            if (cards.length <= 1) {
-                if(prevButton) prevButton.style.display = 'none';
-                if(nextButton) nextButton.style.display = 'none';
-                return;
-            }
+            const updateCarouselState = () => {
+                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                const totalVisible = visibleCards.length;
+                
+                if (totalVisible === 0) {
+                    prevBtn.classList.add('disabled');
+                    nextBtn.classList.add('disabled');
+                    track.style.transform = 'translateX(0px)';
+                    return;
+                }
+                
+                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+                
+                const maxIndex = Math.max(0, totalVisible - cardsInView);
 
-            function updateCarouselPosition() {
-                container.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
+                if (currentIndex > maxIndex) currentIndex = maxIndex;
+                if (currentIndex < 0) currentIndex = 0;
 
-            function moveCarousel(direction) {
-                currentIndex += direction;
-                if (currentIndex >= cards.length) {
+                prevBtn.classList.toggle('disabled', currentIndex === 0);
+                nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
+                
+                const offset = currentIndex * (cardWidth + gap);
+                track.style.transform = `translateX(-${offset}px)`;
+            };
+
+            const applyFilter = (filter) => {
+                allCards.forEach(card => {
+                    const isVisible = filter === 'all' || card.dataset.category === filter;
+                    card.classList.toggle('hidden', !isVisible);
+                });
+                
+                setTimeout(() => {
                     currentIndex = 0;
-                }
-                if (currentIndex < 0) {
-                    currentIndex = cards.length - 1;
-                }
-                updateCarouselPosition();
-            }
+                    updateCarouselState();
+                }, 50);
+            };
 
-            let autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    applyFilter(button.dataset.filter);
+                });
+            });
 
-            function setupNavAction(button, direction) {
-                if (button) {
-                    button.addEventListener('click', () => {
-                        moveCarousel(direction);
-                        clearInterval(autoPlayInterval);
-                        autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
-                    });
+            nextBtn.addEventListener('click', () => {
+                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                 const cardWidth = visibleCards[0].offsetWidth;
+                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                 const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+                
+                 if (currentIndex < visibleCards.length - cardsInView) {
+                    currentIndex++;
+                    updateCarouselState();
+                 }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarouselState();
                 }
-            }
+            });
 
-            setupNavAction(prevButton, -1);
-            setupNavAction(nextButton, 1);
-        });
+            window.addEventListener('resize', () => {
+                currentIndex = 0;
+                updateCarouselState();
+            });
+
+            updateCarouselState();
+        }
+
+        setupFilterableCarousel('latest-videos-section');
+        setupFilterableCarousel('most-viewed-section');
+    });
     </script>
 </body>
 </html>
