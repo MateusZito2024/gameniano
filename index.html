@@ -191,7 +191,7 @@
         .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
         .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
         .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
-        .video-carousel-section .carousel-arrow.disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
+        .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
         
         .member-section {
             padding: 80px 5%; display: flex; justify-content: center; align-items: center;
@@ -318,17 +318,88 @@
                 <button class="filter-btn" data-filter="elementos">Elementos</button>
             </div>
             <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
                 <div class="video-carousel-container">
                     <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" class="thumbnail" alt="Entrevista - Bruxaria Moderna"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/762/hqdefault.jpg" class="thumbnail" alt="Entrevista Tarot Arthuriano"> <div class="video-info"> <h3>Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma conversa especial sobre as lendas do Rei Arthur e sua conexão com o Tarot.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" class="thumbnail" alt="O poder espiritual do lobo"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" class="thumbnail" alt="Poder espiritual do tigre"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" class="thumbnail" alt="Poderoso Desbloqueio com as Águas"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" class="thumbnail" alt="Traumas do Passado e o Elemento Água"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" class="thumbnail" alt="O poder espiritual do cavalo"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/37707/hqdefault.jpg" class="thumbnail" alt="O poder espiritual da borboleta"> <div class="video-info"> <h3>O poder espiritual da borboleta</h3> <p class="description">Descubra a magia da transformação e renovação através do totem da borboleta.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" alt="Poder espiritual do tigre" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" alt="Poderoso Desbloqueio com as Águas" class="thumbnail"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
+                        
+                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/r_Q1g0788sM/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conexão com o Elemento Fogo</h3><p class="description">Aprenda a usar a energia do fogo para transmutação e força interior.</p><a href="https://youtu.be/O4c4S08jcFw?si=QPGE9plbWYLSXf1d" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/y30A1s3T2gI/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Elemento Ar - O Sopro da Vida</h3><p class="description">Explore a força do pensamento e da comunicação através do elemento Ar.</p><a href="https://youtu.be/4FQtfrB1k8s?si=kYB9dPkkRXw8T4AT" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/tO2-YV3w2wI/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Força do Elemento Terra</h3><p class="description">Conecte-se com a estabilidade e a nutrição do elemento Terra.</p><a href="https://youtu.be/kNDUONUnEJ0?si=xwn5qoj6SJTA19jw" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/2v5_rC9y2_A/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Equilíbrio dos Quatro Elementos</h3><p class="description">Uma meditação para harmonizar as energias dos quatro elementos em você.</p><a href="https://youtu.be/SzVi4CEnlRw?si=HPMj5Z2iIDDfaQI0" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Ritual dos Elementos</h3><p class="description">Aprenda um ritual prático para honrar e trabalhar com os quatro elementos.</p><a href="https://youtu.be/Wp-WJ0RekbM?si=phjTokhvhYXVbic-" target="_blank" class="watch-button">Assistir</a></div></div>
+
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/3U2C-D4hX6A/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conversa sobre Xamanismo</h3><p class="description">Uma entrevista sobre as práticas e visões do xamanismo na atualidade.</p><a href="https://youtu.be/r2Q2hcbrFjg?si=AJd73DpjAh9nnnGb" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/oI_g1g5mO7Y/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Astrologia</h3><p class="description">Entenda como os astros influenciam sua vida em uma conversa reveladora.</p><a href="https://youtu.be/Vq0UVZcjJ9E?si=JBFNZ2_mdpuW_gcB" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/r_Q1g0788sM/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Universo dos Oráculos</h3><p class="description">Uma entrevista sobre os diferentes tipos de oráculos e como usá-los.</p><a href="https://youtu.be/tHh99aKscJg?si=ABXxftDBVwQfbQWc" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Mestres e Guias Espirituais</h3><p class="description">Uma conversa sobre como se conectar com seus mentores e guias.</p><a href="https://youtu.be/s7PvSWSRtEc?si=J9tseD56Ea_6xDn3" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/xK2h4h3h3h4/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Jornada da Alma</h3><p class="description">Uma entrevista profunda sobre o propósito e os caminhos da alma.</p><a href="https://youtu.be/ArdGgBiD-mA?si=g8UbbKSBlYQkHSI8" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/RnH1n1s54u8/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo com Daniel Pires</h3><p class="description">Um bate papo descontraído sobre espiritualidade, caminhos e jornadas.</p><a href="https://youtu.be/z79_cwCVtpo?si=KDGbmaOUmIfRy8AK" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Reiki e Cura Energética</h3><p class="description">Entenda os princípios e benefícios do Reiki em uma entrevista especial.</p><a href="https://youtu.be/SDqdIdpSAOw?si=boi7NucRBJi36elH" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/y30A1s3T2gI/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Despertar da Kundalini</h3><p class="description">Uma conversa séria e esclarecedora sobre a energia da Kundalini.</p><a href="https://youtu.be/18Z3uCzE6zc?si=spdgDIT0YhnbrOP1" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Magia e Ocultismo</h3><p class="description">Uma entrevista sobre os fundamentos da magia e do ocultismo prático.</p><a href="https://youtu.be/YUFjwxoAd_Q?si=ww5mMgg5MxCIVFjX" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conversando sobre Projeção Astral</h3><p class="description">Entenda as técnicas e experiências da projeção astral nesta entrevista.</p><a href="https://youtu.be/7uqXm8jOaE4?si=AfX6D7EzWTCYCsO5" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Plantas de Poder</h3><p class="description">Uma conversa sobre o uso sagrado e terapêutico das plantas de poder.</p><a href="https://youtu.be/ufnDR163N1k?si=eKRaWxzIA_XqCBr1" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Cristais e Cristaloterapia</h3><p class="description">Entrevista sobre como usar o poder dos cristais para cura e equilíbrio.</p><a href="https://youtu.be/vpevIb5ZgMA?si=DBx1cWDMFsY3ncKI" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Numerologia na Prática</h3><p class="description">Descubra o poder dos números em uma conversa sobre numerologia.</p><a href="https://youtu.be/FTN7AVoNlgE?si=uCaliuYAGSfh5YJ1" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Umbanda</h3><p class="description">Uma conversa franca e respeitosa sobre os fundamentos da Umbanda.</p><a href="https://youtu.be/SezUmwk41Ik?si=uPl9gFVsfCETmzOI" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Energia dos Chakras</h3><p class="description">Aprenda sobre os centros de energia do corpo em uma entrevista detalhada.</p><a href="https://youtu.be/hCsKriczacs?si=0nxOUdu4PxRxbo1g" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/37707/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Sonhos e Seus Significados</h3><p class="description">Uma conversa sobre a interpretação dos sonhos e o que eles revelam.</p><a href="https://youtu.be/fR5DU6wCcX8?si=M4iodHJEpVxfg6CY" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/25623/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Caminhos da Mão Esquerda</h3><p class="description">Uma entrevista sobre as filosofias e práticas do Caminho da Mão Esquerda.</p><a href="https://youtu.be/dRyotPqXcv4?si=ndxUbMNmFT333CxZ" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/30744/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Registros Akáshicos</h3><p class="description">Descubra o que são e como acessar os Registros Akáshicos.</p><a href="https://youtu.be/A3sPcAYueaE?si=rn7OqNqlf1iUgMey" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/17260/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Visão Celta da Espiritualidade</h3><p class="description">Uma entrevista sobre a mitologia, os deuses e a magia do povo celta.</p><a href="https://youtu.be/-ohz80gwIiU?si=udFy8flVsDYFcNHO" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Meditação</h3><p class="description">Diferentes técnicas e os benefícios da meditação para a vida diária.</p><a href="https://youtu.be/e-l7qo5ZvLQ?si=MMWierInIihyuvdA" target="_blank" class="watch-button">Assistir</a></div></div>
+                    </div>
+                </div>
+                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section class="video-carousel-section" id="most-viewed-section">
+            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="meditacao">Meditação</button>
+                <button class="filter-btn" data-filter="ensinamentos">Ensinamentos</button>
+                <button class="filter-btn" data-filter="eventos">Eventos</button>
+            </div>
+            <div class="video-carousel-wrapper">
+                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <div class="video-carousel-container">
+                    <div class="video-carousel-track">
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/193603/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" alt="Meditação Guiada - Projeção Astral" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Explore outros planos e expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" alt="Como aprender a ler Tarot" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">Entenda a jornada do iniciado na espiritualidade e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/4450/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/762/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/oI_g1g5mO7Y/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Evento de Solstício</h3><p class="description">Celebração especial do Solstício, com rituais e meditações ao vivo.</p><a href="https://youtu.be/WFG0AdgWCAg?si=6CB5q73KGekwKNid" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Jornada Xamânica ao Vivo</h3><p class="description">Participe de uma jornada xamânica guiada em um evento especial ao vivo.</p><a href="https://youtu.be/TukQjTJyaUA?si=WF4kSBMDVC0ejzaX" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/r_Q1g0788sM/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Ritual de Lua Cheia</h3><p class="description">Evento ao vivo com um poderoso ritual para aproveitar a energia da Lua Cheia.</p><a href="https://youtu.be/MkIur2e-oHM?si=zdYarTUW-tLAAUt4" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/3U2C-D4hX6A/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Workshop de Oráculos</h3><p class="description">Aprenda os fundamentos dos oráculos em nosso workshop online.</p><a href="https://youtu.be/xoIGNct-oFg?si=v5nMqaTpY18FWR5A" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Palestra sobre Magia Natural</h3><p class="description">Assista à gravação da palestra sobre o uso de elementos naturais na magia.</p><a href="https://youtu.be/r2Q2hcbrFjg?si=7VMpbzfn9AHdjGy0" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/xK2h4h3h3h4/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Semana da Espiritualidade</h3><p class="description">Participe de uma semana de lives e eventos focados no despertar espiritual.</p><a href="https://youtu.be/135D0iEWmAE?si=3fijaMzxPqQRVByX" target="_blank" class="watch-button">Assistir</a></div></div>
+
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/RnH1n1s54u8/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Os Arquétipos e o Tarot</h3><p class="description">Entenda a relação entre os arquétipos e as cartas do Tarot.</p><a href="https://youtu.be/nhQIR9CWgZA?si=DlAzxiWOP1tuNbAK" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/76979/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Leis Herméticas Explicadas</h3><p class="description">Um resumo claro e objetivo sobre as Sete Leis Herméticas.</p><a href="https://youtu.be/u0HI1JkoJGg?si=p57IuOcuzb2jEJHn" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/tO2-YV3w2wI/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Poder da Intuição</h3><p class="description">Aprenda a ouvir sua voz interior e a confiar na sua intuição como guia.</p><a href="https://youtu.be/i39MqBSEYZ4?si=8U12LyfRIfVYCMJn" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/y30A1s3T2gI/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Como Consagrar seus Instrumentos</h3><p class="description">Aprenda a limpar e consagrar seus objetos mágicos e de poder.</p><a href="https://youtu.be/0r40GE5mfo8?si=dCTZjODecRACO6RN" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/2v5_rC9y2_A/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Roda do Ano e os Sabás</h3><p class="description">Um guia sobre as celebrações pagãs da Roda do Ano.</p><a href="https://youtu.be/XgdVtd809F0?si=FMRs2GaYpGOQLZAb" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O que é a Sombra?</h3><p class="description">Um ensinamento sobre o conceito da Sombra de Jung e como integrá-la.</p><a href="https://youtu.be/UBcAs13slOs?si=cePpy2NhwHujeG-r" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Espiral da Criação</h3><p class="description">Um ensinamento sobre o movimento espiralado da energia e da criação.</p><a href="https://youtu.be/wCJ7yfAm4Uc?si=7WkTiuUnmXvPR6mx" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Ética na Magia</h3><p class="description">Reflexões importantes sobre a responsabilidade e a ética no fazer mágico.</p><a href="https://youtu.be/Wp-WJ0RekbM?si=-CeXDZ4c2BIc5TsL" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Pacto com Hécate</h3><p class="description">Um ensinamento sobre a deusa Hécate e o que significa um pacto.</p><a href="https://youtu.be/SzVi4CEnlRw?si=cbNCcD2p32EfaV1S" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Montando seu Altar</h3><p class="description">Dicas e fundamentos para você montar seu primeiro altar sagrado.</p><a href="https://youtu.be/kNDUONUnEJ0?si=Vc_3LhE2LBr7ztRf" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Simbolismo da Serpente</h3><p class="description">Descubra os significados ocultos do arquétipo da serpente.</p><a href="https://youtu.be/4FQtfrB1k8s?si=xt2winVP9OhYAF9V" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/15086/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Proteção Energética para Iniciantes</h3><p class="description">Técnicas simples e eficazes para proteger sua energia no dia a dia.</p><a href="https://youtu.be/O4c4S08jcFw?si=0MB_2g6JuXw_kBf_" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/22132/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Os Oráculos e o Livre Arbítrio</h3><p class="description">Uma reflexão sobre como os oráculos funcionam em relação ao livre arbítrio.</p><a href="https://youtu.be/qzl2GSBGj1U?si=2V1LvGGh_HUzKwhI" target="_blank" class="watch-button">Assistir</a></div></div>
+                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/37707/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Tipos de Tarot</h3><p class="description">Conheça as diferenças entre os principais tipos de baralhos de Tarot.</p><a href="https://youtu.be/cOW3y42tLfs?si=-s5SEZ3N2saGKSwC" target="_blank" class="watch-button">Assistir</a></div></div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
@@ -342,32 +413,6 @@
                 <h3>Torne-se membro do canal</h3>
                 <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor.</p>
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
-            </div>
-        </section>
-
-        <section class="video-carousel-section" id="most-viewed-section">
-            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="meditacao">Meditação</button>
-                <button class="filter-btn" data-filter="ensinamentos">Ensinamentos</button>
-                <button class="filter-btn" data-filter="eventos">Eventos</button>
-            </div>
-            <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
-                <div class="video-carousel-container">
-                    <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/193603/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Jornada de desbloqueio espiritual para encontrar seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17996/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">A jornada do iniciado e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/158814/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Live de Tarot (Evento)</h3> <p class="description">Gravação de evento ao vivo de tarot com leitura e interação com o público.</p> <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/4450/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder temos?</h3> <p class="description">Ensinamentos sobre os diferentes guias que nos acompanham na vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/30744/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Meditação - Encontrando Um Mestre</h3> <p class="description">Uma jornada guiada para se conectar com um mestre espiritual na floresta.</p> <a href="http://www.youtube.com/watch?v=HDM4PWRs7aA" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/56282/hqdefault.jpg" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/17260/hqdefault.jpg" class="thumbnail"> <div class="video-info"><h3>Limpando o karma de vidas passadas</h3><p class="description">Ensinamentos sobre como entender e purificar o karma de existências anteriores.</p><a href="http://www.youtube.com/watch?v=oc36aFCPcTQ" target="_blank" class="watch-button">Assistir</a></div></div>
-                    </div>
-                </div>
-                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
         
@@ -412,60 +457,61 @@
     </footer>
     
     <script>
+    // SCRIPT ORIGINAL DA PÁGINA (INTOCADO)
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('liveVideoIframe', {
+            events: { 'onStateChange': onPlayerStateChange }
+        });
+    };
+
+    function onPlayerStateChange(event) {
+        const thumbnailContainer = document.getElementById('liveThumbnail');
+        if(!thumbnailContainer) return;
+        if (event.data === YT.PlayerState.PLAYING) {
+            thumbnailContainer.classList.add('hidden');
+        } else {
+            thumbnailContainer.classList.remove('hidden');
+        }
+    }
+    
+    const heroCarousel = document.querySelector('.hero-carousel');
+    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+    const heroCards = heroContainer.querySelectorAll('.hero-card');
+    const dots = document.querySelectorAll('.dot');
+    let currentHeroIndex = 0;
+
+    function updateHeroCarousel() {
+        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentHeroIndex);
+        });
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentHeroIndex = index;
+            updateHeroCarousel();
+            clearInterval(heroAutoPlay);
+            heroAutoPlay = setInterval(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                updateHeroCarousel();
+            }, 5000);
+        });
+    });
+
+    let heroAutoPlay = setInterval(() => {
+        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+        updateHeroCarousel();
+    }, 5000);
+
+
     document.addEventListener('DOMContentLoaded', () => {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        if(firstScriptTag) firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        let player;
-        window.onYouTubeIframeAPIReady = function() {
-            if (document.getElementById('liveVideoIframe')) {
-                player = new YT.Player('liveVideoIframe', {
-                    events: { 'onStateChange': onPlayerStateChange }
-                });
-            }
-        };
-
-        function onPlayerStateChange(event) {
-            const thumbnailContainer = document.getElementById('liveThumbnail');
-            if (!thumbnailContainer) return;
-            thumbnailContainer.classList.toggle('hidden', event.data === YT.PlayerState.PLAYING);
-        }
-
-        const heroContainer = document.querySelector('.hero-carousel-container');
-        if (heroContainer) {
-            const dots = document.querySelectorAll('.dot');
-            const heroCards = heroContainer.querySelectorAll('.hero-card');
-            let currentHeroIndex = 0;
-            let heroAutoPlay;
-
-            const updateHeroCarousel = () => {
-                if(heroContainer) heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                dots.forEach((dot, index) => dot.classList.toggle('active', index === currentHeroIndex));
-            };
-
-            const startHeroAutoplay = () => {
-                stopHeroAutoplay();
-                heroAutoPlay = setInterval(() => {
-                    currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                    updateHeroCarousel();
-                }, 5000);
-            };
-
-            const stopHeroAutoplay = () => clearInterval(heroAutoPlay);
-            
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentHeroIndex = index;
-                    updateHeroCarousel();
-                    startHeroAutoplay();
-                });
-            });
-            
-            startHeroAutoplay();
-        }
-
         function setupFilterableCarousel(sectionId) {
             const section = document.getElementById(sectionId);
             if (!section) return;
@@ -480,35 +526,25 @@
             let currentIndex = 0;
             let autoplayInterval;
 
-            const moveNext = (isAutoplay = false) => {
+            const moveNext = () => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                if (visibleCards.length === 0) return;
-                
+                const totalVisible = visibleCards.length;
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
-                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
+                const cardWidth = visibleCards.length > 0 ? visibleCards[0].offsetWidth : 0;
+                const gap = cardWidth > 0 ? parseInt(window.getComputedStyle(track).gap) || 25 : 0;
+                const cardsInView = cardWidth > 0 ? Math.floor(containerWidth / (cardWidth + gap)) : 0;
                 
-                if (visibleCards.length > cardsInView) {
-                     currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
-                     updateCarouselState(!isAutoplay); 
+                const maxIndex = Math.max(0, totalVisible - cardsInView);
+                
+                if (totalVisible > cardsInView) {
+                    currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
+                    updateCarouselState(false);
                 }
             };
             
             const startAutoplay = () => {
                 stopAutoplay();
-                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                if (visibleCards.length > 0) {
-                     const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                    const cardWidth = visibleCards[0].offsetWidth;
-                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                    const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
-
-                    if (visibleCards.length > cardsInView) {
-                       autoplayInterval = setInterval(moveNext, 3000);
-                    }
-                }
+                autoplayInterval = setInterval(moveNext, 5000);
             };
 
             const stopAutoplay = () => {
@@ -530,25 +566,28 @@
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
+                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
                 
                 const maxIndex = Math.max(0, totalVisible - cardsInView);
 
                 if (currentIndex > maxIndex) currentIndex = maxIndex;
                 if (currentIndex < 0) currentIndex = 0;
 
-                const canScroll = totalVisible > cardsInView;
-                prevBtn.classList.toggle('disabled', !canScroll || currentIndex === 0);
-                nextBtn.classList.toggle('disabled', !canScroll || currentIndex >= maxIndex);
+                prevBtn.classList.toggle('disabled', currentIndex === 0);
+                nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
                 
                 const offset = currentIndex * (cardWidth + gap);
                 track.style.transform = `translateX(-${offset}px)`;
 
                 if (resetAutoplay) {
-                   startAutoplay();
+                    if (totalVisible > cardsInView) {
+                        startAutoplay();
+                    } else {
+                        stopAutoplay();
+                    }
                 }
             };
-            
+
             const applyFilter = (filter) => {
                 allCards.forEach(card => {
                     const isVisible = filter === 'all' || card.dataset.category === filter;
@@ -574,36 +613,29 @@
                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
-                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
+                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
                 
-                if (currentIndex >= maxIndex) {
-                    currentIndex = 0;
-                } else {
+                if (currentIndex < visibleCards.length - cardsInView) {
                     currentIndex++;
+                    updateCarouselState();
                 }
-                updateCarouselState();
             });
 
             prevBtn.addEventListener('click', () => {
-                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor((containerWidth + gap) / (cardWidth + gap));
-                const maxIndex = Math.max(0, visibleCards.length - cardsInView);
-
-                if (currentIndex <= 0) {
-                    currentIndex = maxIndex;
-                } else {
+                if (currentIndex > 0) {
                     currentIndex--;
+                    updateCarouselState();
                 }
-                updateCarouselState();
             });
 
             wrapper.addEventListener('mouseenter', stopAutoplay);
-            wrapper.addEventListener('mouseleave', startAutoplay);
-            window.addEventListener('resize', () => { currentIndex = 0; updateCarouselState(); });
+            wrapper.addEventListener('mouseleave', () => updateCarouselState(true));
+
+            window.addEventListener('resize', () => {
+                currentIndex = 0;
+                updateCarouselState();
+            });
+
             updateCarouselState();
         }
 
