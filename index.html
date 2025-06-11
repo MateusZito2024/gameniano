@@ -463,7 +463,7 @@
     </footer>
     
     <script>
-    // SCRIPT DO HERO CAROUSEL E LIVE PLAYER (INTOCADOS)
+    // --- LÓGICA CORRETA DA LIVE (RESTAURADA DO CÓDIGO ANTIGO) ---
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -471,20 +471,32 @@
 
     let player;
     window.onYouTubeIframeAPIReady = function() {
-        // Player da live não precisa ser instanciado se não houver um ID válido
+        // Instancia o player, associando-o ao iframe 'liveVideoIframe'.
+        // É esta parte que "ativa" o player para que ele possa responder aos eventos do YouTube.
+        player = new YT.Player('liveVideoIframe', {
+            events: {
+                // Define a função que será chamada quando o estado do player mudar.
+                'onStateChange': onPlayerStateChange
+            }
+        });
     };
 
     function onPlayerStateChange(event) {
         const thumbnailContainer = document.getElementById('liveThumbnail');
         if (!thumbnailContainer) return;
+
+        // Se o vídeo estiver tocando (PLAYING), esconde a thumbnail.
         if (event.data === YT.PlayerState.PLAYING) {
             thumbnailContainer.classList.add('hidden');
         } else {
+            // Para qualquer outro estado (pausado, bufferizando, etc.), a thumbnail é mostrada.
             thumbnailContainer.classList.remove('hidden');
         }
     }
 
+    // --- LÓGICA DOS CARROSSÉIS (DO CÓDIGO NOVO) ---
     document.addEventListener('DOMContentLoaded', () => {
+        // Lógica do carrossel do topo (hero)
         const heroCarousel = document.querySelector('.hero-carousel');
         if (heroCarousel) {
             const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -522,7 +534,7 @@
             startHeroAutoplay();
         }
 
-        // --- NOVO SCRIPT PARA CARROSSÉIS DE VÍDEO INFINITOS ---
+        // Lógica dos carrosséis de vídeo infinitos
         function setupInfiniteCarousel(sectionId) {
             const section = document.getElementById(sectionId);
             if (!section) return;
@@ -546,28 +558,28 @@
                 stopAutoplay();
                 isTransitioning = false;
                 
-                // Limpa clones antigos e restaura o estado original
                 const clones = track.querySelectorAll('.clone');
                 clones.forEach(clone => track.removeChild(clone));
                 track.innerHTML = '';
                 originalCards.forEach(card => track.appendChild(card));
                 
-                // Reaplica o filtro atual
                 const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
                 originalCards.forEach(card => {
                     const isVisible = activeFilter === 'all' || card.dataset.category === activeFilter;
                     card.classList.toggle('hidden', !isVisible);
                 });
 
-
                 const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) return;
+                if (visibleCards.length === 0) {
+                    if (prevBtn) prevBtn.classList.add('disabled');
+                    if (nextBtn) nextBtn.classList.add('disabled');
+                    return;
+                };
 
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
                 const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
 
-                // Se todos os cards cabem na tela, não precisa de loop infinito
                 if (visibleCards.length <= cardsInView) {
                     prevBtn.classList.add('disabled');
                     nextBtn.classList.add('disabled');
@@ -578,7 +590,6 @@
                 prevBtn.classList.remove('disabled');
                 nextBtn.classList.remove('disabled');
 
-                // Clonagem para o efeito infinito
                 const itemsToCloneEnd = visibleCards.slice(0, cardsInView);
                 itemsToCloneEnd.forEach(card => {
                     const clone = card.cloneNode(true);
@@ -593,7 +604,6 @@
                     track.insertBefore(clone, track.firstChild);
                 });
 
-                // Posição inicial
                 currentIndex = cardsInView;
                 const initialOffset = -currentIndex * (cardWidth + gap);
                 track.style.transition = 'none';
@@ -607,6 +617,10 @@
                 isTransitioning = true;
                 
                 const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) {
+                    isTransitioning = false;
+                    return;
+                }
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
 
@@ -619,12 +633,16 @@
 
             track.addEventListener('transitionend', () => {
                 const visibleCards = getVisibleCards();
-                const cardsInView = Math.floor(container.offsetWidth / (visibleCards[0].offsetWidth + parseInt(window.getComputedStyle(track).gap)));
+                if (visibleCards.length === 0) {
+                    isTransitioning = false;
+                    return;
+                }
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
                 
                 if (currentIndex <= (cardsInView -1)) {
                     currentIndex = visibleCards.length + (cardsInView -1);
-                    const cardWidth = visibleCards[0].offsetWidth;
-                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
                     const offset = -currentIndex * (cardWidth + gap);
                     track.style.transition = 'none';
                     track.style.transform = `translateX(${offset}px)`;
@@ -632,8 +650,6 @@
 
                 if (currentIndex >= visibleCards.length + cardsInView) {
                     currentIndex = cardsInView;
-                    const cardWidth = visibleCards[0].offsetWidth;
-                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
                     const offset = -currentIndex * (cardWidth + gap);
                     track.style.transition = 'none';
                     track.style.transform = `translateX(${offset}px)`;
