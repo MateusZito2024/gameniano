@@ -1,471 +1,2015 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Lendário TV</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        /* CSS original, com as 2 únicas linhas alteradas para garantir o estado inicial correto */
+
+        /* Variáveis CSS para cores e fontes */
+
         :root {
+
             --dark-background: #0d0d0d;
+
             --dark-gray: #1a1a1a;
+
             --medium-gray: #2c2c2c;
+
             --text-light: #f0f0f0;
+
             --gold: #D4AF37;
+
             --button-gold: #9e843c;
+
             --button-gold-hover: #c4a148;
+
             --red-youtube: #ff0000;
+
             --border-color: #333;
+
             --font-cinzel: 'Cinzel', serif;
+
             --font-montserrat: 'Montserrat', sans-serif;
+
         }
+
+        /* Reset básico e estilos gerais */
+
         body {
+
             font-family: var(--font-montserrat);
+
             background-color: var(--dark-background);
+
             color: var(--text-light);
+
             margin: 0;
+
             padding: 0;
+
             line-height: 1.6;
+
             overflow-x: hidden;
+
         }
-        a { color: var(--text-light); text-decoration: none; transition: color 0.3s ease; }
-        a:hover { color: var(--gold); }
-        header { background-color: var(--dark-gray); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
-        .logo img { height: 45px; margin-right: 10px; }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { margin-left: 35px; }
-        nav ul li a { font-weight: 500; font-size: 0.95em; }
-        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
-        .social-icons a:hover { color: var(--gold); }
-        .hero-section { position: relative; height: 520px; background-image: url('https://i.postimg.cc/SNw7PQKP/capa-3.png'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; text-align: center; color: var(--text-light); margin-bottom: 60px; overflow: hidden; }
-        .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
-        .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
-        .hero-card { min-width: 100%; background-color: rgba(0, 0, 0, 0.6); padding: 50px 70px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); box-sizing: border-box; text-align: center; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; }
-        .hero-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); }
-        .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
-        .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; min-height: 40px; }
-        .hero-button { background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); display: inline-block; width: 200px; text-align: center; }
-        .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .hero-button.youtube:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .hero-button:hover { background-color: var(--button-gold-hover); transform: translateY(-2px); }
-        .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
-        .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .dot.active { background-color: var(--gold); border-color: var(--gold); }
-        .section-title { text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative; }
-        .section-title::before,
-        .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
-        .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
-        .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
-        .live-content-wrapper { display: flex; width: 100%; max-width: 1200px; gap: 40px; margin-bottom: 40px; }
-        .live-video-player { flex: 2; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        
-        /* ALTERAÇÃO 1: Esconde o iframe por padrão */
-        .live-video-player iframe { display: none; }
-        
-        .video-thumbnail-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* ALTERAÇÃO 2: Mostra a thumbnail por padrão */
-            display: flex; 
-            justify-content: center;
+
+        a {
+
+            color: var(--text-light);
+
+            text-decoration: none;
+
+            transition: color 0.3s ease;
+
+        }
+
+        a:hover {
+
+            color: var(--gold);
+
+        }
+
+        /* Header */
+
+        header {
+
+            background-color: var(--dark-gray);
+
+            padding: 15px 5%;
+
+            display: flex;
+
+            justify-content: space-between;
+
             align-items: center;
-            background-color: black;
-            cursor: default;
-            transition: opacity 0.3s ease;
-            z-index: 10;
+
+            border-bottom: 1px solid var(--border-color);
+
         }
-        .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
-        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; box-sizing: border-box; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
-        .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
-        .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
-        .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
-        .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
-        .video-info-overlay .youtube-link:hover { color: var(--gold); }
-        .live-chat { flex: 1; background-color: var(--medium-gray); padding: 30px; border-radius: 8px; display: none; justify-content: center; align-items: center; text-align: center; font-size: 1.15em; color: #aaa; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); }
-        .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
-        .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
-        .share-icons a { color: var(--text-light); background-color: var(--medium-gray); font-size: 26px; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin: 0 10px; transition: background-color 0.3s ease, color 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-        .share-icons a:hover { background-color: var(--gold); color: var(--dark-background); }
-        .carousel { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; }
-        .carousel-container { display: flex; transition: transform 0.5s ease; }
-        .carousel-card { min-width: 100%; box-sizing: border-box; background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; padding: 20px; text-align: left; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease; height: 300px; display: flex; align-items: center; }
-        .carousel-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); }
-        .card-thumbnail-wrapper { width: 400px; height: 100%; margin-right: 20px; border-radius: 5px; overflow: hidden; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .carousel-card img { flex-shrink: 0; width: 100%; height: 135%; }
-        .carousel-card-content { flex: 1; }
-        .carousel-card-content h3 { font-family: var(--font-cinzel); font-size: 1.6em; margin-top: 0; margin-bottom: 15px; color: var(--gold); }
-        .carousel-card-content p { font-size: 1.1em; color: #bbb; margin-bottom: 20px; }
-        .carousel-card-content a { background-color: var(--button-gold); color: var(--dark-background); padding: 12px 25px; border-radius: 5px; font-weight: 600; font-size: 1em; transition: background-color 0.3s ease; }
-        .carousel-card-content a:hover { background-color: var(--button-gold-hover); }
-        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.7); color: var(--text-light); border: 1px solid var(--border-color); width: 45px; height: 45px; border-radius: 50%; font-size: 1.2em; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); transform: translateY(-50%) scale(1.05); }
-        .prev-arrow { left: 20px; }
-        .next-arrow { right: 20px; }
-        .member-section { padding: 80px 5%; display: flex; justify-content: center; align-items: center; min-height: 400px; position: relative; background-color: var(--dark-background); overflow: hidden; }
-        .decorative-border { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png'); background-size: contain; background-repeat: no-repeat; background-position: center center; opacity: 0.08; z-index: 0; pointer-events: none; }
-        .member-card { background-color: var(--dark-gray); padding: 50px; border-radius: 12px; text-align: center; max-width: 600px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); position: relative; z-index: 1; border: 1px solid rgba(255, 255, 255, 0.08); }
-        .member-card .youtube-logo { font-size: 4em; color: var(--red-youtube); margin-bottom: 25px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
-        .member-card h3 { font-family: var(--font-cinzel); font-size: 2.2em; margin-bottom: 20px; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
-        .member-card p { font-size: 1.15em; margin-bottom: 35px; color: #ccc; }
-        .member-button { background-color: var(--red-youtube); color: var(--text-light); padding: 18px 40px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .member-button:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .member-button .icon { font-size: 1.3em; color: white; }
-        footer { background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px; }
-        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
-        .footer-logo-section img { height: 55px; margin-bottom: 20px; }
-        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
-        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
-        .footer-social-icons a:hover { color: var(--gold); }
-        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
-        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
-        .footer-column ul { list-style: none; padding: 0; margin: 0; }
-        .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
-        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
-        .footer-column ul li a:hover { color: var(--gold); }
-        .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
-        @media (max-width: 1200px) { .card-thumbnail-wrapper { width: 350px; } }
-        @media (max-width: 900px) { .carousel-arrow { width: 40px; height: 40px; font-size: 1em; left: 10px; } .next-arrow { right: 10px; } }
-        @media (max-width: 768px) { .card-thumbnail-wrapper { width: 300px; } .carousel-card { height: 250px; } .hero-card h2 { font-size: 2.8em; } .hero-card p { font-size: 1.1em; min-height: 36px; } .hero-carousel-container { height: 300px; } }
-        @media (max-width: 480px) { .card-thumbnail-wrapper { width: 200px; } .carousel-card { flex-direction: column; height: auto; align-items: flex-start; } .card-thumbnail-wrapper { width: 100%; height: 180px; margin-right: 0; margin-bottom: 15px; } .carousel-card-content { width: 100%; } .hero-card { padding: 30px; } .hero-card h2 { font-size: 2em; } .hero-card p { font-size: 1em; margin-bottom: 20px; min-height: 32px; } .hero-button { padding: 14px 30px; font-size: 1em; width: 180px; } .hero-carousel-container { height: 250px; } }
+
+        .logo img {
+
+            height: 45px;
+
+            margin-right: 10px;
+
+        }
+
+        nav ul {
+
+            list-style: none;
+
+            margin: 0;
+
+            padding: 0;
+
+            display: flex;
+
+        }
+
+        nav ul li {
+
+            margin-left: 35px;
+
+        }
+
+        nav ul li a {
+
+            font-weight: 500;
+
+            font-size: 0.95em;
+
+        }
+
+        .social-icons a {
+
+            color: var(--text-light);
+
+            font-size: 22px;
+
+            margin-left: 25px;
+
+            transition: color 0.3s ease;
+
+        }
+
+        .social-icons a:hover {
+
+            color: var(--gold);
+
+        }
+
+        /* Hero Section */
+
+        .hero-section {
+
+            position: relative;
+
+            height: 520px;
+
+            background-image: url('https://i.postimg.cc/SNw7PQKP/capa-3.png');
+
+            background-size: cover;
+
+            background-position: center;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            color: var(--text-light);
+
+            margin-bottom: 60px;
+
+            overflow: hidden;
+
+        }
+
+        .hero-carousel {
+
+            position: relative;
+
+            max-width: 700px;
+
+            width: 100%;
+
+            overflow: hidden;
+
+        }
+
+        .hero-carousel-container {
+
+            display: flex;
+
+            transition: transform 0.5s ease;
+
+            width: 100%;
+
+            height: 350px;
+
+        }
+
+        .hero-card {
+
+            min-width: 100%;
+
+            background-color: rgba(0, 0, 0, 0.6);
+
+            padding: 50px 70px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+
+            box-sizing: border-box;
+
+            text-align: center;
+
+            transition: transform 0.3s ease;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 100%;
+
+        }
+
+        .hero-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+
+        }
+
+        .hero-card h2 {
+
+            font-family: var(--font-cinzel);
+
+            font-size: 3.5em;
+
+            margin: 0 0 20px 0;
+
+            color: var(--gold);
+
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+
+            line-height: 1.2;
+
+        }
+
+        .hero-card p {
+
+            font-size: 1.25em;
+
+            margin: 0 0 20px 0;
+
+            font-weight: 400;
+
+            opacity: 0.9;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            min-height: 40px;
+
+        }
+
+        .hero-button {
+
+            background-color: var(--button-gold);
+
+            color: var(--dark-background);
+
+            padding: 18px 45px;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            font-size: 1.1em;
+
+            letter-spacing: 0.5px;
+
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+            display: inline-block;
+
+            width: 200px;
+
+            text-align: center;
+
+        }
+
+        .hero-button.youtube {
+
+            background-color: var(--red-youtube);
+
+            color: var(--text-light);
+
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+
+        }
+
+        .hero-button.youtube:hover {
+
+            background-color: #cc0000;
+
+            transform: translateY(-2px);
+
+        }
+
+        .hero-button:hover {
+
+            background-color: var(--button-gold-hover);
+
+            transform: translateY(-2px);
+
+        }
+
+        .slider-nav {
+
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        .dot {
+
+            height: 12px;
+
+            width: 12px;
+
+            background-color: rgba(255, 255, 255, 0.3);
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            border: 1px solid rgba(255, 255, 255, 0.5);
+
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+
+        }
+
+        .dot.active {
+
+            background-color: var(--gold);
+
+            border-color: var(--gold);
+
+        }
+
+        /* Títulos de Seção */
+
+        .section-title {
+
+            text-align: center;
+
+            font-family: var(--font-cinzel);
+
+            font-size: 2.8em;
+
+            margin-bottom: 50px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: var(--gold);
+
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+
+            position: relative;
+
+        }
+
+        .section-title::before,
+
+        .section-title::after {
+
+            content: '';
+
+            flex: 1;
+
+            height: 1px;
+
+            background-color: var(--border-color);
+
+            margin: 0 20px;
+
+        }
+
+        .section-title img {
+
+            height: 45px;
+
+            margin-right: 15px;
+
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+
+        }
+
+        /* Live Section */
+
+        .live-section {
+
+            padding: 50px 5%;
+
+            margin-top: 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+        }
+
+        .live-content-wrapper {
+
+            display: flex;
+
+            width: 100%;
+
+            max-width: 1200px;
+
+            gap: 40px;
+
+            margin-bottom: 40px;
+
+        }
+
+        .live-video-player {
+
+            flex: 2;
+
+            background-color: #000;
+
+            aspect-ratio: 16 / 9;
+
+            position: relative;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+
+        }
+
+        .live-video-player iframe {
+
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
+
+            display: none;
+
+        }
+
+        .live-video-player.active iframe {
+
+            display: block;
+
+        }
+
+        .video-thumbnail-container {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background-color: black;
+
+            cursor: pointer;
+
+            transition: opacity 0.3s ease;
+
+        }
+
+        .live-video-player.active .video-thumbnail-container {
+
+            display: none;
+
+        }
+
+        .video-thumbnail-container img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
+        .play-button {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            background-color: rgba(255, 0, 0, 0.9);
+
+            border-radius: 10px;
+
+            width: 90px;
+
+            height: 90px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 50px;
+
+            color: white;
+
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+
+        }
+
+        .play-button:hover {
+
+            background-color: #cc0000;
+
+            transform: translate(-50%, -50%) scale(1.05);
+
+        }
+
+        .video-info-overlay {
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+
+            padding: 20px;
+
+            box-sizing: border-box;
+
+            color: white;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            font-size: 1.1em;
+
+        }
+
+        .video-info-overlay .title {
+
+            font-weight: 700;
+
+            font-size: 1.3em;
+
+            margin-bottom: 5px;
+
+            color: var(--text-light);
+
+        }
+
+        .video-info-overlay .time {
+
+            font-size: 0.9em;
+
+            opacity: 0.8;
+
+        }
+
+        .video-info-overlay .youtube-link {
+
+            display: flex;
+
+            align-items: center;
+
+            color: var(--text-light);
+
+            text-decoration: none;
+
+            font-weight: 500;
+
+            font-size: 1em;
+
+        }
+
+        .video-info-overlay .youtube-link i {
+
+            margin-right: 8px;
+
+            font-size: 1.4em;
+
+            color: var(--red-youtube);
+
+        }
+
+        .video-info-overlay .youtube-link:hover {
+
+            color: var(--gold);
+
+        }
+
+        .live-chat {
+
+            flex: 1;
+
+            background-color: var(--medium-gray);
+
+            padding: 30px;
+
+            border-radius: 8px;
+
+            display: none;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            font-size: 1.15em;
+
+            color: #aaa;
+
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+
+        }
+
+        .social-share {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            padding-top: 30px;
+
+            border-top: 1px solid var(--border-color);
+
+            width: 100%;
+
+            max-width: 1200px;
+
+        }
+
+        .social-share p {
+
+            font-size: 1.1em;
+
+            margin-bottom: 20px;
+
+            font-weight: 500;
+
+        }
+
+        .share-icons a {
+
+            color: var(--text-light);
+
+            background-color: var(--medium-gray);
+
+            font-size: 26px;
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 50%;
+
+            display: inline-flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            margin: 0 10px;
+
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+        }
+
+        .share-icons a:hover {
+
+            background-color: var(--gold);
+
+            color: var(--dark-background);
+
+        }
+
+        /* Carousel Styles for Últimos Vídeos and Mais Vistos */
+
+        .carousel {
+
+            position: relative;
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            overflow: hidden;
+
+        }
+
+        .carousel-container {
+
+            display: flex;
+
+            transition: transform 0.5s ease;
+
+        }
+
+        .carousel-card {
+
+            min-width: 100%;
+
+            box-sizing: border-box;
+
+            background-color: rgba(0, 0, 0, 0.6);
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            text-align: left;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+
+            transition: transform 0.3s ease;
+
+            height: 300px;
+
+            display: flex;
+
+            align-items: center;
+
+        }
+
+        .carousel-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+
+        }
+
+        .card-thumbnail-wrapper {
+
+            width: 400px;
+
+            height: 100%;
+
+            margin-right: 20px;
+
+            border-radius: 5px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-shrink: 0;
+
+        }
+
+        .carousel-card img {
+
+            flex-shrink: 0;
+
+            width: 100%;
+
+            height: 135%;
+
+        }
+
+        .carousel-card-content {
+
+            flex: 1;
+
+        }
+
+        .carousel-card-content h3 {
+
+            font-family: var(--font-cinzel);
+
+            font-size: 1.6em;
+
+            margin-top: 0;
+
+            margin-bottom: 15px;
+
+            color: var(--gold);
+
+        }
+
+        .carousel-card-content p {
+
+            font-size: 1.1em;
+
+            color: #bbb;
+
+            margin-bottom: 20px;
+
+        }
+
+        .carousel-card-content a {
+
+            background-color: var(--button-gold);
+
+            color: var(--dark-background);
+
+            padding: 12px 25px;
+
+            border-radius: 5px;
+
+            font-weight: 600;
+
+            font-size: 1em;
+
+            transition: background-color 0.3s ease;
+
+        }
+
+        .carousel-card-content a:hover {
+
+            background-color: var(--button-gold-hover);
+
+        }
+
+        .carousel-arrow {
+
+            position: absolute;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background-color: rgba(44, 44, 44, 0.7);
+
+            color: var(--text-light);
+
+            border: 1px solid var(--border-color);
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            font-size: 1.2em;
+
+            cursor: pointer;
+
+            z-index: 10;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+
+        }
+
+        .carousel-arrow:hover {
+
+            background-color: var(--gold);
+
+            color: var(--dark-background);
+
+            transform: translateY(-50%) scale(1.05);
+
+        }
+
+        .prev-arrow {
+
+            left: 20px;
+
+        }
+
+        .next-arrow {
+
+            right: 20px;
+
+        }
+
+        /* Member Section */
+
+        .member-section {
+
+            padding: 80px 5%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 400px;
+
+            position: relative;
+
+            background-color: var(--dark-background);
+
+            overflow: hidden;
+
+        }
+
+        .decorative-border {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+
+            background-size: contain;
+
+            background-repeat: no-repeat;
+
+            background-position: center center;
+
+            opacity: 0.08;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+        }
+
+        .member-card {
+
+            background-color: var(--dark-gray);
+
+            padding: 50px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            max-width: 600px;
+
+            width: 100%;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+
+            position: relative;
+
+            z-index: 1;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        }
+
+        .member-card .youtube-logo {
+
+            font-size: 4em;
+
+            color: var(--red-youtube);
+
+            margin-bottom: 25px;
+
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+
+        }
+
+        .member-card h3 {
+
+            font-family: var(--font-cinzel);
+
+            font-size: 2.2em;
+
+            margin-bottom: 20px;
+
+            color: var(--gold);
+
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+
+        }
+
+        .member-card p {
+
+            font-size: 1.15em;
+
+            margin-bottom: 35px;
+
+            color: #ccc;
+
+        }
+
+        .member-button {
+
+            background-color: var(--red-youtube);
+
+            color: var(--text-light);
+
+            padding: 18px 40px;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            font-size: 1.1em;
+
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+
+        }
+
+        .member-button:hover {
+
+            background-color: #cc0000;
+
+            transform: translateY(-2px);
+
+        }
+
+        .member-button .icon {
+
+            font-size: 1.3em;
+
+            color: white;
+
+        }
+
+        /* Footer */
+
+        footer {
+
+            background-color: var(--dark-gray);
+
+            color: var(--text-light);
+
+            padding: 60px 5%;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            border-top: 1px solid var(--border-color);
+
+            margin-top: 80px;
+
+        }
+
+        .footer-logo-section {
+
+            flex: 1;
+
+            min-width: 280px;
+
+            margin-right: 40px;
+
+        }
+
+        .footer-logo-section img {
+
+            height: 55px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .footer-logo-section p {
+
+            font-size: 0.95em;
+
+            color: #bbb;
+
+            margin-bottom: 25px;
+
+            line-height: 1.8;
+
+        }
+
+        .footer-social-icons a {
+
+            color: var(--text-light);
+
+            font-size: 24px;
+
+            margin-right: 20px;
+
+            transition: color 0.3s ease;
+
+        }
+
+        .footer-social-icons a:hover {
+
+            color: var(--gold);
+
+        }
+
+        .footer-links {
+
+            flex: 2;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 40px;
+
+            justify-content: space-around;
+
+        }
+
+        .footer-column {
+
+            flex: 1;
+
+            min-width: 180px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .footer-column ul {
+
+            list-style: none;
+
+            padding: 0;
+
+            margin: 0;
+
+        }
+
+        .footer-column ul li {
+
+            margin-bottom: 12px;
+
+        }
+
+        .footer-column ul li a {
+
+            font-size: 0.98em;
+
+            font-weight: 400;
+
+            display: flex;
+
+            align-items: center;
+
+        }
+
+        .footer-column ul li a .icon {
+
+            margin-right: 10px;
+
+            font-size: 1.2em;
+
+            color: var(--gold);
+
+        }
+
+        .footer-column ul li a:hover {
+
+            color: var(--gold);
+
+        }
+
+        .copyright {
+
+            width: 100%;
+
+            text-align: center;
+
+            margin-top: 50px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid var(--border-color);
+
+            font-size: 0.88em;
+
+            color: #888;
+
+            font-weight: 400;
+
+        }
+
+        /* Design Responsivo para o wrapper da thumbnail */
+
+        @media (max-width: 1200px) {
+
+            .card-thumbnail-wrapper {
+
+                width: 350px;
+
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .carousel-arrow {
+
+                width: 40px;
+
+                height: 40px;
+
+                font-size: 1em;
+
+                left: 10px;
+
+            }
+
+            .next-arrow {
+
+                right: 10px;
+
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .card-thumbnail-wrapper {
+
+                width: 300px;
+
+            }
+
+            .carousel-card {
+
+                height: 250px;
+
+            }
+
+            .hero-card h2 {
+
+                font-size: 2.8em;
+
+            }
+
+            .hero-card p {
+
+                font-size: 1.1em;
+
+                min-height: 36px;
+
+            }
+
+            .hero-carousel-container {
+
+                height: 300px;
+
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .card-thumbnail-wrapper {
+
+                width: 200px;
+
+            }
+
+            .carousel-card {
+
+                flex-direction: column;
+
+                height: auto;
+
+                align-items: flex-start;
+
+            }
+
+            .card-thumbnail-wrapper {
+
+                width: 100%;
+
+                height: 180px;
+
+                margin-right: 0;
+
+                margin-bottom: 15px;
+
+            }
+
+            .carousel-card-content {
+
+                width: 100%;
+
+            }
+
+            .hero-card {
+
+                padding: 30px;
+
+            }
+
+            .hero-card h2 {
+
+                font-size: 2em;
+
+            }
+
+            .hero-card p {
+
+                font-size: 1em;
+
+                margin-bottom: 20px;
+
+                min-height: 32px;
+
+            }
+
+            .hero-button {
+
+                padding: 14px 30px;
+
+                font-size: 1em;
+
+                width: 180px;
+
+            }
+
+            .hero-carousel-container {
+
+                height: 250px;
+
+            }
+
+        }
+
     </style>
+
 </head>
+
 <body>
+
     <header>
+
         <div class="logo">
+
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
+
         </div>
+
         <nav>
+
             <ul>
+
                 <li><a href="#">Início</a></li>
+
                 <li><a href="#">Sorteio</a></li>
+
                 <li><a href="#">Vídeos</a></li>
+
                 <li><a href="#">Doação</a></li>
+
                 <li><a href="#">Contato</a></li>
+
                 <li><a href="#">Consulta</a></li>
+
             </ul>
+
         </nav>
+
         <div class="social-icons">
+
             <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
+
             <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
         </div>
+
     </header>
 
     <main>
+
         <section class="hero-section">
+
             <div class="hero-carousel">
+
                 <div class="hero-carousel-container">
+
                     <div class="hero-card">
+
                         <h2>Agendar Consulta</h2>
+
                         <p>Está em busca de clareza, direcionamento ou respostas?</p>
+
                         <a href="#" class="hero-button">Agendar</a>
+
                     </div>
+
                     <div class="hero-card">
+
                         <h2>Sorteio Semanal</h2>
+
                         <p>Participe do nosso sorteio semanal para ganhar prêmios incríveis!</p>
+
                         <a href="#" class="hero-button">Participar</a>
+
                     </div>
+
                     <div class="hero-card">
+
                         <h2>Live Tarot</h2>
+
                         <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p>
+
                         <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a>
+
                     </div>
+
                 </div>
+
             </div>
+
             <div class="slider-nav">
+
                 <span class="dot active"></span>
+
                 <span class="dot"></span>
+
                 <span class="dot"></span>
+
             </div>
+
         </section>
 
         <section class="live-section">
+
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
+
             <div class="live-content-wrapper">
+
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" 
-                            src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1?enablejsapi=1&origin=https://lendario.tv?enablejsapi=1&autoplay=1&mute=1" 
-                            title="Live Tarot" 
-                            frameborder="0" 
-                            allow="autoplay; encrypted-media" 
-                            allowfullscreen>
-                    </iframe>
+
                     <div class="video-thumbnail-container" id="liveThumbnail">
+
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
+
                         <div class="play-button"><i class="fas fa-play"></i></div>
+
                         <div class="video-info-overlay">
+
                             <div>
-                                <div class="title">Live Tarot</div>
-                                <div class="time">A transmissão começará em breve</div>
+
+                                <div class="title">Live Tarot - Em Breve</div>
+
+                                <div class="time">Próxima live em breve</div>
+
                             </div>
+
                             <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+
                         </div>
+
                     </div>
+
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+
                 </div>
+
                 <div class="live-chat" id="liveChat">
+
                     <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
+
                 </div>
+
             </div>
+
             <div class="social-share">
+
                 <p>Compartilhe Live Tarot – Próxima Transmissão</p>
+
                 <div class="share-icons">
+
                     <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
                     <a href="https://twitter.com/intent/tweet?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
+
                     <a href="https://telegram.me/share/url?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+
                     <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20YOUR_VIDEO_URL" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
                     <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20YOUR_VIDEO_URL"><i class="fas fa-envelope"></i></a>
+
                 </div>
+
             </div>
+
         </section>
 
         <section class="video-gallery">
+
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/fgqwgqwghwh.png" alt="Mão">ÚLTIMOS VÍDEOS</h2>
+
             <div class="carousel">
+
                 <div class="carousel-container">
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" alt="Live Tarot - Quinta 10/06 às 21h">
+
+                            <img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" alt="Live Tarot - Quinta 10/06 às 21px">
+
                         </div>
+
                         <div class="carousel-card-content">
+
                             <h3>Live Tarot - Quinta 10/06 às 21h</h3>
+
                             <p>Transmissão ao vivo de tarot com leitura e interação ao vivo. Participe agora!</p>
+
                             <a href="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS" target="_blank">Assistir Agora</a>
+
                         </div>
+
                     </div>
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
+
                             <img src="https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg" alt="Meditação Guiada - Conexão com a Água">
+
                         </div>
+
                         <div class="carousel-card-content">
+
                             <h3>Meditação Guiada - Conexão com a Água</h3>
+
                             <p>Uma meditação guiada para se conectar com o elemento água e encontrar equilíbrio.</p>
+
                             <a href="https://youtu.be/OOXhnm_SA-0?si=5hfcpFlqA9Xgr0bU" target="_blank">Assistir Agora</a>
+
                         </div>
+
                     </div>
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
+
                             <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna">
+
                         </div>
+
                         <div class="carousel-card-content">
+
                             <h3>Entrevista - Bruxaria Moderna</h3>
+
                             <p>Conversa com um especialista sobre as práticas da bruxaria moderna nos dias atuais.</p>
+
                             <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank">Assistir Agora</a>
+
                         </div>
+
                     </div>
+
                 </div>
+
                 <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+
             </div>
+
         </section>
+
         <section class="member-section">
+
             <div class="decorative-border"></div>
+
             <div class="member-card">
+
                 <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
-                <h3>Torne-se membro do canal</h3>
+
+                <h3>Torne-se um membro do canal</h3>
+
                 <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor.</p>
-                <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+
+                <a href="#" class="member-button"><span class="icon fa fa-heart">?</span> Seja membro</a>
+
             </div>
+
         </section>
+
         <section class="most-viewed-section">
-            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
+
+            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2015/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
+
             <div class="carousel">
+
                 <div class="carousel-container">
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água">
+
+                            <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado ou o Elemento Água">
+
                         </div>
+
                         <div class="carousel-card-content">
+
                             <h3>Traumas do Passado e o Elemento Água</h3>
-                            <p>Exploração dos traumas emocionais e como o elemento água pode ajudar na cura.</p>
-                            <a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank">Assistir Agora</a>
+
+                            <p>Exploração dos traumas emocionais ou como o elemento água pode ajudar na cura.</p>
+
+                            <a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank">Assistir agora</a>
+
                         </div>
+
                     </div>
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/1Vt8p8JvifI/hqdefault.jpg" alt="Meditação Guiada - Mestre na Floresta">
+
+                            <img src="https://i.ytimg.com/vi/1Vt8p8JvifI/hqdefault.jpg" alt="Meditação Guiada - Mestre da Floresta">
+
                         </div>
+
                         <div class="carousel-card-content">
-                            <h3>Meditação Guiada - Mestre na Floresta</h3>
-                            <p>Uma jornada guiada para encontrar um mestre espiritual na floresta.</p>
-                            <a href="https://youtu.be/1Vt8p8JvifI?si=IFwwXKwp8v2GwHaW" target="_blank">Assistir Agora</a>
+
+                            <hh3>Meditação Guiada - Mestre da Floresta</h3>
+
+                            <pp>Uma jornada guiada para encontrar um mestre espiritual na floresta.</p>
+
+                            <a href="#">https://youtu.be/1Vt8p8JvifI?si=IFwwXKwp8v2GwHaW target="_blank">Assistir agora</a>
+
                         </div>
+
                     </div>
+
                     <div class="carousel-card">
+
                         <div class="card-thumbnail-wrapper">
-                            <img src="https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg" alt="Sabedoria das Árvores">
+
+                            <img src="https://i.ytimg.com/vi/4BTOHb8QtLq0/hqdefault.jpg" alt="Sabedoria das Árvores">
+
                         </div>
+
                         <div class="carousel-card-content">
+
                             <h3>Sabedoria das Árvores</h3>
+
                             <p>Meditação para conectar com a sabedoria ancestral das árvores.</p>
-                            <a href="https://youtu.be/4BTOHbBTLq0?si=hRiDa6yX2Y5U5h1L" target="_blank">Assistir Agora</a>
+
+                            <a href="https://youtu.be/4BTOHbLq0?si=hRiDa6yX2Y5U5h1L" target="_blank">Assistir agora</a>
+
                         </div>
+
                     </div>
+
                 </div>
+
                 <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+
             </div>
+
         </section>
+
     </main>
+
     <footer>
-        <div class="footer-logo-section">
+
+        veld<div class="footer-logo-section">
+
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
-            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
+
+            <p>Conteúdo místico e espiritual, com foco em empoderamento e despertar espiritual. Ou seja, te auxiliar nesta jornada especial.</p>
+
             <div class="footer-social-icons">
+
                 <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+                <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook"></i></a>
+
                 <a href="https://youtube.com/@Gameniano-x" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
+
+                <a href="mailto:contato@vplantario.tv"><i class="fas fa-envelope"></i></a>
+
             </div>
+
         </div>
+
         <div class="footer-links">
+
             <div class="footer-column">
+
                 <ul>
-                    <li><a href="#"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+
+                    <li><a href="#"><i class="fas fa-home icon"></i> Início</a></li>
+
+                    <li><a href="#"><i class="fas fa-magic icon"></i> Sorteio</a></li>
+
+                    <li><a href="#"><i class="fas fa-video icon"></i> Vídeos</a></a>
+
+                    <li><a href="#"><i class="fas fa-heart icon"></i> Doação</a></li>                   
+
+                    <li><a href="#"><i class="fas fa-phone icon"></i> Contato</a></li>                   
+
+                    <li><a href="#"><i class="fas fa-calendar-check icon"></i> Consulta</a></li>
+
                 </ul>
+
             </div>
+
             <div class="footer-column">
-                <ul>
-                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
-                </ul>
+
+                <div><ul>
+
+                    <li><a href="#"><i class="fas fa-hat-wizard icon"></i> Wizard</i></a></li>
+
+                    <li><a href="#"><i class="fas fa-comment icon"></i> Entrevistas</a></li>
+
+                    <li><a href="#"><i class="fas fa-ticket icon"></i> Eventos</a></li>
+
+                    <li><a href="#"><i class="fas fa-paw icon"></i> Animais</a></li>
+
+                    <li><a href="#"><i class="fas fa-tree icon"></i> Série Elementos</a></li>
+
+                    <li><a href="#"><i class="fas fa-broadcast-tower icon"></i> Transmissão ao vivo</a></li>
+
+                </ul></div>
+
             </div>
+
         </div>
+
         <div class="copyright">
-            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
+
+            ©©©© Copyright © 2025 | Todos os direitos reservados | Lendario.tv
+
         </div>
+
     </footer>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        // Bloco 1: Lógica do Player
-        const liveThumbnail = document.getElementById('liveThumbnail');
-        const liveVideoIframe = document.getElementById('liveVideoIframe');
-        const liveChat = document.getElementById('liveChat');
-        
-        let player;
+<script>
 
-        // Função que a API do YouTube chama sozinha quando está pronta.
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('liveVideoIframe', {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange,
-                    'onError': onPlayerError
-                }
+// Live Video Player and Thumbnail Logic
+
+const liveThumbnailContainer = document.querySelector('#liveThumbnail');
+
+const liveVideoPlayerIframe = document.querySelector('#liveVideo');
+
+const liveLiveChat = document.querySelector('#liveChat');
+
+const liveVideoPlayerContainer = document.querySelector('.live-video-player');
+
+const youtubeChannelId = 'UC4qMNZcEr7SPOcPyitb8VAhw'; // Channel ID for YouTube
+
+// Function to check live stream status and toggle visibility
+
+function checkLiveStatus() {
+
+    const docIframe = liveVideoPlayerIframe.contentDocument || liveVideoPlayerIframe.contentWindow.document;
+
+    const isLiveActive = docIframe && docIframe.body && docIframe.body.innerHTML.includes('live');
+
+    if (isLiveActive) {
+
+        liveVideoPlayerContainer.classList.add('active');
+
+        liveLiveChat.style.display = 'block';
+
+        liveLiveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?channel=${encodeURIComponent(youtubeChannelId)}&embed_domain=matheusito2025`;
+
+        // Attempt to enable auto-playing
+
+        const source = liveVideoPlayerIframe.src;
+
+        if (!source.includes('mute=1')) {
+
+            liveVideoPlayerIframe.src = `${source}&mute=0`; // Ensure autoplay works
+
+        }
+
+        liveVideoIframe.contentWindow?.postMessage('{"event":"command","command":"playVideo"}', '*');
+
+    } else {
+
+        liveVideoPlayerContainer.classList.remove('active');
+
+        liveLiveChat.style.display = 'none';
+
+        liveLiveChat.querySelector('iframe').src = '';
+
+    }
+
+}
+
+// Check live status every 30 secs
+
+setInterval(checkLiveStatus, 30000);
+
+// Initial check on page load
+
+checkLiveStatus();
+
+// Hero Carousel Section
+
+const heroSectionCarousel = document.querySelector('.hero-carousel');
+
+const heroSectionContainer = heroSectionCarousel.querySelector('.hero-carousel-container');
+
+const heroSectionCards = heroSectionContainer.querySelectorAll('.hero-card');
+
+const heroDots = document.querySelectorAll('.hero-card');
+
+let currentHeroSlideIndex = 0;
+
+function updateHeroSectionCarousel() {
+
+    heroSectionContainer.set(`translateX(-${currentHeroSlideIndex} * 100}%)`);
+
+    heroDots.forEach((heroDot, heroDotIndex) => {
+
+        heroDot.classList.toggle('active', heroDotIndex === currentHeroSlideIndex);
+
+    });
+
+}
+
+heroSectionCarousel.forEach((heroDot, heroDotIndex) => {
+
+    heroDot.addEventListener('click', () => {
+
+        currentHeroSlideIndex = heroDotIndex;
+
+        updateHeroSectionContainer();
+
+    });
+
+});
+
+let heroSectionAutoPlayInterval = setInterval(() => {
+
+    currentHeroSlideIndex = (currentHeroSlideIndex + 1) % heroSectionCards.length;
+
+    updateHeroSectionCarousel();
+
+}, 5000);
+
+// Carousels for Latest Videos and Most Viewed
+
+document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carouselSection => {
+
+    const carouselContainer = carouselSection.querySelector('.carousel-container');
+
+    if (!carouselContainer) return;
+
+    const carouselCards = carouselContainer.querySelectorAll('.carousel-card');
+
+    const prevSlideButton = carouselSection.querySelector('.prev-arrow');
+
+    const nextSlideButton = carouselSection.querySelector('.next-arrow');
+
+    let currentSlideIndex = 0;
+
+    if (carouselCards.length <= 1) {
+
+        if (prevButton) prevSlideButton.style.display = 'none';
+
+        if (nextButton) nextSlideButton.style.display = 'none';
+
+        return;
+
+    }
+
+    function updateCarouselCardsPosition() {
+
+        carouselContainer.set('transform', `translate(-${currentSlideIndex * 100}%)`);
+
+    }
+
+    function moveSlideCarousel(direction) {
+
+        currentSlideIndex += direction;
+
+        if (currentSlideIndex >= carouselCards.length) {
+
+            currentSlideIndex = 0;
+
+        }
+
+        if (currentSlideIndex < 0) {
+
+            currentSlideIndex = carouselCards.length - 1;
+
+        }
+
+        updateCarouselCardsPosition();
+
+    }
+
+    function setupSlideNavigation(button, slideDirection) {
+
+        if (button) {
+
+            button.addEventListener('click', () => {
+
+                moveSlideCarousel(slideDirection);
+
+                clearInterval(autoPlayInterval);
+
+                autoPlayInterval = setInterval(() => moveSlideCarousel(1), 5000);
+
             });
-        };
 
-        // Assim que o player carregar, tentamos dar play. O autoplay na URL ajuda.
-        function onPlayerReady(event) {
-            event.target.playVideo();
         }
 
-        // Esta é a função que "ouve" o vídeo em tempo real.
-        function onPlayerStateChange(event) {
-            // Se o estado for PLAYING (tocando), a live está online.
-            if (event.data === YT.PlayerState.PLAYING) {
-                // Esconde a thumbnail e mostra o vídeo e o chat.
-                liveThumbnail.style.display = 'none';
-                liveVideoIframe.style.display = 'block';
-                liveChat.style.display = 'block';
-            }
-        }
+    }
 
-        // Se o YouTube retornar um erro (live offline)...
-        function onPlayerError(event) {
-            // Escondemos o player e mostramos a thumbnail.
-            liveVideoIframe.style.display = 'none';
-            liveThumbnail.style.display = 'flex';
-            liveChat.style.display = 'none';
-        }
+    let autoPlayInterval = setInterval(() => moveSlideCarousel(1), 5000);
 
-        // Bloco 2: Lógica dos Carrosséis (SEU CÓDIGO ORIGINAL, 100% INTACTO)
-        const heroCarousel = document.querySelector('.hero-carousel');
-        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-        const heroCards = heroContainer.querySelectorAll('.hero-card');
-        const dots = document.querySelectorAll('.dot');
-        let currentHeroIndex = 0;
+    setupSlideNavigation(prevSlideButton, -1);
 
-        function updateHeroCarousel() {
-            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentHeroIndex);
-            });
-        }
+    setupSlideNavigation(nextSlideButton, 1);
 
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentHeroIndex = index;
-                updateHeroCarousel();
-            });
-        });
+});
+</script>
 
-        let heroAutoPlay = setInterval(() => {
-            currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-            updateHeroCarousel();
-        }, 5000);
-
-        document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
-            const container = carousel.querySelector('.carousel-container');
-            if (!container) return;
-
-            const cards = container.querySelectorAll('.carousel-card');
-            const prevButton = carousel.querySelector('.prev-arrow');
-            const nextButton = carousel.querySelector('.next-arrow');
-            let currentIndex = 0;
-
-            if (cards.length <= 1) {
-                if(prevButton) prevButton.style.display = 'none';
-                if(nextButton) nextButton.style.display = 'none';
-                return;
-            }
-
-            function updateCarouselPosition() {
-                container.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
-
-            function moveCarousel(direction) {
-                currentIndex += direction;
-                if (currentIndex >= cards.length) {
-                    currentIndex = 0;
-                }
-                if (currentIndex < 0) {
-                    currentIndex = cards.length - 1;
-                }
-                updateCarouselPosition();
-            }
-
-            let autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
-
-            function setupNavAction(button, direction) {
-                if (button) {
-                    button.addEventListener('click', () => {
-                        moveCarousel(direction);
-                        clearInterval(autoPlayInterval);
-                        autoPlayInterval = setInterval(() => moveCarousel(1), 5000);
-                    });
-                }
-            }
-
-            setupNavAction(prevButton, -1);
-            setupNavAction(nextButton, 1);
-        });
-    </script>
 </body>
 </html>
