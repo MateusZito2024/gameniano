@@ -169,7 +169,6 @@
         .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
         .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
         
-        /* ÍCONES DE COMPARTILHAMENTO ATUALIZADOS */
         .share-icons a {
             color: var(--text-light);
             background-color: var(--medium-gray);
@@ -182,8 +181,8 @@
             align-items: center;
             margin: 0 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            position: relative; /* Necessário para o efeito */
-            overflow: hidden;   /* Necessário para o efeito */
+            position: relative;
+            overflow: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -192,7 +191,6 @@
             color: var(--dark-background);
         }
 
-        /* EFEITO CINTILANTE APLICADO AOS ÍCONES */
         .share-icons a::after {
             content: '';
             position: absolute;
@@ -312,29 +310,130 @@
         .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
         .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
         
+        /* --- SEÇÃO DE MEMBROS ATUALIZADA --- */
         .member-section {
-            padding: 80px 5%; display: flex; justify-content: center; align-items: center;
-            min-height: 400px; position: relative; background-color: var(--dark-background); overflow: hidden;
+            padding: 80px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 450px;
+            position: relative;
+            background-color: var(--dark-background);
+            /* overflow: hidden; foi removido para não cortar a animação */
         }
+
         .decorative-border {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
-            background-size: contain; background-repeat: no-repeat; background-position: center center; opacity: 0.08; z-index: 0; pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+            background-size: contain; background-repeat: no-repeat; background-position: center center;
+            opacity: 0.08; z-index: 0; pointer-events: none;
         }
+        
         .member-card {
-            background-color: var(--dark-gray); padding: 50px; border-radius: 12px; text-align: center;
-            max-width: 600px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); position: relative; z-index: 1;
+            background-color: transparent;
+            max-width: 600px;
+            width: 100%;
+            height: 380px;
+            perspective: 1500px;
+            /* Estilos de layout originais foram movidos para o .member-card-inner */
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            text-align: initial;
+        }
+        
+        .member-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .member-card:hover .member-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .member-card-front, .member-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px; /* Padding ajustado */
+            text-align: center;
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .member-card .youtube-logo { font-size: 4em; color: var(--red-youtube); margin-bottom: 25px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
-        .member-card h3 { font-family: var(--font-cinzel); font-size: 2.2em; margin-bottom: 20px; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
-        .member-card p { font-size: 1.15em; margin-bottom: 35px; color: #ccc; }
-        .member-button {
-            background-color: var(--red-youtube); color: var(--text-light); padding: 18px 40px; text-decoration: none; border-radius: 30px;
-            font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+
+        .member-card-back {
+            transform: rotateY(180deg);
         }
-        .member-button:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .member-button .icon { font-size: 1.3em; color: white; }
+        
+        .member-card .youtube-logo { 
+            font-size: 4em; 
+            color: var(--red-youtube); 
+            margin-bottom: 20px; /* Margem ajustada */
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); 
+        }
+        
+        .member-card h3 { 
+            font-family: var(--font-cinzel); 
+            font-size: 2.2em; 
+            margin-top: 0;
+            margin-bottom: 15px; /* Margem ajustada */
+            color: var(--gold); 
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); 
+        }
+
+        .member-card-back h4 {
+            font-family: var(--font-cinzel);
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        
+        .member-card p { 
+            font-size: 1.15em; 
+            color: #ccc; 
+            max-width: 95%;
+            margin-top: 0;
+            margin-bottom: 0; /* Margem removida da frente para centralizar */
+        }
+        
+        .member-card-back p {
+            margin-bottom: 30px; /* Adiciona margem no verso para espaçar o botão */
+        }
+
+        .member-button {
+            background-color: var(--red-youtube); 
+            color: var(--text-light); 
+            padding: 18px 40px; 
+            text-decoration: none; 
+            border-radius: 30px;
+            font-weight: bold; 
+            font-size: 1.1em; 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        .member-button:hover { 
+            background-color: #cc0000; 
+            transform: translateY(-2px); 
+        }
+        .member-button .icon { 
+            font-size: 1.3em; 
+            color: white; 
+        }
 
         footer {
             background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap;
@@ -417,6 +516,7 @@
             <div class="social-share">
                 <p>Compartilhe Live Tarot – Próxima Transmissão</p>
                 <div class="share-icons">
+                    <a href="https://instagram.com/lendario.tv" target="_blank" aria-label="Visitar o Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20YOUR_VIDEO_URL" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20YOUR_VIDEO_URL" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
@@ -521,10 +621,18 @@
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
-                <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
-                <h3>Torne-se membro do canal</h3>
-                <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor.</p>
-                <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+                <div class="member-card-inner">
+                    <div class="member-card-front">
+                        <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
+                        <h3>Torne-se membro do canal</h3>
+                        <p>Gosta do nosso conteúdo? Fortaleça esta comunidade e tenha acesso a benefícios exclusivos.</p>
+                    </div>
+                    <div class="member-card-back">
+                        <h4>Apoie o Canal!</h4>
+                        <p>Com sua ajuda, podemos criar ainda mais conteúdo de qualidade e fortalecer nossa comunidade. Clique abaixo para se tornar um membro oficial!</p>
+                        <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -567,7 +675,6 @@
     </footer>
     
     <script>
-        // O JAVASCRIPT NÃO SOFREU ALTERAÇÕES NESTA ETAPA
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
