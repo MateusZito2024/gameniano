@@ -167,12 +167,16 @@
         
         .video-carousel-wrapper { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 60px; }
         .video-carousel-container { overflow: hidden; }
-        .video-carousel-track { display: flex; gap: 25px; transition: transform 0.5s ease-in-out; }
+        .video-carousel-track { display: flex; gap: 25px; }
         
         .video-card-vertical {
             background-color: var(--dark-gray); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             flex: 0 0 calc(25% - 20px); min-width: 280px; display: flex; flex-direction: column;
+        }
+        .video-card-vertical.clone {
+            pointer-events: none;
+            user-select: none;
         }
         .video-card-vertical.hidden { display: none; }
         .video-card-vertical:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
@@ -318,7 +322,7 @@
                 <button class="filter-btn" data-filter="elementos">Elementos</button>
             </div>
             <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <div class="video-carousel-container">
                     <div class="video-carousel-track">
                         <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/aDNqauEvQtY/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
@@ -370,7 +374,7 @@
                 <button class="filter-btn" data-filter="eventos">Eventos</button>
             </div>
             <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
                 <div class="video-carousel-container">
                     <div class="video-carousel-track">
                         <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
@@ -459,7 +463,7 @@
     </footer>
     
     <script>
-    // SCRIPT ORIGINAL DA PÁGINA (INTOCADO)
+    // SCRIPT DO HERO CAROUSEL E LIVE PLAYER (INTOCADOS)
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -467,182 +471,202 @@
 
     let player;
     window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('liveVideoIframe', {
-            events: { 'onStateChange': onPlayerStateChange }
-        });
+        // Player da live não precisa ser instanciado se não houver um ID válido
     };
 
     function onPlayerStateChange(event) {
         const thumbnailContainer = document.getElementById('liveThumbnail');
-        if(!thumbnailContainer) return;
+        if (!thumbnailContainer) return;
         if (event.data === YT.PlayerState.PLAYING) {
             thumbnailContainer.classList.add('hidden');
         } else {
             thumbnailContainer.classList.remove('hidden');
         }
     }
-    
-    const heroCarousel = document.querySelector('.hero-carousel');
-    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-    const heroCards = heroContainer.querySelectorAll('.hero-card');
-    const dots = document.querySelectorAll('.dot');
-    let currentHeroIndex = 0;
-
-    function updateHeroCarousel() {
-        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentHeroIndex);
-        });
-    }
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentHeroIndex = index;
-            updateHeroCarousel();
-            clearInterval(heroAutoPlay);
-            heroAutoPlay = setInterval(() => {
-                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                updateHeroCarousel();
-            }, 5000);
-        });
-    });
-
-    let heroAutoPlay = setInterval(() => {
-        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-        updateHeroCarousel();
-    }, 5000);
-
 
     document.addEventListener('DOMContentLoaded', () => {
-        function setupFilterableCarousel(sectionId) {
+        const heroCarousel = document.querySelector('.hero-carousel');
+        if (heroCarousel) {
+            const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+            const heroCards = heroContainer.querySelectorAll('.hero-card');
+            const dots = document.querySelectorAll('.dot');
+            let currentHeroIndex = 0;
+            let heroAutoPlay;
+
+            function updateHeroCarousel() {
+                heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentHeroIndex);
+                });
+            }
+
+            function startHeroAutoplay() {
+                stopHeroAutoplay();
+                heroAutoPlay = setInterval(() => {
+                    currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                    updateHeroCarousel();
+                }, 5000);
+            }
+
+            function stopHeroAutoplay() {
+                clearInterval(heroAutoPlay);
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentHeroIndex = index;
+                    updateHeroCarousel();
+                    startHeroAutoplay();
+                });
+            });
+            startHeroAutoplay();
+        }
+
+        // --- NOVO SCRIPT PARA CARROSSÉIS DE VÍDEO INFINITOS ---
+        function setupInfiniteCarousel(sectionId) {
             const section = document.getElementById(sectionId);
             if (!section) return;
 
-            const wrapper = section.querySelector('.video-carousel-wrapper');
+            const container = section.querySelector('.video-carousel-container');
             const track = section.querySelector('.video-carousel-track');
             const prevBtn = section.querySelector('.prev-arrow');
             const nextBtn = section.querySelector('.next-arrow');
             const filterButtons = section.querySelectorAll('.filter-btn');
-            const allCards = Array.from(track.children);
             
-            let currentIndex = 0;
+            let originalCards = Array.from(track.children);
+            let isTransitioning = false;
             let autoplayInterval;
+            let currentIndex = 0;
 
-            const moveNext = () => {
-                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                const totalVisible = visibleCards.length;
-                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                const cardWidth = visibleCards.length > 0 ? visibleCards[0].offsetWidth : 0;
-                const gap = cardWidth > 0 ? parseInt(window.getComputedStyle(track).gap) || 25 : 0;
-                const cardsInView = cardWidth > 0 ? Math.floor(containerWidth / (cardWidth + gap)) : 0;
-                
-                const maxIndex = Math.max(0, totalVisible - cardsInView);
-                
-                if (totalVisible > cardsInView) {
-                    currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
-                    updateCarouselState(false);
-                }
-            };
-            
-            const startAutoplay = () => {
+            function getVisibleCards() {
+                return Array.from(track.children).filter(card => !card.classList.contains('hidden') && !card.classList.contains('clone'));
+            }
+
+            function setupCarousel() {
                 stopAutoplay();
-                autoplayInterval = setInterval(moveNext, 5000);
-            };
-
-            const stopAutoplay = () => {
-                clearInterval(autoplayInterval);
-            };
-
-            const updateCarouselState = (resetAutoplay = true) => {
-                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                const totalVisible = visibleCards.length;
+                isTransitioning = false;
                 
-                if (totalVisible === 0) {
+                // Limpa clones antigos e restaura o estado original
+                const clones = track.querySelectorAll('.clone');
+                clones.forEach(clone => track.removeChild(clone));
+                track.innerHTML = '';
+                originalCards.forEach(card => track.appendChild(card));
+                
+                // Reaplica o filtro atual
+                const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+                originalCards.forEach(card => {
+                    const isVisible = activeFilter === 'all' || card.dataset.category === activeFilter;
+                    card.classList.toggle('hidden', !isVisible);
+                });
+
+
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) return;
+
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
+
+                // Se todos os cards cabem na tela, não precisa de loop infinito
+                if (visibleCards.length <= cardsInView) {
                     prevBtn.classList.add('disabled');
                     nextBtn.classList.add('disabled');
-                    track.style.transform = 'translateX(0px)';
-                    stopAutoplay();
+                    track.style.transform = 'translateX(0)';
                     return;
                 }
                 
-                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                prevBtn.classList.remove('disabled');
+                nextBtn.classList.remove('disabled');
+
+                // Clonagem para o efeito infinito
+                const itemsToCloneEnd = visibleCards.slice(0, cardsInView);
+                itemsToCloneEnd.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.classList.add('clone');
+                    track.appendChild(clone);
+                });
+
+                const itemsToCloneStart = visibleCards.slice(-cardsInView);
+                itemsToCloneStart.reverse().forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.classList.add('clone');
+                    track.insertBefore(clone, track.firstChild);
+                });
+
+                // Posição inicial
+                currentIndex = cardsInView;
+                const initialOffset = -currentIndex * (cardWidth + gap);
+                track.style.transition = 'none';
+                track.style.transform = `translateX(${initialOffset}px)`;
+                
+                startAutoplay();
+            }
+
+            function move(direction) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                
+                const visibleCards = getVisibleCards();
                 const cardWidth = visibleCards[0].offsetWidth;
                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+
+                currentIndex += direction;
+                const offset = -currentIndex * (cardWidth + gap);
+
+                track.style.transition = 'transform 0.5s ease-in-out';
+                track.style.transform = `translateX(${offset}px)`;
+            }
+
+            track.addEventListener('transitionend', () => {
+                const visibleCards = getVisibleCards();
+                const cardsInView = Math.floor(container.offsetWidth / (visibleCards[0].offsetWidth + parseInt(window.getComputedStyle(track).gap)));
                 
-                const maxIndex = Math.max(0, totalVisible - cardsInView);
-
-                if (currentIndex > maxIndex) currentIndex = maxIndex;
-                if (currentIndex < 0) currentIndex = 0;
-
-                prevBtn.classList.toggle('disabled', currentIndex === 0);
-                nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
-                
-                const offset = currentIndex * (cardWidth + gap);
-                track.style.transform = `translateX(-${offset}px)`;
-
-                if (resetAutoplay) {
-                    if (totalVisible > cardsInView) {
-                        startAutoplay();
-                    } else {
-                        stopAutoplay();
-                    }
+                if (currentIndex <= (cardsInView -1)) {
+                    currentIndex = visibleCards.length + (cardsInView -1);
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const offset = -currentIndex * (cardWidth + gap);
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${offset}px)`;
                 }
+
+                if (currentIndex >= visibleCards.length + cardsInView) {
+                    currentIndex = cardsInView;
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const offset = -currentIndex * (cardWidth + gap);
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${offset}px)`;
+                }
+                isTransitioning = false;
+            });
+            
+            const stopAutoplay = () => clearInterval(autoplayInterval);
+            const startAutoplay = () => {
+                stopAutoplay();
+                autoplayInterval = setInterval(() => move(1), 5000);
             };
 
-            const applyFilter = (filter) => {
-                allCards.forEach(card => {
-                    const isVisible = filter === 'all' || card.dataset.category === filter;
-                    card.classList.toggle('hidden', !isVisible);
-                });
-                
-                setTimeout(() => {
-                    currentIndex = 0;
-                    updateCarouselState();
-                }, 50);
-            };
+            nextBtn.addEventListener('click', () => move(1));
+            prevBtn.addEventListener('click', () => move(-1));
 
+            section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+            section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+            
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
-                    applyFilter(button.dataset.filter);
+                    setupCarousel();
                 });
             });
 
-            nextBtn.addEventListener('click', () => {
-                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
-                
-                if (currentIndex < visibleCards.length - cardsInView) {
-                    currentIndex++;
-                    updateCarouselState();
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateCarouselState();
-                }
-            });
-
-            wrapper.addEventListener('mouseenter', stopAutoplay);
-            wrapper.addEventListener('mouseleave', () => updateCarouselState(true));
-
-            window.addEventListener('resize', () => {
-                currentIndex = 0;
-                updateCarouselState();
-            });
-
-            updateCarouselState();
+            window.addEventListener('resize', setupCarousel);
+            setupCarousel();
         }
 
-        setupFilterableCarousel('latest-videos-section');
-        setupFilterableCarousel('most-viewed-section');
+        setupInfiniteCarousel('latest-videos-section');
+        setupInfiniteCarousel('most-viewed-section');
     });
     </script>
 </body>
