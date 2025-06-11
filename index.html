@@ -159,7 +159,6 @@
         .share-icons a { color: var(--text-light); background-color: var(--medium-gray); font-size: 26px; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin: 0 10px; transition: background-color 0.3s ease, color 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
         .share-icons a:hover { background-color: var(--gold); color: var(--dark-background); }
 
-        /* --- NOVOS ESTILOS PARA CARROSSÉIS DE VÍDEOS COM FILTRO --- */
         .video-carousel-section { padding: 80px 0; }
         .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; padding: 0 5%; }
         .filter-btn { background-color: var(--medium-gray); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 500; transition: all 0.3s ease; }
@@ -193,7 +192,6 @@
         .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
         .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
         .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-        /* --- FIM DOS NOVOS ESTILOS --- */
         
         .member-section {
             padding: 80px 5%; display: flex; justify-content: center; align-items: center;
@@ -462,14 +460,13 @@
         updateHeroCarousel();
     }, 5000);
 
-    // SCRIPT ORIGINAL DOS CARROSSÉIS ANTIGOS FOI REMOVIDO PARA EVITAR CONFLITO
 
-    // NOVO SCRIPT PARA CARROSSÉIS COM FILTRO
     document.addEventListener('DOMContentLoaded', () => {
         function setupFilterableCarousel(sectionId) {
             const section = document.getElementById(sectionId);
             if (!section) return;
 
+            const wrapper = section.querySelector('.video-carousel-wrapper');
             const track = section.querySelector('.video-carousel-track');
             const prevBtn = section.querySelector('.prev-arrow');
             const nextBtn = section.querySelector('.next-arrow');
@@ -477,6 +474,32 @@
             const allCards = Array.from(track.children);
             
             let currentIndex = 0;
+            let autoplayInterval;
+
+            const moveNext = () => {
+                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                const totalVisible = visibleCards.length;
+                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                const cardWidth = visibleCards.length > 0 ? visibleCards[0].offsetWidth : 0;
+                const gap = cardWidth > 0 ? parseInt(window.getComputedStyle(track).gap) || 25 : 0;
+                const cardsInView = cardWidth > 0 ? Math.floor(containerWidth / (cardWidth + gap)) : 0;
+                
+                const maxIndex = Math.max(0, totalVisible - cardsInView);
+                
+                if (totalVisible > cardsInView) {
+                    currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
+                    updateCarouselState();
+                }
+            };
+            
+            const startAutoplay = () => {
+                stopAutoplay();
+                autoplayInterval = setInterval(moveNext, 5000);
+            };
+
+            const stopAutoplay = () => {
+                clearInterval(autoplayInterval);
+            };
 
             const updateCarouselState = () => {
                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
@@ -486,6 +509,7 @@
                     prevBtn.classList.add('disabled');
                     nextBtn.classList.add('disabled');
                     track.style.transform = 'translateX(0px)';
+                    stopAutoplay();
                     return;
                 }
                 
@@ -504,6 +528,12 @@
                 
                 const offset = currentIndex * (cardWidth + gap);
                 track.style.transform = `translateX(-${offset}px)`;
+
+                if (totalVisible > cardsInView) {
+                    startAutoplay();
+                } else {
+                    stopAutoplay();
+                }
             };
 
             const applyFilter = (filter) => {
@@ -527,16 +557,16 @@
             });
 
             nextBtn.addEventListener('click', () => {
-                 const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
-                 const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
-                 const cardWidth = visibleCards[0].offsetWidth;
-                 const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                 const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
+                const visibleCards = allCards.filter(card => !card.classList.contains('hidden'));
+                const containerWidth = section.querySelector('.video-carousel-container').offsetWidth;
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = Math.floor(containerWidth / (cardWidth + gap));
                 
-                 if (currentIndex < visibleCards.length - cardsInView) {
+                if (currentIndex < visibleCards.length - cardsInView) {
                     currentIndex++;
                     updateCarouselState();
-                 }
+                }
             });
 
             prevBtn.addEventListener('click', () => {
@@ -545,6 +575,9 @@
                     updateCarouselState();
                 }
             });
+
+            wrapper.addEventListener('mouseenter', stopAutoplay);
+            wrapper.addEventListener('mouseleave', startAutoplay);
 
             window.addEventListener('resize', () => {
                 currentIndex = 0;
