@@ -274,23 +274,22 @@
         
         .video-thumbnail-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: black;
             cursor: default;
-            z-index: 2;
+            z-index: 2; 
             opacity: 1;
-            transition: opacity 0.5s ease; 
+            transition: opacity 0.5s ease;
+            pointer-events: none; /* Deixa o clique "atravessar" para o vídeo */
         }
 
+        /* Classe que faz a thumbnail desaparecer */
         .video-thumbnail-container.hidden {
             opacity: 0;
-            pointer-events: none;
         }
 
         .video-thumbnail-container img {
@@ -845,7 +844,7 @@
             <div class="live-content-wrapper">
                 <div class="live-video-player">
                     <iframe id="liveVideoIframe" 
-                            src="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS2"
+                            src="https://youtu.be/LzJCXg9PMWc?si=2Gcff5wQ9GsizWaS2" 
                             title="Live Tarot" 
                             frameborder="0" 
                             allow="autoplay; encrypted-media" 
@@ -1009,42 +1008,35 @@
     </footer>
     
     <script src="https://www.youtube.com/iframe_api"></script>
-    
     <script>
         // Bloco 1: Lógica do Player e do Chat
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveChat = document.getElementById('liveChat');
         let player;
 
-        // Função que a API do YouTube chama sozinha quando está pronta.
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('liveVideoIframe', {
                 events: {
                     'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange,
-                    'onError': onPlayerError
+                    'onStateChange': onPlayerStateChange
                 }
             });
         };
         
-        // Quando o player carrega, ele tenta tocar o vídeo.
         function onPlayerReady(event) {
             event.target.playVideo();
         }
 
-        // Esta é a função que "ouve" o vídeo em tempo real.
         function onPlayerStateChange(event) {
             const chatIframe = liveChat.querySelector('iframe');
             
-            // Se o estado for PLAYING (tocando), a live está online.
             if (event.data === YT.PlayerState.PLAYING) {
-                // Esconde a thumbnail.
-                liveThumbnail.style.display = 'none';
+                liveThumbnail.classList.add('hidden');
                 
-                // Pega o ID do vídeo para usar no chat.
                 const videoId = event.target.getVideoData().video_id;
                 if (videoId) {
-                    // ATENÇÃO: Troque "seudominio.com" pelo seu domínio real.
+                    // ATENÇÃO: Se o chat não funcionar, pode ser necessário trocar
+                    // "mateuszito2024.github.io" pelo seu domínio final.
                     const embedDomain = "mateuszito2024.github.io"; 
                     const chatUrl = `https://www.youtube.com/live_chat?v=VIDEO_ID&embed_domain={videoId}&embed_domain=${embedDomain}`;
                     
@@ -1055,17 +1047,9 @@
                 liveChat.style.display = 'block';
 
             } else {
-                // Se o vídeo não estiver tocando (pausado, terminado, etc.), mostra a thumbnail.
-                liveThumbnail.style.display = 'flex';
+                liveThumbnail.classList.remove('hidden');
                 liveChat.style.display = 'none';
             }
-        }
-        
-        // Se der erro ao carregar o vídeo (live offline)...
-        function onPlayerError(event) {
-            // Garante que a thumbnail esteja visível e o chat escondido.
-            liveThumbnail.style.display = 'flex';
-            liveChat.style.display = 'none';
         }
         
         // Bloco 2: Lógica dos Carrosséis (SEU CÓDIGO ORIGINAL, 100% INTACTO)
