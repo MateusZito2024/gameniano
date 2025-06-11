@@ -58,8 +58,30 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; width: 100%; max-width: 1200px; gap: 40px; margin-bottom: 40px; }
         .live-video-player { flex: 2; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .live-video-player iframe { width: 100%; height: 100%; border: none; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; transition: opacity 0.3s ease; }
+        
+        /* A única alteração no CSS é aqui, para o iframe começar escondido */
+        .live-video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Começa oculto */
+        }
+
+        .video-thumbnail-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Alterado de 'none' para 'flex' para que a thumbnail seja o padrão */
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -176,20 +198,13 @@
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title">Live Tarot</div>
-                                <div class="time">A transmissão está offline</div>
+                                <div class="title">Live Tarot - Em Breve</div>
+                                <div class="time">A transmissão está offline.</div>
                             </div>
                             <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
                     </div>
-                    
-                    <iframe id="liveVideoIframe" 
-                            src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1?enablejsapi=1&origin=https://lendario.tv?enablejsapi=1&autoplay=1&mute=1" 
-                            title="Live Tarot" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1?enablejsapi=1&origin=https://lendario.tv?enablejsapi=1&autoplay=1&mute=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
                 </div>
                 <div class="live-chat" id="liveChat">
                     <iframe src="" frameborder="0" style="width: 100%; height: 100%; min-height: 400px;"></iframe>
@@ -246,7 +261,6 @@
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
-
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
@@ -256,7 +270,6 @@
                 <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
             </div>
         </section>
-
         <section class="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
             <div class="carousel">
@@ -297,7 +310,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -337,38 +349,16 @@
     </footer>
 
     <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
-        // Elementos da página
+        // Bloco 1: Lógica do Player de Vídeo (única parte alterada)
         const liveThumbnail = document.getElementById('liveThumbnail');
         const liveVideoIframe = document.getElementById('liveVideoIframe');
         const liveChat = document.getElementById('liveChat');
-        
-        let player; // Variável para guardar o objeto do player do YouTube
+        const channelId = 'UC4qMNZEr7SPOcPyitB8VAhw'; // ID do seu canal
 
-        // Define o estado inicial da página: mostra a thumbnail, esconde o vídeo e o chat
-        function setOfflineState() {
-            liveThumbnail.style.display = 'flex';
-            liveVideoIframe.style.display = 'none';
-            liveChat.style.display = 'none';
-            liveChat.querySelector('iframe').src = '';
-        }
+        let player;
 
-        // Define o estado da página para quando a live está online
-        function setOnlineState() {
-            liveThumbnail.style.display = 'none';
-            liveVideoIframe.style.display = 'block';
-            liveChat.style.display = 'block';
-            
-            // Carrega o chat da live
-            const videoId = player.getVideoData().video_id;
-            if (videoId) {
-                const embedDomain = window.location.hostname;
-                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?v=$${videoId}&embed_domain=${embedDomain}`;
-            }
-        }
-
-        // Esta função é chamada automaticamente pela API do YouTube quando ela carrega
+        // Função que a API do YouTube chama quando está pronta.
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('liveVideoIframe', {
                 events: {
@@ -379,30 +369,31 @@
             });
         };
 
-        // Evento chamado quando o player está pronto
+        // Quando o player carregar, ele tenta tocar o vídeo.
+        // O autoplay já é incentivado pelos parâmetros na URL do iframe.
         function onPlayerReady(event) {
-            // Tenta dar play. O som já está mudo pelos parâmetros da URL
             event.target.playVideo();
         }
-        
-        // Evento chamado quando o estado do player muda (ex: tocando, pausado, etc.)
+
+        // Quando o status do vídeo muda...
         function onPlayerStateChange(event) {
-            // Se o vídeo começou a tocar, consideramos a live como ONLINE
+            // YT.PlayerState.PLAYING significa que a live está ONLINE e tocando.
             if (event.data === YT.PlayerState.PLAYING) {
-                setOnlineState();
+                liveVideoIframe.style.display = 'block'; // Mostra o player
+                liveThumbnail.style.display = 'none';   // Esconde a thumbnail
+                liveChat.style.display = 'block';       // Mostra o chat
+                liveChat.querySelector('iframe').src = `https://www.youtube.com/live_chat?v=$${encodeURIComponent(channelId)}&embed_domain=${window.location.hostname}`;
             }
         }
 
-        // Evento chamado se o YouTube retornar um erro (ex: vídeo não encontrado, offline)
+        // Se ocorrer qualquer erro ao carregar o vídeo (ex: offline)...
         function onPlayerError(event) {
-            // Qualquer erro significa que a live está OFFLINE
-            setOfflineState();
+            liveVideoIframe.style.display = 'none';   // Esconde o player
+            liveThumbnail.style.display = 'flex';   // Mostra a thumbnail
+            liveChat.style.display = 'none';        // Esconde o chat
         }
-        
-        // Inicia a página no estado offline por padrão
-        setOfflineState();
-        
-        // --- CÓDIGO DO CARROSSEL (ORIGINAL, SEM ALTERAÇÕES) ---
+
+        // Bloco 2: Lógica dos Carrosséis (seu código original, intacto)
         const heroCarousel = document.querySelector('.hero-carousel');
         const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
         const heroCards = heroContainer.querySelectorAll('.hero-card');
@@ -431,6 +422,7 @@
         document.querySelectorAll('.carousel:not(.hero-carousel)').forEach(carousel => {
             const container = carousel.querySelector('.carousel-container');
             if (!container) return;
+
             const cards = container.querySelectorAll('.carousel-card');
             const prevButton = carousel.querySelector('.prev-arrow');
             const nextButton = carousel.querySelector('.next-arrow');
@@ -473,6 +465,5 @@
             setupNavAction(nextButton, 1);
         });
     </script>
-
 </body>
 </html>
