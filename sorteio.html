@@ -72,7 +72,6 @@
         .footer-logo-section img { height: 65px; margin-bottom: 20px; }
         .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
         
-        /* EFEITO HOVER ADICIONADO AOS ÍCONES DO RODAPÉ */
         .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
         .footer-social-icons a:hover { color: var(--gold); }
 
@@ -81,7 +80,6 @@
         .footer-column ul { list-style: none; padding: 0; margin: 0; }
         .footer-column ul li { margin-bottom: 12px; }
 
-        /* EFEITO HOVER ADICIONADO AOS LINKS DO RODAPÉ */
         .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; text-decoration: none; color: var(--text-light); transition: color 0.3s ease; }
         .footer-column ul li a:hover { color: var(--gold); }
 
@@ -215,6 +213,55 @@
             .animated-title { font-size: 2.8em; width: 100%; }
             .form-column h2 { font-size: 2em; }
         }
+        
+        /* 5. ESTILOS DO POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0s 0.4s;
+        }
+        .popup-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.4s ease;
+        }
+        .popup-content {
+            background-color: var(--dark-gray);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+        .popup-overlay.visible .popup-content {
+            transform: scale(1);
+        }
+        .popup-content h3 {
+            font-family: var(--font-cinzel);
+            color: var(--gold);
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .popup-content p {
+            color: var(--text-light);
+            font-size: 1.1em;
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -254,7 +301,8 @@
                 <div class="form-column">
                     <h2>Participe dos Nossos Sorteios Místicos!</h2>
                     <p>Inscreva-se para participar dos nossos sorteios esporádicos! As datas são sempre anunciadas durante nossas lives. Siga-nos para ficar por dentro e concorrer a prêmios incríveis.</p>
-                    <form class="sorteio-form" action="#" method="post">
+                    
+                    <form id="sorteioForm" class="sorteio-form" action="https://formspree.io/f/mgvolbyv" method="POST">
                         <input type="text" name="nome" placeholder="Nome" required>
                         <input type="tel" name="telefone" placeholder="Telefone" required>
                         <input type="email" name="email" placeholder="E-mail" required>
@@ -306,29 +354,88 @@
         </div>
     </footer>
 
+    <div id="popup-agradecimento" class="popup-overlay">
+        <div class="popup-content">
+            <h3 id="popup-titulo"></h3>
+            <p id="popup-mensagem"></p>
+        </div>
+    </div>
+
     <script>
+        // SCRIPT DA ANIMAÇÃO DO TÍTULO
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica para a animação do título
             const animatedTitle = document.querySelector('.animated-title');
             if (animatedTitle) {
                 const words = animatedTitle.querySelectorAll('.word');
                 let currentWordIndex = 0;
 
                 if (words.length > 0) {
-                    // Ativa a primeira palavra imediatamente
                     words[currentWordIndex].classList.add('active');
-
                     setInterval(() => {
-                        const currentWord = words[currentWordIndex];
-                        currentWord.classList.remove('active');
-
+                        words[currentWordIndex].classList.remove('active');
                         currentWordIndex = (currentWordIndex + 1) % words.length;
-
-                        const nextWord = words[currentWordIndex];
-                        nextWord.classList.add('active');
-                    }, 2500); // Muda a palavra a cada 2.5 segundos
+                        words[currentWordIndex].classList.add('active');
+                    }, 2500);
                 }
             }
+
+            // NOVA LÓGICA DO FORMULÁRIO COM POPUP
+            const form = document.getElementById('sorteioForm');
+            const popup = document.getElementById('popup-agradecimento');
+            const popupTitulo = document.getElementById('popup-titulo');
+            const popupMensagem = document.getElementById('popup-mensagem');
+
+            async function handleSubmit(event) {
+                event.preventDefault();
+                const data = new FormData(event.target);
+                
+                fetch(event.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        // Mensagem de sucesso
+                        popupTitulo.innerText = "Inscrição Enviada!";
+                        popupMensagem.innerText = "Agradecemos por se inscrever. Boa sorte!";
+                        popup.classList.add('visible');
+                        form.reset(); // Limpa o formulário
+                        
+                        // Esconde o popup após 4 segundos
+                        setTimeout(() => {
+                            popup.classList.remove('visible');
+                        }, 4000);
+                    } else {
+                        // Mensagem de erro vinda do Formspree
+                        response.json().then(data => {
+                            if (Object.hasOwn(data, 'errors')) {
+                                popupMensagem.innerText = data["errors"].map(error => error["message"]).join(", ");
+                            } else {
+                                popupMensagem.innerText = "Oops! Ocorreu um problema ao enviar sua inscrição.";
+                            }
+                            popupTitulo.innerText = "Erro!";
+                            popup.classList.add('visible');
+
+                            setTimeout(() => {
+                                popup.classList.remove('visible');
+                            }, 4000);
+                        })
+                    }
+                }).catch(error => {
+                    // Mensagem de erro de rede
+                    popupTitulo.innerText = "Erro!";
+                    popupMensagem.innerText = "Oops! Ocorreu um problema de conexão. Tente novamente.";
+                    popup.classList.add('visible');
+
+                    setTimeout(() => {
+                        popup.classList.remove('visible');
+                    }, 4000);
+                });
+            }
+
+            form.addEventListener("submit", handleSubmit);
         });
     </script>
 </body>
