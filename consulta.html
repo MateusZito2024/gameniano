@@ -57,14 +57,13 @@
 
         body {
             font-family: var(--font-montserrat);
-            /* Degradê radial animado para maior visibilidade */
             background: radial-gradient(circle at var(--grad-pos, 50% 50%), var(--dark-gray) 0%, var(--dark-background) 80%);
-            background-size: 150% 150%; /* Tamanho inicial do gradiente */
-            animation: radialGradientAnimation 20s ease-in-out infinite; /* Animação mais longa e suave */
+            background-size: 150% 150%;
+            animation: radialGradientAnimation 20s ease-in-out infinite;
             color: var(--text-light);
             margin: 0;
             line-height: 1.6;
-            overflow-x: hidden; /* Garante que não haja barra de rolagem horizontal */
+            overflow-x: hidden;
         }
         a { color: var(--text-light); text-decoration: none; }
         a:hover { color: var(--gold); }
@@ -79,7 +78,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: opacity 0.3s ease; /* Ensure smooth fade */
+            transition: opacity 0.3s ease;
         }
         .logo img { height: 60px; }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
@@ -125,16 +124,24 @@
         .main-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 15px;
+            padding: 0 15px;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Mantém o alinhamento no topo dos itens flex */
+            gap: 40px;
+            flex-wrap: wrap;
         }
         .consulta-section {
-            padding: 40px 0;
+            padding-top: 40px; /* Mantém o padding no topo para o conteúdo do formulário */
+            padding-bottom: 40px; /* Mantém o padding na parte inferior */
             position: relative;
+            flex: 1;
+            min-width: 300px;
         }
         .consulta-section::before {
             content: '';
-            display: none; /* Remove background image */
+            display: none;
         }
         .consulta-section h2 {
             font-family: var(--font-cinzel);
@@ -155,14 +162,12 @@
             margin: 0 auto;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); /* Revertido para o brilho original */
-            background: rgba(13, 13, 13, 0.7); /* Fundo semi-transparente */
-            backdrop-filter: blur(5px); /* Efeito de desfoque suave para o fundo */
-            animation: none; /* Removendo a animação formGlow */
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            background: rgba(13, 13, 13, 0.7);
+            backdrop-filter: blur(5px);
+            animation: none;
         }
-        .consulta-form input[type="text"],
-        .consulta-form input[type="tel"],
-        .consulta-form input[type="email"] {
+        .consulta-form input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -173,9 +178,7 @@
             font-size: 1em;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .consulta-form input[type="text"]:focus,
-        .consulta-form input[type="tel"]:focus,
-        .consulta-form input[type="email"]:focus {
+        .consulta-form input:focus {
             border-color: var(--gold);
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
             outline: none;
@@ -196,7 +199,7 @@
             transition: background 0.3s ease, transform 0.2s ease;
             position: relative;
             overflow: hidden;
-            animation: buttonPulse 2s infinite; /* Revertido para o pulso original */
+            animation: buttonPulse 2s infinite;
         }
         .consulta-form button:hover {
             background: var(--button-gold-hover);
@@ -209,6 +212,38 @@
             display: none;
         }
 
+        /* Image next to form */
+        .form-side-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: none;
+            animation: none;
+            opacity: 0.2;
+            margin-top: auto;
+            margin-right: 1px;
+            margin-bottom: 34px;
+            align-self: flex-end;
+        }
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .form-side-image {
+                margin-top: 20px;
+                margin-right: 0;
+                margin-bottom: 0;
+                max-width: 80%;
+                align-self: center;
+            }
+            .consulta-section {
+                width: 100%;
+            }
+        }
+
+
         /* Success Animation */
         .success-animation {
             display: none;
@@ -216,7 +251,7 @@
             align-items: center;
             justify-content: center;
             height: 200px;
-            position: relative; /* Added for sparkle positioning */
+            position: relative;
         }
         .success-animation.active {
             display: flex;
@@ -343,6 +378,7 @@
                 <div class="sparkle"></div>
             </div>
         </section>
+        <img src="https://i.postimg.cc/8CvnnK6j/192201006-pentagram-esoteric-circle-occult-magic-and-tarot-symbol-vector-pentacle-star-and-ankh-esot.jpg" alt="Símbolo Esotérico Pentagrama" class="form-side-image">
     </main>
 
     <footer>
@@ -418,20 +454,18 @@
                     // Remove existing error messages
                     form.querySelectorAll('.error').forEach(error => error.remove());
 
-                    const inputs = form.querySelectorAll('input[required]');
+                    const inputs = form.querySelectorAll('input');
                     inputs.forEach(input => {
-                        if (!input.value.trim()) {
+                        if (input.hasAttribute('required') && !input.value.trim()) {
                             const errorSpan = document.createElement('span');
                             errorSpan.className = 'error';
                             errorSpan.textContent = `Insira ${input.placeholder.toLowerCase()}.`;
-                            // Insert the error message after the input field
                             input.parentNode.insertBefore(errorSpan, input.nextSibling);
                             isValid = false;
                         } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
                             const errorSpan = document.createElement('span');
                             errorSpan.className = 'error';
                             errorSpan.textContent = 'Insira um e-mail válido.';
-                            // Insert the error message after the input field
                             input.parentNode.insertBefore(errorSpan, input.nextSibling);
                             isValid = false;
                         }
