@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta – Lendário TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        :root {
+            --dark-background: #0d0d0d;
+            --dark-gray: #1a1a1a;
+            --text-light: #f0f0f0;
+            --gold: #D4AF37;
+            --button-gold: #9e843c;
+            --button-gold-hover: linear-gradient(45deg, #c4a148, #D4AF37);
+            --red-youtube: #ff0000;
+            --border-color: #333;
+            --font-cinzel: 'Cinzel', serif;
+            --font-montserrat: 'Montserrat', sans-serif;
+            --whatsapp-glow: #25D366;
+            --meeting-glow: #1E90FF;
+            --form-glow: #FFD700;
+            --feedback-glow: #FF69B4;
+            --comment-glow: #00CED1;
+            --story-glow: #800080;
+        }
+        @keyframes success-glow {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+        @keyframes sparkle {
+            0% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { transform: translateX(10%); opacity: 0.5; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        /* Animated radial gradient for the body */
+        @keyframes radialGradientAnimation {
+            0% { background-size: 150% 150%; background-position: 50% 50%; }
+            25% { background-size: 200% 200%; background-position: 20% 80%; }
+            50% { background-size: 150% 150%; background-position: 80% 20%; }
+            75% { background-size: 200% 200%; background-position: 50% 50%; }
+            100% { background-size: 150% 150%; background-position: 50% 50%; }
+        }
+        @keyframes buttonPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        body {
+            font-family: var(--font-montserrat);
+            /* Degradê radial animado para maior visibilidade */
+            background: radial-gradient(circle at var(--grad-pos, 50% 50%), var(--dark-gray) 0%, var(--dark-background) 80%);
+            background-size: 150% 150%; /* Tamanho inicial do gradiente */
+            animation: radialGradientAnimation 20s ease-in-out infinite; /* Animação mais longa e suave */
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden; /* Garante que não haja barra de rolagem horizontal */
+        }
+        a { color: var(--text-light); text-decoration: none; }
+        a:hover { color: var(--gold); }
+
+        /* Header */
+        header {
+            background-color: var(--dark-gray);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: opacity 0.3s ease; /* Ensure smooth fade */
+        }
+        .logo img { height: 60px; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        nav ul li { margin-left: 40px; }
+        nav ul li a { font-weight: 500; font-size: 1em; }
+        .social-icons a { font-size: 24px; margin-left: 25px; }
+        .social-icons a:hover { color: var(--gold); }
+
+        /* Banner */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-image: url('https://i.postimg.cc/Znw7hmDY/istockphoto-1256442975-612x612-1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+        .banner h1 {
+            font-family: var(--font-cinzel);
+            font-size: 2.5em;
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+            z-index: 2;
+            text-align: center;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 15px;
+            text-align: center;
+        }
+        .consulta-section {
+            padding: 40px 0;
+            position: relative;
+        }
+        .consulta-section::before {
+            content: '';
+            display: none; /* Remove background image */
+        }
+        .consulta-section h2 {
+            font-family: var(--font-cinzel);
+            font-size: 1.8em;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .consulta-section p {
+            font-size: 1em;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        .consulta-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); /* Revertido para o brilho original */
+            background: rgba(13, 13, 13, 0.7); /* Fundo semi-transparente */
+            backdrop-filter: blur(5px); /* Efeito de desfoque suave para o fundo */
+            animation: none; /* Removendo a animação formGlow */
+        }
+        .consulta-form input[type="text"],
+        .consulta-form input[type="tel"],
+        .consulta-form input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .consulta-form input[type="text"]:focus,
+        .consulta-form input[type="tel"]:focus,
+        .consulta-form input[type="email"]:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            outline: none;
+        }
+        .consulta-form button {
+            background: var(--button-gold);
+            color: var(--dark-background);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-cinzel);
+            font-weight: 700;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            animation: buttonPulse 2s infinite; /* Revertido para o pulso original */
+        }
+        .consulta-form button:hover {
+            background: var(--button-gold-hover);
+            transform: scale(1.05);
+        }
+        .error {
+            color: var(--red-youtube);
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Success Animation */
+        .success-animation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            position: relative; /* Added for sparkle positioning */
+        }
+        .success-animation.active {
+            display: flex;
+        }
+        .success-checkmark {
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: success-glow 1s ease;
+        }
+        .success-checkmark i {
+            font-size: 30px;
+            color: var(--dark-background);
+        }
+        .success-text {
+            font-family: var(--font-cinzel);
+            font-size: 1.2em;
+            color: var(--gold);
+            margin-top: 10px;
+        }
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .sparkle:nth-child(1) { top: 20%; left: 30%; animation: sparkle 0.5s 0.1s forwards; }
+        .sparkle:nth-child(2) { top: 30%; left: 60%; animation: sparkle 0.5s 0.2s forwards; }
+        .sparkle:nth-child(3) { top: 50%; left: 20%; animation: sparkle 0.5s 0.3s forwards; }
+        .sparkle:nth-child(4) { top: 60%; left: 70%; animation: sparkle 0.5s 0.4s forwards; }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: var(--text-light);
+            padding: 50px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 60px;
+        }
+        .footer-logo-section { flex: 1; min-width: 280px; }
+        .footer-logo-section img { height: 70px; margin-bottom: 20px; }
+        .footer-logo-section p { font-size: 1em; color: #ccc; }
+        .footer-social-icons a { font-size: 26px; margin-right: 20px; }
+        .footer-links { flex: 2; display: flex; gap: 40px; }
+        .footer-column { flex: 1; min-width: 180px; }
+        .footer-column ul { list-style: none; padding: 0; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { font-size: 1em; }
+        .footer-column ul li a .icon { margin-right: 10px; color: var(--gold); }
+        .copyright { width: 100%; text-align: center; margin-top: 40px; font-size: 0.9em; color: #888; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .banner { height: 250px; }
+            .banner h1 { font-size: 2em; }
+            nav ul li { margin-left: 30px; }
+            .footer-links { gap: 30px; }
+        }
+        @media (max-width: 600px) {
+            .banner { height: 200px; }
+            .banner h1 { font-size: 1.5em; }
+            header { padding: 15px 5%; }
+            .logo img { height: 50px; }
+            nav ul li { margin-left: 20px; }
+            nav ul li a { font-size: 0.9em; }
+            .social-icons a { font-size: 20px; margin-left: 15px; }
+            .consulta-form { padding: 15px; }
+            .consulta-form button { padding: 12px 20px; font-size: 1em; }
+            footer { padding: 40px 5%; }
+            .footer-logo-section img { height: 60px; }
+            .footer-social-icons a { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sorteio.html">Sorteio</a></li>
+                <li><a href="videos.html">Vídeos</a></li>
+                <li><a href="doacao.html">Doação</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="consulta.html">Consulta</a></li>
+            </ul>
+        </nav>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </header>
+
+    <section class="banner">
+        <h1>Consulta</h1>
+    </section>
+    <main class="main-container">
+        <section class="consulta-section">
+            <h2>Agende sua Consulta</h2>
+            <p>Descubra os segredos do universo com uma consulta personalizada, realizada por quem ama e entende a espiritualidade.</p>
+            <form class="consulta-form" id="consulta-form">
+                <input type="text" name="name" placeholder="Nome" required>
+                <input type="tel" name="phone" placeholder="Telefone" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+                <button type="submit">Cadastrar-se</button>
+            </form>
+            <div class="success-animation">
+                <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                <div class="success-text">Enviado com Sucesso!</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo-section">
+            <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
+            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar.</p>
+            <div class="footer-social-icons">
+                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <ul>
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Sorteio</a></li>
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="doacao.html"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="contato.html"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="consulta.html"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul>
+                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded at', new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }));
+
+            // Header scroll fade
+            const header = document.querySelector('header');
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop <= 50) {
+                    header.style.opacity = '1';
+                } else if (scrollTop > lastScroll && scrollTop > 100) {
+                    header.style.opacity = '0';
+                } else if (scrollTop < lastScroll) {
+                    let opacity = Math.min(1, 1 - (scrollTop - 50) / 100);
+                    header.style.opacity = opacity.toString();
+                }
+                lastScroll = scrollTop;
+            });
+
+            // Form submission
+            const form = document.getElementById('consulta-form');
+            const successAnimation = document.querySelector('.success-animation');
+            const endpoint = 'https://formspree.io/f/mgvolbyv';
+
+            if (form) {
+                console.log('Found form: consulta-form');
+                form.addEventListener('submit', async e => {
+                    e.preventDefault();
+                    console.log('Submit clicked for form: consulta-form');
+                    let isValid = true;
+
+                    // Remove existing error messages
+                    form.querySelectorAll('.error').forEach(error => error.remove());
+
+                    const inputs = form.querySelectorAll('input[required]');
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            const errorSpan = document.createElement('span');
+                            errorSpan.className = 'error';
+                            errorSpan.textContent = `Insira ${input.placeholder.toLowerCase()}.`;
+                            // Insert the error message after the input field
+                            input.parentNode.insertBefore(errorSpan, input.nextSibling);
+                            isValid = false;
+                        } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+                            const errorSpan = document.createElement('span');
+                            errorSpan.className = 'error';
+                            errorSpan.textContent = 'Insira um e-mail válido.';
+                            // Insert the error message after the input field
+                            input.parentNode.insertBefore(errorSpan, input.nextSibling);
+                            isValid = false;
+                        }
+                    });
+
+                    if (isValid) {
+                        const formData = new FormData(form);
+                        console.log('Form consulta-form data:', Object.fromEntries(formData));
+                        try {
+                            const response = await fetch(endpoint, {
+                                method: 'POST',
+                                body: formData,
+                                headers: { 'Accept': 'application/json' }
+                            });
+                            if (response.ok) {
+                                console.log('Form consulta-form submitted successfully');
+                                form.style.display = 'none';
+                                successAnimation.classList.add('active');
+                                setTimeout(() => {
+                                    form.style.display = 'block';
+                                    successAnimation.classList.remove('active');
+                                    form.reset();
+                                }, 2000);
+                            } else {
+                                console.error(`Form consulta-form submission failed: ${response.status} ${response.statusText}`);
+                                alert(`Erro ao enviar o formulário. Status: ${response.status}`);
+                            }
+                        } catch (error) {
+                            console.error('Form consulta-form error:', error);
+                            alert('Erro ao enviar o formulário. Tente novamente.');
+                        }
+                    }
+                });
+            } else {
+                console.error('Form not found: consulta-form');
+            }
+        });
+    </script>
+</body>
+</html>
