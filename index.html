@@ -540,8 +540,10 @@
             
             /* ---- AJUSTES MOBILE ---- */
             
-            /* 1. Esconde o botão de play vermelho da Live */
-            .play-button {
+            /* 1. Esconde o botão de play e os textos da Live */
+            .play-button,
+            #liveTitle,
+            #liveTime {
                 display: none;
             }
 
@@ -571,8 +573,7 @@
                 display: none;
             }
             .video-carousel-track {
-                /* Padding mágico para centralizar o primeiro e último item */
-                padding: 0 calc(50vw - 140px); /* 140px = metade da largura do card de 280px */
+                padding: 0 calc(50vw - 140px);
             }
             .video-card-vertical {
                 scroll-snap-align: center;
@@ -612,14 +613,14 @@
                 height: auto;
             }
             .member-card-front {
-                display: none; /* Esconde a frente do card no mobile */
+                display: none; 
             }
             .member-card-back {
                 position: static;
                 transform: none;
                 height: auto;
                 padding: 30px;
-                display: flex; /* Garante que ele seja exibido */
+                display: flex;
             }
         }
     </style>
@@ -904,7 +905,6 @@
                     });
                 });
                 
-                // Lógica de swipe do Hero apenas para mobile
                 heroCarousel.addEventListener('touchstart', e => {
                     if (window.innerWidth > 992) return;
                     touchStartX = e.changedTouches[0].screenX;
@@ -924,7 +924,7 @@
                     if (!isDragging || window.innerWidth > 992) return;
                     isDragging = false;
                     const touchEndX = e.changedTouches[0].screenX;
-                    const diff = touchEndX - touchStartX;
+                    const diff = touchStartX - touchEndX;
                     if (Math.abs(diff) > 50) {
                         if (diff < 0) {
                             currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
@@ -943,7 +943,6 @@
 
             if (window.innerWidth > 992) {
                 // --- LÓGICA PARA DESKTOP (PC) ---
-                // Usa a função original e intocada para o carrossel infinito.
                 function setupInfiniteCarousel(sectionId) {
                     const section = document.getElementById(sectionId);
                     if (!section) return;
@@ -966,6 +965,9 @@
                     function setupCarousel() {
                         stopAutoplay();
                         isTransitioning = false;
+                        
+                        const clones = track.querySelectorAll('.clone');
+                        clones.forEach(clone => track.removeChild(clone));
                         
                         track.innerHTML = '';
                         originalCards.forEach(card => track.appendChild(card));
@@ -1087,7 +1089,6 @@
 
             } else {
                 // --- LÓGICA APENAS PARA MOBILE ---
-                // Função simples que só controla os filtros. A rolagem é feita pelo CSS.
                 function setupMobileCarousel(sectionId) {
                     const section = document.getElementById(sectionId);
                     if (!section) return;
@@ -1103,8 +1104,6 @@
                             
                             const activeFilter = button.dataset.filter;
                             allCards.forEach(card => {
-                                // Em vez de usar a classe .hidden, mudamos o display
-                                // para funcionar bem com o CSS de rolagem.
                                 card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
                             });
                         });
@@ -1115,7 +1114,6 @@
                 setupMobileCarousel('most-viewed-section');
             }
             
-            // --- LÓGICA DO HEADER QUE RODA EM AMBOS ---
             const header = document.querySelector('header');
             if (header) {
                 let lastScrollTop = 0;
