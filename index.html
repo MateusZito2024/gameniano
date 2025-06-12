@@ -84,6 +84,7 @@
         nav ul li { margin-left: 35px; }
         nav ul li a { font-weight: 500; font-size: 0.95em; }
 
+        .social-icons { display: flex; align-items: center; }
         .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
         .social-icons a:hover { color: var(--gold); }
 
@@ -285,7 +286,7 @@
         
         .video-card-vertical:hover {
             box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 
-                          0 0 5px 1px rgba(255, 100, 100, 0.6);
+                         0 0 5px 1px rgba(255, 100, 100, 0.6);
         }
 
         .video-card-vertical:hover::after {
@@ -459,11 +460,121 @@
         .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
         .footer-column ul li a:hover { color: var(--gold); }
         .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
+        
+        /* --- ESTILOS MOBILE --- */
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav { display: none; }
 
-        @media (max-width: 1200px) { .video-card-vertical { flex-basis: calc(33.33% - 20px); } }
-        @media (max-width: 992px) { .video-card-vertical { flex-basis: calc(50% - 15px); } }
-        @media (max-width: 768px) { .video-carousel-wrapper { padding: 20px 50px; } }
-        @media (max-width: 600px) { .video-card-vertical { min-width: 70%; } }
+        @media (max-width: 992px) {
+            header nav, header .social-icons {
+                display: none;
+            }
+            .mobile-nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-light);
+                font-size: 28px;
+                cursor: pointer;
+            }
+            .mobile-nav {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100%;
+                background-color: var(--dark-gray);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                transition: right 0.4s ease-in-out;
+                z-index: 1001;
+                padding: 40px 20px;
+            }
+            .mobile-nav.is-active {
+                right: 0;
+            }
+            .mobile-nav .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                font-size: 30px;
+                color: var(--text-light);
+                cursor: pointer;
+            }
+            .mobile-nav ul {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+            }
+            .mobile-nav ul li {
+                margin: 0;
+            }
+            .mobile-nav ul li a {
+                display: block;
+                padding: 18px;
+                font-size: 1.2em;
+            }
+            .mobile-nav .mobile-socials {
+                margin-top: 40px;
+                padding-top: 30px;
+                border-top: 1px solid var(--border-color);
+                width: 100%;
+                text-align: center;
+            }
+            .mobile-nav .mobile-socials a {
+                font-size: 28px;
+                margin: 0 15px;
+            }
+
+            .hero-card h2 { font-size: 2.5em; }
+            .hero-card p { font-size: 1.1em; }
+            .hero-card { padding: 40px 25px; }
+            
+            .section-title { font-size: 2.2em; }
+            .section-title img { height: 35px; }
+
+            .video-info-overlay { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
+            .video-carousel-wrapper { padding: 20px 0; }
+            .video-carousel-container { 
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch; /* Para iOS */
+            }
+            .video-carousel-track { 
+                padding: 0 20px; /* Adiciona espaçamento nas laterais para ver que é rolável */
+            }
+            .video-carousel-track .video-card-vertical {
+                scroll-snap-align: start;
+                min-width: 280px;
+            }
+            .video-carousel-section .carousel-arrow { display: none; } /* Esconde as setas no mobile */
+            .filter-buttons { gap: 10px; }
+            .filter-btn { padding: 10px 20px; font-size: 0.9em; }
+
+            .footer-links { justify-content: flex-start; }
+            .footer-column { min-width: 150px; }
+            .footer-logo-section { margin-bottom: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section { height: auto; padding: 80px 0; }
+            .hero-carousel-container { height: auto; }
+            .member-card { height: auto; padding: 20px 0; }
+            .member-card-inner { position: static; transform: none; }
+            .member-card-front, .member-card-back { position: static; -webkit-backface-visibility: visible; backface-visibility: visible; transform: none; margin-bottom: 20px; }
+            .member-card:hover .member-card-inner { transform: none; }
+            .member-card-back { display: none; } /* Esconde o verso do cartão para simplificar */
+
+            .decorative-border { background-size: cover; }
+        }
+
     </style>
 </head>
 <body>
@@ -486,13 +597,35 @@
             <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
+
+        <button class="mobile-nav-toggle" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
+
+    <div class="mobile-nav">
+        <button class="close-btn" aria-label="Fechar menu">&times;</button>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="sorteio.html">Sorteio</a></li>
+            <li><a href="videos.html">Vídeos</a></li>
+            <li><a href="doacao.html">Doação</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="consulta.html">Consulta</a></li>
+        </ul>
+        <div class="mobile-socials">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+
     <main>
         <section class="hero-section">
             <div class="hero-carousel">
                 <div class="hero-carousel-container">
-                    <div class="hero-card"> <h2>Agendar Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="#" class="hero-button">Agendar</a> </div>
-                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="#" class="hero-button">Verificar</a> </div>
+                    <div class="hero-card"> <h2>Agendar Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="consulta.html" class="hero-button">Agendar</a> </div>
+                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="sorteio.html" class="hero-button">Verificar</a> </div>
                     <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo.</p> <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a> </div>
                 </div>
             </div>
@@ -506,14 +639,14 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" src="about:blank" data-src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title">Live Tarot - Em Breve</div>
-                                <div class="time">Próxima live em breve</div>
+                                <div class="title" id="liveTitle">Live de Tarot</div>
+                                <div class="time" id="liveTime">Próxima live: Em breve</div>
                             </div>
                             <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
@@ -576,6 +709,7 @@
                         <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Visão Celta da Espiritualidade</h3><p class="description">Uma entrevista sobre a mitologia, os deuses e a magia do povo celta.</p><a href="https://youtu.be/-ohz80gwIiU?si=udFy8flVsDYFcNHO" target="_blank" class="watch-button">Assistir</a></div></div>
                         <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/e-l7qo5ZvLQ/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Meditação</h3><p class="description">Diferentes técnicas e os benefícios da meditação para a vida diária.</p><a href="https://youtu.be/e-l7qo5ZvLQ?si=MMWierInIihyuvdA" target="_blank" class="watch-button">Assistir</a></div></div>
                         <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg" alt="Poder espiritual do Cachorro" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do Cachorro</h3> <p class="description">Descubra a lealdade, proteção e o amor incondicional do totem do Cachorro.</p> <a href="https://youtu.be/J-9SOpyoD3o?si=XhAGn-E_xCJ-vxOU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
@@ -682,6 +816,7 @@
     </footer>
     
     <script>
+        // Carregamento da API do YouTube
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -709,6 +844,34 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+
+            // --- LÓGICA DO MENU MOBILE ---
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+
+            if(mobileNavToggle && mobileNav) {
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNav.classList.add('is-active');
+                });
+                closeNavBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('is-active');
+                });
+            }
+
+
+            // Lógica para carregar o vídeo da live apenas ao clicar
+            const liveThumbnail = document.getElementById('liveThumbnail');
+            const liveIframe = document.getElementById('liveVideoIframe');
+            if(liveThumbnail && liveIframe) {
+                liveThumbnail.addEventListener('click', () => {
+                    liveIframe.src = liveIframe.dataset.src;
+                    liveThumbnail.classList.add('hidden');
+                });
+            }
+
+
+            // Lógica do carrossel Hero
             const heroCarousel = document.querySelector('.hero-carousel');
             if (heroCarousel) {
                 const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -746,7 +909,13 @@
                 startHeroAutoplay();
             }
 
+            // Lógica dos carrosséis de vídeo
             function setupInfiniteCarousel(sectionId) {
+                // Desativa a lógica complexa do carrossel no mobile
+                if (window.innerWidth <= 992) {
+                    return; 
+                }
+
                 const section = document.getElementById(sectionId);
                 if (!section) return;
 
@@ -899,18 +1068,15 @@
             const header = document.querySelector('header');
             if (header) {
                 let lastScrollTop = 0;
-                // O ponto em que o cabeçalho irá sumir/aparecer. Ajuste se necessário.
                 const scrollThreshold = 150; 
 
                 window.addEventListener('scroll', () => {
                     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-                    // Se rolar para baixo e passar do ponto definido, esconde o cabeçalho.
                     if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
                         header.classList.add('header-hidden');
                     } 
-                    // Se rolar para cima e entrar na zona de aparição (acima do ponto definido), mostra o cabeçalho.
-                    else if (scrollTop < lastScrollTop && scrollTop < scrollThreshold) {
+                    else if (scrollTop < lastScrollTop) {
                        header.classList.remove('header-hidden');
                     }
                     
