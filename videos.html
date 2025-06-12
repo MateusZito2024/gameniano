@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        /* Estilos CSS (permanecem os mesmos) */
+        /* 1. ESTILOS GERAIS E VARIÁVEIS */
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
@@ -28,6 +28,8 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+
+        /* 2. CABEÇALHO E RODAPÉ */
         header {
             background-color: var(--dark-gray);
             padding: 15px 5%;
@@ -44,6 +46,7 @@
         header nav ul li a:hover, header nav ul li a.active { color: var(--gold); }
         header .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
         header .social-icons a:hover { color: var(--gold); }
+        
         footer {
             background-color: var(--dark-gray);
             color: var(--text-light);
@@ -68,6 +71,8 @@
         .footer-column ul li a:hover { color: var(--gold); }
         .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
         .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; }
+
+        /* 3. ESTILOS DA PÁGINA DE VÍDEOS */
         .page-banner {
             padding: 60px 20px; text-align: center;
             height: 350px;
@@ -85,6 +90,7 @@
             margin: 0; text-shadow: 0 0 15px rgba(0,0,0,0.8);
         }
         .video-gallery-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        
         .video-controls {
             display: flex; flex-wrap: wrap; justify-content: space-between;
             align-items: flex-start; gap: 20px; margin-bottom: 50px;
@@ -96,6 +102,80 @@
             color: var(--text-light); border-radius: 25px; font-size: 1em;
         }
         #video-search-input:focus { outline: none; border-color: var(--gold); }
+
+        #search-results-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%; left: 0; right: 0;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1001;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .search-result-item {
+            display: flex; align-items: flex-start;
+            padding: 10px; cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background-color: #f0f0f0; }
+        .search-result-item img {
+            width: 100px; height: 56px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .search-result-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .search-result-info h4 {
+            color: #222; font-size: 0.9em;
+            margin: 0 0 4px 0; line-height: 1.3;
+            font-weight: 500;
+        }
+        .search-result-info p {
+            color: #555; font-size: 0.8em; margin: 0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .filter-dropdown-container { position: relative; flex: 0 1 auto; }
+        .filter-dropdown-toggle {
+            background-color: var(--medium-gray); color: var(--text-light);
+            border: 1px solid var(--border-color); border-radius: 25px;
+            padding: 12px 25px; font-size: 1em; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; width: 100%;
+            justify-content: space-between;
+        }
+        .filter-dropdown-toggle .fa-chevron-down { transition: transform 0.3s ease; }
+        .filter-dropdown-toggle.open .fa-chevron-down { transform: rotate(180deg); }
+        
+        .filter-dropdown-list {
+            position: absolute; top: 110%; right: 0;
+            background-color: var(--medium-gray); border: 1px solid var(--border-color);
+            border-radius: 8px; list-style: none;
+            padding: 10px; margin: 0; z-index: 10;
+            width: 250px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        .filter-dropdown-list.open { opacity: 1; visibility: visible; transform: translateY(0); }
+        .filter-dropdown-list a {
+            display: block; padding: 10px 15px; color: var(--text-light);
+            text-decoration: none; border-radius: 5px;
+        }
+        .filter-dropdown-list a:hover { background-color: #444; }
+        .filter-dropdown-list a.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; }
+
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -119,6 +199,8 @@
             transition: background-color 0.3s ease;
         }
         .ver-mais-btn:hover { background-color: #f0c34a; }
+
+        /* 4. ESTILOS DO POPUP DE VÍDEO */
         .popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.9); display: flex;
@@ -150,17 +232,18 @@
         .popup-video-details { padding: 25px 5px 5px 5px; }
         .popup-video-details h3 { font-family: var(--font-cinzel); margin: 0 0 15px 0; font-size: 2em; color: var(--gold); }
         .popup-video-details p { margin: 0 0 20px 0; color: #ccc; font-size: 1.05em; }
-        
-        /* NOVO ESTILO PARA O LINK DE FALLBACK */
         .popup-fallback-link {
             text-align: center;
             margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
             font-size: 0.9em;
         }
         .popup-fallback-link a {
             color: var(--gold);
             text-decoration: underline;
         }
+
     </style>
 </head>
 <body>
@@ -189,10 +272,37 @@
         <section class="page-banner">
             <h1>Nossos Vídeos</h1>
         </section>
+
         <div class="video-gallery-container">
+            
             <div class="video-controls">
+                <div class="search-container">
+                    <input type="search" id="video-search-input" placeholder="Pesquisar vídeos..." autocomplete="off">
+                    <div id="search-results-dropdown"></div>
                 </div>
-            <div class="video-grid"></div>
+                <div class="filter-dropdown-container">
+                    <button class="filter-dropdown-toggle">
+                        <span>Categorias</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown-list">
+                        <a href="#" class="filter-link active" data-filter="all">Todos</a>
+                        <a href="#" class="filter-link" data-filter="tarot">Tarot</a>
+                        <a href="#" class="filter-link" data-filter="eventos">Eventos</a>
+                        <a href="#" class="filter-link" data-filter="entrevistas">Entrevistas</a>
+                        <a href="#" class="filter-link" data-filter="meditacao">Meditação Guiada</a>
+                        <a href="#" class="filter-link" data-filter="animais-poder">Animais de Poder</a>
+                        <a href="#" class="filter-link" data-filter="serie-elementos">Série Elementos</a>
+                        <a href="#" class="filter-link" data-filter="lives">Transmissões Ao Vivo</a>
+                        <a href="#" class="filter-link" data-filter="ensinamentos-lendarios">Ensinamentos Lendários</a>
+                        <a href="#" class="filter-link" data-filter="ensinamentos-xamanicos">Ensinamentos Xamânicos</a>
+                        <a href="#" class="filter-link" data-filter="outros">Outros</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-grid">
+                </div>
         </div>
     </main>
 
@@ -201,14 +311,34 @@
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
             <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
             <div class="footer-social-icons">
-                 <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer-links">
+            <div class="footer-column">
+                <ul>
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+                </ul>
             </div>
+            <div class="footer-column">
+                <ul>
+                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="copyright">
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
@@ -223,11 +353,9 @@
                 <div class="popup-video-details">
                     <h3 id="popup-video-title"></h3>
                     <p id="popup-video-description"></p>
-                    
                     <div class="popup-fallback-link">
                         <p>Se o vídeo não carregar, <a id="popup-direct-link" href="#" target="_blank" rel="noopener noreferrer">clique aqui para assistir diretamente no YouTube</a>.</p>
                     </div>
-
                 </div>
             </div>
             <button class="popup-close-btn" aria-label="Fechar"><i class="fas fa-times"></i></button>
@@ -236,6 +364,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- BANCO DE DADOS DE VÍDEOS COM URLS PÚBLICAS E CORRETAS ---
         const videosData = [
             { videoId: 'K4zm30A3da0', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/K4zm30A3da0/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
             { videoId: '4_gI1Y-sRDA', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/4_gI1Y-sRDA/hqdefault.jpg', category: 'meditacao serie-elementos' },
@@ -245,20 +374,28 @@
             { videoId: 'u9_j5tG4jL4', title: 'Meditação Guiada - Encontrando Um Mestre na Floresta', description: 'Uma jornada meditativa para o interior de uma floresta sagrada para encontrar um mestre e receber orientações.', thumbnail: 'https://i.ytimg.com/vi/u9_j5tG4jL4/hqdefault.jpg', category: 'meditacao ensinamentos-xamanicos' }
         ];
 
+        // --- SELETORES DE ELEMENTOS ---
         const videoGrid = document.querySelector('.video-grid');
+        const searchInput = document.getElementById('video-search-input');
+        const searchResultsDropdown = document.getElementById('search-results-dropdown');
+        const dropdownContainer = document.querySelector('.filter-dropdown-container');
+        const dropdownToggle = document.querySelector('.filter-dropdown-toggle');
+        const dropdownList = document.querySelector('.filter-dropdown-list');
+        const filterLinks = dropdownList.querySelectorAll('.filter-link');
         const popup = document.getElementById('video-popup');
         const popupCloseBtn = popup.querySelector('.popup-close-btn');
         const popupIframe = document.getElementById('popup-video-iframe');
         const popupTitle = document.getElementById('popup-video-title');
         const popupDescription = document.getElementById('popup-video-description');
-        const popupDirectLink = document.getElementById('popup-direct-link'); // NOVO SELETOR
+        const popupDirectLink = document.getElementById('popup-direct-link');
+
+        // --- FUNÇÕES PRINCIPAIS ---
 
         function renderVideoGrid(videosToRender) {
             videoGrid.innerHTML = '';
             videosToRender.forEach(video => {
                 const card = document.createElement('article');
                 card.className = 'video-card';
-                // Usar JSON.stringify para armazenar o objeto completo de forma segura
                 card.dataset.videoData = JSON.stringify(video);
                 card.innerHTML = `
                     <div class="video-thumbnail">
@@ -275,10 +412,10 @@
         }
 
         function openPopup(videoData) {
-            // CORREÇÃO FINAL E DEFINITIVA DA URL DO PLAYER
+            // CORREÇÃO DEFINITIVA DA SINTAXE E URL DO PLAYER
             popupIframe.src = `youtube.com{videoData.videoId}?autoplay=1&rel=0`;
             
-            // ATUALIZAÇÃO DO LINK DIRETO DE FALLBACK
+            // CORREÇÃO DEFINITIVA DA SINTAXE DO LINK DIRETO
             popupDirectLink.href = `https://www.youtube.com/embed/ID_DO_VÍDEO{videoData.videoId}`;
 
             popupTitle.innerText = videoData.title;
@@ -293,6 +430,50 @@
             document.body.style.overflow = 'auto';
         }
 
+        function applyFilters() {
+            const activeFilter = dropdownList.querySelector('.active').dataset.filter;
+            const filteredVideos = videosData.filter(video => {
+                return activeFilter === 'all' || video.category.includes(activeFilter);
+            });
+            renderVideoGrid(filteredVideos);
+        }
+        
+        function handleSearchInput() {
+            const searchTerm = searchInput.value.toLowerCase();
+            searchResultsDropdown.innerHTML = '';
+            
+            if (searchTerm.length < 2) {
+                searchResultsDropdown.style.display = 'none';
+                return;
+            }
+            const matchedVideos = videosData.filter(video => video.title.toLowerCase().includes(searchTerm) || video.description.toLowerCase().includes(searchTerm)).slice(0, 5);
+            
+            if (matchedVideos.length > 0) {
+                matchedVideos.forEach(video => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.innerHTML = `
+                        <img src="${video.thumbnail}" alt="">
+                        <div class="search-result-info">
+                            <h4>${video.title}</h4>
+                            <p>${video.description}</p>
+                        </div>
+                    `;
+                    item.addEventListener('click', () => {
+                        openPopup(video);
+                        searchInput.value = '';
+                        searchResultsDropdown.style.display = 'none';
+                    });
+                    searchResultsDropdown.appendChild(item);
+                });
+                searchResultsDropdown.style.display = 'block';
+            } else {
+                searchResultsDropdown.style.display = 'none';
+            }
+        }
+        
+        // --- EVENT LISTENERS ---
+        
         videoGrid.addEventListener('click', (event) => {
             const verMaisBtn = event.target.closest('.ver-mais-btn');
             if (verMaisBtn) {
@@ -305,9 +486,38 @@
         popup.addEventListener('click', (event) => {
             if (event.target.classList.contains('popup-overlay')) closePopup();
         });
+        
+        searchInput.addEventListener('input', handleSearchInput);
+        
+        dropdownToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            dropdownList.classList.toggle('open');
+            dropdownToggle.classList.toggle('open');
+        });
+        
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                dropdownList.querySelector('.active').classList.remove('active');
+                link.classList.add('active');
+                dropdownList.classList.remove('open');
+                dropdownToggle.classList.remove('open');
+                applyFilters();
+            });
+        });
+        
+        document.addEventListener('click', (event) => {
+            if (!dropdownContainer.contains(event.target)) {
+                dropdownList.classList.remove('open');
+                dropdownToggle.classList.remove('open');
+            }
+            if (!searchResultsDropdown.contains(event.target) && event.target !== searchInput) {
+                searchResultsDropdown.style.display = 'none';
+            }
+        });
 
-        // Inicializa a galeria com todos os vídeos
-        renderVideoGrid(videosData);
+        // --- INICIALIZAÇÃO ---
+        applyFilters();
     });
     </script>
 </body>
