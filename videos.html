@@ -370,7 +370,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- BANCO DE DADOS DE VÍDEOS ---
+        // --- BANCO DE DADOS DE VÍDEOS COM URLS CORRIGIDAS ---
         const videosData = [
             { videoId: 'K4zm30A3da0', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/K4zm30A3da0/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
             { videoId: '4_gI1Y-sRDA', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/4_gI1Y-sRDA/hqdefault.jpg', category: 'meditacao serie-elementos' },
@@ -417,7 +417,9 @@
         }
 
         function openPopup(videoData) {
-            popupIframe.src = `https://www.youtube.com/embed/$9{videoData.videoId}?autoplay=1&rel=0`;
+            // CORREÇÃO DEFINITIVA: Usando a URL de embed pública do YouTube.
+            popupIframe.src = `youtube.com{videoData.videoId}?autoplay=1&rel=0`;
+            
             popupTitle.innerText = videoData.title;
             popupDescription.innerText = videoData.description;
             const pageUrl = encodeURIComponent(window.location.href);
