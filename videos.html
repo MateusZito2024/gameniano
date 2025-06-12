@@ -80,7 +80,7 @@
             align-items: center;
             justify-content: center;
             background-color: var(--dark-background);
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/6Q7N6fGX/tarot-reverce-border-magic-sacred-cover-card-frame-gold-line-border-celelstial-mystery-esoteric-deco.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/6Q7N6fGX/tarot-reverce-border-magic-sacred-cover-card-frame-gold-line-beautification.jpg');
             background-size: cover;
             background-position: center; 
             background-repeat: no-repeat;
@@ -244,7 +244,6 @@
         .share-whatsapp { background-color: #25D366; }
         .share-facebook { background-color: #1877F2; }
         .share-twitter { background-color: #1DA1F2; }
-
     </style>
 </head>
 <body>
@@ -275,7 +274,6 @@
         </section>
 
         <div class="video-gallery-container">
-            
             <div class="video-controls">
                 <div class="search-container">
                     <input type="search" id="video-search-input" placeholder="Pesquisar vídeos..." autocomplete="off">
@@ -302,8 +300,7 @@
                 </div>
             </div>
 
-            <div class="video-grid">
-                </div>
+            <div class="video-grid"></div>
         </div>
     </main>
 
@@ -370,14 +367,49 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // CORREÇÃO: URLs das miniaturas (thumbnails) e do player de vídeo corrigidas.
         const videosData = [
-            { videoId: 'K4zm30A3da0', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/K4zm30A3da0/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
-            { videoId: '4_gI1Y-sRDA', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/4_gI1Y-sRDA/hqdefault.jpg', category: 'meditacao serie-elementos' },
-            { videoId: 'tG0i0h3Auhc', title: 'Como aprender a ler Tarot - A jornada do iniciado', description: 'Entenda os primeiros passos na jornada espiritual do Tarot e como iniciar seus estudos para aprender a ler este oráculo.', thumbnail: 'https://i.ytimg.com/vi/tG0i0h3Auhc/hqdefault.jpg', category: 'tarot ensinamentos-lendarios' },
-            { videoId: 'vG1mDEa2o6I', title: 'Live Tarot - Domingo 08/06', description: 'Transmissão ao vivo de leitura de Tarot realizada no domingo, dia 08/06, com interação e respostas aos participantes.', thumbnail: 'https://i.ytimg.com/vi/vG1mDEa2o6I/hqdefault.jpg', category: 'lives tarot' },
-            { videoId: 'NcsZt_p_28Q', title: 'Série Elementos - Introdução - Video 1/5', description: 'O vídeo de introdução da Série Elementos, explicando a importância e a energia de cada um dos elementos na nossa jornada.', thumbnail: 'https://i.ytimg.com/vi/NcsZt_p_28Q/hqdefault.jpg', category: 'serie-elementos' },
-            { videoId: 'u9_j5tG4jL4', title: 'Meditação Guiada - Encontrando Um Mestre na Floresta', description: 'Uma jornada meditativa para o interior de uma floresta sagrada para encontrar um mestre e receber orientações.', thumbnail: 'https://i.ytimg.com/vi/u9_j5tG4jL4/hqdefault.jpg', category: 'meditacao ensinamentos-xamanicos' }
+            { 
+                videoId: 'K4zm30A3da0', 
+                title: 'Meditação Guiada - Descubra seu animal de poder', 
+                description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', 
+                thumbnail: 'https://img.youtube.com/vi/K4zm30A3da0/hqdefault.jpg', 
+                category: 'animais-poder meditacao ensinamentos-xamanicos' 
+            },
+            { 
+                videoId: '4_gI1Y-sRDA', 
+                title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', 
+                description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', 
+                thumbnail: 'https://img.youtube.com/vi/4_gI1Y-sRDA/hqdefault.jpg', 
+                category: 'meditacao serie-elementos' 
+            },
+            { 
+                videoId: 'tG0i0h3Auhc', 
+                title: 'Como aprender a ler Tarot - A jornada do iniciado', 
+                description: 'Entenda os primeiros passos na jornada espiritual do Tarot e como iniciar seus estudos para aprender a ler este oráculo.', 
+                thumbnail: 'https://img.youtube.com/vi/tG0i0h3Auhc/hqdefault.jpg', 
+                category: 'tarot ensinamentos-lendarios' 
+            },
+            { 
+                videoId: 'vG1mDEa2o6I', 
+                title: 'Live Tarot - Domingo 08/06', 
+                description: 'Transmissão ao vivo de leitura de Tarot realizada no domingo, dia 08/06, com interação e respostas aos participantes.', 
+                thumbnail: 'https://img.youtube.com/vi/vG1mDEa2o6I/hqdefault.jpg', 
+                category: 'lives tarot' 
+            },
+            { 
+                videoId: 'NcsZt_p_28Q', 
+                title: 'Série Elementos - Introdução - Video 1/5', 
+                description: 'O vídeo de introdução da Série Elementos, explicando a importância e a energia de cada um dos elementos na nossa jornada.', 
+                thumbnail: 'https://img.youtube.com/vi/NcsZt_p_28Q/hqdefault.jpg', 
+                category: 'serie-elementos' 
+            },
+            { 
+                videoId: 'u9_j5tG4jL4', 
+                title: 'Meditação Guiada - Encontrando Um Mestre na Floresta', 
+                description: 'Uma jornada meditativa para o interior de uma floresta sagrada para encontrar um mestre e receber orientações.', 
+                thumbnail: 'https://img.youtube.com/vi/u9_j5tG4jL4/hqdefault.jpg', 
+                category: 'meditacao ensinamentos-xamanicos' 
+            }
         ];
 
         const videoGrid = document.querySelector('.video-grid');
@@ -401,7 +433,7 @@
                 card.dataset.videoData = JSON.stringify(video);
                 card.innerHTML = `
                     <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.title}">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://img.youtube.com/vi/default.jpg';">
                     </div>
                     <div class="video-info">
                         <h3>${video.title.substring(0, 40)}${video.title.length > 40 ? '...' : ''}</h3>
@@ -414,16 +446,21 @@
         }
 
         function openPopup(videoData) {
-            popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0`;
-            popupTitle.innerText = videoData.title;
-            popupDescription.innerText = videoData.description;
-            const pageUrl = encodeURIComponent(window.location.href);
-            const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
-            popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${pageUrl}`;
-            popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-            popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}`;
-            popup.classList.add('visible');
-            document.body.style.overflow = 'hidden';
+            try {
+                popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0&enablejsapi=1`;
+                popupTitle.innerText = videoData.title;
+                popupDescription.innerText = videoData.description;
+                const pageUrl = encodeURIComponent(window.location.href);
+                const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
+                popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${pageUrl}`;
+                popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+                popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}`;
+                popup.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            } catch (error) {
+                console.error('Erro ao abrir o popup de vídeo:', error);
+                alert('Ocorreu um erro ao carregar o vídeo. Tente novamente.');
+            }
         }
 
         function closePopup() {
@@ -448,14 +485,17 @@
                 searchResultsDropdown.style.display = 'none';
                 return;
             }
-            const matchedVideos = videosData.filter(video => video.title.toLowerCase().includes(searchTerm) || video.description.toLowerCase().includes(searchTerm)).slice(0, 5);
+            const matchedVideos = videosData.filter(video => 
+                video.title.toLowerCase().includes(searchTerm) || 
+                video.description.toLowerCase().includes(searchTerm)
+            ).slice(0, 5);
             
             if (matchedVideos.length > 0) {
                 matchedVideos.forEach(video => {
                     const item = document.createElement('div');
                     item.className = 'search-result-item';
                     item.innerHTML = `
-                        <img src="${video.thumbnail}" alt="">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://img.youtube.com/vi/default.jpg';">
                         <div class="search-result-info">
                             <h4>${video.title}</h4>
                             <p>${video.description}</p>
