@@ -559,24 +559,29 @@
             }
 
             /* 3. Ajusta carrossel de vídeos */
-    .video-carousel-wrapper { 
-        padding: 20px 0;
-        touch-action: pan-y;
-    }
-    .video-carousel-container { 
-        overflow-x: hidden;
-    }
-    .video-carousel-track {
-        /* As propriedades de padding e justify-content foram removidas para corrigir o alinhamento */
-        /* O JavaScript agora controla totalmente o posicionamento para garantir a centralização. */
-    }
-    .video-card-vertical {
-        flex: 0 0 280px; /* Largura fixa para consistência */
-        min-width: 280px;
-    }
-    .video-carousel-section .carousel-arrow { display: none; }
-    .filter-buttons { gap: 10px; }
-    .filter-btn { padding: 10px 20px; font-size: 0.9em; }
+            .video-carousel-wrapper { 
+                padding: 20px 0;
+                touch-action: pan-y;
+            }
+            .video-carousel-container { 
+                overflow-x: hidden;
+            }
+            .video-carousel-track {
+                /* As propriedades de padding e justify-content foram removidas na correção anterior */
+            }
+            .video-card-vertical {
+                flex: 0 0 280px; 
+                min-width: 280px;
+            }
+            .video-carousel-section .carousel-arrow { display: none; }
+            
+            /* NOVA REGRA PARA ALINHAR OS BOTÕES DE FILTRO EM GRADE */
+            .filter-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Cria 2 colunas de largura igual */
+                gap: 15px;
+            }
+            .filter-btn { padding: 10px 20px; font-size: 0.9em; }
             
             /* 4. Organiza o Rodapé */
             footer {
@@ -588,13 +593,9 @@
                 margin-right: 0;
                 margin-bottom: 40px;
             }
+            /* NOVA REGRA PARA ESCONDER OS LINKS DO RODAPÉ */
             .footer-links {
-                justify-content: center;
-                gap: 50px;
-                width: 100%;
-            }
-            .footer-column ul li a {
-                justify-content: center;
+                display: none;
             }
 
             /* 5. Ajusta o card de Membro para ser estático */
@@ -819,6 +820,7 @@
     </footer>
     
     <script>
+        // O JavaScript permanece o mesmo
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
