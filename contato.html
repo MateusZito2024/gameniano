@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contato – Lendário TV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; }
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
-            --medium-gray: #2c2c2c;
             --text-light: #f0f0f0;
             --gold: #D4AF37;
             --button-gold: #9e843c;
@@ -20,10 +19,27 @@
             --border-color: #333;
             --font-cinzel: 'Cinzel', serif;
             --font-montserrat: 'Montserrat', sans-serif;
+            --whatsapp-glow: #25D366;
+            --meeting-glow: #1E90FF;
+            --form-glow: #FFD700;
+            --feedback-glow: #FF69B4;
+            --comment-glow: #00CED1;
+            --story-glow: #800080;
         }
-        @keyframes shimmer-effect {
-            0% { transform: translateX(-150%) skewX(-30deg); }
-            100% { transform: translateX(150%) skewX(-30deg); }
+        @keyframes success-glow {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+        @keyframes sparkle {
+            0% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        @keyframes subtle-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
         body {
             font-family: var(--font-montserrat);
@@ -31,111 +47,110 @@
             color: var(--text-light);
             margin: 0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
-        a { color: var(--text-light); text-decoration: none; transition: color 0.3s ease; }
+        a { color: var(--text-light); text-decoration: none; }
         a:hover { color: var(--gold); }
 
         /* Header */
         header {
             background-color: var(--dark-gray);
-            padding: 15px 5%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: transform 0.4s ease-out;
+            transition: transform 0.3s ease;
         }
         .header-hidden { transform: translateY(-100%); }
-        .logo img { height: 55px; }
+        .logo img { height: 60px; }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { margin-left: 35px; }
-        nav ul li a { font-weight: 500; font-size: 0.95em; }
-        nav ul li a.active { color: var(--gold); }
-        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; }
+        nav ul li { margin-left: 40px; }
+        nav ul li a { font-weight: 500; font-size: 1em; }
+        .social-icons a { font-size: 24px; margin-left: 25px; }
         .social-icons a:hover { color: var(--gold); }
+
+        /* Banner */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-image: url('https://i.postimg.cc/MpRWzZ1p/modern-astrological-banner-tarot-card-vintage-vector-47626241.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .banner h1 {
+            font-family: var(--font-cinzel);
+            font-size: 2.5em;
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+            z-index: 2;
+            text-align: center;
+        }
 
         /* Main Content */
         .main-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 40px 15px;
         }
         .contact-section {
-            padding: 50px 0;
-        }
-        .section-title {
-            text-align: center;
-            font-family: var(--font-cinzel);
-            font-size: 2.8em;
-            margin-bottom: 50px;
-            color: var(--gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
-            position: relative;
-        }
-        .section-title::before, .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 0 20px;
-            display: inline-block;
-            vertical-align: middle;
-            width: 100px;
+            padding: 40px 0;
         }
         .cards-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 20px;
         }
         .contact-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--gold);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
             cursor: pointer;
+            animation: subtle-bounce 1.5s ease-in-out;
         }
         .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
         }
-        .contact-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(212, 175, 55, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
-            transform: skewX(-30deg);
-            transition: left 2s ease;
-        }
-        .contact-card:hover::after {
-            left: 150%;
-            animation: shimmer-effect 2s infinite;
-        }
+        .contact-card.whatsapp:hover { box-shadow: 0 0 10px rgba(37, 211, 102, 0.7), 0 0 15px rgba(37, 211, 102, 0.5); }
+        .contact-card.meeting:hover { box-shadow: 0 0 10px rgba(30, 144, 255, 0.7), 0 0 15px rgba(30, 144, 255, 0.5); }
+        .contact-card.form:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.5); }
+        .contact-card.feedback:hover { box-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 15px rgba(255, 105, 180, 0.5); }
+        .contact-card.comment:hover { box-shadow: 0 0 10px rgba(0, 206, 209, 0.7), 0 0 15px rgba(0, 206, 209, 0.5); }
+        .contact-card.story:hover { box-shadow: 0 0 10px rgba(128, 0, 128, 0.7), 0 0 15px rgba(128, 0, 128, 0.5); }
         .contact-card i {
-            font-size: 2.5em;
+            font-size: 2em;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .contact-card h3 {
             font-family: var(--font-cinzel);
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: var(--gold);
             margin: 0 0 10px;
         }
         .contact-card p {
-            font-size: 0.95em;
-            color: #bbb;
+            font-size: 0.9em;
+            color: #ccc;
             margin: 0;
         }
 
@@ -147,39 +162,33 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--gold);
             border-radius: 10px;
-            padding: 30px;
-            max-width: 600px;
+            padding: 25px;
+            max-width: 550px;
             width: 90%;
             position: relative;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            text-align: center;
         }
         .modal-content h3 {
             font-family: var(--font-cinzel);
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: var(--gold);
             margin-bottom: 20px;
-            text-align: center;
         }
         .close-button {
             position: absolute;
-            top: 15px;
+            top: 10px;
             right: 15px;
             font-size: 1.5em;
             color: var(--text-light);
@@ -187,242 +196,146 @@
         }
         .close-button:hover { color: var(--gold); }
 
-        /* Static Form Styles */
+        /* Form Styles */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            text-align: left;
         }
         .form-group label {
+            font-size: 0.95em;
+            color: #ccc;
+            margin-bottom: 5px;
             display: block;
-            font-size: 1em;
-            color: #bbb;
-            margin-bottom: 8px;
         }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             color: var(--text-light);
-            font-size: 1em;
+            font-size: 0.9em;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
             outline: none;
         }
-        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
         .form-group .error {
             color: var(--red-youtube);
-            font-size: 0.9em;
+            font-size: 0.85em;
             margin-top: 5px;
             display: none;
         }
-        .submit-button {
-            background-color: var(--button-gold);
+        .submit-button, .whatsapp-button {
+            background: var(--button-gold);
             color: var(--dark-background);
-            padding: 12px 25px;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
+            font-family: var(--font-montserrat);
             font-weight: 500;
             font-size: 1em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            display: inline-block;
+            text-align: center;
             width: 100%;
-            text-align: center;
+            transition: background 0.3s ease;
         }
-        .submit-button:hover { background-color: var(--button-gold-hover); }
-        .whatsapp-button {
-            background-color: #25D366;
-            color: var(--text-light);
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: 500;
-            font-size: 1em;
-            text-align: center;
-            display: block;
+        .submit-button:hover, .whatsapp-button:hover {
+            background: var(--button-gold-hover);
         }
-        .whatsapp-button:hover { background-color: #1e7e57; }
 
-        /* Chatbot Styles */
-        .chat-container {
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--gold);
-            border-radius: 10px;
-            padding: 12px;
-            height: 400px;
-            display: flex;
+        /* Success Animation */
+        .success-animation {
+            display: none;
             flex-direction: column;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
         }
-        .chat-container.success {
-            background: transparent;
-            padding: 0;
-            border: none;
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
+        .success-animation.active {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
         }
-        .message {
-            max-width: 80%;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.95em;
-        }
-        .bot-message {
-            background: var(--dark-gray);
-            color: var(--text-light);
-            align-self: flex-start;
-            border: 1px solid var(--gold);
-            border-bottom-left-radius: 0;
-        }
-        .user-message {
-            background: var(--gold);
-            color: var(--dark-background);
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            align-self: flex-start;
-            padding: 8px;
-        }
-        .typing-indicator span {
-            width: 6px;
-            height: 6px;
+        .success-checkmark {
+            width: 60px;
+            height: 60px;
             background: var(--gold);
             border-radius: 50%;
-            animation: bounce 0.6s infinite alternate;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
-        }
-        .chat-input {
-            display: flex;
-            gap: 8px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border-color);
-            align-items: center;
-        }
-        .chat-input textarea {
-            flex: 1;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--gold);
-            border-radius: 5px;
-            color: var(--text-light);
-            font-size: 0.95em;
-            outline: none;
-            resize: none;
-        }
-        .chat-input button {
-            background: var(--button-gold);
-            color: var(--dark-background);
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: 500;
-            font-size: 0.95em;
-            cursor: pointer;
-        }
-        .chat-input button:hover {
-            background: var(--button-gold-hover);
-            transform: translateY(-2px);
-        }
-        .mic-button {
-            background: var(--button-gold);
-            color: var(--dark-background);
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: success-glow 1s ease;
         }
-        .mic-button.recording { background: var(--button-gold-hover); transform: scale(1.1); }
-        .mic-button:disabled { background: var(--medium-gray); cursor: not-allowed; }
-        .mic-button svg { width: 18px; height: 18px; }
-        .mic-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--dark-gray);
-            color: var(--text-light);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.75em;
-            animation: fadeInTooltip 0.3s ease-in-out;
+        .success-checkmark i {
+            font-size: 30px;
+            color: var(--dark-background);
         }
-        .mic-tooltip.fade-out { animation: fadeOutTooltip 0.3s ease-in-out forwards; }
-        @keyframes fadeInTooltip {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeOutTooltip {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(5px); }
-        }
-        .sparkle-text {
+        .success-text {
             font-family: var(--font-cinzel);
-            font-size: 1.5em;
+            font-size: 1.2em;
             color: var(--gold);
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+            margin-top: 10px;
         }
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .sparkle:nth-child(1) { top: 20%; left: 30%; animation: sparkle 0.5s 0.1s; }
+        .sparkle:nth-child(2) { top: 30%; left: 60%; animation: sparkle 0.5s 0.2s; }
+        .sparkle:nth-child(3) { top: 50%; left: 20%; animation: sparkle 0.5s 0.3s; }
+        .sparkle:nth-child(4) { top: 60%; left: 70%; animation: sparkle 0.5s 0.4s; }
 
         /* Footer */
         footer {
-            background-color: var(--dark-gray);
+            background: var(--dark-gray);
             color: var(--text-light);
-            padding: 60px 5%;
+            padding: 50px 5%;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            border-top: 1px solid var(--border-color);
-            margin-top: 80px;
+            margin-top: 60px;
         }
-        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
-        .footer-logo-section img { height: 65px; margin-bottom: 20px; }
-        .footer-logo-section p { font-size: 0.95em; color: #bbb; }
-        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; }
-        .footer-social-icons a:hover { color: var(--gold); }
-        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; }
+        .footer-logo-section { flex: 1; min-width: 280px; }
+        .footer-logo-section img { height: 70px; margin-bottom: 20px; }
+        .footer-logo-section p { font-size: 1em; color: #ccc; }
+        .footer-social-icons a { font-size: 26px; margin-right: 20px; }
+        .footer-links { flex: 2; display: flex; gap: 40px; }
         .footer-column { flex: 1; min-width: 180px; }
         .footer-column ul { list-style: none; padding: 0; }
         .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 0.98em; display: flex; align-items: center; }
-        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
-        .copyright { width: 100%; text-align: center; margin-top: 50px; font-size: 0.88em; color: #888; }
+        .footer-column ul li a { font-size: 1em; }
+        .footer-column ul li a .icon { margin-right: 10px; color: var(--gold); }
+        .copyright { width: 100%; text-align: center; margin-top: 40px; font-size: 0.9em; color: #888; }
 
         /* Responsive */
         @media (max-width: 992px) {
             .cards-container { grid-template-columns: repeat(2, 1fr); }
-            .chat-container { height: 350px; }
+            .banner { height: 250px; }
+            .banner h1 { font-size: 2em; }
+            nav ul li { margin-left: 30px; }
+            .footer-links { gap: 30px; }
         }
         @media (max-width: 600px) {
             .cards-container { grid-template-columns: 1fr; }
-            .modal-content { padding: 20px; }
-            .section-title { font-size: 2.2em; }
-            .section-title::before, .section-title::after { width: 50px; }
-            .chat-container { height: 300px; width: 95%; max-width: 380px; }
-            .chat-input textarea, .chat-input button { font-size: 0.875em; }
-            .mic-button svg { width: 16px; height: 16px; }
+            .modal-content { padding: 15px; }
+            .banner { height: 200px; }
+            .banner h1 { font-size: 1.5em; }
+            .success-checkmark { width: 50px; height: 50px; }
+            .success-checkmark i { font-size: 25px; }
+            .success-text { font-size: 1em; }
+            header { padding: 15px 5%; }
+            .logo img { height: 50px; }
+            nav ul li { margin-left: 20px; }
+            nav ul li a { font-size: 0.9em; }
+            .social-icons a { font-size: 20px; margin-left: 15px; }
+            footer { padding: 40px 5%; }
+            .footer-logo-section img { height: 60px; }
+            .footer-social-icons a { font-size: 22px; }
         }
     </style>
 </head>
@@ -437,7 +350,7 @@
                 <li><a href="sorteio.html">Sorteio</a></li>
                 <li><a href="videos.html">Vídeos</a></li>
                 <li><a href="doacao.html">Doação</a></li>
-                <li><a href="contato.html" class="active">Contato</a></li>
+                <li><a href="contato.html">Contato</a></li>
                 <li><a href="#">Consulta</a></li>
             </ul>
         </nav>
@@ -448,36 +361,38 @@
         </div>
     </header>
 
+    <section class="banner">
+        <h1>Entre em Contato</h1>
+    </section>
     <main class="main-container">
         <section class="contact-section">
-            <h2 class="section-title">Entre em Contato</h2>
             <div class="cards-container">
-                <div class="contact-card" data-modal="whatsapp-modal">
+                <div class="contact-card whatsapp" data-modal="whatsapp-modal">
                     <i class="fab fa-whatsapp"></i>
                     <h3>WhatsApp</h3>
                     <p>Fale diretamente para dúvidas ou agendamentos.</p>
                 </div>
-                <div class="contact-card" data-modal="meeting-modal">
+                <div class="contact-card meeting" data-modal="meeting-modal">
                     <i class="fas fa-calendar-alt"></i>
                     <h3>Agendar Reunião</h3>
                     <p>Marque uma consulta espiritual personalizada.</p>
                 </div>
-                <div class="contact-card" data-modal="form-modal">
+                <div class="contact-card form" data-modal="form-modal">
                     <i class="fas fa-envelope"></i>
                     <h3>Enviar Formulário</h3>
                     <p>Envie sua mensagem ou solicitação geral.</p>
                 </div>
-                <div class="contact-card" data-modal="feedback-modal">
+                <div class="contact-card feedback" data-modal="feedback-modal">
                     <i class="fas fa-star"></i>
                     <h3>Enviar Feedback</h3>
                     <p>Compartilhe sua opinião sobre nosso conteúdo.</p>
                 </div>
-                <div class="contact-card" data-modal="comment-modal">
+                <div class="contact-card comment" data-modal="comment-modal">
                     <i class="fas fa-comment"></i>
                     <h3>Enviar Comentário</h3>
                     <p>Deixe um comentário sobre nossas lives ou vídeos.</p>
                 </div>
-                <div class="contact-card" data-modal="story-modal">
+                <div class="contact-card story" data-modal="story-modal">
                     <i class="fas fa-book-open"></i>
                     <h3>Enviar Conto Espiritual</h3>
                     <p>Compartilhe sua história espiritual conosco.</p>
@@ -488,69 +403,85 @@
         <!-- Modals -->
         <div class="modal" id="whatsapp-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Contato via WhatsApp</h3>
-                <p>Entre em contato diretamente pelo WhatsApp para uma resposta rápida.</p>
+                <p>Entre em contato diretamente pelo WhatsApp.</p>
                 <a href="https://api.whatsapp.com/send/?phone=5511987637786" target="_blank" class="whatsapp-button">Abrir WhatsApp</a>
             </div>
         </div>
         <div class="modal" id="meeting-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Agendar Reunião</h3>
                 <form id="meeting-form">
                     <div class="form-group">
                         <label for="meeting-name">Nome</label>
                         <input type="text" id="meeting-name" name="name" required>
-                        <span class="error" id="meeting-name-error">Por favor, insira seu nome.</span>
+                        <span class="error" id="meeting-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="meeting-email">E-mail</label>
                         <input type="email" id="meeting-email" name="email" required>
-                        <span class="error" id="meeting-email-error">Por favor, insira um e-mail válido.</span>
+                        <span class="error" id="meeting-email-error">Insira um e-mail válido.</span>
                     </div>
                     <div class="form-group">
                         <label for="meeting-datetime">Data e Hora</label>
                         <input type="datetime-local" id="meeting-datetime" name="datetime" required>
-                        <span class="error" id="meeting-datetime-error">Por favor, selecione uma data e hora.</span>
+                        <span class="error" id="meeting-datetime-error">Selecione uma data e hora.</span>
                     </div>
                     <button type="submit" class="submit-button">Agendar</button>
                 </form>
+                <div class="success-animation">
+                    <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                    <div class="success-text">Enviado com Sucesso!</div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                </div>
             </div>
         </div>
         <div class="modal" id="form-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Enviar Formulário</h3>
                 <form id="contact-form">
                     <div class="form-group">
                         <label for="form-name">Nome</label>
                         <input type="text" id="form-name" name="name" required>
-                        <span class="error" id="form-name-error">Por favor, insira seu nome.</span>
+                        <span class="error" id="form-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="form-email">E-mail</label>
                         <input type="email" id="form-email" name="email" required>
-                        <span class="error" id="form-email-error">Por favor, insira um e-mail válido.</span>
+                        <span class="error" id="form-email-error">Insira um e-mail válido.</span>
                     </div>
                     <div class="form-group">
                         <label for="form-message">Mensagem</label>
                         <textarea id="form-message" name="message" required></textarea>
-                        <span class="error" id="form-message-error">Por favor, insira sua mensagem.</span>
+                        <span class="error" id="form-message-error">Insira sua mensagem.</span>
                     </div>
                     <button type="submit" class="submit-button">Enviar</button>
                 </form>
+                <div class="success-animation">
+                    <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                    <div class="success-text">Enviado com Sucesso!</div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                </div>
             </div>
         </div>
         <div class="modal" id="feedback-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Enviar Feedback</h3>
                 <form id="feedback-form">
                     <div class="form-group">
                         <label for="feedback-name">Nome</label>
                         <input type="text" id="feedback-name" name="name" required>
-                        <span class="error" id="feedback-name-error">Por favor, insira seu nome.</span>
+                        <span class="error" id="feedback-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="feedback-rating">Avaliação</label>
@@ -562,51 +493,86 @@
                             <option value="2">2 Estrelas</option>
                             <option value="1">1 Estrela</option>
                         </select>
-                        <span class="error" id="feedback-rating-error">Por favor, selecione uma avaliação.</span>
+                        <span class="error" id="feedback-rating-error">Selecione uma avaliação.</span>
                     </div>
                     <div class="form-group">
                         <label for="feedback-message">Feedback</label>
                         <textarea id="feedback-message" name="message" required></textarea>
-                        <span class="error" id="feedback-message-error">Por favor, insira seu feedback.</span>
+                        <span class="error" id="feedback-message-error">Insira seu feedback.</span>
                     </div>
                     <button type="submit" class="submit-button">Enviar</button>
                 </form>
+                <div class="success-animation">
+                    <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                    <div class="success-text">Enviado com Sucesso!</div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                </div>
             </div>
         </div>
         <div class="modal" id="comment-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Enviar Comentário</h3>
                 <form id="comment-form">
                     <div class="form-group">
                         <label for="comment-name">Nome</label>
                         <input type="text" id="comment-name" name="name" required>
-                        <span class="error" id="comment-name-error">Por favor, insira seu nome.</span>
+                        <span class="error" id="comment-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="comment-message">Comentário</label>
                         <textarea id="comment-message" name="comment" required></textarea>
-                        <span class="error" id="comment-message-error">Por favor, insira seu comentário.</span>
+                        <span class="error" id="comment-message-error">Insira seu comentário.</span>
                     </div>
                     <button type="submit" class="submit-button">Enviar</button>
                 </form>
+                <div class="success-animation">
+                    <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                    <div class="success-text">Enviado com Sucesso!</div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                </div>
             </div>
         </div>
         <div class="modal" id="story-modal">
             <div class="modal-content">
-                <span class="close-button">&times;</span>
+                <span class="close-button">×</span>
                 <h3>Enviar Conto Espiritual</h3>
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="chat-input">
-                        <textarea id="userInput" placeholder="Digite sua resposta..." rows="1" onkeypress="handleKeyPress(event)"></textarea>
-                        <button class="mic-button" id="micButton" title="Segure para gravar" onmousedown="startRecording(event)" onmouseup="stopRecording()" ontouchstart="startRecording(event)" ontouchend="stopRecording()">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.47 6 6.93V22h2v-3.07c3.39-.46 6-3.4 6-6.93h-2z"/>
-                            </svg>
-                        </button>
-                        <button onclick="sendMessage()">Enviar</button>
+                <form id="story-form">
+                    <div class="form-group">
+                        <label for="story-name">Nome</label>
+                        <input type="text" id="story-name" name="name" required>
+                        <span class="error" id="story-name-error">Insira seu nome.</span>
                     </div>
+                    <div class="form-group">
+                        <label for="story-email">E-mail</label>
+                        <input type="email" id="story-email" name="email" required>
+                        <span class="error" id="story-email-error">Insira um e-mail válido.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="story-title">Título do Conto</label>
+                        <input type="text" id="story-title" name="title" required>
+                        <span class="error" id="story-title-error">Insira o título do conto.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="story-content">Conto Espiritual</label>
+                        <textarea id="story-content" name="content" required></textarea>
+                        <span class="error" id="story-content-error">Insira seu conto.</span>
+                    </div>
+                    <button type="submit" class="submit-button">Enviar</button>
+                </form>
+                <div class="success-animation">
+                    <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                    <div class="success-text">Enviado com Sucesso!</div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
                 </div>
             </div>
         </div>
@@ -615,7 +581,7 @@
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
-            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
+            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar.</p>
             <div class="footer-social-icons">
                 <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -652,15 +618,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded, initializing...');
+            console.log('DOM loaded at', new Date().toLocaleString());
 
-            // Header scroll behavior
+            // Header scroll
             const header = document.querySelector('header');
-            let lastScrollTop = 0;
+            let lastScroll = 0;
             window.addEventListener('scroll', () => {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                header.classList.toggle('header-hidden', scrollTop > lastScrollTop && scrollTop > 100);
-                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                let scrollTop = window.pageYOffset;
+                header.classList.toggle('header-hidden', scrollTop > lastScroll && scrollTop > 100);
+                lastScroll = scrollTop;
             });
 
             // Modal handling
@@ -676,11 +642,8 @@
                     if (modal) {
                         modal.classList.add('active');
                         document.body.style.overflow = 'hidden';
-                        if (modalId === 'story-modal') {
-                            initializeChatbot();
-                        }
                     } else {
-                        console.error(`Modal with ID ${modalId} not found`);
+                        console.error(`Modal ${modalId} not found`);
                     }
                 });
             });
@@ -690,284 +653,100 @@
                     console.log('Closing modal');
                     modals.forEach(modal => modal.classList.remove('active'));
                     document.body.style.overflow = 'auto';
-                    if (button.closest('#story-modal')) {
-                        resetChat();
-                    }
                 });
             });
 
             modals.forEach(modal => {
-                modal.addEventListener('click', (e) => {
+                modal.addEventListener('click', e => {
                     if (e.target === modal) {
-                        console.log('Closing modal via background click');
+                        console.log('Closing modal via background');
                         modal.classList.remove('active');
                         document.body.style.overflow = 'auto';
-                        if (modal.id === 'story-modal') {
-                            resetChat();
-                        }
                     }
                 });
             });
 
-            // Static form validation
+            // Form submission
             const forms = [
                 { id: 'meeting-form', fields: ['name', 'email', 'datetime'] },
                 { id: 'contact-form', fields: ['name', 'email', 'message'] },
                 { id: 'feedback-form', fields: ['name', 'rating', 'message'] },
-                { id: 'comment-form', fields: ['name', 'comment'] }
+                { id: 'comment-form', fields: ['name', 'comment'] },
+                { id: 'story-form', fields: ['name', 'email', 'title', 'content'] }
             ];
+            const endpoint = 'https://formspree.io/f/mgvolbyv';
 
             forms.forEach(formConfig => {
                 const form = document.getElementById(formConfig.id);
                 if (form) {
-                    form.addEventListener('submit', (e) => {
+                    console.log(`Found form: ${formConfig.id}`);
+                    form.addEventListener('submit', async e => {
                         e.preventDefault();
+                        console.log(`Submit clicked for form: ${formConfig.id}`);
                         let isValid = true;
+
                         formConfig.fields.forEach(field => {
                             const input = document.getElementById(`${formConfig.id.split('-')[0]}-${field}`);
                             const error = document.getElementById(`${formConfig.id.split('-')[0]}-${field}-error`);
+                            if (!input) {
+                                console.error(`Input not found: ${formConfig.id.split('-')[0]}-${field}`);
+                                return;
+                            }
                             error.style.display = 'none';
-                            if (field === 'email') {
-                                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
-                                    error.style.display = 'block';
-                                    isValid = false;
-                                }
+
+                            if (field === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+                                error.style.display = 'block';
+                                isValid = false;
+                            } else if (field === 'title' && (input.value.trim().length < 1 || input.value.trim().length > 255)) {
+                                error.textContent = 'O título deve ter entre 1 e 255 caracteres.';
+                                error.style.display = 'block';
+                                isValid = false;
+                            } else if (field === 'content' && (input.value.trim().length < 1 || input.value.trim().length > 2000)) {
+                                error.textContent = 'O conto deve ter entre 1 e 2000 caracteres.';
+                                error.style.display = 'block';
+                                isValid = false;
                             } else if (!input.value.trim()) {
                                 error.style.display = 'block';
                                 isValid = false;
                             }
                         });
+
                         if (isValid) {
-                            alert('Formulário enviado com sucesso!');
-                            form.reset();
-                            modals.forEach(modal => modal.classList.remove('active'));
-                            document.body.style.overflow = 'auto';
+                            const formData = new FormData(form);
+                            console.log(`Form ${formConfig.id} data:`, Object.fromEntries(formData));
+                            try {
+                                const response = await fetch(endpoint, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: { 'Accept': 'application/json' }
+                                });
+                                if (response.ok) {
+                                    console.log(`Form ${formConfig.id} submitted successfully`);
+                                    const modalContent = form.closest('.modal-content');
+                                    form.style.display = 'none';
+                                    const successAnimation = modalContent.querySelector('.success-animation');
+                                    successAnimation.classList.add('active');
+                                    setTimeout(() => {
+                                        form.style.display = 'block';
+                                        successAnimation.classList.remove('active');
+                                        form.reset();
+                                        modals.forEach(modal => modal.classList.remove('active'));
+                                        document.body.style.overflow = 'auto';
+                                    }, 2000);
+                                } else {
+                                    console.error(`Form ${formConfig.id} submission failed: ${response.status} ${response.statusText}`);
+                                    alert(`Erro ao enviar o formulário ${formConfig.id}. Status: ${response.status}`);
+                                }
+                            } catch (error) {
+                                console.error(`Form ${formConfig.id} error:`, error);
+                                alert(`Erro ao enviar o formulário ${formConfig.id}. Tente novamente.`);
+                            }
                         }
                     });
+                } else {
+                    console.error(`Form not found: ${formConfig.id}`);
                 }
             });
-
-            // Chatbot logic
-            let chatState = {
-                step: 1,
-                name: '',
-                email: '',
-                title: '',
-                content: ''
-            };
-            let isBotTyping = false;
-            let chatMessages, userInput;
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            let recognition = SpeechRecognition ? new SpeechRecognition() : null;
-
-            if (recognition) {
-                recognition.lang = 'pt-BR';
-                recognition.interimResults = false;
-                recognition.onresult = event => {
-                    userInput.value = event.results[0][0].transcript;
-                    sendMessage();
-                };
-                recognition.onerror = event => {
-                    console.error('Speech recognition error:', event.error);
-                    document.getElementById('micButton').classList.remove('recording');
-                };
-                recognition.onend = () => {
-                    document.getElementById('micButton').classList.remove('recording');
-                };
-            }
-
-            function initializeChatbot() {
-                console.log('Initializing chatbot...');
-                chatMessages = document.getElementById('chatMessages');
-                userInput = document.getElementById('userInput');
-                if (!chatMessages || !userInput) {
-                    console.error('Chat elements not found');
-                    return;
-                }
-                chatMessages.innerHTML = '';
-                document.querySelector('.chat-container').classList.remove('success');
-                if (!recognition) {
-                    document.getElementById('micButton').disabled = true;
-                }
-                showTypingIndicator();
-                setTimeout(() => {
-                    removeTypingIndicator();
-                    addBotMessage('Olá! Sou o Lendário Bot. 😊 Qual é o seu nome?');
-                }, 1000);
-            }
-
-            function addBotMessage(message) {
-                const msg = document.createElement('div');
-                msg.classList.add('message', 'bot-message');
-                msg.textContent = message;
-                chatMessages.appendChild(msg);
-                scrollToBottom();
-            }
-
-            function addUserMessage(message) {
-                const msg = document.createElement('div');
-                msg.classList.add('message', 'user-message');
-                msg.textContent = message;
-                chatMessages.appendChild(msg);
-                scrollToBottom();
-            }
-
-            function showTypingIndicator() {
-                const typing = document.createElement('div');
-                typing.classList.add('typing-indicator');
-                typing.innerHTML = '<span></span><span></span><span></span>';
-                typing.id = 'typingIndicator';
-                chatMessages.appendChild(typing);
-                scrollToBottom();
-                isBotTyping = true;
-            }
-
-            function removeTypingIndicator() {
-                const typing = document.getElementById('typingIndicator');
-                if (typing) typing.remove();
-                isBotTyping = false;
-            }
-
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            function sendMessage() {
-                if (isBotTyping) return;
-                const text = userInput.value.trim();
-                if (!text) return;
-                addUserMessage(text);
-
-                if (chatState.step === 1) {
-                    if (/^[a-zA-ZÀ-ÿ\s-]{1,50}$/.test(text)) {
-                        chatState.name = text;
-                        chatState.step = 2;
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage(`Prazer, ${text}! Qual é o seu e-mail?`);
-                        }, 1000);
-                    } else {
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('Por favor, insira um nome válido (apenas letras e espaços).');
-                        }, 1000);
-                    }
-                } else if (chatState.step === 2) {
-                    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
-                        chatState.email = '';
-                        chatState.step = 3;
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('Ótimo! Qual é o título do seu conto espiritual?');
-                        }, 1000);
-                    } else {
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('Por favor, insira um e-mail válido.');
-                        }, 1000);
-                    }
-                } else if (chatState.step === 3) {
-                    if (text.length > 0 && text.length <= 255) {
-                        chatState.title = text;
-                        chatState.step = 4;
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('Perfeito! Agora, compartilhe seu conto espiritual.');
-                            userInput.placeholder = 'Digite seu conto...';
-                            userInput.rows = 3;
-                        }, 1000);
-                    } else {
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('O título deve ter entre 1 e 255 caracteres.');
-                        }, 1000);
-                    }
-                } else if (chatState.step === 4) {
-                    if (text.length > 0 && text.length <= 2000) {
-                        chatState.content = text;
-                        chatState.step = 5;
-                        sendToFormspree();
-                    } else {
-                        showTypingIndicator();
-                        setTimeout(() => {
-                            removeTypingIndicator();
-                            addBotMessage('O conto deve ter entre 1 e 2000 caracteres.');
-                        }, 1000);
-                    }
-                }
-                userInput.value = '';
-            }
-
-            function handleKeyPress(event) {
-                if (event.shiftKey && event.key === 'Enter') {
-                    event.preventDefault();
-                    sendMessage();
-                }
-            }
-
-            function sendToFormspree() {
-                console.log('Sending to Formspree:', chatState);
-                const formData = new FormData();
-                formData.append('name', chatState.name);
-                formData.append('email', chatState.email);
-                formData.append('title', chatState.title);
-                formData.append('content', chatState.content);
-                fetch('https://formspree.io/f/mgvolbyv', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        showSuccessMessage();
-                    } else {
-                        addBotMessage('Erro ao enviar o conto. Tente novamente.');
-                        chatState.step = 4;
-                    }
-                })
-                .catch(error => {
-                    console.error('Formspree error:', error);
-                    addBotMessage('Erro ao enviar o conto. Tente novamente.');
-                    chatState.step = 4;
-                });
-            }
-
-            function showSuccessMessage() {
-                chatMessages.innerHTML = '';
-                document.querySelector('.chat-container').classList.add('success');
-                chatMessages.innerHTML = '<span class="sparkle-text">Conto Enviado! ✨</span>';
-                chatState = { step: 1, name: '', email: '', title: '', content: '' };
-            }
-
-            function resetChat() {
-                console.log('Resetting chat');
-                chatState = { step: 1, name: '', email: '', title: '', content: '' };
-                if (chatMessages) {
-                    chatMessages.innerHTML = '';
-                    document.querySelector('.chat-container').classList.remove('success');
-                }
-            }
-
-            function startRecording(event) {
-                event.preventDefault();
-                if (!recognition) return;
-                recognition.start();
-                document.getElementById('micButton').classList.add('recording');
-            }
-
-            function stopRecording() {
-                if (!recognition) return;
-                recognition.stop();
-                document.getElementById('micButton').classList.remove('recording');
-            }
         });
     </script>
 </body>
