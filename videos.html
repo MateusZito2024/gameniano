@@ -28,6 +28,8 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+        a { text-decoration: none; color: var(--text-light); transition: color 0.3s ease; }
+        a:hover { color: var(--gold); }
 
         /* 2. CABEÇALHO E RODAPÉ */
         header {
@@ -38,14 +40,20 @@
             justify-content: space-between;
             align-items: center;
             position: sticky; top: 0; z-index: 1000;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
         }
         .logo img { height: 55px; }
         header nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
         header nav ul li { margin-left: 35px; }
-        header nav ul li a { font-weight: 500; font-size: 0.95em; text-decoration: none; color: var(--text-light); transition: color 0.3s ease; }
-        header nav ul li a:hover, header nav ul li a.active { color: var(--gold); }
-        header .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
-        header .social-icons a:hover { color: var(--gold); }
+        header nav ul li a { font-weight: 500; font-size: 0.95em; }
+        header nav ul li a:hover { color: var(--gold); }
+        header .social-icons { display: flex; align-items: center; }
+        header .social-icons a { font-size: 22px; margin-left: 25px; }
         
         footer {
             background-color: var(--dark-gray);
@@ -61,14 +69,12 @@
         .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
         .footer-logo-section img { height: 65px; margin-bottom: 20px; }
         .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
-        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
-        .footer-social-icons a:hover { color: var(--gold); }
+        .footer-social-icons a { font-size: 24px; margin-right: 20px; }
         .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
         .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
         .footer-column ul { list-style: none; padding: 0; margin: 0; }
         .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; text-decoration: none; color: var(--text-light); transition: color 0.3s ease; }
-        .footer-column ul li a:hover { color: var(--gold); }
+        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
         .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
         .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; }
 
@@ -82,7 +88,7 @@
             background-color: var(--dark-background);
             background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.postimg.cc/6Q7N6fGX/tarot-reverce-border-magic-sacred-cover-card-frame-gold-line-beautification.jpg');
             background-size: cover;
-            background-position: center; 
+            background-position: center;  
             background-repeat: no-repeat;
         }
         .page-banner h1 {
@@ -102,51 +108,6 @@
             color: var(--text-light); border-radius: 25px; font-size: 1em;
         }
         #video-search-input:focus { outline: none; border-color: var(--gold); }
-
-        #search-results-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%; left: 0; right: 0;
-            background-color: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-top: 8px;
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 1001;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        }
-        .search-result-item {
-            display: flex; align-items: flex-start;
-            padding: 10px; cursor: pointer;
-            border-bottom: 1px solid #eee;
-        }
-        .search-result-item:last-child { border-bottom: none; }
-        .search-result-item:hover { background-color: #f0f0f0; }
-        .search-result-item img {
-            width: 100px; height: 56px;
-            object-fit: cover;
-            margin-right: 10px;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
-        .search-result-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .search-result-info h4 {
-            color: #222; font-size: 0.9em;
-            margin: 0 0 4px 0; line-height: 1.3;
-            font-weight: 500;
-        }
-        .search-result-info p {
-            color: #555; font-size: 0.8em; margin: 0;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
 
         .filter-dropdown-container { position: relative; flex: 0 1 auto; }
         .filter-dropdown-toggle {
@@ -170,8 +131,8 @@
         }
         .filter-dropdown-list.open { opacity: 1; visibility: visible; transform: translateY(0); }
         .filter-dropdown-list a {
-            display: block; padding: 10px 15px; color: var(--text-light);
-            text-decoration: none; border-radius: 5px;
+            display: block; padding: 10px 15px;
+            border-radius: 5px;
         }
         .filter-dropdown-list a:hover { background-color: #444; }
         .filter-dropdown-list a.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; }
@@ -200,19 +161,20 @@
         }
         .ver-mais-btn:hover { background-color: #f0c34a; }
 
-        /* ESTILOS DA PAGINAÇÃO (NOVO) */
         .pagination-container {
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 40px 0 20px 0;
+            flex-wrap: wrap;
+            gap: 5px;
         }
         .pagination-btn {
             background-color: var(--medium-gray);
             border: 1px solid var(--border-color);
             color: var(--text-light);
             padding: 10px 15px;
-            margin: 0 5px;
+            margin: 0;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
@@ -231,7 +193,6 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-
 
         /* 4. ESTILOS DO POPUP DE VÍDEO */
         .popup-overlay {
@@ -275,7 +236,7 @@
         .share-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
         .share-buttons a {
             display: inline-flex; align-items: center; justify-content: center;
-            text-decoration: none; color: white; padding: 10px 20px;
+            padding: 10px 20px;
             border-radius: 5px; font-size: 1em; transition: opacity 0.3s ease;
         }
         .share-buttons a:hover { opacity: 0.8; }
@@ -283,6 +244,130 @@
         .share-whatsapp { background-color: #25D366; }
         .share-facebook { background-color: #1877F2; }
         .share-twitter { background-color: #1DA1F2; }
+
+        .mobile-nav-toggle, .mobile-nav { display: none; }
+
+        /* 5. RESPONSIVIDADE */
+        @media (max-width: 992px) {
+            /* --- CABEÇALHO E MENU MOBILE --- */
+            header nav, header .social-icons {
+                display: none;
+            }
+            .mobile-nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-light);
+                font-size: 28px;
+                cursor: pointer;
+            }
+            .mobile-nav {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100%;
+                background-color: var(--dark-gray);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                transition: right 0.4s ease-in-out;
+                z-index: 1001;
+                padding: 40px 20px;
+            }
+            .mobile-nav.is-active {
+                right: 0;
+            }
+            .mobile-nav .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                font-size: 30px;
+                color: var(--text-light);
+                cursor: pointer;
+            }
+            .mobile-nav ul {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+                padding: 0;
+                list-style: none;
+            }
+            .mobile-nav ul li a {
+                display: block;
+                padding: 18px;
+                font-size: 1.2em;
+            }
+            .mobile-nav .mobile-socials {
+                margin-top: 40px;
+                padding-top: 30px;
+                border-top: 1px solid var(--border-color);
+                width: 100%;
+                text-align: center;
+            }
+            .mobile-nav .mobile-socials a {
+                font-size: 28px;
+                margin: 0 15px;
+            }
+
+            /* --- AJUSTES DE CONTEÚDO --- */
+            .page-banner {
+                height: 250px;
+            }
+            .page-banner h1 {
+                font-size: 2.5em;
+            }
+            .video-gallery-container {
+                margin-top: 20px;
+            }
+            .video-controls {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+            .search-container {
+                flex-grow: 1;
+            }
+            .filter-dropdown-container {
+                flex-grow: 0;
+                flex-shrink: 0;
+            }
+            .filter-dropdown-toggle {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+            .video-grid {
+                gap: 25px;
+            }
+            .popup-video-details h3 {
+                font-size: 1.5em;
+            }
+            .popup-close-btn {
+                top: 5px; right: 5px;
+                width: 35px; height: 35px; font-size: 16px;
+            }
+
+            /* --- RODAPÉ --- */
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-logo-section {
+                margin-right: 0;
+                margin-bottom: 40px;
+            }
+            .footer-links {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -305,13 +390,32 @@
             <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
         </div>
+        <button class="mobile-nav-toggle" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
+
+    <div class="mobile-nav">
+        <button class="close-btn" aria-label="Fechar menu">×</button>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="sorteio.html">Sorteio</a></li>
+            <li><a href="videos.html">Vídeos</a></li>
+            <li><a href="doacao.html">Doação</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="consulta.html">Consulta</a></li>
+        </ul>
+        <div class="mobile-socials">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
 
     <main>
         <section class="page-banner">
             <h1>Vídeos</h1>
         </section>
-
         <div class="video-gallery-container">
             <div class="video-controls">
                 <div class="search-container">
@@ -338,20 +442,19 @@
                     </div>
                 </div>
             </div>
-
             <div class="video-grid"></div>
             <div class="pagination-container" id="pagination-container"></div>
         </div>
     </main>
 
-    <footer class="custom-footer">
+    <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
             <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
             <div class="footer-social-icons">
                 <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="mailto:lendarioesoterico@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
@@ -393,7 +496,7 @@
                     <h3 id="popup-video-title"></h3>
                     <p id="popup-video-description"></p>
                     <div class="popup-share-links">
-                        <h4>Compartilhe esta página:</h4>
+                        <h4>Compartilhe este vídeo:</h4>
                         <div class="share-buttons">
                             <a href="#" class="share-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                             <a href="#" class="share-facebook" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
@@ -408,707 +511,108 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Copie e cole todo o seu array 'videosData' aqui para garantir que a página funcione.
         const videosData = [
-            { 
-                videoId: '_kFRwfeOycU', 
-                title: 'Meditação Guiada - Descubra seu animal de poder', 
-                description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', 
-                thumbnail: 'https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg',
-                category: 'animais-poder meditacao ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'qqGB-rsf8wU', 
-                title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', 
-                description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', 
-                thumbnail: 'https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg',
-                category: 'meditacao serie-elementos ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 't8CP_yHw-kg', 
-                title: 'Como aprender a ler Tarot - A jornada do iniciado', 
-                description: 'Entenda os primeiros passos na jornada espiritual do Tarot e como iniciar seus estudos para aprender a ler este oráculo.', 
-                thumbnail: 'https://i.ytimg.com/vi/t8CP_yHw-kg/hqdefault.jpg',
-                category: 'tarot ensinamentos-lendarios ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'LzJCXg9PMWc', 
-                title: 'Ensinamentos Valiosos -  e Magos', 
-                description: 'Estive na Convenção de bruxas e magos e de Paranapiacaba pedindo que às pessoas ensinassem ou compartilhassem algo de bom conosco, este vídeo é o resultado, espero que gostem!', 
-                thumbnail: 'https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg',
-                category: 'tarot ensinamentos-lendarios ensinamentos-xamanicos entrevistas eventos' 
-            },
-            { 
-                videoId: 'DBml1noAKzE', 
-                title: 'Live de Ano Novo - Bate Papo e Tarot', 
-                description: 'Saudações, amigos! 🥂 Live especial de Véspera de Ano Novo! Dia 31/12 (sexta), das 20h às 22h, teremos bate-papo e Tarot! Celebre o Ano Novo conosco! Inscreva-se, curta e compartilhe para que a mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se puder, torne-se um membro mantenedor do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/DBml1noAKzE/hqdefault.jpg',
-                category: 'lives tarot' 
-            },
-            { 
-                videoId: 'u2_a93wS8h4', 
-                title: 'Perguntas ao tarot ajudam? Cortes Lendários', 
-                description: 'Se você curte nosso conteúdo, inscreva-se, curta e compartilhe os vídeos do canal! Cada ação sua nos ajuda a levar essa mensagem a muito mais pessoas. Conecte-se conosco nas redes sociais: Instagram, Facebook e Twitter em @lendarioesoterico. Nossa gratidão profunda a todos os patronos que tornam este trabalho possível. Sem o apoio de vocês, nada disso seria real. Perguntar ao Tarot pode ajudar? Descubra com os trechos das nossas lives! Se você se identifica com nosso trabalho e tem a possibilidade, torne-se um patrono mantenedor e junte-se à nossa comunidade no canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/u2_a93wS8h4/hqdefault.jpg',
-                category: 'tarot outros' 
-            },
-            { 
-                videoId: '9TM_L-dZ-Lo', 
-                title: 'Existe alma gêmea? Cortes Lendários', 
-                description: 'Descubra: Existe alma gêmea? Assista aos trechos das lives do canal. Se você curte nosso conteúdo, inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos; sem vocês, este trabalho não seria possível. Se você não é patrono e tem a possibilidade, torne-se um membro mantenedor do canal e apoie nosso trabalho.', 
-                thumbnail: 'https://i.ytimg.com/vi/9TM_L-dZ-Lo/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'FauDQykSK3s', 
-                title: 'Estamos perdendo tempo? Cortes Lendários', 
-                description: 'Será que estamos perdendo tempo? Descubra nos trechos das lives do canal. Se você curte o conteúdo, inscreva-se, curta e compartilhe os vídeos para que nossa mensagem alcance ainda mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos que tornam este trabalho possível. Se você tem a possibilidade, torne-se um patrono mantenedor do canal e ajude a impulsionar nosso projeto.', 
-                thumbnail: 'https://i.ytimg.com/vi/FauDQykSK3s/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'Yz9L9WpXhiw', 
-                title: 'Isso aconteceu aqui em casa - Vocês acreditam em possessão?', 
-                description: 'Estava em casa quando uma voz estranha e grave surgiu no portão. Ao verificar a câmera, deparei-me com esta imagem sinistras bem na entrada, em frente ao meu altar voltado para a rua. Apesar de conhecer a pessoa, decidi compartilhar por segurança. Acreditam que pessoas podem ser influenciadas? Se inscreva, curta e compartilhe os vídeos do canal para ajudar a mensagem a alcançar mais pessoas. Nossa gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é patrono e tem a possibilidade, torne-se um mantenedor e membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/Yz9L9WpXhiw/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'QUtgUOPzNp4', 
-                title: 'Cortes - Porque a Bruxaria entre tantos caminhos?', 
-                description: 'Em meio a tantos caminhos espirituais, o que torna a Bruxaria tão fascinante e escolhida por muitos? Mergulhe nessa reflexão em mais um corte imperdível do nosso canal. Se a pergunta te intriga, inscreva-se, curta e compartilhe para que essa discussão chegue a mais pessoas! E para ir além, torne-se um patrono e apoie nosso trabalho. Gratidão profunda!', 
-                thumbnail: 'https://i.ytimg.com/vi/QUtgUOPzNp4/hqdefault.jpg',
-                category: 'outros entrevistas' 
-            },
-            { 
-                videoId: 'XY3dV-n38_8', 
-                title: 'Oráculo pelo Mundo - Participações Especiais - O poder dos oráculos', 
-                description: 'Embarque em uma jornada fascinante com nosso documentário Oráculos pelo Mundo ! Explore o I Ching, Runas Nórdicas, Ogham Celta, Runa das Bruxas, Bola de Cristal, Ifá, Búzios e Tarot, além de mergulhar na intuição e sonhos premonitórios. Com convidados especiais e a visão de uma médium espírita, este documentário revela como os oráculos, de práticas isoladas a sistemas filosóficos, refletem a espiritualidade humana e a busca por respostas internas e externas. Inscreva-se, curta e compartilhe!', 
-                thumbnail: 'https://i.ytimg.com/vi/XY3dV-n38_8/hqdefault.jpg',
-                category: 'entrevistas ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'OB55az3PHaA', 
-                title: 'Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar', 
-                description: 'Descubra insights profundos neste vídeo gravado no encontro de terapeutas em Guararema/SP! Conversamos com Lucélia de Fátima sobre Medicina Tradicional Chinesa, memórias uterinas, sagrado feminino e muito mais. Não perca também um trecho da palestra sobre as leis da constelação familiar. Para saber mais sobre o trabalho da Lucélia (e o Encontro de Expansão do Feminino), entre em contato: (11) 98642-3129, Insta @luceliade.fatima, Face @expansaodofeminino. Inscreva-se, curta e compartilhe o canal para que nossa mensagem alcance mais pessoas! Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos; seu apoio é fundamental. Se puder, torne-se um membro e patrono mantenedor do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/OB55az3PHaA/hqdefault.jpg',
-                category: 'entrevistas eventos' 
-            },
-            { 
-                videoId: 'SsuJJolcnPc', 
-                title: 'Premonição - Meu filho sonhou com a minha morte', 
-                description: 'Saudações, amigos! Neste vídeo, exploro a premonição e sonhos premonitórios como prova do mundo espiritual, incluindo o relato arrepiante do meu filho Diogo sobre sonhar com a minha morte. Descubra como os sonhos podem ser avisos e alertas importantes, repletos de mensagens espirituais. Espero que este conteúdo seja útil para você! Ajude o canal se inscrevendo, curtindo e compartilhando os vídeos.', 
-                thumbnail: 'https://i.ytimg.com/vi/SsuJJolcnPc/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'qPhgQbjgKlk', 
-                title: 'A terceira Visão - Participação Gayatri Devi', 
-                description: 'Saudações, irmãos lendários! Neste vídeo, mergulhamos no tema do **Terceiro Olho (terceira visão)** com a amiga do canal Gayatri Devi, que compartilha a visão Hindu e sua jornada espiritual com o Guru Nithyananda Swamiji. Abordamos faculdades espirituais desenvolvidas, a glândula pineal e mais informações relevantes. Esperamos que gostem! Ajude o canal a sobreviver: inscreva-se, curta e compartilhe. Seja um patrono mantenedor deste trabalho.', 
-                thumbnail: 'https://i.ytimg.com/vi/qPhgQbjgKlk/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'NFl8UXqlq-8', 
-                title: 'Leitura de mãos - Luna Gitana - Holistic Fair Atibaia', 
-                description: 'Saudações, amigos! Neste vídeo, converso com a Luna Gitana sobre a fascinante leitura de mãos, a Quiromancia. Além de um pouco da sua jornada, ela faz uma breve leitura prática para demonstrar como funciona. Espero que gostem! Contato Luna Gitana: Insta @keith.goes ou Luna Gitana, Whatsapp 11951244841. #LunaGitana #HolisticFair #atibaia. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem possibilidade, torne-se um patrono mantenedor deste trabalho se tornando membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/NFl8UXqlq-8/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'SDqdIdpSAOw', 
-                title: 'Jogo de Búzios - Íris de Oxum - Holistic Fair Atibaia', 
-                description: 'Saudações, amigos! Nesta entrevista fascinante, converso com a Íris de Oxum sobre o mistério do Jogo de Búzios, seu método de tiragem e outros detalhes, tudo gravado na Holistic Fair Atibaia! Espero que gostem! Encontre Íris de Oxum no Instagram: @irisdeosun. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Me siga no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/SDqdIdpSAOw/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'z79_cwCVtpo', 
-                title: 'Sibila da Antevisão - Don Julio - Holistic Fair Atibaia', 
-                description: 'Saudações, amigos! Hoje converso com o oraculista Don Julio sobre a fascinante Sibila da Antevisão e suas peculiaridades. Não percam! Espero que gostem! Encontre Don Julio no Instagram: @OraculistaDonJulio. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/z79_cwCVtpo/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'OOXhnm_SA-0', 
-                title: '20° Convenção de Bruxas e Magos - Já não encheu o saco?', 
-                description: 'Saudações queridos amigos, chegamos à celebração da 20° convenção de bruxas e magos de Paranapiacaba com uma pergunta: após tantos encontros já não enjoou o eventos? Os participantes já não estão cansados? Confira neste vídeo.', 
-                thumbnail: 'https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg',
-                category: 'eventos entrevistas' 
-            },
-            { 
-                videoId: 'ArdGgBiD-mA', 
-                title: 'O Diabo do Tarot - Haichelin Duzzioni - Holistic Fair Atibaia', 
-                description: 'Descubra: Existe alma gêmea? Assista aos trechos das lives do canal. Se você curte nosso conteúdo, inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos que tornam este trabalho possível. Sem o apoio de vocês, este trabalho não seria real. Se você não é patrono e tem a possibilidade, torne-se um membro mantenedor do canal e apoie nosso trabalho.', 
-                thumbnail: 'https://i.ytimg.com/vi/ArdGgBiD-mA/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: '18Z3uCzE6zc', 
-                title: 'O Cinema brasileiro - Diaulas Ullysses - Cinemando por aí', 
-                description: 'Olá, pessoal! No vídeo de hoje, batemos um papo com o cineasta Diaulas Ullysses sobre a realidade do cinema nacional e seu livro Cinemando por aí, direto do CAV – Centro de Audiovisual de São Bernardo do Campo. Reconhecemos a arte de Milton Santos Jr. (desenhos), Evill Rebouças (orelha), Denis Barbosa (captura CAV), Jonathan Fernandes, Geraldo Arcanjo, Yann Vergari, Soll Domingues, Nikolas Maciel (cenas de bastidores), Diaulas Ullysses, Soll Domingues, Bea Costa e Renato J Silva (fotos de cena, com destaque para Ayrton, Meninices no Coração do Brasil de Vicentini Gomez). Para apoiar o canal, inscreva-se, curta e compartilhe. Me encontre no TikTok, Instagram e Facebook: @lendarioesoterico. Um agradecimento especial aos nossos patronos, sem os quais este trabalho não existiria. Considere se tornar um membro mantenedor do canal e faça a diferença!', 
-                thumbnail: 'https://i.ytimg.com/vi/18Z3uCzE6zc/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'YUFjwxoAd_Q', 
-                title: 'Yogi Surat - Kundalini Yoga vs Hatha Yoga', 
-                description: 'Saudações, amigos! Neste vídeo, converso com a Yogi Surat sobre a diferença entre Hatha Yoga e Kundalini Yoga, e ela ainda compartilha a experiência de viver na floresta. Espero que gostem! Para aulas e contato, siga no Instagram: yogi.surat.kaur. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/YUFjwxoAd_Q/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'om938FH7Hz4', 
-                title: 'Victor Valentim - Bazar das Bruxas 2023 - Tenis Clube Paulista', 
-                description: 'Saudações, amigos! Abrindo nossa série de entrevistas do Bazar das Bruxas 23 no Tenis Clube Paulista, começamos com o organizador, Victor Valentim do @BosquedosGnomos. Espero que gostem! Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/om938FH7Hz4/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: '7uqXm8jOaE4', 
-                title: 'DarkSide Books - Sugestões de leitura com a Camila - Bazar das Bruxas 2023', 
-                description: 'Saudações, amigos! Hoje, recebo Camila da @DarkSideBooks com dicas de leituras incríveis e um pouco do universo da caveirinha, direto do Bazar das Bruxas 2023 no Tenis Clube Paulista! Não percam! Visite o site: https://www.darksidebooks.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/7uqXm8jOaE4/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'ufnDR163N1k', 
-                title: 'Tania Gori - Bruxaria Cristã - Ganesha - Bazar das Bruxas 23', 
-                description: 'Saudações, amigos! Hoje, o bate-papo é com a Tania Gori, proprietária da Casa de Bruxa, sobre Ganesha, Egrégoras, Bruxaria Cristã e a Convenção de Magos e Bruxas de Paranapiacaba. Não percam! Saiba mais sobre a Convenção em: https://www.convencaodebruxas.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/ufnDR163N1k/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'vpevIb5ZgMA', 
-                title: 'Lord A. - Espiritualidade para Idiotas - Sombra e Luz - Vampiros - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, a conversa é com Lord A. da @redevampyrica sobre temas fascinantes como O Lado Sombra, a Falsa Luz, vampiros no Brasil e no mundo, Círculo Strigoi e Magia Vampírica. Espero que gostem! Siga Lord A. no Insta: @redevamp. Conheça a Rede Vampírica: https://redevampyrica.com/. Encontre os livros de Lord A.: https://redevampyrica.com/categoria-p.... Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/vpevIb5ZgMA/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'FTN7AVoNlgE', 
-                title: 'Wagner Perico - Dicas valiosas para a sua magia dar certo - Magia Wanen - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, nosso bate-papo é com Wagner Perico, sacerdote e representante da Magia Wanen no Brasil. Falamos sobre a magia e como fazê-la dar certo, com dicas de ouro para quem trilha essa jornada. Gravado no Bazar das Bruxas, espero que gostem! Siga Wagner no Insta: @pericowagner. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/FTN7AVoNlgE/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'SezUmwk41Ik', 
-                title: 'Claudiney Prieto - Wicca - Iniciação e Auto iniciação - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, nosso bate-papo é com Claudiney Prieto, um dos grandes precursores da Wicca no Brasil. Falamos sobre sua jornada, iniciação e auto iniciação, magias pelo mundo, Old Religion, o Museu de Bruxaria, o Santuário da Grande Mãe e muito mais. Espero que gostem! Conecte-se com Claudiney Prieto: Canal @claudineyprieto, Insta @claudineyprieto, Site Oficial http://www.claudineyprieto.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/SezUmwk41Ik/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'Vq0UVZcjJ9E', 
-                title: 'Artemisia - Porque Magia Natural - Midias Sociais e Bruxaria - Bazar das Bruxas', 
-                description: 'Saudações, amigos!Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais.Espero que gostem!Siga Artemisia no TikTok e Instagram: @ArtemisiaBruxa. Inscreva-se, curta e compartilheos vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas.Siga-me no TikTok e Instagram: @lendarioesoterico. Gratidão profundaa todos os patronos deste trabalho,sem vocês não seria possível.Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/Vq0UVZcjJ9E/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'tHh99aKscJg', 
-                title: 'Cedrec Nightingale - Ser bruxo no dia a dia - O elemento fogo - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais. Espero que gostem! Encontre Artemisia no TikTok e Instagram: @ArtemisiaBruxa. Inscreva-se, curta e compartilheos vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas.Siga-me no TikTok e Instagram: @lendarioesoterico. Gratidão profundaa todos os patronos deste trabalho,sem vocês não seria possível.Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/tHh99aKscJg/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'hCsKriczacs', 
-                title: 'Cântico à Siringe - Conflito entre bruxos e magistas - Bruxaria Eclética', 
-                description: 'Saudações, amigos! Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais.Espero que gostem! Encontre Artemisia no TikTok e Instagram: @ArtemisiaBruxa . Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok e Instagram:   @lendarioesoterico . Gratidão profunda a todos os patronos deste trabalho,  sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/hCsKriczacs/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'fR5DU6wCcX8', 
-                title: 'Mãe Ieda de Oyá - Como se tornar um Sacerdote - Umbanda e Candomblé - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, o papo é com a @MaeIedaPauladeOya , onde desvendamos as nuances da Umbanda e do Candomblé, e o que é preciso para se tornar um sacerdote. Espero que gostem! Encontre Mãe Ieda Paula no Instagram: @maeiedapaula .  Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook:  @lendarioesoterico . Gratidão profunda a todos os patronos deste trabalho,  sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/fR5DU6wCcX8/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'dRyotPqXcv4', 
-                title: 'A Bruxaria no dia-a-dia - Maçonaria - Alline Lima - Alexandre Garzeri - Dayvi Mizrahi', 
-                description: 'Saudações, amigos! Hoje, o papo é com a @MaeIedaPauladeOya, onde desvendamos as nuances da Umbanda e do Candomblé, e o que é preciso para se tornar um sacerdote. Espero que gostem! Encontre Mãe Ieda Paula no Instagram: @maeiedapaula. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/dRyotPqXcv4/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: '-ohz80gwIiU', 
-                title: 'Rosana Santiago - Tarot Arthuriano - A lenda do Rei Arthur - Bazar das Bruxas', 
-                description: 'Saudações, amigos! Hoje, nosso papo é com a @rosanasantiago5 sobre o fascinante Tarot Arthuriano e sua lenda. Falamos também do cinema e suas inspirações. Espero que gostem! Encontre Rosana Santiago nas redes sociais. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'e-l7qo5ZvLQ', 
-                title: 'Harnaldo Ribeiro - Numerologia - Significado do dia de nascimento - Números Maléficos', 
-                description: 'Saudações, amigos! Hoje, nosso papo é com a @rosanasantiago5 sobre o fascinante Tarot Arthuriano e sua lenda. Falamos também do cinema e suas inspirações. Espero que gostem! Encontre Rosana Santiago nas redes sociais. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/e-l7qo5ZvLQ/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'N0zjqYoRdCY', 
-                title: 'Desvendando a Mesa Radiônica com Guto Morato', 
-                description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/N0zjqYoRdCY/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'MkIur2e-oHM', 
-                title: 'Recomende um livro parte 1 - 27° Bienal do Livro de SP', 
-                description: 'Olá, pessoal! Mesa Radiônica Xamânica: será que funciona? Bati um papo com o psicanalista Guto Morato para entender essa técnica de detecção e envio de energia para pessoas, animais ou locais. Descubra como ela utiliza simbologias do xamanismo, abordando animais de poder, rituais, medicinas nativas, ervas, reiki xamânico e muito mais. Você vai adorar! Para cursos e contato: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Ajude o canal a crescer: inscreva-se, curta e compartilhe os vídeos. Me acompanhe no TikTok, Instagram e Facebook: @lendarioesoterico . Nossa gratidão a todos os patronos, que tornam tudo isso real. Se você puder, torne-se um patrono mantenedor do canal! ', 
-                thumbnail: 'https://i.ytimg.com/vi/MkIur2e-oHM/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'ftWKgqUlRVs', 
-                title: 'Clube de Literatura Clássica - Bienal do Livro de SP - Sorteio', 
-                description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/ftWKgqUlRVs/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'TukQjTJyaUA', 
-                title: 'Recomende um livro parte 2 - 27° Bienal do livro de SP', 
-                description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/TukQjTJyaUA/hqdefault.jpg',
-                category: 'entrevistas' 
-            },
-            { 
-                videoId: 'BTaO9X1AlwE', 
-                title: 'Entrevista o Tarot por Kao Kazlauckas - Quinta 16/01 às 20h', 
-                description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/BTaO9X1AlwE/hqdefault.jpg',
-                category: 'lives entrevistas' 
-            },
-            { 
-                videoId: 'SBawVYdOugo', 
-                title: 'Bate-papo - Fenômenos Ufológicos com Edison Boaventura Jr | Enigmas e Mistérios', 
-                description: 'Saudações, amigos! 🌟 Nesta quinta-feira, dia 27, às 20h, teremos uma live emocionante sobre fenômenos ufológicos com o renomado ufólogo @EdisonBoaventura do programa Enigmas e Mistérios! 🚀 Com mais de 40 anos de experiência, Edison discutirá O que são esses fenômenos?, O governo sabe de alguma coisa? e Quais os casos mais intrigantes?. Participe ao vivo, traga suas questões e concorra ao nosso sorteio exclusivo! 🎁 Visite a Loja do Edison: https://www.lojadoedisonboaventura.co.... Inscreva-se, ative as notificações, deixe seu like e compartilhe! Siga-me no Instagram: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se não é patrono e pode, torne-se um membro mantenedor do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/SBawVYdOugo/hqdefault.jpg',
-                category: 'lives entrevistas' 
-            },
-            { 
-                videoId: 'vMrNAf9F-OY', 
-                title: 'Bate-papo - Fenômenos Ufológicos - Nilka e Ronaldo', 
-                description: 'Live especial! 🛸 Quinta-feira, dia 27, às 20h, o @EdisonBoaventura, ufólogo com 40 anos de experiência, estará conosco para um bate-papo imperdível sobre fenômenos ufológicos! Vamos explorar O que são?, Há envolvimento governamental? e Quais os casos mais enigmáticos?. Não perca essa chance de interagir e participar do nosso sorteio! 🎁 Acesse a Loja do Edison: https://www.lojadoedisonboaventura.co.... Inscreva-se, curta e compartilhe o canal! Acompanhe-me no Instagram: @lendarioesoterico. Um agradecimento profundo a todos os patronos, sem vocês nada disso seria possível. Considere se tornar um membro mantenedor do canal e faça a diferença!', 
-                thumbnail: 'https://i.ytimg.com/vi/vMrNAf9F-OY/hqdefault.jpg',
-                category: 'lives entrevistas' 
-            },
-            { 
-                videoId: 'O4c4S08jcFw', 
-                title: 'Série Elementos - Introdução - Video 1/5', 
-                description: 'Saudações, amigos! Apresento a nova Série Elementos do canal! Serão 4 vídeos (Terra, Fogo, Água e Ar) com a participação especial de grandes escolas de magia: Tânia Gori (@taniagori1) da Casa de Bruxa (Ar), Victor Valentim (@bosquedosgnomos) do Bosque dos Gnomos (Terra), Alline Lima (@casatatwaescola1995) da Casa Tatwa (Fogo) e Claudhia Issa (@claudineyprieto) do Santuário da Grande Mãe (Água). O objetivo é absorver informações valiosas e conhecer cada escola. Este é o vídeo de introdução, e os próximos virão em breve! Inscreva-se, curta e compartilhe para que a mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos, sem vocês nada disso seria possível. Se puder, torne-se um patrono mantenedor do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg',
-                category: 'serie-elementos' 
-            },
-            { 
-                videoId: '4FQtfrB1k8s', 
-                title: 'Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5', 
-                description: 'Saudações, amigos! Apresento a nova Série Elementos do canal! Serão 4 vídeos (Terra, Fogo, Água e Ar) com a participação especial de grandes escolas de magia: Tânia Gori (@taniagori1) da Casa de Bruxa (Ar), Victor Valentim (@bosquedosgnomos) do Bosque dos Gnomos (Terra), Alline Lima (@casatatwaescola1995) da Casa Tatwa (Fogo) e Claudhia Issa (@claudineyprieto) do Santuário da Grande Mãe (Água). O objetivo é absorver informações valiosas e conhecer cada escola. Este é o vídeo de introdução, e os próximos virão em breve! Inscreva-se, curta e compartilhe para que a mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos, sem vocês nada disso seria possível. Se puder, torne-se um patrono mantenedor do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg',
-                category: 'serie-elementos' 
-            },
-            { 
-                videoId: 'kNDUONUnEJ0', 
-                title: 'Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5', 
-                description: 'Este vídeo faz parte da nossa série de 4 vídeos sobre os Elementos! Hoje, Tania Gori da Casa de Bruxa (@taniagori1) nos traz conhecimentos aprofundados sobre o Elemento Ar. Espero que goste! Confira a Introdução à série e os vídeos anteriores: [link para Introdução] e [link para Elemento Terra]. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg',
-                category: 'serie-elementos' 
-            },
-            { 
-                videoId: 'SzVi4CEnlRw', 
-                title: 'Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5', 
-                description: 'Neste vídeo da nossa série sobre os Elementos, a Alline Lima da Casa Tatwa (@casatatwaescola1995) nos revela as particularidades do Elemento Fogo. Espero que goste! Confira o canal da Alline (@allinelimabruxa) e os outros vídeos da série: Introdução, Elemento Terra e Elemento Ar, ou a playlist completa. Inscreva-se, curta e compartilhe o canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda aos nossos patronos, sem vocês não seria possível. Se puder, torne-se um patrono mantenedor do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg',
-                category: 'serie-elementos' 
-            },
-            { 
-                videoId: 'Wp-WJ0RekbM', 
-                title: 'Série elementos - Água - Claudhia Issa - Santuário da Grande Mãe - vídeo 5/5', 
-                description: 'Este é o vídeo final da Série Elementos, onde Claudhia Issa do Santuário da Grande Mãe nos traz os conhecimentos sobre o Elemento Água! Passamos por 4 escolas incríveis: Victor Valentim (Bosque dos Gnomos) no Elemento Terra, Tania Gori (Casa de Bruxa) no Elemento Ar, e Alline Lima (Casa Tatwa) no Elemento Fogo. Grato a todos que tornaram isso possível e que sejam sempre abençoados! Confira a introdução da série, vídeos de Terra, Ar e Fogo. Siga o canal da Claudhia Issa (@claudiacrip) e da Alline Lima (@allinelimabruxa), e a Casa Tatwa (@casatatwaescola1995). Acesse a playlist completa da série. Inscreva-se, curta e compartilhe os vídeos do canal para nos ajudar a alcançar mais pessoas #RumoAos100k. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, nada seria possível. Se puder, torne-se um patrono mantenedor deste trabalho e seja membro do canal!', 
-                thumbnail: 'https://i.ytimg.com/vi/Wp-WJ0RekbM/hqdefault.jpg',
-                category: 'serie-elementos' 
-            },
-            { 
-                videoId: 'D7MAQdl6tiE', 
-                title: 'O poder espiritual da borboleta - Transformação - Totem - Animal de poder', 
-                description: 'Saudações, amigos lendários! ✨ Neste vídeo, desvendamos o animal de poder Borboleta, a força mística deste arquétipo e seu poderoso totem. Pessoas com a borboleta como guardiã recebem uma chave para profunda evolução e aprimoramento, um chamado espiritual ligado ao elemento Ar e às Fadas, representando o melhor que podemos ser. Espero que goste e que a energia ancestral esteja em sua jornada! Conhece alguém que se beneficiaria? Compartilhe o vídeo e ajude o canal. Seja um patrono a partir de R$2,00 em https://apoia.se/lendario.', 
-                thumbnail: 'https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg',
-                category: 'animais-poder totem' 
-            },
-            { 
-                videoId: 'Zt5ao_e2y-A', 
-                title: 'Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder', 
-                description: 'Saudações, amigos e irmãos lendários! 🌟 Neste vídeo, o assunto é o animal de poder Beija-flor (ou colibri), a pura expressão da frequência de luz e da divindade. Espero que traga ainda mais informações para você! Já é inscrito? Gratidão profunda! Seu apoio é essencial para levarmos este trabalho adiante. Considere se tornar um patrono mantenedor em: https://apoia.se/lendario.', 
-                thumbnail: 'https://i.ytimg.com/vi/Zt5ao_e2y-A/hqdefault.jpg',
-                category: 'animais-poder totem ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'ykdzJtuxs0o', 
-                title: 'O poder espiritual do cavalo - Totem - Animal de poder', 
-                description: 'Saudações, família lendária! No vídeo de hoje, vamos desvendar o Animal de Poder Cavalo e suas características como guardião espiritual, incluindo um pouco sobre seu arquétipo. Que o totem do Cavalo te traga movimento e intuição necessários na sua jornada! Espero que goste. Confira a playlist completa de Animais de Poder: [link para playlist]. #animaldepoder #xamanismo #totemcavalo. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, seria muito difícil seguir em frente. Se puder, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg',
-                category: 'animais-poder totem ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'aDNqauEvQtY', 
-                title: 'O poder espiritual do lobo - Totem - Animal de poder', 
-                description: 'Saudações, queridos amigos! 👋 O assunto da semana é o animal de poder Lobo, o guardião do sul no xamanismo. Desvende suas características de alcateia, sua sabedoria como professor dos mais jovens, e as poderosas propriedades de liderança, trabalho em equipe e proteção que este espírito totem representa. Que este vídeo sobre o lobo sagrado seja útil em sua jornada! Conhece alguém que se beneficiaria? Compartilhe e espalhe boas notícias. Gratidão por acompanhar o canal! Seja um patrono mantenedor em: http://apoia.se/lendario.', 
-                thumbnail: 'https://i.ytimg.com/vi/aDNqauEvQtY/hqdefault.jpg',
-                category: 'animais-poder totem ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: '3r7yfkUKUMw', 
-                title: 'Poder espiritual da coruja - Totem - Animal de poder', 
-                description: 'Irmãos lendários, mergulhem na sabedoria do Totem da Coruja! Conheçam as propriedades deste animal de poder, sua medicina profunda e a capacidade de ver além, nos mundos espirituais e na escuridão. A coruja guia grandes aprendizados em sonhos e guarda muitos mistérios que vamos desbravar. Compartilhe se este vídeo puder iluminar alguém. Ajude o canal a se manter firme e seja um patrono mantenedor: https://apoia.se/lendario.', 
-                thumbnail: 'https://i.ytimg.com/vi/3r7yfkUKUMw/hqdefault.jpg',
-                category: 'animais-poder totem ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'LQ_VKuWSsLg', 
-                title: 'Simbolos Magickos. O que utilizar e o que evitar', 
-                description: 'Este é um vídeo mais antigo, mas essencial, sobre Símbolos Mágickos, o primeiro de nossa série! Nele, exploro os principais símbolos, suas propriedades, e quais usar ou evitar, servindo como um guia para estudantes de espiritualismo, esoterismo ou quem busca conhecimento. Espero que goste! Conheça também os outros títulos do canal. Gratidão profunda por todo o apoio! Faça parte do crescimento: inscreva-se, curta e compartilhe, espalhando conhecimento. Seja sempre um lendário em sua jornada! Torne-se um patrono mantenedor deste trabalho.', 
-                thumbnail: 'https://i.ytimg.com/vi/LQ_VKuWSsLg/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'L0T-Ln8IDdA', 
-                title: 'Simbolos Magickos. O que utilizar e o que evitar. #2', 
-                description: 'Saudações, queridos amigos! Devido ao sucesso do primeiro vídeo e muitos pedidos, hoje trago a Parte 2 sobre Simbolismo Mágicko! Espero que gostem! Faça parte do crescimento deste canal: inscreva-se, curta e compartilhe. Espalhe conhecimento a quem busca e seja sempre um lendário em sua jornada! Torne-se um patrono mantenedor deste trabalho em: https://apoia.se/lendario.', 
-                thumbnail: 'https://i.ytimg.com/vi/L0T-Ln8IDdA/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'u0HI1JkoJGg', 
-                title: 'Varinhas e instrumentos magickos', 
-                description: 'Saudações, amigos! No vídeo de hoje, mergulhamos no universo das varinhas e instrumentos espirituais e mágicos, explorando como eles nos auxiliam e ganham força com nossa energia. Abordo também vestimentas e objetos sagrados em geral, e trago detalhes sobre o sorteio das 10 varinhas para os patronos! Gratidão especial ao Ateliê Mystic Ghob do Robert Leite (@daftrobertpunk), que produziu as varinhas. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, seria muito difícil seguir em frente. Se puder, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/u0HI1JkoJGg/hqdefault.jpg',
-                category: 'outros' 
-            },
-            { 
-                videoId: 'zscptxAPdT0', 
-                title: 'NÃO escolha uma carta!', 
-                description: 'Saudações, irmãos lendários! 🔮 Hoje, o assunto é o Tarot e práticas oraculares como Faça uma pergunta, Mensagem do dia/semana/mês e Escolha uma carta. Mostro na prática como essas mensagens podem ser genéricas, comprometendo o resultado. Meu objetivo é trazer um ensinamento sincero de despertar, um ponto de vista a se pensar, sem desrespeitar ninguém. Para ajudar, faço leituras explicando o processo de interpretação. Espero que este vídeo traga muita luz! Gratidão a todos os inscritos; sua proximidade fortalece este trabalho! Conhece alguém que se beneficiaria? Compartilhe e seja um transmissor de boas mensagens. Seja um patrono mantenedor deste trabalho.', 
-                thumbnail: 'https://i.ytimg.com/vi/zscptxAPdT0/hqdefault.jpg',
-                category: 'tarot' 
-            },
-            { 
-                videoId: 'SN7EaV4nHJo', 
-                title: 'Leitura de Tarot, uma pequena demonstração de como ocorre a leitura deste oráculo', 
-                description: 'Existem diversos modos de leitura de Tarot! Neste vídeo, faço uma pequena demonstração de como realizo uma leitura online, utilizando um trecho autorizado do atendimento (menos pessoal para o cliente). Se você nunca viu, esta é a base para entender o processo! Lembre-se: leituras oraculares exigem preparo, treino, intuição e espiritualidade; utilizo um método próprio. Todas as leituras ocorrem sob doação livre, sem valor fixo, para que os mestres multipliquem sua caridade. Inscreva-se! Faça parte deste canal! Abençoado seja!', 
-                thumbnail: 'https://i.ytimg.com/vi/SN7EaV4nHJo/hqdefault.jpg',
-                category: 'tarot' 
-            },
-            { 
-                videoId: 'PvvjsxsD38Q', 
-                title: 'Consulta de Tarot e aconselhamento espiritual', 
-                description: 'Para consultas personalizadas, entre em contato via WhatsApp ou chave Pix: (11) 96058-5584. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', 
-                thumbnail: 'https://i.ytimg.com/vi/PvvjsxsD38Q/hqdefault.jpg',
-                category: 'tarot ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '0C8z38ORAZE', 
-                title: 'Aula Tarot Arcanos Maiores - Ultimo convite!', 
-                description: 'Saudações, amigos! Nossas aulas de Tarot estão chegando e este é o último convite para quem ainda não se inscreveu! Faltam poucos dias, não deixe para a última hora! Focaremos na interpretação prática, com o método que utilizo nas lives (primeira aula) e atendimentos (segunda aula). Valor de contribuição sugerido: R$ 50,00. Membros contribuintes do canal (YouTube ou Apoia.se) não pagam: basta informar interesse via WhatsApp. Conheça os modos de contribuição para as aulas e participe!', 
-                thumbnail: 'https://i.ytimg.com/vi/0C8z38ORAZE/hqdefault.jpg',
-                category: 'tarot ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'Vm-q3zLMoJE', 
-                title: 'Jornada Espiritual - Por onde começar - Os primeiros passos', 
-                description: 'Saudações, amigos lendários! 🙏 Muitos me perguntam: como começar a jornada espiritual? Qual livro ler, que estudos ou iniciações fazer, e quais os primeiros passos? Este vídeo responde a essas questões, ajudando você a refletir sobre autonomia e escolhas. Que a luz e a gratidão profunda por seu apoio acompanhem sua jornada! #CreatorsforChange. Agradeço aos primeiros patronos, pontos de luz essenciais para este trabalho. Sua colaboração retornará em luz. Apoie em: https://apoia.se/lendario. Se este conteúdo auxiliar alguém, compartilhe!', 
-                thumbnail: 'https://i.ytimg.com/vi/Vm-q3zLMoJE/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '7Gg42P2-wzo', 
-                title: 'Tecnicas Espirituais, porque não funcionam comigo?', 
-                description: 'Neste vídeo falo sobre porque geralmente técnicas espirituais que aprendemos de terceiros parecem não funcionar tão bem conosco, esta questão é uma percepção que tenho a muito tempo, e a dificuldade que sempre senti em incluir ensinamentos externos a minha jornada, pelo fato de nunca experienciar tão bem quanto a própria pessoa que canalizou o ensinamento ou técnica, seguindo a linha de pensamento indico porque doutrinas e dogmas não funcionam a nível espiritual. Trago neste vídeo minha percepção do porquê não funcionar tão bem com a gente como funciona com o seu criador, espero que gostem!', 
-                thumbnail: 'https://i.ytimg.com/vi/7Gg42P2-wzo/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '8Th7tbmWmr0', 
-                title: 'Quem é Deus e qual a nossa missão - visão esotérica e universalista', 
-                description: 'Neste vídeo falo sobre deus, quem seria ele, e qual o nosso proposito de vida, com tanto dogmatismo e respostas prontas acerca do assunto, decidi tratar de modo universalista desmontando de modo racional o que sabemos sobre ele, longe de encerrar um assunto tão profundo, mas confiante de auxiliar alguém a despertar e a ir mais longe na questão.', 
-                thumbnail: 'https://i.ytimg.com/vi/8Th7tbmWmr0/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'S3F0iBX4aiE', 
-                title: '4 Estações e Espiritualidade - Aplicações da Magia da Natureza', 
-                description: 'Neste vídeo trago um ensinamento da magia da natureza, a energia de cada estação e como podemos nos beneficiar espiritualmente dela, desde buscar respostas espirituais, desenvolver dons a tambem rituais que beneficie a prosperidade, saude, vigor, celebração da vida e muito mais, espero que traga boas informações para você.', 
-                thumbnail: 'https://i.ytimg.com/vi/S3F0iBX4aiE/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'BQMj7gx8Nz4', 
-                title: 'A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé', 
-                description: 'Saudações amigos queridos, neste vídeo falo sobre a vida secreta das arvores,  o poder espiritual das arvores,  também conhecido pelo caminho xamânico como Povo em Pé. Sua mística, benefícios, vibração da floresta e conexão espiritual', 
-                thumbnail: 'https://i.ytimg.com/vi/BQMj7gx8Nz4/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'sxZrTuOE098', 
-                title: 'A Magia do Silêncio - O Poder do Silêncio - O Mestre mais antigo do universo', 
-                description: 'Saudações queridos amigos, devido alguns acontecimentos decidi falar desta vez sobre o poder do silêncio ou a magia do silêncio, como este mestre profundo é essencial a nossa jornada e como muitas pessoas temem tanto ele, trago alguns ensinamentos antigos sobre o silêncio, além de novas percepções pra gente analisar, o silêncio mais importante é o interno, é sabermos acalmar a mente, e deixar os pensamentos fluírem de modo harmonioso, é eliminar o chiado causado pela agitação e insegurança, ao qual comparo com moscas, aquilo que nos perturba e dispersa.', 
-                thumbnail: 'https://i.ytimg.com/vi/sxZrTuOE098/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '8c7WjoPtJWU', 
-                title: 'Consciente Coletivo', 
-                description: 'Saudações irmãos lendários, hoje falaremos da consciência coletiva, ou inconsciência coletiva, o que de fato é este termo e como podemos nos beneficiar dele, espero que goste espero que seja útil a você!', 
-                thumbnail: 'https://i.ytimg.com/vi/8c7WjoPtJWU/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'ZWf2SBiRJ1A', 
-                title: 'Templo interior - Poderosa técnica de conexão espiritual - Tela mental', 
-                description: 'Alguns inscritos do canal me questionaram do porque eles não conseguirem se conectar com a espiritualidade, então decidi trazer esta técnica que auxilia muito na conexão e manutenção do contato espiritual, a tela mental ou templo interior. Este tecnica utilizo desde sempre e tem me auxiliado muito em diversos processos, tanto de conexão com o mundo espiritual quanto o aprimoramento da intuição, a sensitividade, o ambiente interno adequado para o contato espiritual e muito mais, o despertar da consciência, elevação de frequências espirituais, entre outros, espero que gostem e que possa ser útil para alguém.', 
-                thumbnail: 'https://i.ytimg.com/vi/ZWf2SBiRJ1A/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'EN73TXQJupQ', 
-                title: 'O Poder da Lua - A Magia da Lua', 
-                description: 'Saudações queridos amigos, desta vez decidi falar sobre o poder espiritual da lua ou a magia da lua.', 
-                thumbnail: 'https://i.ytimg.com/vi/EN73TXQJupQ/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'AfSwp54FBU', 
-                title: 'Como montar um altar magicko e espiritual', 
-                description: 'Este é o tema deste vídeo, que vai além da receita pratica de como fazer mas porque fazer, acredito que as dicas valem para diversos seguimentos, sejam, magickos, espirituais ou religiosos... para mim o altar não é para todas as pessoas e sim para aquelas que desejam criar seu cantinho fisico espiritual sagrado, nem todos gostam ou acreditam em altar, por isso não é uma obrigatoriedade possuir um altar, mas deve ser realizado se intuído em fazer, se for agregar conexão e positividade a sua força espiritual, espero que o vídeo possa ser útil de algum modo a você.', 
-                thumbnail: 'https://i.ytimg.com/vi/AfSwp54FBU/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '771CcrsutYY', 
-                title: 'Roupa preta - Cor da Roupa e Espiritualidade - Magia das Cores', 
-                description: 'Neste vídeo falo sobre a magia das cores e a importância das cores das roupas, sejam elas do dia a dia ou vestes espirituais. Quando usar roupa preta, qual a diferença entre roupa preta e roupa branca, onde e como utilizar cada cor, cores do arco íris e dos chacras. Cor de roupa importa para a nossa espiritualidade? Como se beneficiar das roupas coloridas.', 
-                thumbnail: 'https://i.ytimg.com/vi/771CcrsutYY/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'pyyBqOTRuNc', 
-                title: 'O Povo Sentado - O poder espiritual das pedras', 
-                description: 'Neste vídeo falo sobre o poder espiritual das pedras e o reino mineral como um todo desde a simples rocha ate os mais belos cristais, as memorias armazenadas e suas cargas energéticas de absorção e irradiação, espero que acrescente boas informações a você.', 
-                thumbnail: 'https://i.ytimg.com/vi/pyyBqOTRuNc/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'lZPhMxmI0Kc', 
-                title: 'Reiki - Johrei - Cura pelas mãos', 
-                description: 'Saudações queridos amigos, pensando em nossa jornada espiritual e o que pode somar, decidi falar sobre o desbloqueio energético como uma ferramenta espiritual, há diversas técnicas espirituais de cura pelas mãos, e hoje decidi falar sobre o Reiki, falo um pouco tambem sobre o Johrei e porque devemos evita-lo. Espero que traga boas informações para você, abençoado seja profundamente!', 
-                thumbnail: 'https://i.ytimg.com/vi/lZPhMxmI0Kc/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: '4BTOHbBTLq0', 
-                title: 'A Justiça divina - A Lei do Retorno - Aqui se faz aqui se paga?', 
-                description: 'Saudações amigos, será que com tanta impunidade por aí existe de fato alguma justiça divina atuando nos bastidores? Existe a lei do retorno ou a impunidade espiritual é certa? Existe céu e inferno? Esses temas tão polêmicos são o assunto deste vídeo, espero que possa lhe ser útil.', 
-                thumbnail: 'https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg',
-                category: 'ensinamentos-lendarios' 
-            },
-            { 
-                videoId: 'xhhcl8Ogw2U', 
-                title: 'Meditação Guiada - Desbloqueio da terceira visão - Conexão espiritual', 
-                description: 'Esta é uma meditação guiada criada para auxiliar o desbloqueio da glândula pineal e abertura da terceira visão, os sons e estímulos neste vídeo foi preparado para auxiliar no desbloqueio e conexão espiritual, só faça se realmente desejar passar por este processo, espero que goste e que possa ser útil a sua jornada. ', 
-                thumbnail: 'https://i.ytimg.com/vi/xhhcl8Ogw2U/hqdefault.jpg',
-                category: 'meditacao' 
-            },
-            { 
-                videoId: 'MCAQ-5I1Mg8', 
-                title: 'Jornada Xamânica - Conexão com seu mestre interior - Meditação', 
-                description: 'Saudações amigos, diferente da meditação guiada neste vídeo decidi fazer uma jornada xamânica, ao invés de direionar com palavras em todo o processo meditativo neste eu apenas ambientei e criei uma atmosfera benéfica para uma jornada espiritual, deixe sua intuição guiar durante a meditação e se permita viajar ao enontro do seu mestre interior. Medite na cachoeira, voe por aí com seu animal de poder, mergulhe fundo no mar, ou sente com uma sábia arvore para absorver sua sabedoria, ande pelo bosque, na chuva ou saia flutuando pelo universo. Esta jornada possui som ritmio de tambor xamanico junto com sons da natureza em diversos ambientes diferentes, incluindo passaros, som da chuva do mar, do fogo, da floresta o som do universo, no tambor dou 8inicio a um ritmo mais forte para induzir um estado de jornada e termino com a batida do coração, uma batida suave para finalizar e auxiliar o sono, este vídeo foi produzido com muito carinho na intenção de auxiliar cada vez mais a conexão espiritual, espero que seja de muita luz para você!', 
-                thumbnail: 'https://i.ytimg.com/vi/MCAQ-5I1Mg8/hqdefault.jpg',
-                category: 'meditacao' 
-            },
-            { 
-                videoId: 'F9WQqbgB9Po', 
-                title: 'Meditação Guiada - Projeção Astral - Viagem Astral', 
-                description: 'Saudações esta é uma meditação guiada para auxiliar a projeção astral ou viagem astral, recomendo que utilize fone de ouvido e faça esta meditação no período que for dormir para aproveitar o estado profundo de relaxamento, refaça a meditação quantas vezes desejar, espero que seja uma experiência positiva para você.', 
-                thumbnail: 'https://i.ytimg.com/vi/F9WQqbgB9Po/hqdefault.jpg',
-                category: 'meditacao' 
-            },
-            { 
-                videoId: 'jbeO-4BIdbY', 
-                title: 'Meditação Guiada - Acessando a sabedoria das arvores', 
-                description: 'Saudações amigos, esta meditação guiada tem por objetivo auxiliar você a se conectar com a sabedoria das arvores e com o reino vegetal, te trazendo mais intuição, conexão e sabedoria, a intenção do video é te despertar para as forças sutis que permeiam toda natureza e em especial as arvores ancestrais, espero que possa se beneficiar deste trabalho. ', 
-                thumbnail: 'https://i.ytimg.com/vi/jbeO-4BIdbY/hqdefault.jpg',
-                category: 'meditacao' 
-            },
-            { 
-                videoId: 'aNSN-92f9K8', 
-                title: 'Live Tarot - Domingo 28/05', 
-                description: 'Saudações amigos, Neste domingo dia 25/05 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', 
-                thumbnail: 'https://i.ytimg.com/vi/aNSN-92f9K8/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: '2gVFSMGhiis', 
-                title: 'Coroa de Flores - Dicas de Leitura Clássica - Live Tarot - Domingo 04/06', 
-                description: 'Saudações amigos, Neste domingo dia 04/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', 
-                thumbnail: 'https://i.ytimg.com/vi/2gVFSMGhiis/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: 'yyaAF4mG16M', 
-                title: 'Live Tarot - Domingo 09/07', 
-                description: 'Saudações amigos, Neste domingo dia 09/07 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!   ', 
-                thumbnail: 'https://i.ytimg.com/vi/yyaAF4mG16M/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: 'jAQIqhGH99Q', 
-                title: 'Live Tarot - Domingo 18/06', 
-                description: 'Saudações amigos, Neste domingo dia 18/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', 
-                thumbnail: 'https://i.ytimg.com/vi/jAQIqhGH99Q/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: 'ZyNuo4toYvg', 
-                title: 'Live Tarot - Domingo 25/06', 
-                description: 'Saudações amigos, Neste domingo dia 25/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão! ', 
-                thumbnail: 'https://i.ytimg.com/vi/ZyNuo4toYvg/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: 'KgY70FTA3pc', 
-                title: 'Live Tarot - Domingo 16/07', 
-                description: 'Saudações amigos, Neste domingo dia 16/07 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', 
-                thumbnail: 'https://i.ytimg.com/vi/KgY70FTA3pc/hqdefault.jpg',
-                category: 'lives' 
-            },
-            { 
-                videoId: '0TPRx4EcQeY', 
-                title: 'Convenção de Magos e Bruxas de Paranapiacaba 2022', 
-                description: 'Saudações amigos, neste vídeo trago toda a experiência que vivi neste que foi para mim a maior edição da convenção de Magos e Bruxas de Paranapiacaba, video produzido com muito carinho, espero que goste! ', 
-                thumbnail: 'https://i.ytimg.com/vi/0TPRx4EcQeY/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: '9OPH0yly70g', 
-                title: 'Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs', 
-                description: 'Saudações amigos, trago imagens de como foi o Mercado Místico primeira edição de 2020.', 
-                thumbnail: 'https://i.ytimg.com/vi/9OPH0yly70g/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: '_0YsJ1gWIcw', 
-                title: 'Evento Incrível!! Bazar das Bruxas 2021 - confira!', 
-                description: 'Neste dia das bruxas - halloween estive no Bazar das bruxas que ocorreu na vila Mariana em SP, foi um evento magnifico cheio de convidados especiais, artesão talentosos, oraculistas, dançarinos etc, com direito a palestras (inclusive minha) lançamento de livro e muito mais, confira!', 
-                thumbnail: 'https://i.ytimg.com/vi/_0YsJ1gWIcw/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: 'r2Q2hcbrFjg', 
-                title: 'Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?', 
-                description: 'Saudações amigos, neste vídeo eu entrevisto o Caique Pereira do canal @escolaparayoutubers, falamos sobre os novos canais e se ainda vale a pena iniciar um canal hoje do zero.', 
-                thumbnail: 'https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: '135D0iEWmAE', 
-                title: '3º Bazar das Bruxas - Bosque dos Gnomos 2019', 
-                description: 'Saudações amigos, hoje o vídeo é sobre o 3º Bazar das Bruxas, organizado pelo bosque dos gnomos do Victor Valentim, espero que gostem!', 
-                thumbnail: 'https://i.ytimg.com/vi/135D0iEWmAE/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: 'BuB6POFFkOg', 
-                title: 'Halloween Bosque dos Gnomos 2017', 
-                description: 'Saudações irmãos lendários, participei este ano da festa do dia das bruxas no bosque dos gnomos, com o Victor Valentim e sua equipe, musicas, rituais, palestras e muita harmonia, confiram neste vídeo como foi o evento.', 
-                thumbnail: 'https://i.ytimg.com/vi/BuB6POFFkOg/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: 'ORJdIP3AcgI', 
-                title: 'Holistic Fair Atibaia - 2022', 
-                description: 'Saudações amigos, estive na Holistic Fair 2022 em Atibaia e o evento foi incrível, espero que gostem!', 
-                thumbnail: 'https://i.ytimg.com/vi/ORJdIP3AcgI/hqdefault.jpg',
-                category: 'eventos' 
-            },
-            { 
-                videoId: 'vKHSu0bNvnE', 
-                title: 'Ayahuasca, Santo Daime, experiência e opinião pessoal', 
-                description: 'Neste vídeo falo um pouco sobre o chá de ayahuasca, hoasca ou santo daime para alguns segmentos religiosos, minha experiência pessoal e opinião referente ao uso.', 
-                thumbnail: 'https://i.ytimg.com/vi/vKHSu0bNvnE/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'quWr1qIJLyg', 
-                title: 'Tambor e Maracá, a particularidade desses instrumentos espirituais', 
-                description: 'Neste vídeo trago algumas propriedades do tambor e do maracá e sua profunda utilização espiritual e viagem da alma, esses instrumentos tem o poder de auxiliar o processo de viagem espiritual, nos levar para dentro de nós e para o profundo, este vídeo mostra algumas das qualidades, espero que gostem!', 
-                thumbnail: 'https://i.ytimg.com/vi/quWr1qIJLyg/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'J-9SOpyoD3o', 
-                title: 'Poder espiritual do cachorro - Totem - Animal de poder', 
-                description: 'Saudações amigos, neste vídeo decidi comentar o ocorrido com o cachorro morto pelo segurança do supermercado carrefour e tbm sobre o poder espiritual desses animais, alem de suas propriedades como animal de poder. Espero que as informações sobre este totem possa ser útil a você.', 
-                thumbnail: 'https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'q8TvFlGq4ZI', 
-                title: 'Poder espiritual dos gatos - Purificação - Totem - Animal de poder', 
-                description: 'Neste vídeo decidi falar sobre o poder espiritual dos gatos e sua parceria para conosco, amizade essa que dura milênios, desde antes dos egípcios, passando pela energia budista, pelos caminhos pagãos, da magia, sobrevivendo a perseguição junto com as bruxas e chegando ao nosso tempo. Os gatos são seres muito espirituais.', 
-                thumbnail: 'https://i.ytimg.com/vi/q8TvFlGq4ZI/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'TdeOKL4RJEg', 
-                title: 'O poder espiritual do elefante - Totem - Animal de poder', 
-                description: 'Saudações amigos lendários, neste vídeo falamos um pouco sobre o animal de poder elefante, o poder espiritual e suas características como um animal guardião, falamos tambem o que os irmãos podem esperar caso tenha este animal como totem. O elefante é um animal muito antigo, profundamente ligado aos mestres espirituais legítimos, além de ser um animal sagrado por muitos povos, no xamanismo não é diferente, o elefante trás em sua medicina, o resgate de alma e de essência, força e sabedoria para superar obstáculos, além de trazer ensinamentos perdidos no tempo, espero que goste do vídeo e que possa lhe ser úteis essas informações, abençoados sejamos!', 
-                thumbnail: 'https://i.ytimg.com/vi/TdeOKL4RJEg/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'Yf70vQk4S7Q', 
-                title: 'O poder espiritual da aranha - Totem - Animal de poder', 
-                description: 'Saudações amigos, o video de hoje é sobre o animal de poder aranha quais as características deste grande guardião. O totem aranha possui características muito profundas com os sonhos e pensamentos, além de ser um grande guia para a nossa análise íntima mais profunda, o significado da sua teia se estande ate o filtro dos sonhos, que foi criado e inspirado pelo tecer da avó aranha, espero que este vídeo possa ser útil a você!', 
-                thumbnail: 'https://i.ytimg.com/vi/Yf70vQk4S7Q/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'v1edlSPCUYA', 
-                title: 'O poder espiritual do golfinho - Totem - Animal de poder', 
-                description: 'Saudações amigos, hoje trago o vídeo sobre o animal de poder golfinho, e suas características espirituais, como este animal pode nos auxiliar e quais características das pessoas cujo o totem seja o golfinho.', 
-                thumbnail: 'https://i.ytimg.com/vi/v1edlSPCUYA/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'rh7E20lkd-Q', 
-                title: 'O poder espiritual do Leão - Totem - Animal de Poder', 
-                description: 'Saudações amigos, neste vídeo falo sobre o poder espiritual do leão tanto seu arquétipo quanto o animal de poder, o totem leão possui características de um grande guardião e todos que possui este animal de poder se beneficiam desta característica. O arquétipo leão possui também características negativas e trato sobre isso também no vídeo, aqueles que não possuem o leão como animal de poder pode também se beneficiar de suas características de guardião o convidando a se aproximar.', 
-                thumbnail: 'https://i.ytimg.com/vi/rh7E20lkd-Q/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: '6Z6QELUK7xY', 
-                title: 'O poder espiritual do urso - Totem - Animal de poder', 
-                description: 'Saudações queridos amigos, no vídeo de hoje falaremos sobre o animal de poder urso e suas características espirituais. O urso possui uma energia poderosa de xamã, sendo um dos grandes mestres dentre os animais guardiões, representante do elemento terra, direção oeste dentro da roda das quatro direções, o totem urso é um eremita nato, levando os homens para a interiorização profunda e verdadeira, o poder espiritual do urso vai muito além de suas características físicas como força, bravura e superação, o mestre urso vem ensinar a verdadeira profundidade espiritual, esquecida no tempo.', 
-                thumbnail: 'https://i.ytimg.com/vi/6Z6QELUK7xY/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: 'SD2qgUakXqw', 
-                title: 'Poder espiritual da águia - Totem - Animal de poder', 
-                description: 'Saudações amigos lendários, neste vídeo falo sobre o animal de poder águia e suas características espirituais, além do totem falo também do arquétipo, e sua influência positiva a quem busca um recomeço na via ou se encontrar em algum novo tipo de negócio, arquétipo águia expressa foco e concentração, visão empreendedora, já o poder espiritual do totem, vemos um guardião que trás a visão plena, derrubando os véus, além de proporcionar força e coragem a quem atrai ou manifesta esta medicina.', 
-                thumbnail: 'https://i.ytimg.com/vi/SD2qgUakXqw/hqdefault.jpg',
-                category: 'ensinamentos-xamanicos' 
-            },
-            { 
-                videoId: '3Q6BtjJa4NI', 
-                title: 'Em breve minha participação com a Tais Pavanelli na Astral TV', 
-                description: 'Em breve vai para o ar pela Astral Tv?, minha participação no programa Cozinha Encantada com a Tais Pavanelli.', 
-                thumbnail: 'https://i.ytimg.com/vi/3Q6BtjJa4NI/hqdefault.jpg',
-                category: 'entrevistas' 
-            }
+            { videoId: '_kFRwfeOycU', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
+            { videoId: 'qqGB-rsf8wU', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg', category: 'meditacao serie-elementos ensinamentos-xamanicos' },
+            { videoId: 't8CP_yHw-kg', title: 'Como aprender a ler Tarot - A jornada do iniciado', description: 'Entenda os primeiros passos na jornada espiritual do Tarot e como iniciar seus estudos para aprender a ler este oráculo.', thumbnail: 'https://i.ytimg.com/vi/t8CP_yHw-kg/hqdefault.jpg', category: 'tarot ensinamentos-lendarios ensinamentos-xamanicos' },
+            { videoId: 'LzJCXg9PMWc', title: 'Ensinamentos Valiosos - Bruxas e Magos', description: 'Estive na Convenção de bruxas e magos e de Paranapiacaba pedindo que às pessoas ensinassem ou compartilhassem algo de bom conosco, este vídeo é o resultado, espero que gostem!', thumbnail: 'https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg', category: 'tarot ensinamentos-lendarios ensinamentos-xamanicos entrevistas eventos' },
+            { videoId: 'DBml1noAKzE', title: 'Live de Ano Novo - Bate Papo e Tarot', description: 'Saudações, amigos! 🥂 Live especial de Véspera de Ano Novo! Dia 31/12 (sexta), das 20h às 22h, teremos bate-papo e Tarot! Celebre o Ano Novo conosco!', thumbnail: 'https://i.ytimg.com/vi/DBml1noAKzE/hqdefault.jpg', category: 'lives tarot' },
+            { videoId: 'u2_a93wS8h4', title: 'Perguntas ao tarot ajudam? Cortes Lendários', description: 'Perguntar ao Tarot pode ajudar? Descubra com os trechos das nossas lives! Se você se identifica com nosso trabalho e tem a possibilidade, torne-se um patrono mantenedor.', thumbnail: 'https://i.ytimg.com/vi/u2_a93wS8h4/hqdefault.jpg', category: 'tarot outros' },
+            { videoId: '9TM_L-dZ-Lo', title: 'Existe alma gêmea? Cortes Lendários', description: 'Descubra: Existe alma gêmea? Assista aos trechos das lives do canal. Se você curte nosso conteúdo, inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos; sem vocês, este trabalho não seria possível. Se você não é patrono e tem a possibilidade, torne-se um membro mantenedor do canal e apoie nosso trabalho.', thumbnail: 'https://i.ytimg.com/vi/9TM_L-dZ-Lo/hqdefault.jpg', category: 'outros' },
+            { videoId: 'FauDQykSK3s', title: 'Estamos perdendo tempo? Cortes Lendários', description: 'Será que estamos perdendo tempo? Descubra nos trechos das lives do canal. Se você curte o conteúdo, inscreva-se, curta e compartilhe os vídeos para que nossa mensagem alcance ainda mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos que tornam este trabalho possível. Se você tem a possibilidade, torne-se um patrono mantenedor do canal e ajude a impulsionar nosso projeto.', thumbnail: 'https://i.ytimg.com/vi/FauDQykSK3s/hqdefault.jpg', category: 'outros' },
+            { videoId: 'Yz9L9WpXhiw', title: 'Isso aconteceu aqui em casa - Vocês acreditam em possessão?', description: 'Estava em casa quando uma voz estranha e grave surgiu no portão. Ao verificar a câmera, deparei-me com esta imagem sinistras bem na entrada, em frente ao meu altar voltado para a rua. Apesar de conhecer a pessoa, decidi compartilhar por segurança. Acreditam que pessoas podem ser influenciadas? Se inscreva, curta e compartilhe os vídeos do canal para ajudar a mensagem a alcançar mais pessoas. Nossa gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é patrono e tem a possibilidade, torne-se um mantenedor e membro do canal.', thumbnail: 'https://i.ytimg.com/vi/Yz9L9WpXhiw/hqdefault.jpg', category: 'outros' },
+            { videoId: 'QUtgUOPzNp4', title: 'Cortes - Porque a Bruxaria entre tantos caminhos?', description: 'Em meio a tantos caminhos espirituais, o que torna a Bruxaria tão fascinante e escolhida por muitos? Mergulhe nessa reflexão em mais um corte imperdível do nosso canal. Se a pergunta te intriga, inscreva-se, curta e compartilhe para que essa discussão chegue a mais pessoas! E para ir além, torne-se um patrono e apoie nosso trabalho. Gratidão profunda!', thumbnail: 'https://i.ytimg.com/vi/QUtgUOPzNp4/hqdefault.jpg', category: 'outros entrevistas' },
+            { videoId: 'XY3dV-n38_8', title: 'Oráculo pelo Mundo - Participações Especiais - O poder dos oráculos', description: 'Embarque em uma jornada fascinante com nosso documentário Oráculos pelo Mundo ! Explore o I Ching, Runas Nórdicas, Ogham Celta, Runa das Bruxas, Bola de Cristal, Ifá, Búzios e Tarot, além de mergulhar na intuição e sonhos premonitórios. Com convidados especiais e a visão de uma médium espírita, este documentário revela como os oráculos, de práticas isoladas a sistemas filosóficos, refletem a espiritualidade humana e a busca por respostas internas e externas. Inscreva-se, curta e compartilhe!', thumbnail: 'https://i.ytimg.com/vi/XY3dV-n38_8/hqdefault.jpg', category: 'entrevistas ensinamentos-lendarios' },
+            { videoId: 'OB55az3PHaA', title: 'Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar', description: 'Descubra insights profundos neste vídeo gravado no encontro de terapeutas em Guararema/SP! Conversamos com Lucélia de Fátima sobre Medicina Tradicional Chinesa, memórias uterinas, sagrado feminino e muito mais. Não perca também um trecho da palestra sobre as leis da constelação familiar. Para saber mais sobre o trabalho da Lucélia (e o Encontro de Expansão do Feminino), entre em contato: (11) 98642-3129, Insta @luceliade.fatima, Face @expansaodofeminino. Inscreva-se, curta e compartilhe o canal para que nossa mensagem alcance mais pessoas! Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos; seu apoio é fundamental. Se puder, torne-se um membro e patrono mantenedor do canal.', thumbnail: 'https://i.ytimg.com/vi/OB55az3PHaA/hqdefault.jpg', category: 'entrevistas eventos' },
+            { videoId: 'SsuJJolcnPc', title: 'Premonição - Meu filho sonhou com a minha morte', description: 'Saudações, amigos! Neste vídeo, exploro a premonição e sonhos premonitórios como prova do mundo espiritual, incluindo o relato arrepiante do meu filho Diogo sobre sonhar com a minha morte. Descubra como os sonhos podem ser avisos e alertas importantes, repletos de mensagens espirituais. Espero que este conteúdo seja útil para você! Ajude o canal se inscrevendo, curtindo e compartilhando os vídeos.', thumbnail: 'https://i.ytimg.com/vi/SsuJJolcnPc/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'qPhgQbjgKlk', title: 'A terceira Visão - Participação Gayatri Devi', description: 'Saudações, irmãos lendários! Neste vídeo, mergulhamos no tema do **Terceiro Olho (terceira visão)** com a amiga do canal Gayatri Devi, que compartilha a visão Hindu e sua jornada espiritual com o Guru Nithyananda Swamiji. Abordamos faculdades espirituais desenvolvidas, a glândula pineal e mais informações relevantes. Esperamos que gostem! Ajude o canal a sobreviver: inscreva-se, curta e compartilhe. Seja um patrono mantenedor deste trabalho.', thumbnail: 'https://i.ytimg.com/vi/qPhgQbjgKlk/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'NFl8UXqlq-8', title: 'Leitura de mãos - Luna Gitana - Holistic Fair Atibaia', description: 'Saudações, amigos! Neste vídeo, converso com a Luna Gitana sobre a fascinante leitura de mãos, a Quiromancia. Além de um pouco da sua jornada, ela faz uma breve leitura prática para demonstrar como funciona. Espero que gostem! Contato Luna Gitana: Insta @keith.goes ou Luna Gitana, Whatsapp 11951244841. #LunaGitana #HolisticFair #atibaia. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem possibilidade, torne-se um patrono mantenedor deste trabalho se tornando membro do canal.', thumbnail: 'https://i.ytimg.com/vi/NFl8UXqlq-8/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'SDqdIdpSAOw', title: 'Jogo de Búzios - Íris de Oxum - Holistic Fair Atibaia', description: 'Saudações, amigos! Nesta entrevista fascinante, converso com a Íris de Oxum sobre o mistério do Jogo de Búzios, seu método de tiragem e outros detalhes, tudo gravado na Holistic Fair Atibaia! Espero que gostem! Encontre Íris de Oxum no Instagram: @irisdeosun. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Me siga no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/SDqdIdpSAOw/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'z79_cwCVtpo', title: 'Sibila da Antevisão - Don Julio - Holistic Fair Atibaia', description: 'Saudações, amigos! Hoje converso com o oraculista Don Julio sobre a fascinante Sibila da Antevisão e suas peculiaridades. Não percam! Espero que gostem! Encontre Don Julio no Instagram: @OraculistaDonJulio. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/z79_cwCVtpo/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'OOXhnm_SA-0', title: '20° Convenção de Bruxas e Magos - Já não encheu o saco?', description: 'Saudações queridos amigos, chegamos à celebração da 20° convenção de bruxas e magos de Paranapiacaba com uma pergunta: após tantos encontros já não enjoou o eventos? Os participantes já não estão cansados? Confira neste vídeo.', thumbnail: 'https://i.ytimg.com/vi/OOXhnm_SA-0/hqdefault.jpg', category: 'eventos entrevistas' },
+            { videoId: 'ArdGgBiD-mA', title: 'O Diabo do Tarot - Haichelin Duzzioni - Holistic Fair Atibaia', description: 'Descubra: Existe alma gêmea? Assista aos trechos das lives do canal. Se você curte nosso conteúdo, inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-nos no Instagram, Facebook e Twitter: @lendarioesoterico. Nossa gratidão profunda a todos os patronos que tornam este trabalho possível. Sem o apoio de vocês, este trabalho não seria real. Se você não é patrono e tem a possibilidade, torne-se um membro mantenedor do canal e apoie nosso trabalho.', thumbnail: 'https://i.ytimg.com/vi/ArdGgBiD-mA/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: '18Z3uCzE6zc', title: 'O Cinema brasileiro - Diaulas Ullysses - Cinemando por aí', description: 'Olá, pessoal! No vídeo de hoje, batemos um papo com o cineasta Diaulas Ullysses sobre a realidade do cinema nacional e seu livro Cinemando por aí, direto do CAV – Centro de Audiovisual de São Bernardo do Campo. Reconhecemos a arte de Milton Santos Jr. (desenhos), Evill Rebouças (orelha), Denis Barbosa (captura CAV), Jonathan Fernandes, Geraldo Arcanjo, Yann Vergari, Soll Domingues, Nikolas Maciel (cenas de bastidores), Diaulas Ullysses, Soll Domingues, Bea Costa e Renato J Silva (fotos de cena, com destaque para Ayrton, Meninices no Coração do Brasil de Vicentini Gomez). Para apoiar o canal, inscreva-se, curta e compartilhe. Me encontre no TikTok, Instagram e Facebook: @lendarioesoterico. Um agradecimento especial aos nossos patronos, sem os quais este trabalho não existiria. Considere se tornar um membro mantenedor do canal e faça a diferença!', thumbnail: 'https://i.ytimg.com/vi/18Z3uCzE6zc/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'YUFjwxoAd_Q', title: 'Yogi Surat - Kundalini Yoga vs Hatha Yoga', description: 'Saudações, amigos! Neste vídeo, converso com a Yogi Surat sobre a diferença entre Hatha Yoga e Kundalini Yoga, e ela ainda compartilha a experiência de viver na floresta. Espero que gostem! Para aulas e contato, siga no Instagram: yogi.surat.kaur. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/YUFjwxoAd_Q/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'om938FH7Hz4', title: 'Victor Valentim - Bazar das Bruxas 2023 - Tenis Clube Paulista', description: 'Saudações, amigos! Abrindo nossa série de entrevistas do Bazar das Bruxas 23 no Tenis Clube Paulista, começamos com o organizador, Victor Valentim do @BosquedosGnomos. Espero que gostem! Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/om938FH7Hz4/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: '7uqXm8jOaE4', title: 'DarkSide Books - Sugestões de leitura com a Camila - Bazar das Bruxas 2023', description: 'Saudações, amigos! Hoje, recebo Camila da @DarkSideBooks com dicas de leituras incríveis e um pouco do universo da caveirinha, direto do Bazar das Bruxas 2023 no Tenis Clube Paulista! Não percam! Visite o site: https://www.darksidebooks.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/7uqXm8jOaE4/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'ufnDR163N1k', title: 'Tania Gori - Bruxaria Cristã - Ganesha - Bazar das Bruxas 23', description: 'Saudações, amigos! Hoje, o bate-papo é com a Tania Gori, proprietária da Casa de Bruxa, sobre Ganesha, Egrégoras, Bruxaria Cristã e a Convenção de Magos e Bruxas de Paranapiacaba. Não percam! Saiba mais sobre a Convenção em: https://www.convencaodebruxas.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/ufnDR163N1k/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'vpevIb5ZgMA', title: 'Lord A. - Espiritualidade para Idiotas - Sombra e Luz - Vampiros - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, a conversa é com Lord A. da @redevampyrica sobre temas fascinantes como O Lado Sombra, a Falsa Luz, vampiros no Brasil e no mundo, Círculo Strigoi e Magia Vampírica. Espero que gostem! Siga Lord A. no Insta: @redevamp. Conheça a Rede Vampírica: https://redevampyrica.com/. Encontre os livros de Lord A.: https://redevampyrica.com/categoria-p.... Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/vpevIb5ZgMA/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'FTN7AVoNlgE', title: 'Wagner Perico - Dicas valiosas para a sua magia dar certo - Magia Wanen - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, nosso bate-papo é com Wagner Perico, sacerdote e representante da Magia Wanen no Brasil. Falamos sobre a magia e como fazê-la dar certo, com dicas de ouro para quem trilha essa jornada. Gravado no Bazar das Bruxas, espero que gostem! Siga Wagner no Insta: @pericowagner. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/FTN7AVoNlgE/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'SezUmwk41Ik', title: 'Claudiney Prieto - Wicca - Iniciação e Auto iniciação - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, nosso bate-papo é com Claudiney Prieto, um dos grandes precursores da Wicca no Brasil. Falamos sobre sua jornada, iniciação e auto iniciação, magias pelo mundo, Old Religion, o Museu de Bruxaria, o Santuário da Grande Mãe e muito mais. Espero que gostem! Conecte-se com Claudiney Prieto: Canal @claudineyprieto, Insta @claudineyprieto, Site Oficial http://www.claudineyprieto.com.br/. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/SezUmwk41Ik/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'Vq0UVZcjJ9E', title: 'Artemisia - Porque Magia Natural - Midias Sociais e Bruxaria - Bazar das Bruxas', description: 'Saudações, amigos!Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais.Espero que gostem!Siga Artemisia no TikTok e Instagram: @ArtemisiaBruxa. Inscreva-se, curta e compartilheos vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas.Siga-me no TikTok e Instagram: @lendarioesoterico. Gratidão profundaa todos os patronos deste trabalho,sem vocês não seria possível.Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/Vq0UVZcjJ9E/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'tHh99aKscJg', title: 'Cedrec Nightingale - Ser bruxo no dia a dia - O elemento fogo - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais. Espero que gostem! Encontre Artemisia no TikTok e Instagram: @ArtemisiaBruxa. Inscreva-se, curta e compartilheos vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas.Siga-me no TikTok e Instagram: @lendarioesoterico. Gratidão profundaa todos os patronos deste trabalho,sem vocês não seria possível.Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/tHh99aKscJg/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'hCsKriczacs', title: 'Cântico à Siringe - Conflito entre bruxos e magistas - Bruxaria Eclética', description: 'Saudações, amigos! Hoje, converso com a Artemisia, Bruxa Natural e TikToker, sobre a escolha de caminho na espiritualidade e o papel das mídias sociais.Espero que gostem! Encontre Artemisia no TikTok e Instagram: @ArtemisiaBruxa . Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok e Instagram:    @lendarioesoterico . Gratidão profunda a todos os patronos deste trabalho,  sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedordeste trabalho,tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/hCsKriczacs/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'fR5DU6wCcX8', title: 'Mãe Ieda de Oyá - Como se tornar um Sacerdote - Umbanda e Candomblé - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, o papo é com a @MaeIedaPauladeOya , onde desvendamos as nuances da Umbanda e do Candomblé, e o que é preciso para se tornar um sacerdote. Espero que gostem! Encontre Mãe Ieda Paula no Instagram: @maeiedapaula .  Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook:  @lendarioesoterico . Gratidão profunda a todos os patronos deste trabalho,  sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/fR5DU6wCcX8/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'dRyotPqXcv4', title: 'A Bruxaria no dia-a-dia - Maçonaria - Alline Lima - Alexandre Garzeri - Dayvi Mizrahi', description: 'Saudações, amigos! Hoje, o papo é com a @MaeIedaPauladeOya, onde desvendamos as nuances da Umbanda e do Candomblé, e o que é preciso para se tornar um sacerdote. Espero que gostem! Encontre Mãe Ieda Paula no Instagram: @maeiedapaula. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho, sem vocês não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/dRyotPqXcv4/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: '-ohz80gwIiU', title: 'Rosana Santiago - Tarot Arthuriano - A lenda do Rei Arthur - Bazar das Bruxas', description: 'Saudações, amigos! Hoje, nosso papo é com a @rosanasantiago5 sobre o fascinante Tarot Arthuriano e sua lenda. Falamos também do cinema e suas inspirações. Espero que gostem! Encontre Rosana Santiago nas redes sociais. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'e-l7qo5ZvLQ', title: 'Harnaldo Ribeiro - Numerologia - Significado do dia de nascimento - Números Maléficos', description: 'Saudações, amigos! Hoje, nosso papo é com a @rosanasantiago5 sobre o fascinante Tarot Arthuriano e sua lenda. Falamos também do cinema e suas inspirações. Espero que gostem! Encontre Rosana Santiago nas redes sociais. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/e-l7qo5ZvLQ/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'N0zjqYoRdCY', title: 'Desvendando a Mesa Radiônica com Guto Morato', description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/N0zjqYoRdCY/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'MkIur2e-oHM', title: 'Recomende um livro parte 1 - 27° Bienal do Livro de SP', description: 'Olá, pessoal! Mesa Radiônica Xamânica: será que funciona? Bati um papo com o psicanalista Guto Morato para entender essa técnica de detecção e envio de energia para pessoas, animais ou locais. Descubra como ela utiliza simbologias do xamanismo, abordando animais de poder, rituais, medicinas nativas, ervas, reiki xamânico e muito mais. Você vai adorar! Para cursos e contato: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Ajude o canal a crescer: inscreva-se, curta e compartilhe os vídeos. Me acompanhe no TikTok, Instagram e Facebook: @lendarioesoterico . Nossa gratidão a todos os patronos, que tornam tudo isso real. Se você puder, torne-se um patrono mantenedor do canal! ', thumbnail: 'https://i.ytimg.com/vi/MkIur2e-oHM/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'ftWKgqUlRVs', title: 'Clube de Literatura Clássica - Bienal do Livro de SP - Sorteio', description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/ftWKgqUlRVs/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'TukQjTJyaUA', title: 'Recomende um livro parte 2 - 27° Bienal do livro de SP', description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/TukQjTJyaUA/hqdefault.jpg', category: 'entrevistas' },
+            { videoId: 'BTaO9X1AlwE', title: 'Entrevista o Tarot por Kao Kazlauckas - Quinta 16/01 às 20h', description: 'Saudações, amigos! Curiosos se a Mesa Radiônica funciona? Fui desvendar os detalhes dessa técnica com o psicanalista Guto Morato! Ele nos explica a Mesa Radiônica Xamânica para detecção e harmonização de energia, utilizando simbologias do xamanismo, animais de poder, rituais, divindades, medicinas, a visão nativa, ervas, reiki xamânico (Sistema Amadeus) e muito mais. Espero que gostem! Para cursos e infos: João Augusto Morato (11) 98650-5039, Insta: @vidaterapiaalquimica, site: www.vidaterapiaalternativa.com. Inscreva-se, curta e compartilhe os vídeos para que a mensagem alcance mais pessoas. Siga-me no TikTok, Instagram e Facebook: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/BTaO9X1AlwE/hqdefault.jpg', category: 'lives entrevistas' },
+            { videoId: 'SBawVYdOugo', title: 'Bate-papo - Fenômenos Ufológicos com Edison Boaventura Jr | Enigmas e Mistérios', description: 'Saudações, amigos! 🌟 Nesta quinta-feira, dia 27, às 20h, teremos uma live emocionante sobre fenômenos ufológicos com o renomado ufólogo @EdisonBoaventura do programa Enigmas e Mistérios! 🚀 Com mais de 40 anos de experiência, Edison discutirá O que são esses fenômenos?, O governo sabe de alguma coisa? e Quais os casos mais intrigantes?. Participe ao vivo, traga suas questões e concorra ao nosso sorteio exclusivo! 🎁 Visite a Loja do Edison: https://www.lojadoedisonboaventura.co.... Inscreva-se, ative as notificações, deixe seu like e compartilhe! Siga-me no Instagram: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se não é patrono e pode, torne-se um membro mantenedor do canal!', thumbnail: 'https://i.ytimg.com/vi/SBawVYdOugo/hqdefault.jpg', category: 'lives entrevistas' },
+            { videoId: 'vMrNAf9F-OY', title: 'Bate-papo - Fenômenos Ufológicos - Nilka e Ronaldo', description: 'Live especial! 🛸 Quinta-feira, dia 27, às 20h, o @EdisonBoaventura, ufólogo com 40 anos de experiência, estará conosco para um bate-papo imperdível sobre fenômenos ufológicos! Vamos explorar O que são?, Há envolvimento governamental? e Quais os casos mais enigmáticos?. Não perca essa chance de interagir e participar do nosso sorteio! 🎁 Acesse a Loja do Edison: https://www.lojadoedisonboaventura.co.... Inscreva-se, curta e compartilhe o canal! Acompanhe-me no Instagram: @lendarioesoterico. Um agradecimento profundo a todos os patronos, sem vocês nada disso seria possível. Considere se tornar um membro mantenedor do canal e faça a diferença!', thumbnail: 'https://i.ytimg.com/vi/vMrNAf9F-OY/hqdefault.jpg', category: 'lives entrevistas' },
+            { videoId: 'O4c4S08jcFw', title: 'Série Elementos - Introdução - Video 1/5', description: 'Saudações, amigos! Apresento a nova Série Elementos do canal! Serão 4 vídeos (Terra, Fogo, Água e Ar) com a participação especial de grandes escolas de magia: Tânia Gori (@taniagori1) da Casa de Bruxa (Ar), Victor Valentim (@bosquedosgnomos) do Bosque dos Gnomos (Terra), Alline Lima (@casatatwaescola1995) da Casa Tatwa (Fogo) e Claudhia Issa (@claudineyprieto) do Santuário da Grande Mãe (Água). O objetivo é absorver informações valiosas e conhecer cada escola. Este é o vídeo de introdução, e os próximos virão em breve! Inscreva-se, curta e compartilhe para que a mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos, sem vocês nada disso seria possível. Se puder, torne-se um patrono mantenedor do canal!', thumbnail: 'https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg', category: 'serie-elementos' },
+            { videoId: '4FQtfrB1k8s', title: 'Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5', description: 'Saudações, amigos! Apresento a nova Série Elementos do canal! Serão 4 vídeos (Terra, Fogo, Água e Ar) com a participação especial de grandes escolas de magia: Tânia Gori (@taniagori1) da Casa de Bruxa (Ar), Victor Valentim (@bosquedosgnomos) do Bosque dos Gnomos (Terra), Alline Lima (@casatatwaescola1995) da Casa Tatwa (Fogo) e Claudhia Issa (@claudineyprieto) do Santuário da Grande Mãe (Água). O objetivo é absorver informações valiosas e conhecer cada escola. Este é o vídeo de introdução, e os próximos virão em breve! Inscreva-se, curta e compartilhe para que a mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos, sem vocês nada disso seria possível. Se puder, torne-se um patrono mantenedor do canal!', thumbnail: 'https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg', category: 'serie-elementos' },
+            { videoId: 'kNDUONUnEJ0', title: 'Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5', description: 'Este vídeo faz parte da nossa série de 4 vídeos sobre os Elementos! Hoje, Tania Gori da Casa de Bruxa (@taniagori1) nos traz conhecimentos aprofundados sobre o Elemento Ar. Espero que goste! Confira a Introdução à série e os vídeos anteriores: [link para Introdução] e [link para Elemento Terra]. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg', category: 'serie-elementos' },
+            { videoId: 'SzVi4CEnlRw', title: 'Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5', description: 'Neste vídeo da nossa série sobre os Elementos, a Alline Lima da Casa Tatwa (@casatatwaescola1995) nos revela as particularidades do Elemento Fogo. Espero que goste! Confira o canal da Alline (@allinelimabruxa) e os outros vídeos da série: Introdução, Elemento Terra e Elemento Ar, ou a playlist completa. Inscreva-se, curta e compartilhe o canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda aos nossos patronos, sem vocês não seria possível. Se puder, torne-se um patrono mantenedor do canal!', thumbnail: 'https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg', category: 'serie-elementos' },
+            { videoId: 'Wp-WJ0RekbM', title: 'Série elementos - Água - Claudhia Issa - Santuário da Grande Mãe - vídeo 5/5', description: 'Este é o vídeo final da Série Elementos, onde Claudhia Issa do Santuário da Grande Mãe nos traz os conhecimentos sobre o Elemento Água! Passamos por 4 escolas incríveis: Victor Valentim (Bosque dos Gnomos) no Elemento Terra, Tania Gori (Casa de Bruxa) no Elemento Ar, e Alline Lima (Casa Tatwa) no Elemento Fogo. Grato a todos que tornaram isso possível e que sejam sempre abençoados! Confira a introdução da série, vídeos de Terra, Ar e Fogo. Siga o canal da Claudhia Issa (@claudiacrip) e da Alline Lima (@allinelimabruxa), e a Casa Tatwa (@casatatwaescola1995). Acesse a playlist completa da série. Inscreva-se, curta e compartilhe os vídeos do canal para nos ajudar a alcançar mais pessoas #RumoAos100k. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, nada seria possível. Se puder, torne-se um patrono mantenedor deste trabalho e seja membro do canal!', thumbnail: 'https://i.ytimg.com/vi/Wp-WJ0RekbM/hqdefault.jpg', category: 'serie-elementos' },
+            { videoId: 'D7MAQdl6tiE', title: 'O poder espiritual da borboleta - Transformação - Totem - Animal de poder', description: 'Saudações, amigos lendários! ✨ Neste vídeo, desvendamos o animal de poder Borboleta, a força mística deste arquétipo e seu poderoso totem. Pessoas com a borboleta como guardiã recebem uma chave para profunda evolução e aprimoramento, um chamado espiritual ligado ao elemento Ar e às Fadas, representando o melhor que podemos ser. Espero que goste e que a energia ancestral esteja em sua jornada! Conhece alguém que se beneficiaria? Compartilhe o vídeo e ajude o canal. Seja um patrono a partir de R$2,00 em https://apoia.se/lendario.', thumbnail: 'https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg', category: 'animais-poder totem' },
+            { videoId: 'Zt5ao_e2y-A', title: 'Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder', description: 'Saudações, amigos e irmãos lendários! 🌟 Neste vídeo, o assunto é o animal de poder Beija-flor (ou colibri), a pura expressão da frequência de luz e da divindade. Espero que traga ainda mais informações para você! Já é inscrito? Gratidão profunda! Seu apoio é essencial para levarmos este trabalho adiante. Considere se tornar um patrono mantenedor em: https://apoia.se/lendario.', thumbnail: 'https://i.ytimg.com/vi/Zt5ao_e2y-A/hqdefault.jpg', category: 'animais-poder totem ensinamentos-xamanicos' },
+            { videoId: 'ykdzJtuxs0o', title: 'O poder espiritual do cavalo - Totem - Animal de poder', description: 'Saudações, família lendária! No vídeo de hoje, vamos desvendar o Animal de Poder Cavalo e suas características como guardião espiritual, incluindo um pouco sobre seu arquétipo. Que o totem do Cavalo te traga movimento e intuição necessários na sua jornada! Espero que goste. Confira a playlist completa de Animais de Poder: [link para playlist]. #animaldepoder #xamanismo #totemcavalo. Inscreva-se, curta e compartilhe os vídeos do canal para ajudar nossa mensagem a alcançar mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, seria muito difícil seguir em frente. Se puder, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg', category: 'animais-poder totem ensinamentos-xamanicos' },
+            { videoId: 'aDNqauEvQtY', title: 'O poder espiritual do lobo - Totem - Animal de poder', description: 'Saudações, queridos amigos! 👋 O assunto da semana é o animal de poder Lobo, o guardião do sul no xamanismo. Desvende suas características de alcateia, sua sabedoria como professor dos mais jovens, e as poderosas propriedades de liderança, trabalho em equipe e proteção que este espírito totem representa. Que este vídeo sobre o lobo sagrado seja útil em sua jornada! Conhece alguém que se beneficiaria? Compartilhe e espalhe boas notícias. Gratidão por acompanhar o canal! Seja um patrono mantenedor em: http://apoia.se/lendario.', thumbnail: 'https://i.ytimg.com/vi/aDNqauEvQtY/hqdefault.jpg', category: 'animais-poder totem ensinamentos-xamanicos' },
+            { videoId: '3r7yfkUKUMw', title: 'Poder espiritual da coruja - Totem - Animal de poder', description: 'Irmãos lendários, mergulhem na sabedoria do Totem da Coruja! Conheçam as propriedades deste animal de poder, sua medicina profunda e a capacidade de ver além, nos mundos espirituais e na escuridão. A coruja guia grandes aprendizados em sonhos e guarda muitos mistérios que vamos desbravar. Compartilhe se este vídeo puder iluminar alguém. Ajude o canal a se manter firme e seja um patrono mantenedor: https://apoia.se/lendario.', thumbnail: 'https://i.ytimg.com/vi/3r7yfkUKUMw/hqdefault.jpg', category: 'animais-poder totem ensinamentos-xamanicos' },
+            { videoId: 'LQ_VKuWSsLg', title: 'Simbolos Magickos. O que utilizar e o que evitar', description: 'Este é um vídeo mais antigo, mas essencial, sobre Símbolos Mágickos, o primeiro de nossa série! Nele, exploro os principais símbolos, suas propriedades, e quais usar ou evitar, servindo como um guia para estudantes de espiritualismo, esoterismo ou quem busca conhecimento. Espero que goste! Conheça também os outros títulos do canal. Gratidão profunda por todo o apoio! Faça parte do crescimento: inscreva-se, curta e compartilhe, espalhando conhecimento. Seja sempre um lendário em sua jornada! Torne-se um patrono mantenedor deste trabalho.', thumbnail: 'https://i.ytimg.com/vi/LQ_VKuWSsLg/hqdefault.jpg', category: 'outros' },
+            { videoId: 'L0T-Ln8IDdA', title: 'Simbolos Magickos. O que utilizar e o que evitar. #2', description: 'Saudações, queridos amigos! Devido ao sucesso do primeiro vídeo e muitos pedidos, hoje trago a Parte 2 sobre Simbolismo Mágicko! Espero que gostem! Faça parte do crescimento deste canal: inscreva-se, curta e compartilhe. Espalhe conhecimento a quem busca e seja sempre um lendário em sua jornada! Torne-se um patrono mantenedor deste trabalho em: https://apoia.se/lendario.', thumbnail: 'https://i.ytimg.com/vi/L0T-Ln8IDdA/hqdefault.jpg', category: 'outros' },
+            { videoId: 'u0HI1JkoJGg', title: 'Varinhas e instrumentos magickos', description: 'Saudações, amigos! No vídeo de hoje, mergulhamos no universo das varinhas e instrumentos espirituais e mágicos, explorando como eles nos auxiliam e ganham força com nossa energia. Abordo também vestimentas e objetos sagrados em geral, e trago detalhes sobre o sorteio das 10 varinhas para os patronos! Gratidão especial ao Ateliê Mystic Ghob do Robert Leite (@daftrobertpunk), que produziu as varinhas. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos; sem vocês, seria muito difícil seguir em frente. Se puder, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/u0HI1JkoJGg/hqdefault.jpg', category: 'outros' },
+            { videoId: 'zscptxAPdT0', title: 'NÃO escolha uma carta!', description: 'Saudações, irmãos lendários! 🔮 Hoje, o assunto é o Tarot e práticas oraculares como Faça uma pergunta, Mensagem do dia/semana/mês e Escolha uma carta. Mostro na prática como essas mensagens podem ser genéricas, comprometendo o resultado. Meu objetivo é trazer um ensinamento sincero de despertar, um ponto de vista a se pensar, sem desrespeitar ninguém. Para ajudar, faço leituras explicando o processo de interpretação. Espero que este vídeo traga muita luz! Gratidão a todos os inscritos; sua proximidade fortalece este trabalho! Conhece alguém que se beneficiaria? Compartilhe e seja um transmissor de boas mensagens. Seja um patrono mantenedor deste trabalho.', thumbnail: 'https://i.ytimg.com/vi/zscptxAPdT0/hqdefault.jpg', category: 'tarot' },
+            { videoId: 'SN7EaV4nHJo', title: 'Leitura de Tarot, uma pequena demonstração de como ocorre a leitura deste oráculo', description: 'Existem diversos modos de leitura de Tarot! Neste vídeo, faço uma pequena demonstração de como realizo uma leitura online, utilizando um trecho autorizado do atendimento (menos pessoal para o cliente). Se você nunca viu, esta é a base para entender o processo! Lembre-se: leituras oraculares exigem preparo, treino, intuição e espiritualidade; utilizo um método próprio. Todas as leituras ocorrem sob doação livre, sem valor fixo, para que os mestres multipliquem sua caridade. Inscreva-se! Faça parte deste canal! Abençoado seja!', thumbnail: 'https://i.ytimg.com/vi/SN7EaV4nHJo/hqdefault.jpg', category: 'tarot' },
+            { videoId: 'PvvjsxsD38Q', title: 'Consulta de Tarot e aconselhamento espiritual', description: 'Para consultas personalizadas, entre em contato via WhatsApp ou chave Pix: (11) 96058-5584. Inscreva-se, curta e compartilhe os vídeos do canal para que nossa mensagem alcance mais pessoas. Siga-me no Instagram, Facebook e Twitter: @lendarioesoterico. Gratidão profunda a todos os patronos deste trabalho; sem vocês, não seria possível. Se você não é e tem a possibilidade, torne-se um patrono mantenedor deste trabalho, tornando-se membro do canal.', thumbnail: 'https://i.ytimg.com/vi/PvvjsxsD38Q/hqdefault.jpg', category: 'tarot ensinamentos-lendarios' },
+            { videoId: '0C8z38ORAZE', title: 'Aula Tarot Arcanos Maiores - Ultimo convite!', description: 'Saudações, amigos! Nossas aulas de Tarot estão chegando e este é o último convite para quem ainda não se inscreveu! Faltam poucos dias, não deixe para a última hora! Focaremos na interpretação prática, com o método que utilizo nas lives (primeira aula) e atendimentos (segunda aula). Valor de contribuição sugerido: R$ 50,00. Membros contribuintes do canal (YouTube ou Apoia.se) não pagam: basta informar interesse via WhatsApp. Conheça os modos de contribuição para as aulas e participe!', thumbnail: 'https://i.ytimg.com/vi/0C8z38ORAZE/hqdefault.jpg', category: 'tarot ensinamentos-lendarios' },
+            { videoId: 'Vm-q3zLMoJE', title: 'Jornada Espiritual - Por onde começar - Os primeiros passos', description: 'Saudações, amigos lendários! 🙏 Muitos me perguntam: como começar a jornada espiritual? Qual livro ler, que estudos ou iniciações fazer, e quais os primeiros passos? Este vídeo responde a essas questões, ajudando você a refletir sobre autonomia e escolhas. Que a luz e a gratidão profunda por seu apoio acompanhem sua jornada! #CreatorsforChange. Agradeço aos primeiros patronos, pontos de luz essenciais para este trabalho. Sua colaboração retornará em luz. Apoie em: https://apoia.se/lendario. Se este conteúdo auxiliar alguém, compartilhe!', thumbnail: 'https://i.ytimg.com/vi/Vm-q3zLMoJE/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: '7Gg42P2-wzo', title: 'Tecnicas Espirituais, porque não funcionam comigo?', description: 'Neste vídeo falo sobre porque geralmente técnicas espirituais que aprendemos de terceiros parecem não funcionar tão bem conosco, esta questão é uma percepção que tenho a muito tempo, e a dificuldade que sempre senti em incluir ensinamentos externos a minha jornada, pelo fato de nunca experienciar tão bem quanto a própria pessoa que canalizou o ensinamento ou técnica, seguindo a linha de pensamento indico porque doutrinas e dogmas não funcionam a nível espiritual. Trago neste vídeo minha percepção do porquê não funcionar tão bem com a gente como funciona com o seu criador, espero que gostem!', thumbnail: 'https://i.ytimg.com/vi/7Gg42P2-wzo/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: '8Th7tbmWmr0', title: 'Quem é Deus e qual a nossa missão - visão esotérica e universalista', description: 'Neste vídeo falo sobre deus, quem seria ele, e qual o nosso proposito de vida, com tanto dogmatismo e respostas prontas acerca do assunto, decidi tratar de modo universalista desmontando de modo racional o que sabemos sobre ele, longe de encerrar um assunto tão profundo, mas confiante de auxiliar alguém a despertar e a ir mais longe na questão.', thumbnail: 'https://i.ytimg.com/vi/8Th7tbmWmr0/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'S3F0iBX4aiE', title: '4 Estações e Espiritualidade - Aplicações da Magia da Natureza', description: 'Neste vídeo trago um ensinamento da magia da natureza, a energia de cada estação e como podemos nos beneficiar espiritualmente dela, desde buscar respostas espirituais, desenvolver dons a tambem rituais que beneficie a prosperidade, saude, vigor, celebração da vida e muito mais, espero que traga boas informações para você.', thumbnail: 'https://i.ytimg.com/vi/S3F0iBX4aiE/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'BQMj7gx8Nz4', title: 'A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé', description: 'Saudações amigos queridos, neste vídeo falo sobre a vida secreta das arvores,  o poder espiritual das arvores,  também conhecido pelo caminho xamânico como Povo em Pé. Sua mística, benefícios, vibração da floresta e conexão espiritual', thumbnail: 'https://i.ytimg.com/vi/BQMj7gx8Nz4/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'sxZrTuOE098', title: 'A Magia do Silêncio - O Poder do Silêncio - O Mestre mais antigo do universo', description: 'Saudações queridos amigos, devido alguns acontecimentos decidi falar desta vez sobre o poder do silêncio ou a magia do silêncio, como este mestre profundo é essencial a nossa jornada e como muitas pessoas temem tanto ele, trago alguns ensinamentos antigos sobre o silêncio, além de novas percepções pra gente analisar, o silêncio mais importante é o interno, é sabermos acalmar a mente, e deixar os pensamentos fluírem de modo harmonioso, é eliminar o chiado causado pela agitação e insegurança, ao qual comparo com moscas, aquilo que nos perturba e dispersa.', thumbnail: 'https://i.ytimg.com/vi/sxZrTuOE098/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: '8c7WjoPtJWU', title: 'Consciente Coletivo', description: 'Saudações irmãos lendários, hoje falaremos da consciência coletiva, ou inconsciência coletiva, o que de fato é este termo e como podemos nos beneficiar dele, espero que goste espero que seja útil a você!', thumbnail: 'https://i.ytimg.com/vi/8c7WjoPtJWU/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'ZWf2SBiRJ1A', title: 'Templo interior - Poderosa técnica de conexão espiritual - Tela mental', description: 'Alguns inscritos do canal me questionaram do porque eles não conseguirem se conectar com a espiritualidade, então decidi trazer esta técnica que auxilia muito na conexão e manutenção do contato espiritual, a tela mental ou templo interior. Este tecnica utilizo desde sempre e tem me auxiliado muito em diversos processos, tanto de conexão com o mundo espiritual quanto o aprimoramento da intuição, a sensitividade, o ambiente interno adequado para o contato espiritual e muito mais, o despertar da consciência, elevação de frequências espirituais, entre outros, espero que gostem e que possa ser útil para alguém.', thumbnail: 'https://i.ytimg.com/vi/ZWf2SBiRJ1A/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'EN73TXQJupQ', title: 'O Poder da Lua - A Magia da Lua', description: 'Saudações queridos amigos, desta vez decidi falar sobre o poder espiritual da lua ou a magia da lua.', thumbnail: 'https://i.ytimg.com/vi/EN73TXQJupQ/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'AfSwp54FBU', title: 'Como montar um altar magicko e espiritual', description: 'Este é o tema deste vídeo, que vai além da receita pratica de como fazer mas porque fazer, acredito que as dicas valem para diversos seguimentos, sejam, magickos, espirituais ou religiosos... para mim o altar não é para todas as pessoas e sim para aquelas que desejam criar seu cantinho fisico espiritual sagrado, nem todos gostam ou acreditam em altar, por isso não é uma obrigatoriedade possuir um altar, mas deve ser realizado se intuído em fazer, se for agregar conexão e positividade a sua força espiritual, espero que o vídeo possa ser útil de algum modo a você.', thumbnail: 'https://i.ytimg.com/vi/AfSwp54FBU/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: '771CcrsutYY', title: 'Roupa preta - Cor da Roupa e Espiritualidade - Magia das Cores', description: 'Neste vídeo falo sobre a magia das cores e a importância das cores das roupas, sejam elas do dia a dia ou vestes espirituais. Quando usar roupa preta, qual a diferença entre roupa preta e roupa branca, onde e como utilizar cada cor, cores do arco íris e dos chacras. Cor de roupa importa para a nossa spiritualidade? Como se beneficiar das roupas coloridas.', thumbnail: 'https://i.ytimg.com/vi/771CcrsutYY/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'pyyBqOTRuNc', title: 'O Povo Sentado - O poder espiritual das pedras', description: 'Neste vídeo falo sobre o poder espiritual das pedras e o reino mineral como um todo desde a simples rocha ate os mais belos cristais, as memorias armazenadas e suas cargas energéticas de absorção e irradiação, espero que acrescente boas informações a você.', thumbnail: 'https://i.ytimg.com/vi/pyyBqOTRuNc/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'lZPhMxmI0Kc', title: 'Reiki - Johrei - Cura pelas mãos', description: 'Saudações queridos amigos, pensando em nossa jornada espiritual e o que pode somar, decidi falar sobre o desbloqueio energético como uma ferramenta espiritual, há diversas técnicas espirituais de cura pelas mãos, e hoje decidi falar sobre o Reiki, falo um pouco tambem sobre o Johrei e porque devemos evita-lo. Espero que traga boas informações para você, abençoado seja profundamente!', thumbnail: 'https://i.ytimg.com/vi/lZPhMxmI0Kc/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: '4BTOHbBTLq0', title: 'A Justiça divina - A Lei do Retorno - Aqui se faz aqui se paga?', description: 'Saudações amigos, será que com tanta impunidade por aí existe de fato alguma justiça divina atuando nos bastidores? Existe a lei do retorno ou a impunidade espiritual é certa? Existe céu e inferno? Esses temas tão polêmicos são o assunto deste vídeo, espero que possa lhe ser útil.', thumbnail: 'https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg', category: 'ensinamentos-lendarios' },
+            { videoId: 'xhhcl8Ogw2U', title: 'Meditação Guiada - Desbloqueio da terceira visão - Conexão espiritual', description: 'Esta é uma meditação guiada criada para auxiliar o desbloqueio da glândula pineal e abertura da terceira visão, os sons e estímulos neste vídeo foi preparado para auxiliar no desbloqueio e conexão espiritual, só faça se realmente desejar passar por este processo, espero que goste e que possa ser útil a sua jornada. ', thumbnail: 'https://i.ytimg.com/vi/xhhcl8Ogw2U/hqdefault.jpg', category: 'meditacao' },
+            { videoId: 'MCAQ-5I1Mg8', title: 'Jornada Xamânica - Conexão com seu mestre interior - Meditação', description: 'Saudações amigos, diferente da meditação guiada neste vídeo decidi fazer uma jornada xamânica, ao invés de direionar com palavras em todo o processo meditativo neste eu apenas ambientei e criei uma atmosfera benéfica para uma jornada espiritual, deixe sua intuição guiar durante a meditação e se permita viajar ao enontro do seu mestre interior. Medite na cachoeira, voe por aí com seu animal de poder, mergulhe fundo no mar, ou sente com uma sábia arvore para absorver sua sabedoria, ande pelo bosque, na chuva ou saia flutuando pelo universo. Esta jornada possui som ritmio de tambor xamanico junto com sons da natureza em diversos ambientes diferentes, incluindo passaros, som da chuva do mar, do fogo, da floresta o som do universo, no tambor dou 8inicio a um ritmo mais forte para induzir um estado de jornada e termino com a batida do coração, uma batida suave para finalizar e auxiliar o sono, este vídeo foi produzido com muito carinho na intenção de auxiliar cada vez mais a conexão espiritual, espero que seja de muita luz para você!', thumbnail: 'https://i.ytimg.com/vi/MCAQ-5I1Mg8/hqdefault.jpg', category: 'meditacao' },
+            { videoId: 'F9WQqbgB9Po', title: 'Meditação Guiada - Projeção Astral - Viagem Astral', description: 'Saudações esta é uma meditação guiada para auxiliar a projeção astral ou viagem astral, recomendo que utilize fone de ouvido e faça esta meditação no período que for dormir para aproveitar o estado profundo de relaxamento, refaça a meditação quantas vezes desejar, espero que seja uma experiência positiva para você.', thumbnail: 'https://i.ytimg.com/vi/F9WQqbgB9Po/hqdefault.jpg', category: 'meditacao' },
+            { videoId: 'jbeO-4BIdbY', title: 'Meditação Guiada - Acessando a sabedoria das arvores', description: 'Saudações amigos, esta meditação guiada tem por objetivo auxiliar você a se conectar com a sabedoria das arvores e com o reino vegetal, te trazendo mais intuição, conexão e sabedoria, a intenção do video é te despertar para as forças sutis que permeiam toda natureza e em especial as arvores ancestrais, espero que possa se beneficiar deste trabalho. ', thumbnail: 'https://i.ytimg.com/vi/jbeO-4BIdbY/hqdefault.jpg', category: 'meditacao' },
+            { videoId: 'aNSN-92f9K8', title: 'Live Tarot - Domingo 28/05', description: 'Saudações amigos, Neste domingo dia 25/05 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', thumbnail: 'https://i.ytimg.com/vi/aNSN-92f9K8/hqdefault.jpg', category: 'lives' },
+            { videoId: '2gVFSMGhiis', title: 'Coroa de Flores - Dicas de Leitura Clássica - Live Tarot - Domingo 04/06', description: 'Saudações amigos, Neste domingo dia 04/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', thumbnail: 'https://i.ytimg.com/vi/2gVFSMGhiis/hqdefault.jpg', category: 'lives' },
+            { videoId: 'yyaAF4mG16M', title: 'Live Tarot - Domingo 09/07', description: 'Saudações amigos, Neste domingo dia 09/07 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!   ', thumbnail: 'https://i.ytimg.com/vi/yyaAF4mG16M/hqdefault.jpg', category: 'lives' },
+            { videoId: 'jAQIqhGH99Q', title: 'Live Tarot - Domingo 18/06', description: 'Saudações amigos, Neste domingo dia 18/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', thumbnail: 'https://i.ytimg.com/vi/jAQIqhGH99Q/hqdefault.jpg', category: 'lives' },
+            { videoId: 'ZyNuo4toYvg', title: 'Live Tarot - Domingo 25/06', description: 'Saudações amigos, Neste domingo dia 25/06 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão! ', thumbnail: 'https://i.ytimg.com/vi/ZyNuo4toYvg/hqdefault.jpg', category: 'lives' },
+            { videoId: 'KgY70FTA3pc', title: 'Live Tarot - Domingo 16/07', description: 'Saudações amigos, Neste domingo dia 16/07 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', thumbnail: 'https://i.ytimg.com/vi/KgY70FTA3pc/hqdefault.jpg', category: 'lives' },
+            { videoId: '0TPRx4EcQeY', title: 'Convenção de Magos e Bruxas de Paranapiacaba 2022', description: 'Saudações amigos, neste vídeo trago toda a experiência que vivi neste que foi para mim a maior edição da convenção de Magos e Bruxas de Paranapiacaba, video produzido com muito carinho, espero que goste! ', thumbnail: 'https://i.ytimg.com/vi/0TPRx4EcQeY/hqdefault.jpg', category: 'eventos' },
+            { videoId: '9OPH0yly70g', title: 'Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs', description: 'Saudações amigos, trago imagens de como foi o Mercado Místico primeira edição de 2020.', thumbnail: 'https://i.ytimg.com/vi/9OPH0yly70g/hqdefault.jpg', category: 'eventos' },
+            { videoId: '_0YsJ1gWIcw', title: 'Evento Incrível!! Bazar das Bruxas 2021 - confira!', description: 'Neste dia das bruxas - halloween estive no Bazar das bruxas que ocorreu na vila Mariana em SP, foi um evento magnifico cheio de convidados especiais, artesão talentosos, oraculistas, dançarinos etc, com direito a palestras (inclusive minha) lançamento de livro e muito mais, confira!', thumbnail: 'https://i.ytimg.com/vi/_0YsJ1gWIcw/hqdefault.jpg', category: 'eventos' },
+            { videoId: 'r2Q2hcbrFjg', title: 'Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?', description: 'Saudações amigos, neste vídeo eu entrevisto o Caique Pereira do canal @escolaparayoutubers, falamos sobre os novos canais e se ainda vale a pena iniciar um canal hoje do zero.', thumbnail: 'https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg', category: 'eventos' },
+            { videoId: '135D0iEWmAE', title: '3º Bazar das Bruxas - Bosque dos Gnomos 2019', description: 'Saudações amigos, hoje o vídeo é sobre o 3º Bazar das Bruxas, organizado pelo bosque dos gnomos do Victor Valentim, espero que gostem!', thumbnail: 'https://i.ytimg.com/vi/135D0iEWmAE/hqdefault.jpg', category: 'eventos' },
+            { videoId: 'BuB6POFFkOg', title: 'Halloween Bosque dos Gnomos 2017', description: 'Saudações irmãos lendários, participei este ano da festa do dia das bruxas no bosque dos gnomos, com o Victor Valentim e sua equipe, musicas, rituais, palestras e muita harmonia, confiram neste vídeo como foi o evento.', thumbnail: 'https://i.ytimg.com/vi/BuB6POFFkOg/hqdefault.jpg', category: 'eventos' },
+            { videoId: 'ORJdIP3AcgI', title: 'Holistic Fair Atibaia - 2022', description: 'Saudações amigos, estive na Holistic Fair 2022 em Atibaia e o evento foi incrível, espero que gostem!', thumbnail: 'https://i.ytimg.com/vi/ORJdIP3AcgI/hqdefault.jpg', category: 'eventos' },
+            { videoId: 'vKHSu0bNvnE', title: 'Ayahuasca, Santo Daime, experiência e opinião pessoal', description: 'Neste vídeo falo um pouco sobre o chá de ayahuasca, hoasca ou santo daime para alguns segmentos religiosos, minha experiência pessoal e opinião referente ao uso.', thumbnail: 'https://i.ytimg.com/vi/vKHSu0bNvnE/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'quWr1qIJLyg', title: 'Tambor e Maracá, a particularidade desses instrumentos espirituais', description: 'Neste vídeo trago algumas propriedades do tambor e do maracá e sua profunda utilização espiritual e viagem da alma, esses instrumentos tem o poder de auxiliar o processo de viagem espiritual, nos levar para dentro de nós e para o profundo, este vídeo mostra algumas das qualidades, espero que gostem!', thumbnail: 'https://i.ytimg.com/vi/quWr1qIJLyg/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'J-9SOpyoD3o', title: 'Poder espiritual do cachorro - Totem - Animal de poder', description: 'Saudações amigos, neste vídeo decidi comentar o ocorrido com o cachorro morto pelo segurança do supermercado carrefour e tbm sobre o poder espiritual desses animais, alem de suas propriedades como animal de poder. Espero que as informações sobre este totem possa ser útil a você.', thumbnail: 'https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'q8TvFlGq4ZI', title: 'Poder espiritual dos gatos - Purificação - Totem - Animal de poder', description: 'Neste vídeo decidi falar sobre o poder espiritual dos gatos e sua parceria para conosco, amizade essa que dura milênios, desde antes dos egípcios, passando pela energia budista, pelos caminhos pagãos, da magia, sobrevivendo a perseguição junto com as bruxas e chegando ao nosso tempo. Os gatos são seres muito espirituais.', thumbnail: 'https://i.ytimg.com/vi/q8TvFlGq4ZI/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'TdeOKL4RJEg', title: 'O poder espiritual do elefante - Totem - Animal de poder', description: 'Saudações amigos lendários, neste vídeo falamos um pouco sobre o animal de poder elefante, o poder espiritual e suas características como um animal guardião, falamos tambem o que os irmãos podem esperar caso tenha este animal como totem. O elefante é um animal muito antigo, profundamente ligado aos mestres espirituais legítimos, além de ser um animal sagrado por muitos povos, no xamanismo não é diferente, o elefante trás em sua medicina, o resgate de alma e de essência, força e sabedoria para superar obstáculos, além de trazer ensinamentos perdidos no tempo, espero que goste do vídeo e que possa lhe ser úteis essas informações, abençoados sejamos!', thumbnail: 'https://i.ytimg.com/vi/TdeOKL4RJEg/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'Yf70vQk4S7Q', title: 'O poder espiritual da aranha - Totem - Animal de poder', description: 'Saudações amigos, o video de hoje é sobre o animal de poder aranha quais as características deste grande guardião. O totem aranha possui características muito profundas com os sonhos e pensamentos, além de ser um grande guia para a nossa análise íntima mais profunda, o significado da sua teia se estande ate o filtro dos sonhos, que foi criado e inspirado pelo tecer da avó aranha, espero que este vídeo possa ser útil a você!', thumbnail: 'https://i.ytimg.com/vi/Yf70vQk4S7Q/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'v1edlSPCUYA', title: 'O poder espiritual do golfinho - Totem - Animal de poder', description: 'Saudações amigos, hoje trago o vídeo sobre o animal de poder golfinho, e suas características espirituais, como este animal pode nos auxiliar e quais características das pessoas cujo o totem seja o golfinho.', thumbnail: 'https://i.ytimg.com/vi/v1edlSPCUYA/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'rh7E20lkd-Q', title: 'O poder espiritual do Leão - Totem - Animal de Poder', description: 'Saudações amigos, neste vídeo falo sobre o poder espiritual do leão tanto seu arquétipo quanto o animal de poder, o totem leão possui características de um grande guardião e todos que possui este animal de poder se beneficiam desta característica. O arquétipo leão possui também características negativas e trato sobre isso também no vídeo, aqueles que não possuem o leão como animal de poder pode também se beneficiar de suas características de guardião o convidando a se aproximar.', thumbnail: 'https://i.ytimg.com/vi/rh7E20lkd-Q/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: '6Z6QELUK7xY', title: 'O poder espiritual do urso - Totem - Animal de poder', description: 'Saudações queridos amigos, no vídeo de hoje falaremos sobre o animal de poder urso e suas características espirituais. O urso possui uma energia poderosa de xamã, sendo um dos grandes mestres dentre os animais guardiões, representante do elemento terra, direção oeste dentro da roda das quatro direções, o totem urso é um eremita nato, levando os homens para a interiorização profunda e verdadeira, o poder espiritual do urso vai muito além de suas características físicas como força, bravura e superação, o mestre urso vem ensinar a verdadeira profundidade espiritual, esquecida no tempo.', thumbnail: 'https://i.ytimg.com/vi/6Z6QELUK7xY/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: 'SD2qgUakXqw', title: 'Poder espiritual da águia - Totem - Animal de poder', description: 'Saudações amigos lendários, neste vídeo falo sobre o animal de poder águia e suas características espirituais, além do totem falo também do arquétipo, e sua influência positiva a quem busca um recomeço na via ou se encontrar em algum novo tipo de negócio, arquétipo águia expressa foco e concentração, visão empreendedora, já o poder espiritual do totem, vemos um guardião que trás a visão plena, derrubando os véus, além de proporcionar força e coragem a quem atrai ou manifesta esta medicina.', thumbnail: 'https://i.ytimg.com/vi/SD2qgUakXqw/hqdefault.jpg', category: 'ensinamentos-xamanicos' },
+            { videoId: '3Q6BtjJa4NI', title: 'Em breve minha participação com a Tais Pavanelli na Astral TV', description: 'Em breve vai para o ar pela Astral Tv?, minha participação no programa Cozinha Encantada com a Tais Pavanelli.', thumbnail: 'https://i.ytimg.com/vi/3Q6BtjJa4NI/hqdefault.jpg', category: 'entrevistas' }
         ];
 
         const videoGrid = document.querySelector('.video-grid');
@@ -1126,9 +630,8 @@
         const videoError = document.getElementById('video-error');
         const paginationContainer = document.getElementById('pagination-container');
 
-        // >>> INÍCIO - LÓGICA DE PAGINAÇÃO (NOVO) <<<
         let currentPage = 1;
-        const videosPerPage = 10;
+        const videosPerPage = 9;
         let currentFilteredVideos = [];
 
         function renderPaginationControls() {
@@ -1147,7 +650,10 @@
                 btn.addEventListener('click', () => {
                     currentPage = i;
                     displayPage();
-                    window.scrollTo(0, 0); // Opcional: rola a tela para o topo
+                    const galleryContainer = document.querySelector('.video-gallery-container');
+                    if (galleryContainer) {
+                        galleryContainer.scrollIntoView({ behavior: 'smooth' });
+                    }
                 });
                 paginationContainer.appendChild(btn);
             }
@@ -1161,8 +667,6 @@
             renderVideoGrid(videosToRender);
             renderPaginationControls();
         }
-        // >>> FIM - LÓGICA DE PAGINAÇÃO <<<
-
 
         function renderVideoGrid(videosToRender) {
             videoGrid.innerHTML = '';
@@ -1182,8 +686,7 @@
                         <h3>${video.title.substring(0, 40)}${video.title.length > 40 ? '...' : ''}</h3>
                         <p>${video.description.substring(0, 100)}${video.description.length > 100 ? '...' : ''}</p>
                         <button class="ver-mais-btn">Ver Mais</button>
-                    </div>
-                `;
+                    </div>`;
                 videoGrid.appendChild(card);
             });
         }
@@ -1192,25 +695,16 @@
             try {
                 videoError.style.display = 'none';
                 popupIframe.style.display = 'block';
-                // URL do YouTube Embed corrigida
                 popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0&enablejsapi=1`;
                 
-                popupIframe.onload = () => {
-                    // Esta verificação pode não ser confiável devido a restrições de cross-origin
-                };
-                popupIframe.onerror = () => {
-                    popupIframe.style.display = 'none';
-                    videoError.style.display = 'flex';
-                };
-
                 popupTitle.innerText = videoData.title;
                 popupDescription.innerText = videoData.description;
                 
-                const pageUrl = encodeURIComponent(window.location.href);
+                const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${videoData.videoId}`);
                 const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
-                popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${pageUrl}`;
-                popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-                popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}`;
+                popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${videoUrl}`;
+                popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${videoUrl}`;
+                popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${videoUrl}`;
 
                 popup.classList.add('visible');
                 document.body.style.overflow = 'hidden';
@@ -1232,11 +726,9 @@
 
         function applyFilters() {
             const activeFilter = dropdownList.querySelector('.active').dataset.filter;
-            // Atualiza a lista de vídeos filtrados
             currentFilteredVideos = videosData.filter(video => {
                 return activeFilter === 'all' || video.category.includes(activeFilter);
             });
-            // Reseta para a primeira página e exibe
             currentPage = 1;
             displayPage();
         }
@@ -1263,8 +755,7 @@
                         <div class="search-result-info">
                             <h4>${video.title}</h4>
                             <p>${video.description}</p>
-                        </div>
-                    `;
+                        </div>`;
                     item.addEventListener('click', () => {
                         openPopup(video);
                         searchInput.value = '';
@@ -1304,6 +795,8 @@
                 event.preventDefault();
                 dropdownList.querySelector('.active').classList.remove('active');
                 link.classList.add('active');
+                const selectedCategory = link.textContent;
+                dropdownToggle.querySelector('span').textContent = selectedCategory;
                 dropdownList.classList.remove('open');
                 dropdownToggle.classList.remove('open');
                 applyFilters();
@@ -1311,17 +804,39 @@
         });
         
         document.addEventListener('click', (event) => {
-            if (!dropdownContainer.contains(event.target)) {
+            if (dropdownContainer && !dropdownContainer.contains(event.target)) {
                 dropdownList.classList.remove('open');
                 dropdownToggle.classList.remove('open');
             }
-            if (!searchResultsDropdown.contains(event.target) && event.target !== searchInput) {
+            if (searchResultsDropdown && !searchResultsDropdown.contains(event.target) && event.target !== searchInput) {
                 searchResultsDropdown.style.display = 'none';
             }
         });
 
-        // Chamada inicial para renderizar a primeira página de todos os vídeos
         applyFilters();
+
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+
+        if (mobileNavToggle && mobileNav && closeNavBtn) {
+            mobileNavToggle.addEventListener('click', () => mobileNav.classList.add('is-active'));
+            closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
+        }
+
+        const header = document.querySelector('header');
+        if (header) {
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop && scrollTop > 150) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, { passive: true });
+        }
     });
     </script>
 </body>
