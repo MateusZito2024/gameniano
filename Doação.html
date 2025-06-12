@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação – Lendário TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* 1. ESTILOS GERAIS E VARIÁVEIS */
+        :root {
+            --dark-background: #0d0d0d;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2c2c2c;
+            --text-light: #f0f0f0;
+            --gold: #D4AF37;
+            --border-color: #333;
+            --font-cinzel: 'Cinzel', serif;
+            --font-montserrat: 'Montserrat', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: var(--font-montserrat);
+            background-color: var(--dark-background);
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 2. CABEÇALHO E RODAPÉ */
+        header {
+            background-color: var(--dark-gray);
+            padding: 15px 5%;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo img { height: 55px; }
+        header nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        header nav ul li { margin-left: 35px; }
+        header nav ul li a {
+            font-weight: 500;
+            font-size: 0.95em;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover, header nav ul li a.active { color: var(--gold); }
+        header .social-icons a {
+            color: var(--text-light);
+            font-size: 22px;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+        }
+        header .social-icons a:hover { color: var(--gold); }
+        
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--text-light);
+            padding: 60px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+        .footer-logo-section {
+            flex: 1;
+            min-width: 280px;
+            margin-right: 40px;
+        }
+        .footer-logo-section img {
+            height: 65px;
+            margin-bottom: 20px;
+        }
+        .footer-logo-section p {
+            font-size: 0.95em;
+            color: #bbb;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        .footer-social-icons a {
+            color: var(--text-light);
+            font-size: 24px;
+            margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+        .footer-social-icons a:hover { color: var(--gold); }
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-around;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 180px;
+            margin-bottom: 20px;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a {
+            font-size: 0.98em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        .footer-column ul li a:hover { color: var(--gold); }
+        .footer-column ul li a .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--gold);
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.88em;
+            color: #888;
+        }
+
+        /* 3. ESTILOS DA PÁGINA DE DOAÇÃO */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .donation-hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .hero-text h1 {
+            font-family: var(--font-cinzel);
+            color: var(--gold);
+            font-size: 2.8em;
+            line-height: 1.3;
+            margin: 0 0 20px 0;
+        }
+        .hero-text p {
+            font-size: 1.1em;
+            color: #ccc;
+            line-height: 1.7;
+        }
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+        .circle-wrapper {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            position: relative;
+        }
+        .hero-image .circle-bg {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+            background-color: var(--medium-gray);
+            clip-path: circle(50%);
+            box-shadow: none;
+        }
+        .hero-image .overlay-img {
+            width: 350px;
+            height: 370px;
+            object-fit: cover;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: transparent;
+            border: none;
+        }
+
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .donation-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        @supports not (backdrop-filter: blur(12px)) {
+            .donation-card {
+                background: rgba(26, 26, 26, 0.6);
+            }
+        }
+        .donation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 1s ease;
+            pointer-events: none;
+        }
+        .donation-card:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 255, 0.2);
+            animation: wiggle 0.5s ease;
+        }
+        .donation-card:hover::before {
+            left: 100%;
+            animation: shine 1s ease;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes wiggle {
+            0% { transform: rotate(0); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+            100% { transform: rotate(0); }
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card-icon {
+            font-size: 2.5em;
+            color: var(--gold);
+        }
+        .card-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        .card-icon .apoia-logo {
+            width: 100px;
+            height: auto;
+            max-height: 60px;
+            object-fit: contain;
+            margin-top: -12px;
+        }
+        .card-header h3 {
+            margin: 0;
+            font-family: var(--font-cinzel);
+            font-size: 1.5em;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .card-content p {
+            margin: 0 0 25px 0;
+            color: #bbb;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+        .card-button {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--dark-background);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            align-self: flex-start;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+        .card-button:hover {
+            background-color: #e6c35c;
+        }
+        .copy-feedback {
+            position: absolute;
+            background-color: var(--gold);
+            color: var(--dark-background);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copy-feedback.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sorteio.html">Sorteio</a></li>
+                <li><a href="videos.html">Vídeos</a></li>
+                <li><a href="doacao.html">Doação</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Consulta</a></li>
+            </ul>
+        </nav>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="donation-hero">
+            <div class="hero-text">
+                <h1>Gratidão profunda irmãos queridos, abençoado seja sempre!</h1>
+                <p>O projeto deste trabalho espiritual é continuar expandindo, começar a realizar entrevistas, aumentar a quantidade de vídeos publicados, dentre outras melhorias.</p>
+            </div>
+            <div class="hero-image">
+                <div class="circle-wrapper">
+                    <div class="circle-bg"></div>
+                </div>
+                <img class="overlay-img" src="https://i.postimg.cc/HxfVGVyt/1000203666.png" alt="Denis, do canal Lendário TV">
+            </div>
+        </section>
+
+        <section class="donation-grid">
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/youtube-png.png" alt="YouTube"></div>
+                    <h3>Torne-se membro do canal</h3>
+                </div>
+                <div class="card-content">
+                    <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor através do YouTube.</p>
+                    <a href="https://www.youtube.com/channel/UCnbmIi0Ddoa7BwgWQDTZHVA/join" class="card-button">Seja Membro</a>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img class="apoia-logo" src="https://lendario.tv/wp-content/uploads/2025/03/logoRed-2048x314.png" alt="APOIA.se"></div>
+                    <h3>APOIA.se</h3>
+                </div>
+                <div class="card-content">
+                    <p>Toda contribuição será utilizada para a manutenção, pagamento das contas básicas e melhoria de equipamentos.</p>
+                    <a href="https://apoia.se/lendario" class="card-button">Apoiar</a>
+                </div>
+            </article>
+            
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/Logo-Pix-Png2.png" alt="Pix"></div>
+                    <h3>Chave Pix</h3>
+                </div>
+                <div class="card-content">
+                    <p><b>Celular:</b> 11960585584<br><b>Nome:</b> Denis Barbosa da Silva</p>
+                    <button class="card-button" data-copy="11960585584">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/wise.png" alt="Wise"></div>
+                    <h3>Wise (Internacional)</h3>
+                </div>
+                <div class="card-content">
+                    <p>Para contribuições internacionais ou em outras moedas que não sejam o Real, recomendamos o uso do Wise.</p>
+                    <a href="https://wise.com/invite/ath/denisb416?utm_source=android-account-tab-exp-home&utm_medium=invite&utm_content=&utm_campaign=&referralCode=denisb416" class="card-button">Convite Wise</a>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/1_a8BQ7tLccfU25aNr0ar6ZA-964025798.png" alt="PicPay"></div>
+                    <h3>PicPay</h3>
+                </div>
+                <div class="card-content">
+                    <p>Para fazer sua doação de forma prática e segura, você pode utilizar o PicPay. Basta buscar nosso perfil <b>@lendarioesoterico</b> e contribuir com o valor que desejar.</p>
+                    <button class="card-button" data-copy="@lendarioesoterico">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/paypal.png" alt="PayPal"></div>
+                    <h3>PayPal</h3>
+                </div>
+                <div class="card-content">
+                    <p>Para fazer uma doação de forma rápida e segura, você pode usar o PayPal. Basta utilizar nosso e-mail <b>lendarioesoterico@gmail.com</b> e contribuir com o valor que desejar.</p>
+                    <button class="card-button" data-copy="lendarioesoterico@gmail.com">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/itau-logo.png" alt="Itaú"></div>
+                    <h3>Direto em conta (Itaú)</h3>
+                </div>
+                <div class="card-content">
+                    <p>
+                        <b>341</b> - Itaú<br>
+                        <b>Agência:</b> 7690<br>
+                        <b>Conta Corrente:</b> 16508-4<br>
+                        <b>Nome:</b> Denis Barbosa da Silva
+                    </p>
+                    <button class="card-button" data-copy="341 - Itaú\nAgência: 7690\nConta Corrente: 16508-4">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/santader-logo.png" alt="Santander"></div>
+                    <h3>Direto em conta (Santander)</h3>
+                </div>
+                <div class="card-content">
+                    <p>
+                        <b>033</b> - Santander<br>
+                        <b>Agência:</b> 2986<br>
+                        <b>Conta Corrente:</b> 01043189-5<br>
+                        <b>Nome:</b> Denis Barbosa da Silva
+                    </p>
+                    <button class="card-button" data-copy="033 - Santander\nAgência: 2986\nConta Corrente: 01043189-5">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+
+            <article class="donation-card">
+                <div class="card-header">
+                    <div class="card-icon"><img src="https://lendario.tv/wp-content/uploads/2025/03/bradesco-logo.png" alt="Bradesco"></div>
+                    <h3>Direto em conta (Bradesco)</h3>
+                </div>
+                <div class="card-content">
+                    <p>
+                        <b>237</b> - Bradesco<br>
+                        <b>Agência:</b> 0109<br>
+                        <b>Conta Corrente:</b> 53753-5<br>
+                        <b>Nome:</b> Denis Barbosa da Silva
+                    </p>
+                    <button class="card-button" data-copy="237 - Bradesco\nAgência: 0109\nConta Corrente: 53753-5">Copiar</button>
+                    <span class="copy-feedback">Copiado!</span>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="custom-footer">
+        <div class="footer-logo-section">
+            <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
+            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
+            <div class="footer-social-icons">
+                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <ul>
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <ul>
+                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.card-button[data-copy]').forEach(button => {
+            button.addEventListener('click', () => {
+                const textToCopy = button.getAttribute('data-copy');
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const feedback = button.nextElementSibling;
+                    feedback.classList.add('show');
+                    setTimeout(() => feedback.classList.remove('show'), 2000);
+                }).catch(err => {
+                    console.error('Erro ao copiar:', err);
+                    alert('Erro ao copiar. Tente novamente.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
