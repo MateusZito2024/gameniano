@@ -558,25 +558,20 @@
                 display: none;
             }
 
-            /* 3. Ajusta carrossel de vídeos para toque com centralização */
+            /* 3. Ajusta carrossel de vídeos */
             .video-carousel-wrapper { 
                 padding: 20px 0;
                 touch-action: pan-y;
             }
             .video-carousel-container { 
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
-            .video-carousel-container::-webkit-scrollbar {
-                display: none;
+                overflow-x: hidden;
             }
             .video-carousel-track {
-                padding: 0 calc(50vw - 140px);
+                padding: 0;
             }
             .video-card-vertical {
-                scroll-snap-align: center;
+                flex: 0 0 calc(80% - 20px); /* Ajusta largura para melhor visualização */
+                min-width: 280px;
             }
             .video-carousel-section .carousel-arrow { display: none; }
             .filter-buttons { gap: 10px; }
@@ -621,6 +616,12 @@
                 height: auto;
                 padding: 30px;
                 display: flex;
+            }
+
+            /* 6. Esconde os textos da seção de live */
+            .video-info-overlay .title,
+            .video-info-overlay .time {
+                display: none;
             }
         }
     </style>
@@ -844,7 +845,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mobileNav = document.querySelector('.mobile-nav');
             const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
@@ -867,269 +867,298 @@
                 });
             }
 
-const heroCarousel = document.querySelector('.hero-carousel');
-if (heroCarousel) {
-    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-    const heroCards = heroContainer.querySelectorAll('.hero-card');
-    const dots = document.querySelectorAll('.dot');
-    let currentHeroIndex = 0;
-    let heroAutoPlay;
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isDragging = false;
+            const heroCarousel = document.querySelector('.hero-carousel');
+            if (heroCarousel) {
+                const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+                const heroCards = heroContainer.querySelectorAll('.hero-card');
+                const dots = document.querySelectorAll('.dot');
+                let currentHeroIndex = 0;
+                let heroAutoPlay;
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let isDragging = false;
 
-    function updateHeroCarousel() {
-        heroContainer.style.transition = 'transform 0.5s ease';
-        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentHeroIndex);
-        });
-    }
+                function updateHeroCarousel() {
+                    heroContainer.style.transition = 'transform 0.5s ease';
+                    heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentHeroIndex);
+                    });
+                }
 
-    function startHeroAutoplay() {
-        stopHeroAutoplay();
-        heroAutoPlay = setInterval(() => {
-            currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-            updateHeroCarousel();
-        }, 5000);
-    }
+                function startHeroAutoplay() {
+                    stopHeroAutoplay();
+                    heroAutoPlay = setInterval(() => {
+                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                        updateHeroCarousel();
+                    }, 5000);
+                }
 
-    function stopHeroAutoplay() {
-        clearInterval(heroAutoPlay);
-    }
+                function stopHeroAutoplay() {
+                    clearInterval(heroAutoPlay);
+                }
 
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentHeroIndex = index;
-            updateHeroCarousel();
-            startHeroAutoplay();
-        });
-    });
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentHeroIndex = index;
+                        updateHeroCarousel();
+                        startHeroAutoplay();
+                    });
+                });
 
-    heroCarousel.addEventListener('touchstart', e => {
-        if (window.innerWidth > 992) return;
-        touchStartX = e.changedTouches[0].screenX;
-        isDragging = true;
-        stopHeroAutoplay();
-        heroContainer.style.transition = 'none';
-    });
+                heroCarousel.addEventListener('touchstart', e => {
+                    if (window.innerWidth > 992) return;
+                    touchStartX = e.changedTouches[0].screenX;
+                    isDragging = true;
+                    stopHeroAutoplay();
+                    heroContainer.style.transition = 'none';
+                });
 
-    heroCarousel.addEventListener('touchmove', e => {
-        if (!isDragging || window.innerWidth > 992) return;
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchEndX - touchStartX;
-        heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
-        e.preventDefault(); // Impede o scroll padrão da página durante o swipe
-    });
+                heroCarousel.addEventListener('touchmove', e => {
+                    if (!isDragging || window.innerWidth > 992) return;
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchEndX - touchStartX;
+                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+                    e.preventDefault();
+                });
 
-    heroCarousel.addEventListener('touchend', e => {
-        if (!isDragging || window.innerWidth > 992) return;
-        isDragging = false;
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX; // Corrigido para calcular a direção correta
-        const swipeThreshold = 50; // Distância mínima para considerar um swipe
+                heroCarousel.addEventListener('touchend', e => {
+                    if (!isDragging || window.innerWidth > 992) return;
+                    isDragging = false;
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    const swipeThreshold = 50;
 
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Deslizou para a esquerda (próximo card)
-                currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-            } else {
-                // Deslizou para a direita (card anterior)
-                currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
-            }
-        }
-
-        updateHeroCarousel();
-        startHeroAutoplay();
-    });
-
-    startHeroAutoplay();
-}
-            // --- SEPARAÇÃO DE LÓGICA: PC vs MOBILE ---
-
-            if (window.innerWidth > 992) {
-                // --- LÓGICA PARA DESKTOP (PC) ---
-                function setupInfiniteCarousel(sectionId) {
-                    const section = document.getElementById(sectionId);
-                    if (!section) return;
-
-                    const container = section.querySelector('.video-carousel-container');
-                    const track = section.querySelector('.video-carousel-track');
-                    const prevBtn = section.querySelector('.prev-arrow');
-                    const nextBtn = section.querySelector('.next-arrow');
-                    const filterButtons = section.querySelectorAll('.filter-btn');
-                    
-                    let originalCards = Array.from(track.children);
-                    let isTransitioning = false;
-                    let autoplayInterval;
-                    let currentIndex = 0;
-
-                    function getVisibleCards() {
-                        return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
-                    }
-
-                    function setupCarousel() {
-                        stopAutoplay();
-                        isTransitioning = false;
-                        
-                        const clones = track.querySelectorAll('.clone');
-                        clones.forEach(clone => track.removeChild(clone));
-                        
-                        track.innerHTML = '';
-                        originalCards.forEach(card => track.appendChild(card));
-                        
-                        const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-                        originalCards.forEach(card => {
-                            card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
-                        });
-
-                        const visibleCards = getVisibleCards();
-                        if (visibleCards.length === 0) {
-                            if (prevBtn) prevBtn.style.display = 'none';
-                            if (nextBtn) nextBtn.style.display = 'none';
-                            return;
-                        };
-
-                        if (prevBtn) prevBtn.style.display = 'flex';
-                        if (nextBtn) nextBtn.style.display = 'flex';
-                        
-                        const cardWidth = visibleCards[0].offsetWidth;
-                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                        const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
-
-                        if (visibleCards.length <= cardsInView) {
-                            prevBtn.classList.add('disabled');
-                            nextBtn.classList.add('disabled');
-                            track.style.transform = 'translateX(0)';
-                            return;
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0) {
+                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+                        } else {
+                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
                         }
-                        
-                        prevBtn.classList.remove('disabled');
-                        nextBtn.classList.remove('disabled');
-
-                        const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
-                        itemsToCloneEnd.forEach(card => {
-                            const clone = card.cloneNode(true);
-                            clone.classList.add('clone');
-                            track.appendChild(clone);
-                        });
-
-                        const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
-                        itemsToCloneStart.reverse().forEach(card => {
-                            const clone = card.cloneNode(true);
-                            clone.classList.add('clone');
-                            track.insertBefore(clone, visibleCards[0]);
-                        });
-
-                        currentIndex = cardsInView + 1;
-                        const initialOffset = -currentIndex * (cardWidth + gap);
-                        track.style.transition = 'none';
-                        track.style.transform = `translateX(${initialOffset}px)`;
-                        
-                        startAutoplay();
                     }
 
-                    function move(direction) {
-                        if (isTransitioning) return;
-                        isTransitioning = true;
-                        
-                        const visibleCards = getVisibleCards();
-                        if (visibleCards.length === 0) { isTransitioning = false; return; }
-                        
-                        const cardWidth = visibleCards[0].offsetWidth;
-                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                        
-                        currentIndex += direction;
-                        track.style.transition = 'transform 0.5s ease-in-out';
+                    updateHeroCarousel();
+                    startHeroAutoplay();
+                });
+
+                startHeroAutoplay();
+            }
+
+            function setupInfiniteCarousel(sectionId, isMobile = false) {
+                const section = document.getElementById(sectionId);
+                if (!section) return;
+
+                const container = section.querySelector('.video-carousel-container');
+                const track = section.querySelector('.video-carousel-track');
+                const prevBtn = section.querySelector('.prev-arrow');
+                const nextBtn = section.querySelector('.next-arrow');
+                const filterButtons = section.querySelectorAll('.filter-btn');
+                
+                let originalCards = Array.from(track.children);
+                let isTransitioning = false;
+                let autoplayInterval;
+                let currentIndex = 0;
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let isDragging = false;
+
+                function getVisibleCards() {
+                    return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
+                }
+
+                function setupCarousel() {
+                    stopAutoplay();
+                    isTransitioning = false;
+
+                    const clones = track.querySelectorAll('.clone');
+                    clones.forEach(clone => track.removeChild(clone));
+                    
+                    track.innerHTML = '';
+                    originalCards.forEach(card => track.appendChild(card));
+
+                    const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+                    originalCards.forEach(card => {
+                        card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+                    });
+
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) {
+                        if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+                        if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+
+                    if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+                    if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+                    if (visibleCards.length <= cardsInView) {
+                        if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+                        if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+
+                    if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+                    if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+
+                    const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
+                    itemsToCloneEnd.forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.appendChild(clone);
+                    });
+
+                    const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
+                    itemsToCloneStart.reverse().forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.insertBefore(clone, visibleCards[0]);
+                    });
+
+                    currentIndex = cardsInView + 1;
+                    const initialOffset = -currentIndex * (cardWidth + gap);
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${initialOffset}px)`;
+
+                    if (isMobile) {
+                        container.style.overflowX = 'hidden';
+                        container.style.scrollSnapType = 'none';
+                    }
+
+                    startAutoplay();
+                }
+
+                function move(direction) {
+                    if (isTransitioning) return;
+                    isTransitioning = true;
+
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+                    currentIndex += direction;
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                    track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
+                }
+
+                track.addEventListener('transitionend', () => {
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+                    if (currentIndex <= cardsInView) {
+                        currentIndex += visibleCards.length;
+                        track.style.transition = 'none';
                         track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
                     }
 
-                    track.addEventListener('transitionend', () => {
-                        const visibleCards = getVisibleCards();
-                        if (visibleCards.length === 0) { isTransitioning = false; return; }
+                    if (currentIndex >= visibleCards.length + cardsInView + 1) {
+                        currentIndex -= visibleCards.length;
+                        track.style.transition = 'none';
+                        track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
+                    }
+                    isTransitioning = false;
+                });
 
-                        const cardWidth = visibleCards[0].offsetWidth;
-                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                        const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
-                        
-                        if (currentIndex <= cardsInView) {
-                            currentIndex += visibleCards.length;
-                            track.style.transition = 'none';
-                            track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
-                        }
+                function stopAutoplay() {
+                    clearInterval(autoplayInterval);
+                }
 
-                        if (currentIndex >= visibleCards.length + cardsInView + 1) {
-                            currentIndex -= visibleCards.length;
-                            track.style.transition = 'none';
-                            track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
-                        }
-                        isTransitioning = false;
-                    });
-                    
-                    const stopAutoplay = () => clearInterval(autoplayInterval);
-                    const startAutoplay = () => {
-                        stopAutoplay();
-                        autoplayInterval = setInterval(() => move(1), 5000);
-                    };
+                function startAutoplay() {
+                    stopAutoplay();
+                    autoplayInterval = setInterval(() => move(1), 5000);
+                }
 
+                if (!isMobile) {
                     nextBtn.addEventListener('click', () => move(1));
                     prevBtn.addEventListener('click', () => move(-1));
-
                     section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
                     section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-                    
-                    filterButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            filterButtons.forEach(btn => btn.classList.remove('active'));
-                            button.classList.add('active');
-                            setupCarousel();
-                        });
+                } else {
+                    container.addEventListener('touchstart', e => {
+                        touchStartX = e.changedTouches[0].screenX;
+                        isDragging = true;
+                        stopAutoplay();
+                        track.style.transition = 'none';
                     });
 
-                    window.addEventListener('resize', setupCarousel);
-                    setupCarousel();
+                    container.addEventListener('touchmove', e => {
+                        if (!isDragging) return;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchEndX - touchStartX;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+                        const cardWidth = visibleCards[0].offsetWidth;
+                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                        track.style.transform = `translateX(calc(${-currentIndex * (cardWidth + gap)}px + ${diff}px))`;
+                        e.preventDefault();
+                    });
+
+                    container.addEventListener('touchend', e => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchStartX - touchEndX;
+                        const swipeThreshold = 50;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+
+                        if (Math.abs(diff) > swipeThreshold) {
+                            if (diff > 0) {
+                                move(1);
+                            } else {
+                                move(-1);
+                            }
+                        } else {
+                            track.style.transition = 'transform 0.5s ease-in-out';
+                            const cardWidth = visibleCards[0].offsetWidth;
+                            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                            track.style.transform = `translateX(${-currentIndex * (cardWidth + gap)}px)`;
+                        }
+                        startAutoplay();
+                    });
                 }
-                
+
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        setupCarousel();
+                    });
+                });
+
+                window.addEventListener('resize', setupCarousel);
+                setupCarousel();
+            }
+
+            if (window.innerWidth > 992) {
                 setupInfiniteCarousel('latest-videos-section');
                 setupInfiniteCarousel('most-viewed-section');
-
             } else {
-                // --- LÓGICA APENAS PARA MOBILE ---
-                function setupMobileCarousel(sectionId) {
-                    const section = document.getElementById(sectionId);
-                    if (!section) return;
-
-                    const track = section.querySelector('.video-carousel-track');
-                    const filterButtons = section.querySelectorAll('.filter-btn');
-                    const allCards = Array.from(track.children);
-
-                    filterButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            filterButtons.forEach(btn => btn.classList.remove('active'));
-                            button.classList.add('active');
-                            
-                            const activeFilter = button.dataset.filter;
-                            allCards.forEach(card => {
-                                card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
-                            });
-                        });
-                    });
-                }
-
-                setupMobileCarousel('latest-videos-section');
-                setupMobileCarousel('most-viewed-section');
+                setupInfiniteCarousel('latest-videos-section', true);
+                setupInfiniteCarousel('most-viewed-section', true);
             }
-            
+
             const header = document.querySelector('header');
             if (header) {
                 let lastScrollTop = 0;
-                const scrollThreshold = 150; 
+                const scrollThreshold = 150;
                 window.addEventListener('scroll', () => {
                     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                     if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
                         header.classList.add('header-hidden');
                     } else if (scrollTop < lastScrollTop) {
-                       header.classList.remove('header-hidden');
+                        header.classList.remove('header-hidden');
                     }
                     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
                 }, { passive: true });
