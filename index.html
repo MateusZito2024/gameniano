@@ -867,78 +867,84 @@
                 });
             }
 
-            const heroCarousel = document.querySelector('.hero-carousel');
-            if (heroCarousel) {
-                const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-                const heroCards = heroContainer.querySelectorAll('.hero-card');
-                const dots = document.querySelectorAll('.dot');
-                let currentHeroIndex = 0;
-                let heroAutoPlay;
-                let touchStartX = 0;
-                let isDragging = false;
+const heroCarousel = document.querySelector('.hero-carousel');
+if (heroCarousel) {
+    const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+    const heroCards = heroContainer.querySelectorAll('.hero-card');
+    const dots = document.querySelectorAll('.dot');
+    let currentHeroIndex = 0;
+    let heroAutoPlay;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
 
-                function updateHeroCarousel() {
-                    heroContainer.style.transition = 'transform 0.5s ease';
-                    heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === currentHeroIndex);
-                    });
-                }
+    function updateHeroCarousel() {
+        heroContainer.style.transition = 'transform 0.5s ease';
+        heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentHeroIndex);
+        });
+    }
 
-                function startHeroAutoplay() {
-                    stopHeroAutoplay();
-                    heroAutoPlay = setInterval(() => {
-                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                        updateHeroCarousel();
-                    }, 5000);
-                }
+    function startHeroAutoplay() {
+        stopHeroAutoplay();
+        heroAutoPlay = setInterval(() => {
+            currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+            updateHeroCarousel();
+        }, 5000);
+    }
 
-                function stopHeroAutoplay() {
-                    clearInterval(heroAutoPlay);
-                }
+    function stopHeroAutoplay() {
+        clearInterval(heroAutoPlay);
+    }
 
-                dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        currentHeroIndex = index;
-                        updateHeroCarousel();
-                        startHeroAutoplay();
-                    });
-                });
-                
-                heroCarousel.addEventListener('touchstart', e => {
-                    if (window.innerWidth > 992) return;
-                    touchStartX = e.changedTouches[0].screenX;
-                    isDragging = true;
-                    stopHeroAutoplay();
-                    heroContainer.style.transition = 'none';
-                });
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentHeroIndex = index;
+            updateHeroCarousel();
+            startHeroAutoplay();
+        });
+    });
 
-                heroCarousel.addEventListener('touchmove', e => {
-                    if (!isDragging || window.innerWidth > 992) return;
-                    const touchEndX = e.changedTouches[0].screenX;
-                    const diff = touchEndX - touchStartX;
-                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
-                });
+    heroCarousel.addEventListener('touchstart', e => {
+        if (window.innerWidth > 992) return;
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+        stopHeroAutoplay();
+        heroContainer.style.transition = 'none';
+    });
 
-                heroCarousel.addEventListener('touchend', e => {
-                    if (!isDragging || window.innerWidth > 992) return;
-                    isDragging = false;
-                    const touchEndX = e.changedTouches[0].screenX;
-                    const diff = touchStartX - touchEndX;
-                    if (Math.abs(diff) > 50) {
-                        if (diff < 0) {
-                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-                        } else {
-                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
-                        }
-                    }
-                    updateHeroCarousel();
-                    startHeroAutoplay();
-                });
-                
-                startHeroAutoplay();
+    heroCarousel.addEventListener('touchmove', e => {
+        if (!isDragging || window.innerWidth > 992) return;
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+        e.preventDefault(); // Impede o scroll padrão da página durante o swipe
+    });
+
+    heroCarousel.addEventListener('touchend', e => {
+        if (!isDragging || window.innerWidth > 992) return;
+        isDragging = false;
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX; // Corrigido para calcular a direção correta
+        const swipeThreshold = 50; // Distância mínima para considerar um swipe
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Deslizou para a esquerda (próximo card)
+                currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+            } else {
+                // Deslizou para a direita (card anterior)
+                currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
             }
+        }
 
+        updateHeroCarousel();
+        startHeroAutoplay();
+    });
+
+    startHeroAutoplay();
+}
             // --- SEPARAÇÃO DE LÓGICA: PC vs MOBILE ---
 
             if (window.innerWidth > 992) {
