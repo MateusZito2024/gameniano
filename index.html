@@ -80,7 +80,7 @@
         }
 
         .logo {
-            pointer-events: none; 
+            pointer-events: none;
         }
 
         .logo img { height: 55px; margin-right: 10px; }
@@ -173,12 +173,16 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity: 0.5s ease; }
-        .video-thumbnail-container.hidden { 
-            opacity: 0;
-            pointer-events: none;
+        
+        /* O iframe em si não precisa de estilos, a API vai criá-lo */
+        #liveVideoIframe {
+             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1;
         }
+
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.5s ease; }
+        
+        /* A classe .hidden foi removida do CSS, pois o JS agora controla o 'display' diretamente para maior confiabilidade */
+
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -708,7 +712,7 @@
             <div class="live-content-wrapper">
                 <div class="live-video-player">
                     
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1?enablejsapi=1" title="Tarô ao Vivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div id="liveVideoIframe" data-videoid="_INSERA_SEU_ID_DE_VIDEO_AQUI_"></div>
                     
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Miniatura ao vivo offline">
@@ -840,51 +844,57 @@
     </footer>
     
     <script>
-        // --- ALTERAÇÕES NO SCRIPT DA LIVE ---
+        // --- SCRIPT ROBUSTO PARA A LIVE ---
 
-        // Carrega a API do IFrame Player do YouTube de forma assíncrona.
+        // 1. Carrega a API do IFrame Player do YouTube
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         let player;
-        
-        // Esta função cria o <iframe> e o player do YouTube depois que o código da API é baixado.
+
+        // 2. Função que a API do YouTube chama quando está pronta.
         function onYouTubeIframeAPIReady() {
-            if (document.getElementById('liveVideoIframe')) {
-                player = new YT.Player('liveVideoIframe', {
+            const liveIframeContainer = document.getElementById('liveVideoIframe');
+            // Pega o ID do vídeo que colocamos no atributo 'data-videoid'
+            const videoId = liveIframeContainer.getAttribute('data-videoid'); 
+
+            // Só continua se o ID do vídeo foi inserido no HTML
+            if (videoId && videoId !== '_INSERA_SEU_ID_DE_VIDEO_AQUI_') {
+                player = new YT.Player('liveVideoIframe', { // O alvo é a DIV com id "liveVideoIframe"
+                    videoId: videoId, // Informa o ID do vídeo diretamente para a API
+                    playerVars: {
+                        'autoplay': 1,    // Pede para iniciar automaticamente
+                        'mute': 1,        // **INICIA MUDO (ESSENCIAL PARA AUTOPLAY)**
+                        'enablejsapi': 1, // Habilita o controle via JavaScript
+                        'controls': 1,    // Mostra os controles para o usuário poder ativar o som
+                        'rel': 0          // Não mostrar vídeos relacionados no final
+                    },
                     events: {
-                        // O evento 'onReady' é disparado quando o player está pronto.
-                        'onReady': onPlayerReady,
-                        // O evento 'onStateChange' monitora o status do vídeo (tocando, pausado, etc).
                         'onStateChange': onPlayerStateChange
                     }
                 });
             }
         }
 
-        // Função chamada quando o player está pronto. É aqui que a "mágica" acontece.
-        function onPlayerReady(event) {
-            event.target.mute();      // Deixa o player mudo. ESSENCIAL para o autoplay funcionar.
-            event.target.playVideo(); // Dá o comando para tocar o vídeo.
-        }
-
-        // Função chamada sempre que o estado do player muda.
+        // 3. Função chamada sempre que o estado do player muda.
         function onPlayerStateChange(event) {
             const thumbnailContainer = document.getElementById('liveThumbnail');
             if (!thumbnailContainer) return;
-            
-            // Se o estado for "PLAYING" (tocando), a thumbnail é escondida.
+
+            // Se o estado for "PLAYING" (tocando), o autoplay funcionou -> esconde a thumbnail.
             if (event.data === YT.PlayerState.PLAYING) {
-                thumbnailContainer.classList.add('hidden');
-            } else {
-                // Para qualquer outro estado (pausado, offline, terminado), a thumbnail reaparece.
-                thumbnailContainer.classList.remove('hidden');
+                thumbnailContainer.style.display = 'none';
+            } 
+            // Se o vídeo não começou, está em buffer ou terminou, a thumbnail deve estar visível.
+            else {
+                thumbnailContainer.style.display = 'flex';
             }
         }
 
-        // --- SCRIPTS ORIGINAIS DA PÁGINA (sem alterações) ---
+
+        // --- DEMAIS SCRIPTS DA PÁGINA (Seu código original preservado) ---
         document.addEventListener('DOMContentLoaded', () => {
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -898,8 +908,6 @@
                     mobileNav.classList.remove('is-active');
                 });
             }
-
-            // O script antigo de clique na thumbnail foi REMOVIDO daqui pois a nova lógica acima já o substitui.
 
             const heroCarousel = document.querySelector('.hero-carousel');
             if (heroCarousel) {
