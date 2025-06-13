@@ -80,7 +80,7 @@
         }
 
         .logo {
-            pointer-events: none;
+            pointer-events: none; 
         }
 
         .logo img { height: 55px; margin-right: 10px; }
@@ -174,14 +174,11 @@
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
         .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.5s ease; }
-        
-        /* Alteração na classe 'hidden' para uma transição mais suave */
-        .video-thumbnail-container.hidden {
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity: 0.5s ease; }
+        .video-thumbnail-container.hidden { 
             opacity: 0;
             pointer-events: none;
         }
-        
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -532,14 +529,14 @@
                 color: var(--text-light);
                 cursor: pointer;
             }
-            .mobile-nav ul {
-                flex-direction: column;
-                text-align: center;
-                width: 100%;
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+        .mobile-nav ul {
+            flex-direction: column;
+            text-align: center;
+            width: 100%;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
             .mobile-nav ul li {
                 margin: 0;
             }
@@ -592,7 +589,8 @@
             .video-carousel-container { 
                 overflow-x: hidden;
             }
-
+            .video-carousel-track {
+            }
             .video-card-vertical {
                 flex: 0 0 280px; 
                 min-width: 280px;
@@ -842,37 +840,51 @@
     </footer>
     
     <script>
-        // Script da API do YouTube para controlar a Live (correto e funcional)
+        // --- ALTERAÇÕES NO SCRIPT DA LIVE ---
+
+        // Carrega a API do IFrame Player do YouTube de forma assíncrona.
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         let player;
-        window.onYouTubeIframeAPIReady = function() {
+        
+        // Esta função cria o <iframe> e o player do YouTube depois que o código da API é baixado.
+        function onYouTubeIframeAPIReady() {
             if (document.getElementById('liveVideoIframe')) {
                 player = new YT.Player('liveVideoIframe', {
                     events: {
+                        // O evento 'onReady' é disparado quando o player está pronto.
+                        'onReady': onPlayerReady,
+                        // O evento 'onStateChange' monitora o status do vídeo (tocando, pausado, etc).
                         'onStateChange': onPlayerStateChange
                     }
                 });
             }
-        };
+        }
 
+        // Função chamada quando o player está pronto. É aqui que a "mágica" acontece.
+        function onPlayerReady(event) {
+            event.target.mute();      // Deixa o player mudo. ESSENCIAL para o autoplay funcionar.
+            event.target.playVideo(); // Dá o comando para tocar o vídeo.
+        }
+
+        // Função chamada sempre que o estado do player muda.
         function onPlayerStateChange(event) {
             const thumbnailContainer = document.getElementById('liveThumbnail');
             if (!thumbnailContainer) return;
-
-            // Se o vídeo estiver tocando, esconde a thumbnail
+            
+            // Se o estado for "PLAYING" (tocando), a thumbnail é escondida.
             if (event.data === YT.PlayerState.PLAYING) {
                 thumbnailContainer.classList.add('hidden');
             } else {
-            // Caso contrário (pausado, offline, etc.), mostra a thumbnail
+                // Para qualquer outro estado (pausado, offline, terminado), a thumbnail reaparece.
                 thumbnailContainer.classList.remove('hidden');
             }
         }
 
-        // Demais scripts da página
+        // --- SCRIPTS ORIGINAIS DA PÁGINA (sem alterações) ---
         document.addEventListener('DOMContentLoaded', () => {
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -887,11 +899,7 @@
                 });
             }
 
-            /*
-              ALTERAÇÃO 2: 
-              - O código de "clique para tocar" foi REMOVIDO daqui.
-              - A lógica agora é controlada 100% pelo script da API do YouTube acima.
-            */
+            // O script antigo de clique na thumbnail foi REMOVIDO daqui pois a nova lógica acima já o substitui.
 
             const heroCarousel = document.querySelector('.hero-carousel');
             if (heroCarousel) {
