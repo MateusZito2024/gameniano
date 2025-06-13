@@ -50,6 +50,12 @@
             pointer-events: none;
         }
         .logo img { height: 55px; }
+        
+        /* Adicionado para o título mobile */
+        .header-title-mobile {
+            display: none;
+        }
+        
         header nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
         header nav ul li { margin-left: 35px; }
         header nav ul li a {
@@ -303,6 +309,17 @@
             header nav, header .social-icons {
                 display: none;
             }
+            .header-title-mobile {
+                display: block;
+                flex-grow: 1;
+                text-align: center;
+                font-family: var(--font-cinzel);
+                color: var(--gold);
+                font-size: 1.6em;
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+                margin: 0 10px;
+                line-height: 1;
+            }
             .mobile-nav-toggle {
                 display: block;
                 background: none;
@@ -352,6 +369,10 @@
                 display: block;
                 padding: 18px;
                 font-size: 1.2em;
+                transition: color 0.3s ease;
+            }
+            .mobile-nav ul li a:hover {
+                color: var(--gold);
             }
             .mobile-nav .mobile-socials {
                 margin-top: 40px;
@@ -399,8 +420,9 @@
 <body>
     <header>
         <div class="logo">
-            <a href="index.html"><img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo"></a>
+            <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
         </div>
+        <h1 class="header-title-mobile">Lendario Tv</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Início</a></li>
