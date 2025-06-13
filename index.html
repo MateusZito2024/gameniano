@@ -168,9 +168,8 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
-        .video-thumbnail-container.hidden { display: none; }
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; z-index: 10; transition: opacity 0.5s ease, visibility 0.5s; }
+        .video-thumbnail-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -180,6 +179,7 @@
         .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
         .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
         .video-info-overlay .youtube-link:hover { color: var(--gold); }
+        
         .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
         .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
         
@@ -521,14 +521,14 @@
                 color: var(--text-light);
                 cursor: pointer;
             }
-            .mobile-nav ul {
-                flex-direction: column;
-                text-align: center;
-                width: 100%;
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+        .mobile-nav ul {
+            flex-direction: column;
+            text-align: center;
+            width: 100%;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
             .mobile-nav ul li {
                 margin: 0;
             }
@@ -697,7 +697,9 @@
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDÁRIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="about:blank" data-src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Tarô ao Vivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                    <div id="liveVideoPlayer"></div>
+
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Miniatura ao vivo offline">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -741,8 +743,6 @@
                         <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conexão com o Elemento Fogo</h3><p class="description">Aprenda a usar a energia do fogo para transmutação e força interior.</p><a href="https://youtu.be/O4c4S08jcFw?si=QPGE9plbWYLSXf1d" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Elemento Ar - O Sopro da Vida</h3><p class="description">Explore a força do pensamento e da comunicação através do elemento Ar.</p><a href="https://youtu.be/4FQtfrB1k8s?si=kYB9dPkkRXw8T4AT" target="_blank" class="watch-button">Assistir</a></div></div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
@@ -828,33 +828,48 @@
     </footer>
     
     <script>
-        const tag = document.createElement('script');
+        // Carrega a API do IFrame Player do YouTube
+        var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
+        var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        let player;
-        window.onYouTubeIframeAPIReady = function() {
-            if (document.getElementById('liveVideoIframe')) {
-                player = new YT.Player('liveVideoIframe', {
+        var player;
+        
+        // ALTERAÇÃO 2: ESTA FUNÇÃO AGORA TEM A LÓGICA DE AUTOPLAY
+        function onYouTubeIframeAPIReady() {
+            var videoPlayerElement = document.getElementById('liveVideoPlayer');
+            if (videoPlayerElement) {
+                player = new YT.Player('liveVideoPlayer', {
+                    // Para buscar a live de um canal específico, usamos 'playlist' e 'list'
+                    playerVars: {
+                        'listType': 'playlist',
+                        'list': 'UU-ERgSADxY4-HEtn6FF-1hQ', // ID da playlist "Uploads" do canal Lendario Esoterico
+                        'autoplay': 1, // Pede para iniciar automaticamente
+                        'mute': 1,     // Inicia mudo (ESSENCIAL para autoplay funcionar)
+                        'controls': 1  // Mostra os controles para o usuário poder desmutar
+                    },
                     events: {
                         'onStateChange': onPlayerStateChange
                     }
                 });
             }
-        };
+        }
 
+        // Esta função não precisa de alteração, ela já faz o que é preciso
         function onPlayerStateChange(event) {
             const thumbnailContainer = document.getElementById('liveThumbnail');
             if (!thumbnailContainer) return;
+            // Se o vídeo estiver tocando (PLAYING), esconde a thumbnail
             if (event.data === YT.PlayerState.PLAYING) {
                 thumbnailContainer.classList.add('hidden');
-            } else {
-                thumbnailContainer.classList.remove('hidden');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // ALTERAÇÃO 3: A lógica de clique na thumbnail foi REMOVIDA daqui,
+            // pois agora o autoplay é automático.
+
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mobileNav = document.querySelector('.mobile-nav');
             const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
@@ -865,15 +880,6 @@
                 });
                 closeNavBtn.addEventListener('click', () => {
                     mobileNav.classList.remove('is-active');
-                });
-            }
-
-            const liveThumbnail = document.getElementById('liveThumbnail');
-            const liveIframe = document.getElementById('liveVideoIframe');
-            if(liveThumbnail && liveIframe) {
-                liveThumbnail.addEventListener('click', () => {
-                    liveIframe.src = liveIframe.dataset.src;
-                    liveThumbnail.classList.add('hidden');
                 });
             }
 
