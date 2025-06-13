@@ -7,6 +7,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+/* NOVO: Estilos para o Pop-up da Live */
+.live-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.live-popup-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.live-popup {
+    background-color: var(--dark-gray);
+    padding: 30px 40px;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 5px 25px rgba(212, 175, 55, 0.2);
+    text-align: center;
+    max-width: 90%;
+    width: 350px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.live-popup-overlay.active .live-popup {
+    transform: scale(1);
+}
+
+.live-popup p {
+    font-family: var(--font-montserrat);
+    font-size: 1.1em;
+    color: var(--text-light);
+    margin: 0 0 25px 0;
+}
+
+.live-popup-close-btn {
+    background-color: var(--gold);
+    color: var(--dark-background);
+    border: none;
+    border-radius: 5px;
+    padding: 12px 40px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.live-popup-close-btn:hover {
+    background-color: var(--button-gold-hover);
+}
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -819,6 +880,14 @@
             </div>
         </section>
     </main>
+<div id="live-popup-overlay" class="live-popup-overlay">
+    <div id="live-popup" class="live-popup">
+        <p id="live-popup-message">Live sendo preparada, o Universo está preparando algo especial para todos nós!</p>
+        <button id="live-popup-close" class="live-popup-close-btn">ESTÁ BEM</button>
+    </div>
+</div>
+</main> 
+<footer> 
     <footer>
         <div class="footer-logo-section">
             <img src="https://i.postimg.cc/52ssRLdr/unnamed-removebg-preview.png" alt="Lendário TV Logo">
@@ -858,7 +927,7 @@
     </footer>
     
     <script>
-    // --- LÓGICA DA LIVE (Seu código original, mantido intacto) ---
+    // --- LÓGICA DA LIVE (AJUSTADA COM POP-UP PARA MOBILE) ---
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -868,38 +937,83 @@
     window.onYouTubeIframeAPIReady = function() {
         player = new YT.Player('liveVideoIframe', {
             events: {
+                'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
             }
         });
     };
 
-    function onPlayerStateChange(event) {
-        const thumbnailContainer = document.getElementById('liveThumbnail');
-        if (!thumbnailContainer) return;
-        if (event.data === YT.PlayerState.PLAYING) {
-            thumbnailContainer.classList.add('hidden');
-        } else {
-            thumbnailContainer.classList.remove('hidden');
+    function onPlayerReady(event) {
+        // Pega os elementos do pop-up que criamos
+        const popupOverlay = document.getElementById('live-popup-overlay');
+        const popupCloseBtn = document.getElementById('live-popup-close');
+        const thumbnailClickArea = document.getElementById('liveThumbnail');
+
+        // Lógica de clique na thumbnail
+        if (thumbnailClickArea) {
+            thumbnailClickArea.addEventListener('click', () => {
+                // A lógica agora só roda no clique!
+                const isDesktop = window.innerWidth > 992;
+                
+                // No PC, o comportamento de autoplay continua normal (via onStateChange)
+                if (isDesktop) {
+                    player.playVideo();
+                    return;
+                }
+
+                // --- LÓGICA EXCLUSIVA PARA MOBILE ---
+                const isLive = player.getVideoData().isLive;
+
+                if (isLive) {
+                    // Cenário B: Live está ON. Toca o vídeo.
+                    player.playVideo();
+                } else {
+                    // Cenário A: Live está OFF. Mostra o pop-up.
+                    if (popupOverlay) {
+                        popupOverlay.classList.add('active');
+                    }
+                }
+            });
+        }
+        
+        // Listener para fechar o pop-up
+        if (popupCloseBtn) {
+            popupCloseBtn.addEventListener('click', () => {
+                if (popupOverlay) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
         }
     }
 
-    // --- LÓGICA DO SITE (Com os ajustes para a rolagem mobile) ---
+    function onPlayerStateChange(event) {
+        const thumbnailContainer = document.getElementById('liveThumbnail');
+        if (!thumbnailContainer) return;
+
+        // Esta função agora lida com o estado DEPOIS da interação.
+        // Se o vídeo começar a tocar (autoplay no PC ou clique no mobile)...
+        if (event.data === YT.PlayerState.PLAYING) {
+            // ...esconde a thumbnail.
+            thumbnailContainer.classList.add('hidden');
+        }
+    }
+
+    // --- LÓGICA DO SITE (Sem alterações, mantida da versão anterior) ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Menu mobile (sem alterações)
+        // (O resto do seu código, exatamente como na resposta anterior, vai aqui)
+        // Menu mobile, carrosséis, header, etc...
+
+        // Menu mobile
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
         const mobileNav = document.querySelector('.mobile-nav');
         const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
 
         if (mobileNavToggle && mobileNav) {
-            mobileNavToggle.addEventListener('click', () => {
-                mobileNav.classList.add('is-active');
-            });
-            closeNavBtn.addEventListener('click', () => {
-                mobileNav.classList.remove('is-active');
-            });
+            mobileNavToggle.addEventListener('click', () => mobileNav.classList.add('is-active'));
+            closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
         }
 
-        // --- CARROSSEL HERO (Início) ---
+        // --- CARROSSEL HERO ---
         const heroCarousel = document.querySelector('.hero-carousel');
         if (heroCarousel) {
             const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -913,40 +1027,33 @@
             function updateHeroCarousel() {
                 heroContainer.style.transition = 'transform 0.5s ease';
                 heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentHeroIndex);
-                });
+                dots.forEach((dot, index) => dot.classList.toggle('active', index === currentHeroIndex));
             }
 
             function startHeroAutoplay() {
-                stopHeroAutoplay(); // Garante que não haja múltiplos intervalos rodando
+                stopHeroAutoplay();
                 heroAutoPlay = setInterval(() => {
                     currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
                     updateHeroCarousel();
                 }, 5000);
             }
 
-            function stopHeroAutoplay() {
-                clearInterval(heroAutoPlay);
-            }
+            function stopHeroAutoplay() { clearInterval(heroAutoPlay); }
 
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     currentHeroIndex = index;
                     updateHeroCarousel();
-                    startHeroAutoplay(); // Reinicia o timer ao clicar no dot
+                    startHeroAutoplay();
                 });
             });
 
-            // Lógica de toque para MOBILE
             heroCarousel.addEventListener('touchstart', e => {
-                // A verificação `window.innerWidth > 992` garante que isso só rode no mobile
                 if (window.innerWidth > 992) return;
                 touchStartX = e.changedTouches[0].screenX;
                 isDragging = true;
-                // AÇÃO-CHAVE: Para a animação automática assim que o usuário toca no card.
                 stopHeroAutoplay();
-                heroContainer.style.transition = 'none'; // Remove a transição durante o arrastar
+                heroContainer.style.transition = 'none';
             });
 
             heroCarousel.addEventListener('touchmove', e => {
@@ -962,7 +1069,6 @@
                 const touchEndX = e.changedTouches[0].screenX;
                 const diff = touchStartX - touchEndX;
 
-                // Move para o próximo ou anterior se o arrastar for significativo
                 if (Math.abs(diff) > 50) {
                     if (diff > 0) {
                         currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
@@ -970,19 +1076,16 @@
                         currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
                     }
                 }
-
                 updateHeroCarousel();
-                // AÇÃO-CHAVE: Reinicia o timer da animação automática após o usuário soltar o dedo.
                 startHeroAutoplay();
             });
 
-            // Inicia o autoplay na primeira vez
             startHeroAutoplay();
         }
 
         // --- CARROSSÉIS DE VÍDEOS ---
         function setupInfiniteCarousel(sectionId, isMobile = false) {
-            const section = document.getElementById(sectionId);
+             const section = document.getElementById(sectionId);
             if (!section) return;
 
             const container = section.querySelector('.video-carousel-container');
@@ -998,32 +1101,20 @@
             let touchStartX = 0;
             let isDragging = false;
 
-            function getVisibleCards() {
-                return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
-            }
-
-            // (O resto da sua função setupCarousel, move, transitionend, etc., é mantido como está)
-            // ... seu código de setup, clonagem de cards etc. vai aqui ...
-            // A parte relevante para a sua dúvida está nos listeners de toque abaixo.
-
-            function stopAutoplay() {
-                clearInterval(autoplayInterval);
-            }
+            function getVisibleCards() { return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone')); }
+            function stopAutoplay() { clearInterval(autoplayInterval); }
 
             function startAutoplay() {
                 stopAutoplay();
-                // Só ativa o autoplay se houver cards suficientes para rolar
                 const visibleCards = getVisibleCards();
-                const containerWidth = container.offsetWidth;
                 if(visibleCards.length > 0) {
-                    const cardWidth = visibleCards[0].offsetWidth;
-                    if(track.scrollWidth > containerWidth) {
+                    if(track.scrollWidth > container.offsetWidth) {
                          autoplayInterval = setInterval(() => move(1), 5000);
                     }
                 }
             }
 
-            function move(direction) { /* Sua função move original */ 
+            function move(direction) {
                 if (isTransitioning) return;
                 isTransitioning = true;
                 const visibleCards = getVisibleCards();
@@ -1038,7 +1129,7 @@
                 track.style.transform = `translateX(${offset}px)`;
             }
 
-            track.addEventListener('transitionend', () => { /* Sua função transitionend original */ 
+            track.addEventListener('transitionend', () => {
                 const visibleCards = getVisibleCards();
                 if (visibleCards.length === 0) { isTransitioning = false; return; }
                 const cardWidth = visibleCards[0].offsetWidth;
@@ -1060,8 +1151,8 @@
                 isTransitioning = false;
             });
             
-            function setupCarousel() { /* Sua função setupCarousel original, que já chama startAutoplay no final */ 
-                stopAutoplay();
+            function setupCarousel() {
+                 stopAutoplay();
                 isTransitioning = false;
                 const clones = track.querySelectorAll('.clone');
                 clones.forEach(clone => track.removeChild(clone));
@@ -1112,29 +1203,20 @@
                 }
                 track.style.transition = 'none';
                 track.style.transform = `translateX(${initialOffset}px)`;
-                if (isMobile) {
-                    container.style.overflowX = 'hidden';
-                }
+                if (isMobile) { container.style.overflowX = 'hidden'; }
                 startAutoplay();
             }
 
-            // Lógica para PC (sem alterações)
             if (!isMobile) {
                 nextBtn.addEventListener('click', () => move(1));
                 prevBtn.addEventListener('click', () => move(-1));
                 section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
                 section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
             } 
-            // Lógica de toque para MOBILE (AQUI ESTÁ A CORREÇÃO)
             else {
                 container.addEventListener('touchstart', e => {
-                    touchStartX = e.changedTouches[0].screenX;
-                    isDragging = true;
-                    // AÇÃO-CHAVE: Para a animação automática ao iniciar o toque.
-                    stopAutoplay();
-                    track.style.transition = 'none';
+                    touchStartX = e.changedTouches[0].screenX; isDragging = true; stopAutoplay(); track.style.transition = 'none';
                 });
-
                 container.addEventListener('touchmove', e => {
                     if (!isDragging) return;
                     const touchEndX = e.changedTouches[0].screenX;
@@ -1147,16 +1229,13 @@
                     const centerOffset = (containerWidth - cardWidth) / 2;
                     track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
                 });
-
                 container.addEventListener('touchend', e => {
                     if (!isDragging) return;
                     isDragging = false;
                     const touchEndX = e.changedTouches[0].screenX;
                     const diff = touchStartX - touchEndX;
-
-                    if (Math.abs(diff) > 50) { // Se o arrastar for significativo
-                        move(diff > 0 ? 1 : -1);
-                    } else { // Se for um toque leve, apenas volta ao lugar
+                    if (Math.abs(diff) > 50) { move(diff > 0 ? 1 : -1); } 
+                    else { 
                         const visibleCards = getVisibleCards();
                         if (visibleCards.length === 0) return;
                         track.style.transition = 'transform 0.5s ease-in-out';
@@ -1166,7 +1245,6 @@
                         const centerOffset = (containerWidth - cardWidth) / 2;
                         track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
                     }
-                    // AÇÃO-CHAVE: Reinicia a animação automática após a interação terminar.
                     startAutoplay();
                 });
             }
@@ -1178,30 +1256,10 @@
                     setupCarousel();
                 });
             });
-
             window.addEventListener('resize', setupCarousel);
             setupCarousel();
         }
 
-        // --- Inicialização dos Carrosséis ---
-        // Roda a lógica de inicialização baseada no tamanho da tela
-        const checkDeviceAndInitCarousels = () => {
-             // Limpa event listeners antigos para evitar duplicação na redimensão
-            const latestSection = document.getElementById('latest-videos-section');
-            const mostViewedSection = document.getElementById('most-viewed-section');
-            if (latestSection) latestSection.innerHTML = latestSection.innerHTML;
-            if (mostViewedSection) mostViewedSection.innerHTML = mostViewedSection.innerHTML;
-
-            if (window.innerWidth <= 992) {
-                setupInfiniteCarousel('latest-videos-section', true);
-                setupInfiniteCarousel('most-viewed-section', true);
-            } else {
-                setupInfiniteCarousel('latest-videos-section', false);
-                setupInfiniteCarousel('most-viewed-section', false);
-            }
-        };
-        
-        // Uma versão mais simples da sua lógica de inicialização para evitar problemas
         if (window.innerWidth > 992) {
             setupInfiniteCarousel('latest-videos-section');
             setupInfiniteCarousel('most-viewed-section');
@@ -1210,19 +1268,15 @@
             setupInfiniteCarousel('most-viewed-section', true);
         }
 
-
-        // Header que some ao rolar (sem alterações)
+        // Header
         const header = document.querySelector('header');
         if (header) {
             let lastScrollTop = 0;
             const scrollThreshold = 150;
             window.addEventListener('scroll', () => {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-                    header.classList.add('header-hidden');
-                } else if (scrollTop < lastScrollTop) {
-                    header.classList.remove('header-hidden');
-                }
+                if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) { header.classList.add('header-hidden'); } 
+                else if (scrollTop < lastScrollTop) { header.classList.remove('header-hidden'); }
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, { passive: true });
         }
