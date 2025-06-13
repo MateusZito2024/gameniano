@@ -168,8 +168,9 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; z-index: 10; transition: opacity 0.5s ease, visibility 0.5s; }
-        .video-thumbnail-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
+        .video-thumbnail-container.hidden { display: none; }
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
         .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
@@ -521,14 +522,14 @@
                 color: var(--text-light);
                 cursor: pointer;
             }
-        .mobile-nav ul {
-            flex-direction: column;
-            text-align: center;
-            width: 100%;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+            .mobile-nav ul {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
             .mobile-nav ul li {
                 margin: 0;
             }
@@ -693,22 +694,21 @@
                 <span class="dot"></span>
             </div>
         </section>
+
         <section class="live-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDÁRIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    
-                    <div id="liveVideoPlayer"></div>
-
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Miniatura ao vivo offline">
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title" id="liveTitle">Tarô ao vivo</div>
-                                <div class="time" id="liveTime">Próxima live: Em breve</div>
+                                <div class="title">Live Tarot - Em Breve</div>
+                                <div class="time">Próxima live em breve</div>
                             </div>
-                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assista no YouTube</a>
+                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
                         </div>
                     </div>
                 </div>
@@ -716,7 +716,7 @@
             <div class="social-share">
                 <p>Compartilhe Live Tarot – Próxima Transmissão</p>
                 <div class="share-icons">
-                    <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
+                     <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/lendariomagus/" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="mailto:lendarioesoterico@gmail.com" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
@@ -724,7 +724,6 @@
                 </div>
             </div>
         </section>
-        
         <section class="video-carousel-section" id="latest-videos-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/fgqwgqwghwh.png" alt="Mão">ÚLTIMOS VÍDEOS</h2>
             <div class="filter-buttons">
@@ -828,48 +827,34 @@
     </footer>
     
     <script>
-        // Carrega a API do IFrame Player do YouTube
-        var tag = document.createElement('script');
+        // --- LÓGICA DA LIVE (Cópia exata do seu código funcional) ---
+        const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
+        const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        var player;
-        
-        // ALTERAÇÃO 2: ESTA FUNÇÃO AGORA TEM A LÓGICA DE AUTOPLAY
-        function onYouTubeIframeAPIReady() {
-            var videoPlayerElement = document.getElementById('liveVideoPlayer');
-            if (videoPlayerElement) {
-                player = new YT.Player('liveVideoPlayer', {
-                    // Para buscar a live de um canal específico, usamos 'playlist' e 'list'
-                    playerVars: {
-                        'listType': 'playlist',
-                        'list': 'UU-ERgSADxY4-HEtn6FF-1hQ', // ID da playlist "Uploads" do canal Lendario Esoterico
-                        'autoplay': 1, // Pede para iniciar automaticamente
-                        'mute': 1,     // Inicia mudo (ESSENCIAL para autoplay funcionar)
-                        'controls': 1  // Mostra os controles para o usuário poder desmutar
-                    },
-                    events: {
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-            }
-        }
+        let player;
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('liveVideoIframe', {
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        };
 
-        // Esta função não precisa de alteração, ela já faz o que é preciso
         function onPlayerStateChange(event) {
             const thumbnailContainer = document.getElementById('liveThumbnail');
             if (!thumbnailContainer) return;
-            // Se o vídeo estiver tocando (PLAYING), esconde a thumbnail
+
             if (event.data === YT.PlayerState.PLAYING) {
                 thumbnailContainer.classList.add('hidden');
+            } else {
+                thumbnailContainer.classList.remove('hidden');
             }
         }
 
+        // --- LÓGICA ORIGINAL DO SEU SITE (Carrosséis, etc) ---
         document.addEventListener('DOMContentLoaded', () => {
-            // ALTERAÇÃO 3: A lógica de clique na thumbnail foi REMOVIDA daqui,
-            // pois agora o autoplay é automático.
-
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mobileNav = document.querySelector('.mobile-nav');
             const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
