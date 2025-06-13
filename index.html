@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +79,17 @@
             pointer-events: none;
         }
 
+        /* --- ALTERAÇÃO 1: Logo não clicável --- */
+        .logo {
+            pointer-events: none; /* Impede que o mouse interaja com a logo */
+        }
+
         .logo img { height: 55px; margin-right: 10px; }
+        
+        /* --- ALTERAÇÃO 2: Esconder título do site na versão desktop --- */
+        .header-title-mobile {
+            display: none;
+        }
 
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
         nav ul li { margin-left: 35px; }
@@ -221,7 +232,7 @@
         }
 
         .share-icons a:hover::after {
-            animation: shimmer-effect 2s infinite linear;
+            animation: shimmer-effect 2s linear infinite;
         }
 
         .video-carousel-section { padding: 80px 0; }
@@ -285,11 +296,11 @@
         
         .video-card-vertical:hover {
             box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 
-                          0 0 5px 1px rgba(255, 100, 100, 0.6);
+                        0 0 5px 1px rgba(255, 100, 100, 0.6);
         }
 
         .video-card-vertical:hover::after {
-            animation: shimmer-effect 2s infinite linear;
+            animation: shimmer-effect 2s linear infinite;
         }
         
         .video-card-vertical .thumbnail { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 2px solid var(--gold); background-color: #000; }
@@ -466,6 +477,20 @@
             header nav, header .social-icons {
                 display: none;
             }
+            
+            /* --- ALTERAÇÃO 2: Estilo do título "Lendario Tv" no mobile --- */
+            .header-title-mobile {
+                display: block; /* Torna o título visível */
+                flex-grow: 1; /* Faz o título ocupar o espaço disponível */
+                text-align: center; /* Centraliza o texto */
+                font-family: var(--font-cinzel);
+                color: var(--gold);
+                font-size: 1.6em;
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+                margin: 0 10px; /* Adiciona espaçamento lateral */
+                line-height: 1; /* Ajuda no alinhamento vertical */
+            }
+
             .mobile-nav-toggle {
                 display: block;
                 background: none;
@@ -504,11 +529,15 @@
                 color: var(--text-light);
                 cursor: pointer;
             }
-            .mobile-nav ul {
-                flex-direction: column;
-                text-align: center;
-                width: 100%;
-            }
+            /* Menu hamburguer */
+.mobile-nav ul {
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    list-style: none; /* Remove os pontos */
+    padding: 0; /* Remove o padding extra */
+    margin: 0; /* Remove a margem extra */
+}
             .mobile-nav ul li {
                 margin: 0;
             }
@@ -575,7 +604,7 @@
             }
             .video-carousel-section .carousel-arrow { display: none; }
             
-            /* NOVA REGRA PARA ALINHAR OS BOTÕES DE FILTRO EM GRADE */
+            /* NOVA REGRA PARA ALINHAR BOTÕES DE FILTRO EM GRADE */
             .filter-buttons {
                 display: grid;
                 grid-template-columns: 1fr 1fr; /* Cria 2 colunas de largura igual */
@@ -633,6 +662,7 @@
         <div class="logo">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
         </div>
+        <h1 class="header-title-mobile">Lendario Tv</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Início</a></li>
@@ -640,7 +670,7 @@
                 <li><a href="videos.html">Vídeos</a></li>
                 <li><a href="doacao.html">Doação</a></li>
                 <li><a href="contato.html">Contato</a></li>
-                <li><a href="consulta.html">Consulta</a></li>
+                <li><a href="consult.html">Consultar</a></li>
             </ul>
         </nav>
         <div class="social-icons">
@@ -661,7 +691,7 @@
             <li><a href="videos.html">Vídeos</a></li>
             <li><a href="doacao.html">Doação</a></li>
             <li><a href="contato.html">Contato</a></li>
-            <li><a href="consulta.html">Consulta</a></li>
+            <li><a href="consult.html">Consultar</a></li>
         </ul>
         <div class="mobile-socials">
             <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -686,19 +716,19 @@
             </div>
         </section>
         <section class="live-section">
-            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
+            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDÁRIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="about:blank" data-src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" src="about:blank" data-src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Tarô ao Vivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Miniatura ao vivo offline">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title" id="liveTitle">Live de Tarot</div>
+                                <div class="title" id="liveTitle">Tarô ao vivo</div>
                                 <div class="time" id="liveTime">Próxima live: Em breve</div>
                             </div>
-                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assista no YouTube</a>
                         </div>
                     </div>
                 </div>
@@ -706,7 +736,7 @@
             <div class="social-share">
                 <p>Compartilhe Live Tarot – Próxima Transmissão</p>
                 <div class="share-icons">
-                    <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visitar o Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/lendariomagus/" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="mailto:lendarioesoterico@gmail.com" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
@@ -769,11 +799,11 @@
                 <div class="member-card-inner">
                     <div class="member-card-front">
                         <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
-                        <h3>Torne-se membro do canal</h3>
+                        <h3>Torne-se um membro do canal</h3>
                         <p>Gosta do nosso conteúdo? Fortaleça esta comunidade e tenha acesso a benefícios exclusivos.</p>
                     </div>
                     <div class="member-card-back">
-                        <h4>Apoie o Canal!</h4>
+                        <h4>Apoie o canal!</h4>
                         <p>Com sua ajuda, podemos criar ainda mais conteúdo de qualidade e fortalecer nossa comunidade. Clique abaixo para se tornar um membro oficial!</p>
                         <a href="https://www.youtube.com/@Lendario/join" target="_blank" class="member-button"><span class="icon">🧡</span> Seja membro</a>
                     </div>
@@ -805,12 +835,12 @@
             </div>
             <div class="footer-column">
                 <ul>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarô</a></li>
                     <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplSoQK0KCzIeoA5UesjtSjL&si=vhu0Mk-iOI0I1kSL"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
                     <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopmTkwcIKOxn5KAO9U9tuQq_&si=3nFQ0whFNkLjUgNU"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
                     <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm1SUxAHHHVZGjaFNjVT_gH&si=NUM2OkIuQ1WPi8bc"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
                     <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplK3cUiQblqXOcNAlBlujQe&si=y-OjPs-9wIuEI0hq"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Lives</a></li>
                 </ul>
             </div>
         </div>
@@ -948,216 +978,215 @@
             }
 
             function setupInfiniteCarousel(sectionId, isMobile = false) {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
+                const section = document.getElementById(sectionId);
+                if (!section) return;
 
-    const container = section.querySelector('.video-carousel-container');
-    const track = section.querySelector('.video-carousel-track');
-    const prevBtn = section.querySelector('.prev-arrow');
-    const nextBtn = section.querySelector('.next-arrow');
-    const filterButtons = section.querySelectorAll('.filter-btn');
-    
-    let originalCards = Array.from(track.children);
-    let isTransitioning = false;
-    let autoplayInterval;
-    let currentIndex = 0;
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isDragging = false;
+                const container = section.querySelector('.video-carousel-container');
+                const track = section.querySelector('.video-carousel-track');
+                const prevBtn = section.querySelector('.prev-arrow');
+                const nextBtn = section.querySelector('.next-arrow');
+                const filterButtons = section.querySelectorAll('.filter-btn');
+                
+                let originalCards = Array.from(track.children);
+                let isTransitioning = false;
+                let autoplayInterval;
+                let currentIndex = 0;
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let isDragging = false;
 
-    function getVisibleCards() {
-        return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
-    }
-
-    function setupCarousel() {
-        stopAutoplay();
-        isTransitioning = false;
-
-        const clones = track.querySelectorAll('.clone');
-        clones.forEach(clone => track.removeChild(clone));
-        
-        track.innerHTML = '';
-        originalCards.forEach(card => track.appendChild(card));
-
-        const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-        originalCards.forEach(card => {
-            card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
-        });
-
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) {
-            if (prevBtn && !isMobile) prevBtn.style.display = 'none';
-            if (nextBtn && !isMobile) nextBtn.style.display = 'none';
-            track.style.transform = 'translateX(0)';
-            return;
-        }
-
-        if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
-        if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
-
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-
-        if (visibleCards.length <= cardsInView) {
-            if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
-            if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
-            track.style.transform = 'translateX(0)';
-            return;
-        }
-
-        if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
-        if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
-
-        const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
-        itemsToCloneEnd.forEach(card => {
-            const clone = card.cloneNode(true);
-            clone.classList.add('clone');
-            track.appendChild(clone);
-        });
-
-        const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
-        itemsToCloneStart.reverse().forEach(card => {
-            const clone = card.cloneNode(true);
-            clone.classList.add('clone');
-            track.insertBefore(clone, visibleCards[0]);
-        });
-
-        currentIndex = cardsInView + 1;
-        let initialOffset = -currentIndex * (cardWidth + gap);
-        if (isMobile) {
-            // Ajuste para centralizar o card no mobile
-            const containerWidth = container.offsetWidth;
-            const centerOffset = (containerWidth - cardWidth) / 2;
-            initialOffset += centerOffset;
-        }
-        track.style.transition = 'none';
-        track.style.transform = `translateX(${initialOffset}px)`;
-
-        if (isMobile) {
-            container.style.overflowX = 'hidden';
-            container.style.scrollSnapType = 'none';
-        }
-
-        startAutoplay();
-    }
-
-    function move(direction) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) { isTransitioning = false; return; }
-
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const containerWidth = container.offsetWidth;
-        const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
-
-        currentIndex += direction;
-        let offset = -currentIndex * (cardWidth + gap) + centerOffset;
-        track.style.transition = 'transform 0.5s ease-in-out';
-        track.style.transform = `translateX(${offset}px)`;
-    }
-
-    track.addEventListener('transitionend', () => {
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) { isTransitioning = false; return; }
-
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-        const containerWidth = container.offsetWidth;
-        const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
-
-        if (currentIndex <= cardsInView) {
-            currentIndex += visibleCards.length;
-            track.style.transition = 'none';
-            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-        }
-
-        if (currentIndex >= visibleCards.length + cardsInView + 1) {
-            currentIndex -= visibleCards.length;
-            track.style.transition = 'none';
-            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-        }
-        isTransitioning = false;
-    });
-
-    function stopAutoplay() {
-        clearInterval(autoplayInterval);
-    }
-
-    function startAutoplay() {
-        stopAutoplay();
-        autoplayInterval = setInterval(() => move(1), 5000);
-    }
-
-    if (!isMobile) {
-        nextBtn.addEventListener('click', () => move(1));
-        prevBtn.addEventListener('click', () => move(-1));
-        section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
-        section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-    } else {
-        container.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-            isDragging = true;
-            stopAutoplay();
-            track.style.transition = 'none';
-        });
-
-        container.addEventListener('touchmove', e => {
-            if (!isDragging) return;
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchEndX - touchStartX;
-            const visibleCards = getVisibleCards();
-            if (visibleCards.length === 0) return;
-            const cardWidth = visibleCards[0].offsetWidth;
-            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-            const containerWidth = container.offsetWidth;
-            const centerOffset = (containerWidth - cardWidth) / 2;
-            track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
-            e.preventDefault();
-        });
-
-        container.addEventListener('touchend', e => {
-            if (!isDragging) return;
-            isDragging = false;
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            const swipeThreshold = 50;
-            const visibleCards = getVisibleCards();
-            if (visibleCards.length === 0) return;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    move(1);
-                } else {
-                    move(-1);
+                function getVisibleCards() {
+                    return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
                 }
-            } else {
-                track.style.transition = 'transform 0.5s ease-in-out';
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const containerWidth = container.offsetWidth;
-                const centerOffset = (containerWidth - cardWidth) / 2;
-                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+
+                function setupCarousel() {
+                    stopAutoplay();
+                    isTransitioning = false;
+
+                    const clones = track.querySelectorAll('.clone');
+                    clones.forEach(clone => track.removeChild(clone));
+                    
+                    track.innerHTML = '';
+                    originalCards.forEach(card => track.appendChild(card));
+
+                    const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+                    originalCards.forEach(card => {
+                        card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+                    });
+
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) {
+                        if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+                        if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+
+                    if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+                    if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+                    if (visibleCards.length <= cardsInView) {
+                        if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+                        if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+
+                    if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+                    if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+
+                    const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
+                    itemsToCloneEnd.forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.appendChild(clone);
+                    });
+
+                    const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
+                    itemsToCloneStart.reverse().forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.insertBefore(clone, visibleCards[0]);
+                    });
+
+                    currentIndex = cardsInView + 1;
+                    let initialOffset = -currentIndex * (cardWidth + gap);
+                    if (isMobile) {
+                        const containerWidth = container.offsetWidth;
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+                        initialOffset += centerOffset;
+                    }
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${initialOffset}px)`;
+
+                    if (isMobile) {
+                        container.style.overflowX = 'hidden';
+                        container.style.scrollSnapType = 'none';
+                    }
+
+                    startAutoplay();
+                }
+
+                function move(direction) {
+                    if (isTransitioning) return;
+                    isTransitioning = true;
+
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+                    currentIndex += direction;
+                    let offset = -currentIndex * (cardWidth + gap) + centerOffset;
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                    track.style.transform = `translateX(${offset}px)`;
+                }
+
+                track.addEventListener('transitionend', () => {
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+                    if (currentIndex <= cardsInView) {
+                        currentIndex += visibleCards.length;
+                        track.style.transition = 'none';
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                    }
+
+                    if (currentIndex >= visibleCards.length + cardsInView + 1) {
+                        currentIndex -= visibleCards.length;
+                        track.style.transition = 'none';
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                    }
+                    isTransitioning = false;
+                });
+
+                function stopAutoplay() {
+                    clearInterval(autoplayInterval);
+                }
+
+                function startAutoplay() {
+                    stopAutoplay();
+                    autoplayInterval = setInterval(() => move(1), 5000);
+                }
+
+                if (!isMobile) {
+                    nextBtn.addEventListener('click', () => move(1));
+                    prevBtn.addEventListener('click', () => move(-1));
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+                } else {
+                    container.addEventListener('touchstart', e => {
+                        touchStartX = e.changedTouches[0].screenX;
+                        isDragging = true;
+                        stopAutoplay();
+                        track.style.transition = 'none';
+                    });
+
+                    container.addEventListener('touchmove', e => {
+                        if (!isDragging) return;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchEndX - touchStartX;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+                        const cardWidth = visibleCards[0].offsetWidth;
+                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                        const containerWidth = container.offsetWidth;
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+                        track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
+                        e.preventDefault();
+                    });
+
+                    container.addEventListener('touchend', e => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchStartX - touchEndX;
+                        const swipeThreshold = 50;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+
+                        if (Math.abs(diff) > swipeThreshold) {
+                            if (diff > 0) {
+                                move(1);
+                            } else {
+                                move(-1);
+                            }
+                        } else {
+                            track.style.transition = 'transform 0.5s ease-in-out';
+                            const cardWidth = visibleCards[0].offsetWidth;
+                            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                            const containerWidth = container.offsetWidth;
+                            const centerOffset = (containerWidth - cardWidth) / 2;
+                            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                        }
+                        startAutoplay();
+                    });
+                }
+
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        setupCarousel();
+                    });
+                });
+
+                window.addEventListener('resize', setupCarousel);
+                setupCarousel();
             }
-            startAutoplay();
-        });
-    }
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            setupCarousel();
-        });
-    });
-
-    window.addEventListener('resize', setupCarousel);
-    setupCarousel();
-}
 
             if (window.innerWidth > 992) {
                 setupInfiniteCarousel('latest-videos-section');
