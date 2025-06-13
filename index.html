@@ -1,1245 +1,4830 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lendário TV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        :root {
-            --dark-background: #0d0d0d;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2c2c2c;
-            --text-light: #f0f0f0;
-            --gold: #D4AF37;
-            --button-gold: #9e843c;
-            --button-gold-hover: #c4a148;
-            --red-youtube: #ff0000;
-            --border-color: #333;
-            --font-cinzel: 'Cinzel', serif;
-            --font-montserrat: 'Montserrat', sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lendário TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *, *::before, *::after {
 
-        @keyframes pulse-gold {
-            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); }
-        }
 
-        @keyframes pulse-youtube {
-            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
-        }
 
-        @keyframes shimmer-effect {
-            0% { transform: translateX(-150%) skewX(-30deg); }
-            100% { transform: translateX(150%) skewX(-30deg); }
-        }
+            box-sizing: border-box;
 
-        body {
-            font-family: var(--font-montserrat);
-            background-color: var(--dark-background);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
 
-        a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
 
-        a:hover { color: var(--gold); }
+        }
 
-        header {
-            background-color: var(--dark-gray);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-        }
 
-        .header-hidden {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
 
-        .logo {
-            pointer-events: none;
-        }
+        :root {
 
-        .logo img { height: 55px; margin-right: 10px; }
-        
-        .header-title-mobile {
-            display: none;
-        }
 
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { margin-left: 35px; }
-        nav ul li a { font-weight: 500; font-size: 0.95em; }
 
-        .social-icons { display: flex; align-items: center; }
-        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
-        .social-icons a:hover { color: var(--gold); }
+            --dark-background: #0d0d0d;
 
-        .hero-section {
-            position: relative;
-            height: 520px;
-            background-image: url('https://i.postimg.cc/WbVBrwrj/capa-site-yt.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 60px;
-            overflow: hidden;
-        }
 
-        .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
-        .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
-        
-        .hero-card {
-            min-width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 50px 70px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
 
-        .hero-card:hover {
-            transform: translateY(-10px) scale(1.03) skewY(-3deg);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.25);
-        }
+            --dark-gray: #1a1a1a;
 
-        .hero-card h2, .hero-card p, .hero-card .hero-button { transition: transform 0.4s ease, text-shadow 0.4s ease; }
-        .hero-card:hover h2, .hero-card:hover p, .hero-card:hover .hero-button { transform: skewY(3deg); }
-        
-        .hero-card:hover h2 {
-            transform: skewY(3deg) scale(1.02);
-            text-shadow: 0 0 20px var(--gold), 0 0 10px rgba(255, 235, 179, 0.5);
-        }
 
-        .hero-button {
-            background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none;
-            border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px;
-            transition: background-color 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            display: inline-block; width: 200px; text-align: center;
-        }
 
-        .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .hero-button:hover { background-color: var(--button-gold-hover); }
-        .hero-button.youtube:hover { background-color: #cc0000; }
-        .hero-card:hover .hero-button { animation: pulse-gold 1.5s infinite ease-in-out; }
-        .hero-card:hover .hero-button.youtube { animation: pulse-youtube 1.5s infinite ease-in-out; }
+            --medium-gray: #2c2c2c;
 
-        .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
-        .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; min-height: 40px; }
 
-        .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
-        .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .dot.active { background-color: var(--gold); border-color: var(--gold); }
 
-        .section-title {
-    text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;
-    color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative;
-    width: 100%; /* <-- ESTA É A LINHA QUE CORRIGE O PROBLEMA */
+            --text-light: #f0f0f0;
+
+
+
+            --gold: #D4AF37;
+
+
+
+            --button-gold: #9e843c;
+
+
+
+            --button-gold-hover: #c4a148;
+
+
+
+            --red-youtube: #ff0000;
+
+
+
+            --border-color: #333;
+
+
+
+            --font-cinzel: 'Cinzel', serif;
+
+
+
+            --font-montserrat: 'Montserrat', sans-serif;
+
+
+
+        }
+
+
+
+
+
+
+
+        @keyframes pulse-gold {
+
+
+
+            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); }
+
+
+
+        }
+
+
+
+
+
+
+
+        @keyframes pulse-youtube {
+
+
+
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
+
+
+
+        }
+
+
+
+
+
+
+
+        @keyframes shimmer-effect {
+
+
+
+            0% { transform: translateX(-150%) skewX(-30deg); }
+
+
+
+            100% { transform: translateX(150%) skewX(-30deg); }
+
+
+
+        }
+
+
+
+
+
+
+
+        body {
+
+
+
+            font-family: var(--font-montserrat);
+
+
+
+            background-color: var(--dark-background);
+
+
+
+            color: var(--text-light);
+
+
+
+            margin: 0;
+
+
+
+            padding: 0;
+
+
+
+            line-height: 1.6;
+
+
+
+            overflow-x: hidden;
+
+
+
+        }
+
+
+
+
+
+
+
+        a {
+
+
+
+            color: var(--text-light);
+
+
+
+            text-decoration: none;
+
+
+
+            transition: color 0.3s ease;
+
+
+
+        }
+
+
+
+
+
+
+
+        a:hover { color: var(--gold); }
+
+
+
+
+
+
+
+        header {
+
+
+
+            background-color: var(--dark-gray);
+
+
+
+            padding: 15px 5%;
+
+
+
+            display: flex;
+
+
+
+            justify-content: space-between;
+
+
+
+            align-items: center;
+
+
+
+            border-bottom: 1px solid var(--border-color);
+
+
+
+            position: sticky;
+
+
+
+            top: 0;
+
+
+
+            z-index: 1000;
+
+
+
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+
+
+
+        }
+
+
+
+
+
+
+
+        .header-hidden {
+
+
+
+            transform: translateY(-100%);
+
+
+
+            opacity: 0;
+
+
+
+            pointer-events: none;
+
+
+
+        }
+
+
+
+
+
+
+
+        .logo {
+
+
+
+            pointer-events: none;
+
+
+
+        }
+
+
+
+
+
+
+
+        .logo img { height: 55px; margin-right: 10px; }
+
+
+
+        
+
+
+
+        .header-title-mobile {
+
+
+
+            display: none;
+
+
+
+        }
+
+
+
+
+
+
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+
+
+
+        nav ul li { margin-left: 35px; }
+
+
+
+        nav ul li a { font-weight: 500; font-size: 0.95em; }
+
+
+
+
+
+
+
+        .social-icons { display: flex; align-items: center; }
+
+
+
+        .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
+
+
+
+        .social-icons a:hover { color: var(--gold); }
+
+
+
+
+
+
+
+        .hero-section {
+
+
+
+            position: relative;
+
+
+
+            height: 520px;
+
+
+
+            background-image: url('https://i.postimg.cc/WbVBrwrj/capa-site-yt.png');
+
+
+
+            background-size: cover;
+
+
+
+            background-position: center;
+
+
+
+            display: flex;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            text-align: center;
+
+
+
+            color: var(--text-light);
+
+
+
+            margin-bottom: 60px;
+
+
+
+            overflow: hidden;
+
+
+
+        }
+
+
+
+
+
+
+
+        .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
+
+
+
+        .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
+
+
+
+        
+
+
+
+        .hero-card {
+
+
+
+            min-width: 100%;
+
+
+
+            background-color: rgba(0, 0, 0, 0.7);
+
+
+
+            padding: 50px 70px;
+
+
+
+            border-radius: 8px;
+
+
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+
+
+
+            text-align: center;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            height: 100%;
+
+
+
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+
+
+        }
+
+
+
+
+
+
+
+        .hero-card:hover {
+
+
+
+            transform: translateY(-10px) scale(1.03) skewY(-3deg);
+
+
+
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.25);
+
+
+
+        }
+
+
+
+
+
+
+
+        .hero-card h2, .hero-card p, .hero-card .hero-button { transition: transform 0.4s ease, text-shadow 0.4s ease; }
+
+
+
+        .hero-card:hover h2, .hero-card:hover p, .hero-card:hover .hero-button { transform: skewY(3deg); }
+
+
+
+        
+
+
+
+        .hero-card:hover h2 {
+
+
+
+            transform: skewY(3deg) scale(1.02);
+
+
+
+            text-shadow: 0 0 20px var(--gold), 0 0 10px rgba(255, 235, 179, 0.5);
+
+
+
+        }
+
+
+
+
+
+
+
+        .hero-button {
+
+
+
+            background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none;
+
+
+
+            border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px;
+
+
+
+            transition: background-color 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+
+
+            display: inline-block; width: 200px; text-align: center;
+
+
+
+        }
+
+
+
+
+
+
+
+        .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
+
+
+
+        .hero-button:hover { background-color: var(--button-gold-hover); }
+
+
+
+        .hero-button.youtube:hover { background-color: #cc0000; }
+
+
+
+        .hero-card:hover .hero-button { animation: pulse-gold 1.5s infinite ease-in-out; }
+
+
+
+        .hero-card:hover .hero-button.youtube { animation: pulse-youtube 1.5s infinite ease-in-out; }
+
+
+
+
+
+
+
+        .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
+
+
+
+        .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; min-height: 40px; }
+
+
+
+
+
+
+
+        .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+
+
+
+        .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
+
+
+
+        .dot.active { background-color: var(--gold); border-color: var(--gold); }
+
+
+
+
+
+
+
+        .section-title {
+
+
+
+    text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;
+
+
+
+    color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative;
+
+
+
+    width: 100%; /* <-- ESTA É A LINHA QUE CORRIGE O PROBLEMA */
+
+
+
 }
-        .section-title::before, .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
-        .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
 
-        .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
-        .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
-        .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
-        .video-thumbnail-container.hidden { display: none; }
-        .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
-        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
-        .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
-        .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
-        .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
-        .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
-        .video-info-overlay .youtube-link:hover { color: var(--gold); }
-        
-        .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
-        .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
-        
-        .share-icons a {
-            color: var(--text-light);
-            background-color: var(--medium-gray);
-            font-size: 26px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
 
-        .share-icons a:hover {
-            background-color: var(--gold);
-            color: var(--dark-background);
-        }
 
-        .share-icons a::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            transform: translateX(-150%) skewX(-30deg);
-            background: linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 40%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0.1) 60%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            pointer-events: none;
-        }
+        .section-title::before, .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
 
-        .share-icons a:hover::after {
-            animation: shimmer-effect 2s linear infinite;
-        }
 
-        .video-carousel-section { padding: 80px 0; }
-        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; padding: 0 5%; }
-        .filter-btn { background-color: var(--medium-gray); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 500; transition: all 0.3s ease; }
-        .filter-btn:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
-        .filter-btn.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        
-        .video-carousel-wrapper { 
-            position: relative; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            padding: 20px 60px;
-        }
-        
-        .video-carousel-container { 
-            overflow: hidden;
-        }
-        
-        .video-carousel-track { 
-            display: flex; 
-            gap: 25px; 
-        }
-        
-        .video-card-vertical {
-            background-color: var(--dark-gray);
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
-            flex: 0 0 calc(25% - 20px);
-            min-width: 280px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 5;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .video-card-vertical.clone {
-            pointer-events: none;
-            user-select: none;
-        }
-        
-        .video-card-vertical::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            transform: translateX(-150%) skewX(-30deg);
-            background: linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 40%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0.1) 60%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            pointer-events: none;
-        }
-        
-        .video-card-vertical:hover {
-            box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 
-                        0 0 5px 1px rgba(255, 100, 100, 0.6);
-        }
 
-        .video-card-vertical:hover::after {
-            animation: shimmer-effect 2s linear infinite;
-        }
-        
-        .video-card-vertical .thumbnail { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 2px solid var(--gold); background-color: #000; }
-        .video-card-vertical .video-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        
-        .video-card-vertical h3 {
-            font-family: var(--font-cinzel);
-            font-size: 1.15em;
-            margin: 0 0 10px 0;
-            height: 50px;
-            overflow: hidden;
-        }
-        
-        .video-card-vertical .description { font-size: 0.9em; color: #aaa; line-height: 1.5; height: 65px; margin: 0 0 20px 0; overflow: hidden; }
-        .video-card-vertical .watch-button { display: inline-block; background-color: var(--button-gold); color: var(--dark-background); padding: 10px 20px; border-radius: 5px; font-weight: 600; text-align: center; margin-top: auto; }
-        .video-card-vertical .watch-button:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
+        .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
 
-        .video-carousel-section .carousel-arrow {
-            position: absolute; top: calc(50% + 10px);
-            transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
-            color: var(--text-light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%;
-            font-size: 1.5em; cursor: pointer; z-index: 20;
-            display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
-        }
-        .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
-        .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
-        .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
-        .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-        
-        .member-section {
-            padding: 80px 5%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 450px;
-            position: relative;
-            background-color: var(--dark-background);
-        }
 
-        .decorative-border {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
-            background-size: contain; background-repeat: no-repeat; background-position: center center;
-            opacity: 0.08; z-index: 0; pointer-events: none;
-        }
-        
-        .member-card {
-            background-color: transparent;
-            max-width: 600px;
-            width: 100%;
-            height: 380px;
-            perspective: 1500px;
-            padding: 0;
-            border: none;
-            box-shadow: none;
-            text-align: initial;
-        }
-        
-        .member-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
 
-        .member-card:hover .member-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .member-card-front, .member-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            text-align: center;
-            background-color: var(--dark-gray);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
 
-        .member-card-back {
-            transform: rotateY(180deg);
-        }
-        
-        .member-card .youtube-logo { 
-            font-size: 4em; 
-            color: var(--red-youtube); 
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); 
-        }
-        
-        .member-card h3 { 
-            font-family: var(--font-cinzel); 
-            font-size: 2.2em; 
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: var(--gold); 
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); 
-        }
 
-        .member-card-back h4 {
-            font-family: var(--font-cinzel);
-            font-size: 2em;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: var(--gold);
-        }
-        
-        .member-card p { 
-            font-size: 1.15em; 
-            color: #ccc; 
-            max-width: 95%;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-        
-        .member-card-back p {
-            margin-bottom: 30px;
-        }
 
-        .member-button {
-            background-color: var(--red-youtube); 
-            color: var(--text-light); 
-            padding: 18px 40px; 
-            text-decoration: none; 
-            border-radius: 30px;
-            font-weight: bold; 
-            font-size: 1.1em; 
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex; 
-            align-items: center; 
-            gap: 12px; 
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-        }
-        .member-button:hover { 
-            background-color: #cc0000; 
-            transform: translateY(-2px); 
-        }
-        .member-button .icon { 
-            font-size: 1.3em; 
-            color: white; 
-        }
 
-        footer {
-            background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap;
-            justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px;
-        }
-        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
-        .footer-logo-section img { height: 65px; margin-bottom: 20px; }
-        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
-        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
-        .footer-social-icons a:hover { color: var(--gold); }
-        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
-        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
-        .footer-column ul { list-style: none; padding: 0; margin: 0; }
-        .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
-        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
-        .footer-column ul li a:hover { color: var(--gold); }
-        .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
-        
-        .mobile-nav-toggle { display: none; }
-        .mobile-nav { display: none; }
+        .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
 
-        @media (max-width: 992px) {
-            header nav, header .social-icons {
-                display: none;
-            }
-            
-            .header-title-mobile {
-    display: block;
-    position: absolute;
-    
-    /* Mude o '0px' para mover o título para a esquerda ou direita */
-    left: calc(50% + 0px); 
-    
-    transform: translateX(-50%);
-    font-family: var(--font-cinzel);
-    color: var(--gold);
-    font-size: 1.6em;
-    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-    line-height: 1; 
+
+
+        .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
+
+
+
+        .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
+
+
+
+        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
+
+
+
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
+
+
+
+        .video-thumbnail-container.hidden { display: none; }
+
+
+
+        .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+
+        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+
+
+
+        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
+
+
+
+        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
+
+
+
+        .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
+
+
+
+        .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
+
+
+
+        .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
+
+
+
+        .video-info-overlay .youtube-link i { margin-right: 8px; font-size: 1.4em; color: var(--red-youtube); }
+
+
+
+        .video-info-overlay .youtube-link:hover { color: var(--gold); }
+
+
+
+        
+
+
+
+        .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
+
+
+
+        .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
+
+
+
+        
+
+
+
+        .share-icons a {
+
+
+
+            color: var(--text-light);
+
+
+
+            background-color: var(--medium-gray);
+
+
+
+            font-size: 26px;
+
+
+
+            width: 50px;
+
+
+
+            height: 50px;
+
+
+
+            border-radius: 50%;
+
+
+
+            display: inline-flex;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            margin: 0 10px;
+
+
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+
+
+            position: relative;
+
+
+
+            overflow: hidden;
+
+
+
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+
+
+        }
+
+
+
+
+
+
+
+        .share-icons a:hover {
+
+
+
+            background-color: var(--gold);
+
+
+
+            color: var(--dark-background);
+
+
+
+        }
+
+
+
+
+
+
+
+        .share-icons a::after {
+
+
+
+            content: '';
+
+
+
+            position: absolute;
+
+
+
+            top: 0;
+
+
+
+            left: 0;
+
+
+
+            width: 200%;
+
+
+
+            height: 100%;
+
+
+
+            transform: translateX(-150%) skewX(-30deg);
+
+
+
+            background: linear-gradient(
+
+
+
+                90deg,
+
+
+
+                rgba(255, 255, 255, 0) 0%,
+
+
+
+                rgba(255, 255, 255, 0.1) 40%,
+
+
+
+                rgba(255, 255, 255, 0.4) 50%,
+
+
+
+                rgba(255, 255, 255, 0.1) 60%,
+
+
+
+                rgba(255, 255, 255, 0) 100%
+
+
+
+            );
+
+
+
+            pointer-events: none;
+
+
+
+        }
+
+
+
+
+
+
+
+        .share-icons a:hover::after {
+
+
+
+            animation: shimmer-effect 2s linear infinite;
+
+
+
+        }
+
+
+
+
+
+
+
+        .video-carousel-section { padding: 80px 0; }
+
+
+
+        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; padding: 0 5%; }
+
+
+
+        .filter-btn { background-color: var(--medium-gray); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 500; transition: all 0.3s ease; }
+
+
+
+        .filter-btn:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
+
+
+
+        .filter-btn.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+
+
+
+        
+
+
+
+        .video-carousel-wrapper { 
+
+
+
+            position: relative; 
+
+
+
+            max-width: 1400px; 
+
+
+
+            margin: 0 auto; 
+
+
+
+            padding: 20px 60px;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-carousel-container { 
+
+
+
+            overflow: hidden;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-carousel-track { 
+
+
+
+            display: flex; 
+
+
+
+            gap: 25px; 
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-card-vertical {
+
+
+
+            background-color: var(--dark-gray);
+
+
+
+            border-radius: 8px;
+
+
+
+            border: 2px solid var(--border-color);
+
+
+
+            flex: 0 0 calc(25% - 20px);
+
+
+
+            min-width: 280px;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            position: relative;
+
+
+
+            z-index: 5;
+
+
+
+            overflow: hidden;
+
+
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+
+
+        }
+
+
+
+        .video-card-vertical.clone {
+
+
+
+            pointer-events: none;
+
+
+
+            user-select: none;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-card-vertical::after {
+
+
+
+            content: '';
+
+
+
+            position: absolute;
+
+
+
+            top: 0;
+
+
+
+            left: 0;
+
+
+
+            width: 200%;
+
+
+
+            height: 100%;
+
+
+
+            transform: translateX(-150%) skewX(-30deg);
+
+
+
+            background: linear-gradient(
+
+
+
+                90deg,
+
+
+
+                rgba(255, 255, 255, 0) 0%,
+
+
+
+                rgba(255, 255, 255, 0.1) 40%,
+
+
+
+                rgba(255, 255, 255, 0.4) 50%,
+
+
+
+                rgba(255, 255, 255, 0.1) 60%,
+
+
+
+                rgba(255, 255, 255, 0) 100%
+
+
+
+            );
+
+
+
+            pointer-events: none;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-card-vertical:hover {
+
+
+
+            box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 
+
+
+
+                        0 0 5px 1px rgba(255, 100, 100, 0.6);
+
+
+
+        }
+
+
+
+
+
+
+
+        .video-card-vertical:hover::after {
+
+
+
+            animation: shimmer-effect 2s linear infinite;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-card-vertical .thumbnail { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 2px solid var(--gold); background-color: #000; }
+
+
+
+        .video-card-vertical .video-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+
+
+
+        
+
+
+
+        .video-card-vertical h3 {
+
+
+
+            font-family: var(--font-cinzel);
+
+
+
+            font-size: 1.15em;
+
+
+
+            margin: 0 0 10px 0;
+
+
+
+            height: 50px;
+
+
+
+            overflow: hidden;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .video-card-vertical .description { font-size: 0.9em; color: #aaa; line-height: 1.5; height: 65px; margin: 0 0 20px 0; overflow: hidden; }
+
+
+
+        .video-card-vertical .watch-button { display: inline-block; background-color: var(--button-gold); color: var(--dark-background); padding: 10px 20px; border-radius: 5px; font-weight: 600; text-align: center; margin-top: auto; }
+
+
+
+        .video-card-vertical .watch-button:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
+
+
+
+
+
+
+
+        .video-carousel-section .carousel-arrow {
+
+
+
+            position: absolute; top: calc(50% + 10px);
+
+
+
+            transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
+
+
+
+            color: var(--text-light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%;
+
+
+
+            font-size: 1.5em; cursor: pointer; z-index: 20;
+
+
+
+            display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
+
+
+
+        }
+
+
+
+        .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
+
+
+
+        .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
+
+
+
+        .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
+
+
+
+        .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+
+
+        
+
+
+
+        .member-section {
+
+
+
+            padding: 80px 5%;
+
+
+
+            display: flex;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            min-height: 450px;
+
+
+
+            position: relative;
+
+
+
+            background-color: var(--dark-background);
+
+
+
+        }
+
+
+
+
+
+
+
+        .decorative-border {
+
+
+
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+
+
+
+            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+
+
+
+            background-size: contain; background-repeat: no-repeat; background-position: center center;
+
+
+
+            opacity: 0.08; z-index: 0; pointer-events: none;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card {
+
+
+
+            background-color: transparent;
+
+
+
+            max-width: 600px;
+
+
+
+            width: 100%;
+
+
+
+            height: 380px;
+
+
+
+            perspective: 1500px;
+
+
+
+            padding: 0;
+
+
+
+            border: none;
+
+
+
+            box-shadow: none;
+
+
+
+            text-align: initial;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card-inner {
+
+
+
+            position: relative;
+
+
+
+            width: 100%;
+
+
+
+            height: 100%;
+
+
+
+            transition: transform 0.8s;
+
+
+
+            transform-style: preserve-3d;
+
+
+
+        }
+
+
+
+
+
+
+
+        .member-card:hover .member-card-inner {
+
+
+
+            transform: rotateY(180deg);
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card-front, .member-card-back {
+
+
+
+            position: absolute;
+
+
+
+            width: 100%;
+
+
+
+            height: 100%;
+
+
+
+            -webkit-backface-visibility: hidden;
+
+
+
+            backface-visibility: hidden;
+
+
+
+            display: flex;
+
+
+
+            flex-direction: column;
+
+
+
+            justify-content: center;
+
+
+
+            align-items: center;
+
+
+
+            padding: 40px;
+
+
+
+            text-align: center;
+
+
+
+            background-color: var(--dark-gray);
+
+
+
+            border-radius: 12px;
+
+
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+
+
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+
+
+        }
+
+
+
+
+
+
+
+        .member-card-back {
+
+
+
+            transform: rotateY(180deg);
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card .youtube-logo { 
+
+
+
+            font-size: 4em; 
+
+
+
+            color: var(--red-youtube); 
+
+
+
+            margin-bottom: 20px;
+
+
+
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); 
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card h3 { 
+
+
+
+            font-family: var(--font-cinzel); 
+
+
+
+            font-size: 2.2em; 
+
+
+
+            margin-top: 0;
+
+
+
+            margin-bottom: 15px;
+
+
+
+            color: var(--gold); 
+
+
+
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); 
+
+
+
+        }
+
+
+
+
+
+
+
+        .member-card-back h4 {
+
+
+
+            font-family: var(--font-cinzel);
+
+
+
+            font-size: 2em;
+
+
+
+            margin-top: 0;
+
+
+
+            margin-bottom: 15px;
+
+
+
+            color: var(--gold);
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card p { 
+
+
+
+            font-size: 1.15em; 
+
+
+
+            color: #ccc; 
+
+
+
+            max-width: 95%;
+
+
+
+            margin-top: 0;
+
+
+
+            margin-bottom: 0;
+
+
+
+        }
+
+
+
+        
+
+
+
+        .member-card-back p {
+
+
+
+            margin-bottom: 30px;
+
+
+
+        }
+
+
+
+
+
+
+
+        .member-button {
+
+
+
+            background-color: var(--red-youtube); 
+
+
+
+            color: var(--text-light); 
+
+
+
+            padding: 18px 40px; 
+
+
+
+            text-decoration: none; 
+
+
+
+            border-radius: 30px;
+
+
+
+            font-weight: bold; 
+
+
+
+            font-size: 1.1em; 
+
+
+
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+
+
+            display: inline-flex; 
+
+
+
+            align-items: center; 
+
+
+
+            gap: 12px; 
+
+
+
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+
+
+
+        }
+
+
+
+        .member-button:hover { 
+
+
+
+            background-color: #cc0000; 
+
+
+
+            transform: translateY(-2px); 
+
+
+
+        }
+
+
+
+        .member-button .icon { 
+
+
+
+            font-size: 1.3em; 
+
+
+
+            color: white; 
+
+
+
+        }
+
+
+
+
+
+
+
+        footer {
+
+
+
+            background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap;
+
+
+
+            justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px;
+
+
+
+        }
+
+
+
+        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
+
+
+
+        .footer-logo-section img { height: 65px; margin-bottom: 20px; }
+
+
+
+        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
+
+
+
+        .footer-social-icons a { color: var(--text-light); font-size: 24px; margin-right: 20px; transition: color 0.3s ease; }
+
+
+
+        .footer-social-icons a:hover { color: var(--gold); }
+
+
+
+        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
+
+
+
+        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
+
+
+
+        .footer-column ul { list-style: none; padding: 0; margin: 0; }
+
+
+
+        .footer-column ul li { margin-bottom: 12px; }
+
+
+
+        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
+
+
+
+        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
+
+
+
+        .footer-column ul li a:hover { color: var(--gold); }
+
+
+
+        .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
+
+
+
+        
+
+
+
+        .mobile-nav-toggle { display: none; }
+
+
+
+        .mobile-nav { display: none; }
+
+
+
+
+
+
+
+        @media (max-width: 992px) {
+
+
+
+            header nav, header .social-icons {
+
+
+
+                display: none;
+
+
+
+            }
+
+
+
+            
+
+
+
+            .header-title-mobile {
+
+
+
+    display: block;
+
+
+
+    position: absolute;
+
+
+
+    
+
+
+
+    /* Mude o '0px' para mover o título para a esquerda ou direita */
+
+
+
+    left: calc(50% + 0px); 
+
+
+
+    
+
+
+
+    transform: translateX(-50%);
+
+
+
+    font-family: var(--font-cinzel);
+
+
+
+    color: var(--gold);
+
+
+
+    font-size: 1.6em;
+
+
+
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+
+
+
+    line-height: 1; 
+
+
+
 }
 
-            .mobile-nav-toggle {
-                display: block;
-                background: none;
-                border: none;
-                color: var(--text-light);
-                font-size: 28px;
-                cursor: pointer;
-            }
-            .mobile-nav {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 320px;
-                height: 100%;
-                background-color: var(--dark-gray);
-                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-                transition: right 0.4s ease-in-out;
-                z-index: 1001;
-                padding: 40px 20px;
-            }
-            .mobile-nav.is-active {
-                right: 0;
-            }
-            .mobile-nav .close-btn {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: none;
-                border: none;
-                font-size: 30px;
-                color: var(--text-light);
-                cursor: pointer;
-            }
-            .mobile-nav ul {
-                flex-direction: column;
-                text-align: center;
-                width: 100%;
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            .mobile-nav ul li {
-                margin: 0;
-            }
-            .mobile-nav ul li a {
-                display: block;
-                padding: 18px;
-                font-size: 1.2em;
-            }
-            .mobile-nav .mobile-socials {
-                margin-top: 40px;
-                padding-top: 30px;
-                border-top: 1px solid var(--border-color);
-                width: 100%;
-                text-align: center;
-            }
-            .mobile-nav .mobile-socials a {
-                font-size: 28px;
-                margin: 0 15px;
-            }
-            .hero-card h2 { font-size: 2.5em; }
-            .hero-card p { font-size: 1.1em; }
-            .hero-card { padding: 40px 25px; }
-            
-            .section-title { font-size: 2.2em; }
-            .section-title img { height: 35px; }
 
-            .video-info-overlay { flex-direction: column; align-items: flex-start; gap: 10px; }
-            
-            .play-button,
-            #liveTitle,
-            #liveTime {
-                display: none;
-            }
 
-            .social-share .share-icons {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-            }
-            .share-icons a[aria-label*='E-mail'], 
-            .share-icons a[aria-label*='YouTube'] {
-                display: none;
-            }
 
-            .video-carousel-wrapper { 
-                padding: 20px 0;
-                touch-action: pan-y;
-            }
-            .video-carousel-container { 
-                overflow-x: hidden;
-            }
-            .video-card-vertical {
-                flex: 0 0 280px; 
-                min-width: 280px;
-            }
-            .video-carousel-section .carousel-arrow { display: none; }
-            
-            .filter-buttons {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-            .filter-btn { padding: 10px 20px; font-size: 0.9em; }
-            
-            footer {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .footer-logo-section {
-                margin-right: 0;
-                margin-bottom: 40px;
-            }
-            .footer-links {
-                display: none;
-            }
 
-            .member-card { 
-                height: auto; 
-                padding: 20px 0;
-            }
-            .member-card-inner, .member-card:hover .member-card-inner {
-                transform-style: flat;
-                transform: none;
-                position: static;
-                height: auto;
-            }
-            .member-card-front {
-                display: none; 
-            }
-            .member-card-back {
-                position: static;
-                transform: none;
-                height: auto;
-                padding: 30px;
-                display: flex;
-            }
 
-            .video-info-overlay .title,
-            .video-info-overlay .time {
-                display: none;
-            }
-        }
-    </style>
+
+            .mobile-nav-toggle {
+
+
+
+                display: block;
+
+
+
+                background: none;
+
+
+
+                border: none;
+
+
+
+                color: var(--text-light);
+
+
+
+                font-size: 28px;
+
+
+
+                cursor: pointer;
+
+
+
+            }
+
+
+
+            .mobile-nav {
+
+
+
+                display: flex;
+
+
+
+                flex-direction: column;
+
+
+
+                justify-content: center;
+
+
+
+                align-items: center;
+
+
+
+                position: fixed;
+
+
+
+                top: 0;
+
+
+
+                right: -100%;
+
+
+
+                width: 80%;
+
+
+
+                max-width: 320px;
+
+
+
+                height: 100%;
+
+
+
+                background-color: var(--dark-gray);
+
+
+
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+
+
+
+                transition: right 0.4s ease-in-out;
+
+
+
+                z-index: 1001;
+
+
+
+                padding: 40px 20px;
+
+
+
+            }
+
+
+
+            .mobile-nav.is-active {
+
+
+
+                right: 0;
+
+
+
+            }
+
+
+
+            .mobile-nav .close-btn {
+
+
+
+                position: absolute;
+
+
+
+                top: 20px;
+
+
+
+                right: 20px;
+
+
+
+                background: none;
+
+
+
+                border: none;
+
+
+
+                font-size: 30px;
+
+
+
+                color: var(--text-light);
+
+
+
+                cursor: pointer;
+
+
+
+            }
+
+
+
+            .mobile-nav ul {
+
+
+
+                flex-direction: column;
+
+
+
+                text-align: center;
+
+
+
+                width: 100%;
+
+
+
+                list-style: none;
+
+
+
+                padding: 0;
+
+
+
+                margin: 0;
+
+
+
+            }
+
+
+
+            .mobile-nav ul li {
+
+
+
+                margin: 0;
+
+
+
+            }
+
+
+
+            .mobile-nav ul li a {
+
+
+
+                display: block;
+
+
+
+                padding: 18px;
+
+
+
+                font-size: 1.2em;
+
+
+
+            }
+
+
+
+            .mobile-nav .mobile-socials {
+
+
+
+                margin-top: 40px;
+
+
+
+                padding-top: 30px;
+
+
+
+                border-top: 1px solid var(--border-color);
+
+
+
+                width: 100%;
+
+
+
+                text-align: center;
+
+
+
+            }
+
+
+
+            .mobile-nav .mobile-socials a {
+
+
+
+                font-size: 28px;
+
+
+
+                margin: 0 15px;
+
+
+
+            }
+
+
+
+            .hero-card h2 { font-size: 2.5em; }
+
+
+
+            .hero-card p { font-size: 1.1em; }
+
+
+
+            .hero-card { padding: 40px 25px; }
+
+
+
+            
+
+
+
+            .section-title { font-size: 2.2em; }
+
+
+
+            .section-title img { height: 35px; }
+
+
+
+
+
+
+
+            .video-info-overlay { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+
+
+            
+
+
+
+            .play-button,
+
+
+
+            #liveTitle,
+
+
+
+            #liveTime {
+
+
+
+                display: none;
+
+
+
+            }
+
+
+
+
+
+
+
+            .social-share .share-icons {
+
+
+
+                display: flex;
+
+
+
+                justify-content: center;
+
+
+
+                gap: 20px;
+
+
+
+            }
+
+
+
+            .share-icons a[aria-label*='E-mail'], 
+
+
+
+            .share-icons a[aria-label*='YouTube'] {
+
+
+
+                display: none;
+
+
+
+            }
+
+
+
+
+
+
+
+            .video-carousel-wrapper { 
+
+
+
+                padding: 20px 0;
+
+
+
+                touch-action: pan-y;
+
+
+
+            }
+
+
+
+            .video-carousel-container { 
+
+
+
+                overflow-x: hidden;
+
+
+
+            }
+
+
+
+            .video-card-vertical {
+
+
+
+                flex: 0 0 280px; 
+
+
+
+                min-width: 280px;
+
+
+
+            }
+
+
+
+            .video-carousel-section .carousel-arrow { display: none; }
+
+
+
+            
+
+
+
+            .filter-buttons {
+
+
+
+                display: grid;
+
+
+
+                grid-template-columns: 1fr 1fr;
+
+
+
+                gap: 15px;
+
+
+
+            }
+
+
+
+            .filter-btn { padding: 10px 20px; font-size: 0.9em; }
+
+
+
+            
+
+
+
+            footer {
+
+
+
+                flex-direction: column;
+
+
+
+                align-items: center;
+
+
+
+                text-align: center;
+
+
+
+            }
+
+
+
+            .footer-logo-section {
+
+
+
+                margin-right: 0;
+
+
+
+                margin-bottom: 40px;
+
+
+
+            }
+
+
+
+            .footer-links {
+
+
+
+                display: none;
+
+
+
+            }
+
+
+
+
+
+
+
+            .member-card { 
+
+
+
+                height: auto; 
+
+
+
+                padding: 20px 0;
+
+
+
+            }
+
+
+
+            .member-card-inner, .member-card:hover .member-card-inner {
+
+
+
+                transform-style: flat;
+
+
+
+                transform: none;
+
+
+
+                position: static;
+
+
+
+                height: auto;
+
+
+
+            }
+
+
+
+            .member-card-front {
+
+
+
+                display: none; 
+
+
+
+            }
+
+
+
+            .member-card-back {
+
+
+
+                position: static;
+
+
+
+                transform: none;
+
+
+
+                height: auto;
+
+
+
+                padding: 30px;
+
+
+
+                display: flex;
+
+
+
+            }
+
+
+
+
+
+
+
+            .video-info-overlay .title,
+
+
+
+            .video-info-overlay .time {
+
+
+
+                display: none;
+
+
+
+            }
+
+
+
+        }
+
+
+
+    </style>
+
+
+
 </head>
+
+
+
 <body>
-    <header>
-        <div class="logo">
-            <img src="https://i.postimg.cc/52ssRLdr/unnamed-removebg-preview.png" alt="Lendário TV Logo">
-        </div>
-        <h1 class="header-title-mobile">Lendario Tv</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="sorteio.html">Sorteio</a></li>
-                <li><a href="videos.html">Vídeos</a></li>
-                <li><a href="doacao.html">Doação</a></li>
-                <li><a href="contato.html">Contato</a></li>
-                <li><a href="consult.html">Consulta</a></li>
-            </ul>
-        </nav>
-        <div class="social-icons">
-            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-        <button class="mobile-nav-toggle" aria-label="Abrir menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </header>
 
-    <div class="mobile-nav">
-        <button class="close-btn" aria-label="Fechar menu">×</button>
-        <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="sorteio.html">Sorteio</a></li>
-            <li><a href="videos.html">Vídeos</a></li>
-            <li><a href="doacao.html">Doação</a></li>
-            <li><a href="contato.html">Contato</a></li>
-            <li><a href="consult.html">Consultar</a></li>
-        </ul>
-        <div class="mobile-socials">
-            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-    </div>
 
-    <main>
-        <section class="hero-section">
-            <div class="hero-carousel">
-                <div class="hero-carousel-container">
-                    <div class="hero-card"> <h2>Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="consulta.html" class="hero-button">Agendar</a> </div>
-                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="sorteio.html" class="hero-button">Verificar</a> </div>
-                    <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo.</p> <a href="https://www.youtube.com/@Lendario" target="_blank" class="hero-button youtube">Assistir</a> </div>
-                </div>
-            </div>
-            <div class="slider-nav">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </section>
 
-        <section class="live-section">
-            <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
-            <div class="live-content-wrapper">
-                <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UCnbmIi0Ddoa7BwgWQDTZHVA&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                        <div class="video-info-overlay">
-                            <div>
-                                <div class="title">Próxima Live Em Breve</div>
-                                <div class="time">Atenção, buscadores de luz!</div>
-                            </div>
-                            <a href="https://www.youtube.com/@Lendario" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="social-share">
-                <p>O universo tem muitas mensagens para compartilhar!</p>
-                <div class="share-icons">
-                     <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/lendariomagus/" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:lendarioesoterico@gmail.com" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
-                    <a href="https://www.youtube.com/@Lendario" target="_blank" aria-label="Visitar canal no YouTube"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-        </section>
-        <section class="video-carousel-section" id="latest-videos-section">
-            <h2 class="section-title"><img src="https://i.postimg.cc/x8L5KPGK/fgqwgqwghwh.png" alt="Mão">RECENTES</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="entrevistas">Entrevistas</button>
-                <button class="filter-btn" data-filter="totem">Totem</button>
-                <button class="filter-btn" data-filter="elementos">Elementos</button>
-            </div>
-            <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
-                <div class="video-carousel-container">
-                    <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/aDNqauEvQtY/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/LoXi97f3CIE/hqdefault.jpg" alt="Poder espiritual do tigre" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg" alt="Poderoso Desbloqueio com as Águas" class="thumbnail"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg" alt="Série Elementos - Introdução - Video 1/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Introdução - Video 1/5</h3><p class="description">Saudações amigos, nesta nova série do canal faremos 4 vídeos sendo 1 para cada elemento, Terra, Fogo, Agua e Ar com participação especial de 4 escolas de magias</p><a href="https://youtu.be/fio3zIbEaOQ?si=O4c4S08jcFw" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" alt="Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5</h3><p class="description">Seguindo a nossa série elementos neste vídeo fui ate o ‪@BosquedosGnomos‬ para resgatar conhecimentos sobre o elemento Terra, magia natural, gnomos e duendes, e muito mais com o Victor Valentim, espero que você goste, esta é a primeira de uma série de 4 entrevistas que ocorrerão, cada elemento uma escola de magia diferente, espero que você goste!</p><a href="https://youtu.be/fio3zIbEaOQ?si=4FQtfrB1k8s" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg" alt="Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5</h3><p class="description">Este vídeo faz parte de um série de 4 vídeos sobre os 4 elementos, 4 escolas de magia foram convidadas para falar sobre um elemento e hoje a Tania Gori da Casa de Bruxa nos trás conhecimentos sobre o elemento Ar espero que goste.</p><a href="https://youtu.be/fio3zIbEaOQ?si=kNDUONUnEJ0" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg" alt="Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5</h3><p class="description">Este vídeo faz parte de uma série de 4 vídeos sobre os 4 elementos, cada elemento uma escola de magia diferente.</p><a href="https://youtu.be/fio3zIbEaOQ?si=SzVi4CEnlRw" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/nhQIR9CWgZA/hqdefault.jpg" alt="Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais</h3><p class="description">Neste vídeo faço algumas considerações a respeito da série elementos, trago alguns, algumas reflexões e alguns pontos onde os ensinamentos entram em sintonia. Nesta série tratamos sobre os 4 elementos: Terra, fogo, agua e ar.</p><a href="https://youtu.be/fio3zIbEaOQ?si=nhQIR9CWgZA" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="O mestre do tempo - Poder espiritual da tartaruga - Totem" class="thumbnail"> <div class="video-info"> <h3>O mestre do tempo - Poder espiritual da tartaruga - Totem</h3> <p class="description">Saudações amigos, hoje o nosso papo é sobre o animal de poder tartaruga, como a sabedoria deste ser magnifico pode nos acalmar, baixar a nossa ansiedade e nos colocar no rumo daquilo que realmente importa, e para aqueles que estão estagnados, como a medicina deste totem pode nos colocar em movimento firme e constante.</p> <a href="http://www.youtube.com/watch?v=pWON8VkuACE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/SD2qgUakXqw/hqdefault.jpg" alt="Poder espiritual da águia - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual da águia - Totem - Animal de poder</h3> <p class="description">Saudações amigos lendários, neste vídeo falo sobre o animal de poder águia e suas características espirituais, além do totem falo também do arquétipo, e sua influência positiva a quem busca um recomeço na via ou se encontrar em algum novo tipo de negócio, arquétipo águia expressa foco e concentração, visão empreendedora, já o poder espiritual do totem, vemos um guardião que trás a visão plena, derrubando os véus, além de proporcionar força e coragem a quem atrai ou manifesta esta medicina.</p> <a href="http://www.youtube.com/watch?v=SD2qgUakXqw" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg" alt="O poder espiritual da borboleta - Transformação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da borboleta - Transformação - Totem - Animal de poder</h3> <p class="description">neste vídeo falaremos sobre o animal de poder borboleta, a força deste arquétipo, a mística poderosa por trás deste totem. Pessoas que possuem a borboleta como animal guardião recebem uma chave e uma mensagem muito poderosa de evolução e aprimoramento, é um chamado espiritual profundo, e cheio de significado, ligadas ao elemento ar e as fadas, as borboletas são a representação do melhor que podemos nos tornar, espero que você goste do vídeo, e que a energia ancestral faça parte da nossa jornada.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/6Z6QELUK7xY/hqdefault.jpg" alt="O poder espiritual do urso - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do urso - Totem - Animal de poder</h3> <p class="description">Saudações queridos amigos, no vídeo de hoje falaremos sobre o animal de poder urso e suas características espirituais. O urso possui uma energia poderosa de xamã, sendo um dos grandes mestres dentre os animais guardiões, representante do elemento terra, direção oeste dentro da roda das quatro direções, o totem urso é um eremita nato, levando os homens para a interiorização profunda e verdadeira, o poder espiritual do urso vai muito além de suas características físicas como força, bravura e superação, o mestre urso vem ensinar a verdadeira profundidade espiritual, esquecida no tempo.</p> <a href="http://www.youtube.com/watch?v=6Z6QELUK7xY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/3r7yfkUKUMw/hqdefault.jpg" alt="Poder espiritual da coruja - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual da coruja - Totem - Animal de poder</h3> <p class="description">Desta vez falaremos sobre o Totem Da Coruja, as propriedades deste animal de poder, sua poderosa medicina e particularidades.</p> <a href="http://www.youtube.com/watch?v=3r7yfkUKUMw" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/Yf70vQk4S7Q/hqdefault.jpg" alt="O poder espiritual da aranha - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da aranha - Totem - Animal de poder</h3> <p class="description">Saudações amigos, o video de hoje é sobre o animal de poder aranha quais as características deste grande guardião. O totem aranha possui características muito profundas com os sonhos e pensamentos, além de ser um grande guia para a nossa análise íntima mais profunda, o significado da sua teia se estande ate o filtro dos sonhos, que foi criado e inspirado pelo tecer da avó aranha, espero que este vídeo possa ser útil a você!</p> <a href="http://www.youtube.com/watch?v=Yf70vQk4S7Q" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/q8TvFlGq4ZI/hqdefault.jpg" alt="Poder espiritual dos gatos - Purificação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual dos gatos - Purificação - Totem - Animal de poder</h3> <p class="description">Neste vídeo decidi falar sobre o poder espiritual dos gatos e sua parceria para conosco, amizade essa que dura milênios, desde antes dos egípcios, passando pela energia budista, pelos caminhos pagãos, da magia, sobrevivendo a perseguição junto com as bruxas e chegando ao nosso tempo. Os gatos são seres muito espirituais.</p> <a href="http://www.youtube.com/watch?v=q8TvFlGq4ZI" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/zYrvlZxIkcQ/hqdefault.jpg" alt="Totem Cervo - Veado - Luz Divina - Animal de Poder" class="thumbnail"> <div class="video-info"> <h3>Totem Cervo - Veado - Luz Divina - Animal de Poder</h3> <p class="description">No video de hoje falamos sobre o animal de poder cervo, animal ligado ao divino e a magia da natureza. Video magia das 4 estações</p> <a href="http://www.youtube.com/watch?v=zYrvlZxIkcQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                       </div>
-                </div>
-                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </section>
-        <section class="video-carousel-section" id="most-viewed-section">
-            <h2 class="section-title"><img src="https://i.postimg.cc/JhrVXdGv/192429192-occult-esoteric-symbol-eye-in-human-hand-and-pentagram-star-inside-of-circle-with-moon-spi.png" alt="Olho">EM ALTA</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="meditacao">Meditação</button>
-                <button class="filter-btn" data-filter="ensinamentos">Ensinamentos</button>
-                <button class="filter-btn" data-filter="eventos">Eventos</button>
-            </div>
-            <div class="video-carousel-wrapper">
-                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
-                <div class="video-carousel-container">
-                    <div class="video-carousel-track">
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/F9WQqbgB9Po/hqdefault.jpg" alt="Meditação Guiada - Projeção Astral" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Explore outros planos e expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/t8CP_yHw-kg/hqdefault.jpg" alt="Como aprender a ler Tarot" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">Entenda a jornada do iniciado na espiritualidade e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/tfdLYK2FBHs/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/BQMj7gx8Nz4/hqdefault.jpg" alt="A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé" class="thumbnail"> <div class="video-info"> <h3>A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé</h3> <p class="description">Saudações amigos queridos, neste vídeo falo sobre a vida secreta das arvores,  o poder espiritual das arvores,  também conhecido pelo caminho xamânico como Povo em Pé. Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a href="http://www.youtube.com/watch?v=BQMj7gx8Nz4" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/pyyBqOTRuNc/hqdefault.jpg" alt="O Povo Sentado - O poder espiritual das pedras" class="thumbnail"> <div class="video-info"> <h3>O Povo Sentado - O poder espiritual das pedras</h3> <p class="description">Neste vídeo falo sobre o poder espiritual das pedras e o reino mineral como um todo desde a simples rocha ate os mais belos cristais, as memorias armazenadas e suas cargas energéticas de absorção e irradiação, espero que acrescente boas informações a você.</p> <a href="http://www.youtube.com/watch?v=pyyBqOTRuNc" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/vKHSu0bNvnE/hqdefault.jpg" alt="Ayahuasca, Santo Daime, experiência e opinião pessoal" class="thumbnail"> <div class="video-info"> <h3>Ayahuasca, Santo Daime, experiência e opinião pessoal.</h3> <p class="description">Neste vídeo falo um pouco sobre o chá de ayahuasca, hoasca ou santo daime para alguns segmentos religiosos, minha experiência pessoal e opinião referente ao uso.</p> <a href="http://www.youtube.com/watch?v=vKHSu0bNvnE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/quWr1qIJLyg/hqdefault.jpg" alt="Tambor e Maracá, a particularidade desses instrumentos espirituais" class="thumbnail"> <div class="video-info"> <h3>Tambor e Maracá, a particularidade desses instrumentos espirituais</h3> <p class="description">Neste vídeo trago algumas propriedades do tambor e do maracá e sua profunda utilização espiritual e viagem da alma, esses instrumentos tem o poder de auxiliar o processo de viagem espiritual, nos levar para dentro de nós e para o profundo, este vídeo mostra algumas das qualidades, espero que gostem!</p> <a href="http://www.youtube.com/watch?v=quWr1qIJLyg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/Zt5ao_e2y-A/hqdefault.jpg" alt="Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder</h3> <p class="description">Saudações amigos e irmãos lendários desta vez o assunto é o animal de poder beija-flor ou colibri, a expressão da pureza divina em um animal, frequência de luz viva. espero que traga um pouco mais de informação a você.</p> <a href="http://www.youtube.com/watch?v=Zt5ao_e2y-A" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg" alt="O poder espiritual da borboleta - Transformação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da borboleta - Transformação - Totem - Animal de poder</h3> <p class="description">neste vídeo falaremos sobre o animal de poder borboleta, a força deste arquétipo, a mística poderosa por trás deste totem. Pessoas que possuem a borboleta como animal guardião recebem uma chave e uma mensagem muito poderosa de evolução e aprimoramento, é um chamado espiritual profundo, e cheio de significado, ligadas ao elemento ar e as fadas, as borboletas são a representação do melhor que podemos nos tornar, espero que você goste do vídeo, e que a energia ancestral faça parte da nossa jornada.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg" alt="Poder espiritual do cachorro - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do cachorro - Totem - Animal de poder</h3> <p class="description">Saudações amigos, neste vídeo decidi comentar o ocorrido com o cachorro morto pelo segurança do supermercado carrefour e tbm sobre o poder espiritual desses animais, alem de suas propriedades como animal de poder. Espero que as informações sobre este totem possa ser útil a você.</p> <a href="http://www.youtube.com/watch?v=9SOpyoD3o" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/0TPRx4EcQeY/hqdefault.jpg" alt="Convenção de Magos e Bruxas de Paranapiacaba 2022" class="thumbnail"> <div class="video-info"> <h3>Convenção de Magos e Bruxas de Paranapiacaba 2022</h3> <p class="description">Saudações amigos, neste vídeo trago toda a experiência que vivi neste que foi para mim a maior edição da convenção de Magos e Bruxas de Paranapiacaba, video produzido com muito carinho, espero que goste!</p> <a href="http://www.youtube.com/watch?v=0TPRx4EcQeY" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/9OPH0yly70g/hqdefault.jpg" alt="Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs" class="thumbnail"> <div class="video-info"> <h3>Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs</h3> <p class="description">Saudações amigos, trago imagens de como foi o Mercado Místico primeira edição de 2020.</p> <a href="http://www.youtube.com/watch?v=9OPH0yly70g" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/_0YsJ1gWIcw/hqdefault.jpg" alt="Evento Incrível!! Bazar das Bruxas 2021 - confira!" class="thumbnail"> <div class="video-info"> <h3>Evento Incrível!! Bazar das Bruxas 2021 - confira!</h3> <p class="description">Neste dia das bruxas - halloween estive no Bazar das bruxas que ocorreu na vila Mariana em SP, foi um evento magnifico cheio de convidados especiais, artesão talentosos, oraculistas, dançarinos etc, com direito a palestras (inclusive minha) lançamento de livro e muito mais, confira!</p> <a href="http://www.youtube.com/watch?v=_0YsJ1gWIcw" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/OB55az3PHaA/hqdefault.jpg" alt="Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar" class="thumbnail"> <div class="video-info"> <h3>Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar</h3> <p class="description">Converso com a Lucelia de Fatima sobre diversos assuntos tais como medicina tradicional chinesa, memorias uterinas, sagrado feminino entre outros. </p> <a href="http://www.youtube.com/watch?v=OB55az3PHaA" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg" alt="Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?" class="thumbnail"> <div class="video-info"> <h3>Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?</h3> <p class="description">Saudações amigos, neste vídeo eu entrevisto o Caique Pereira do canal ‪@escolaparayoutubers‬</p> <a href="http://www.youtube.com/watch?v=r2Q2hcbrFjg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/135D0iEWmAE/hqdefault.jpg" alt="3º Bazar das Bruxas - Bosque dos Gnomos 2019" class="thumbnail"> <div class="video-info"> <h3>3º Bazar das Bruxas - Bosque dos Gnomos 2019</h3> <p class="description">Saudações amigos, hoje o vídeo é sobre o 3º Bazar das Bruxas, organizado pelo bosque dos gnomos do Victor Valentim, espero que gostem!</p> <a href="http://www.youtube.com/watch?v=135D0iEWmAE" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/BuB6POFFkOg/hqdefault.jpg" alt="Halloween Bosque dos Gnomos 2017" class="thumbnail"> <div class="video-info"> <h3>Halloween Bosque dos Gnomos 2017</h3> <p class="description">Saudações irmãos lendários, participei este ano da festa do dia das bruxas no bosque dos gnomos, com o Victor Valentim e sua equipe, musicas, rituais, palestras e muita harmonia, confiram neste vídeo como foi o evento.</p> <a href="http://www.youtube.com/watch?v=BuB6POFFkOg" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/z79_cwCVtpo/hqdefault.jpg" alt="Sibila da Antevisão - Don Julio - Holistic Fair Atibaia" class="thumbnail"> <div class="video-info"> <h3>Sibila da Antevisão - Don Julio - Holistic Fair Atibaia</h3> <p class="description">Saudações amigos, hoje converso com o oraculista Don Julio sobre a sibila da antevisão e suas peculiaridades. Espero que gostem!</p> <a href="http://www.youtube.com/watch?v=z79_cwCVtpo" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/96F4TnmFWGQ/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
-                    </div>
-                </div>
-                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </section>
-        <section class="member-section">
-            <div class="decorative-border"></div>
-            <div class="member-card">
-                <div class="member-card-inner">
-                    <div class="member-card-front">
-                        <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
-                        <h3>Torne-se um membro do canal</h3>
-                        <p>Gosta do nosso conteúdo? Fortaleça esta comunidade e tenha acesso a benefícios exclusivos.</p>
-                    </div>
-                    <div class="member-card-back">
-                        <h4>Apoie o canal!</h4>
-                        <p>Com sua ajuda, podemos criar ainda mais conteúdo de qualidade e fortalecer nossa comunidade. Clique abaixo para se tornar um membro oficial!</p>
-                        <a href="https://www.youtube.com/@Lendario/join" target="_blank" class="member-button"><span class="icon">🧡</span> Seja membro</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="footer-logo-section">
-            <img src="https://i.postimg.cc/52ssRLdr/unnamed-removebg-preview.png" alt="Lendário TV Logo">
-            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
-            <div class="footer-social-icons">
-                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="mailto:lendarioesoterico@gmail.com"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="footer-links">
-            <div class="footer-column">
-                <ul>
-                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
-                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
-                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
-                    <li><a href="doacao.html"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
-                    <li><a href="contato.html"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
-                    <li><a href="consulta.html"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <ul>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarô</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplSoQK0KCzIeoA5UesjtSjL&si=vhu0Mk-iOI0I1kSL"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopmTkwcIKOxn5KAO9U9tuQq_&si=3nFQ0whFNkLjUgNU"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm1SUxAHHHVZGjaFNjVT_gH&si=NUM2OkIuQ1WPi8bc"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplK3cUiQblqXOcNAlBlujQe&si=y-OjPs-9wIuEI0hq"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Lives</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
-        </div>
-    </footer>
-    
-    <script>
-        // --- LÓGICA DA LIVE (Cópia exata do seu código funcional) ---
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    <header>
 
-        let player;
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('liveVideoIframe', {
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        };
 
-        function onPlayerStateChange(event) {
-            const thumbnailContainer = document.getElementById('liveThumbnail');
-            if (!thumbnailContainer) return;
 
-            if (event.data === YT.PlayerState.PLAYING) {
-                thumbnailContainer.classList.add('hidden');
-            } else {
-                thumbnailContainer.classList.remove('hidden');
-            }
-        }
+        <div class="logo">
 
-        // --- LÓGICA GERAL DO SITE (CARROSSÉIS, MENU, ETC.) ---
-        document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA DA LIVE (mantida sem alterações) ---
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    let player;
-    window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('liveVideoIframe', {
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    };
 
-    function onPlayerStateChange(event) {
-        const thumbnailContainer = document.getElementById('liveThumbnail');
-        if (!thumbnailContainer) return;
+            <img src="https://i.postimg.cc/52ssRLdr/unnamed-removebg-preview.png" alt="Lendário TV Logo">
 
-        if (event.data === YT.PlayerState.PLAYING) {
-            thumbnailContainer.classList.add('hidden');
-        } else {
-            thumbnailContainer.classList.remove('hidden');
-        }
-    }
 
-    // --- LÓGICA DOS CARROSSEIS ---
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
 
-    if (mobileNavToggle && mobileNav) {
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNav.classList.add('is-active');
-        });
-        closeNavBtn.addEventListener('click', () => {
-            mobileNav.classList.remove('is-active');
-        });
-    }
+        </div>
 
-    // --- CARROSSEL HERO ---
-    const heroCarousel = document.querySelector('.hero-carousel');
-    if (heroCarousel) {
-        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-        const heroCards = heroContainer.querySelectorAll('.hero-card');
-        const dots = document.querySelectorAll('.dot');
-        let currentHeroIndex = 0;
-        let heroAutoPlay;
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let isDragging = false;
 
-        function updateHeroCarousel() {
-            heroContainer.style.transition = 'transform 0.5s ease';
-            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentHeroIndex);
-            });
-        }
 
-        function startHeroAutoplay() {
-            stopHeroAutoplay();
-            heroAutoPlay = setInterval(() => {
-                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                updateHeroCarousel();
-            }, 5000);
-        }
+        <h1 class="header-title-mobile">Lendario Tv</h1>
 
-        function stopHeroAutoplay() {
-            clearInterval(heroAutoPlay);
-        }
 
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentHeroIndex = index;
-                updateHeroCarousel();
-                startHeroAutoplay();
-            });
-        });
 
-        heroCarousel.addEventListener('touchstart', e => {
-            if (window.innerWidth > 992) return;
-            touchStartX = e.changedTouches[0].screenX;
-            isDragging = true;
-            stopHeroAutoplay(); // Pausa a animação automática ao iniciar o toque
-            heroContainer.style.transition = 'none';
-        });
+        <nav>
 
-        heroCarousel.addEventListener('touchmove', e => {
-            if (!isDragging || window.innerWidth > 992) return;
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchEndX - touchStartX;
-            heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
-            e.preventDefault();
-        });
 
-        heroCarousel.addEventListener('touchend', e => {
-            if (!isDragging || window.innerWidth > 992) return;
-            isDragging = false;
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            const swipeThreshold = 50;
 
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-                } else {
-                    currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
-                }
-            }
+            <ul>
 
-            updateHeroCarousel();
-            startHeroAutoplay(); // Reinicia a animação automática após o toque
-        });
 
-        startHeroAutoplay();
-    }
 
-    // --- CARROSSEL DE VÍDEOS ---
-    function setupInfiniteCarousel(sectionId, isMobile = false) {
-        const section = document.getElementById(sectionId);
-        if (!section) return;
+                <li><a href="index.html">Início</a></li>
 
-        const container = section.querySelector('.video-carousel-container');
-        const track = section.querySelector('.video-carousel-track');
-        const prevBtn = section.querySelector('.prev-arrow');
-        const nextBtn = section.querySelector('.next-arrow');
-        const filterButtons = section.querySelectorAll('.filter-btn');
 
-        let originalCards = Array.from(track.children);
-        let isTransitioning = false;
-        let autoplayInterval;
-        let currentIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let isDragging = false;
 
-        function getVisibleCards() {
-            return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
-        }
+                <li><a href="sorteio.html">Sorteio</a></li>
 
-        function setupCarousel() {
-            stopAutoplay();
-            isTransitioning = false;
 
-            const clones = track.querySelectorAll('.clone');
-            clones.forEach(clone => track.removeChild(clone));
 
-            track.innerHTML = '';
-            originalCards.forEach(card => track.appendChild(card));
+                <li><a href="videos.html">Vídeos</a></li>
 
-            const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-            originalCards.forEach(card => {
-                card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
-            });
 
-            const visibleCards = getVisibleCards();
-            if (visibleCards.length === 0) {
-                if (prevBtn && !isMobile) prevBtn.style.display = 'none';
-                if (nextBtn && !isMobile) nextBtn.style.display = 'none';
-                track.style.transform = 'translateX(0)';
-                return;
-            }
 
-            if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
-            if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+                <li><a href="doacao.html">Doação</a></li>
 
-            const cardWidth = visibleCards[0].offsetWidth;
-            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-            const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
 
-            if (visibleCards.length <= cardsInView) {
-                if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
-                if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
-                track.style.transform = 'translateX(0)';
-                return;
-            }
 
-            if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
-            if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+                <li><a href="contato.html">Contato</a></li>
 
-            const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
-            itemsToCloneEnd.forEach(card => {
-                const clone = card.cloneNode(true);
-                clone.classList.add('clone');
-                track.appendChild(clone);
-            });
 
-            const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
-            itemsToCloneStart.reverse().forEach(card => {
-                const clone = card.cloneNode(true);
-                clone.classList.add('clone');
-                track.insertBefore(clone, visibleCards[0]);
-            });
 
-            currentIndex = cardsInView + 1;
-            let initialOffset = -currentIndex * (cardWidth + gap);
-            if (isMobile) {
-                const containerWidth = container.offsetWidth;
-                const centerOffset = (containerWidth - cardWidth) / 2;
-                initialOffset += centerOffset;
-            }
-            track.style.transition = 'none';
-            track.style.transform = `translateX(${initialOffset}px)`;
+                <li><a href="consult.html">Consulta</a></li>
 
-            if (isMobile) {
-                container.style.overflowX = 'hidden';
-                container.style.scrollSnapType = 'none';
-            }
 
-            startAutoplay();
-        }
 
-        function move(direction) {
-            if (isTransitioning) return;
-            isTransitioning = true;
+            </ul>
 
-            const visibleCards = getVisibleCards();
-            if (visibleCards.length === 0) { isTransitioning = false; return; }
 
-            const cardWidth = visibleCards[0].offsetWidth;
-            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-            const containerWidth = container.offsetWidth;
-            const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
 
-            currentIndex += direction;
-            let offset = -currentIndex * (cardWidth + gap) + centerOffset;
-            track.style.transition = 'transform 0.5s ease-in-out';
-            track.style.transform = `translateX(${offset}px)`;
-        }
+        </nav>
 
-        track.addEventListener('transitionend', () => {
-            const visibleCards = getVisibleCards();
-            if (visibleCards.length === 0) { isTransitioning = false; return; }
 
-            const cardWidth = visibleCards[0].offsetWidth;
-            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-            const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-            const containerWidth = container.offsetWidth;
-            const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
 
-            if (currentIndex <= cardsInView) {
-                currentIndex += visibleCards.length;
-                track.style.transition = 'none';
-                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-            }
+        <div class="social-icons">
 
-            if (currentIndex >= visibleCards.length + cardsInView + 1) {
-                currentIndex -= visibleCards.length;
-                track.style.transition = 'none';
-                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-            }
-            isTransitioning = false;
-        });
 
-        function stopAutoplay() {
-            clearInterval(autoplayInterval);
-        }
 
-        function startAutoplay() {
-            stopAutoplay();
-            autoplayInterval = setInterval(() => move(1), 5000);
-        }
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
 
-        if (!isMobile) {
-            nextBtn.addEventListener('click', () => move(1));
-            prevBtn.addEventListener('click', () => move(-1));
-            section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
-            section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-        } else {
-            container.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-                isDragging = true;
-                stopAutoplay(); // Pausa a animação automática ao iniciar o toque
-                track.style.transition = 'none';
-            });
 
-            container.addEventListener('touchmove', e => {
-                if (!isDragging) return;
-                touchEndX = e.changedTouches[0].screenX;
-                const diff = touchEndX - touchStartX;
-                const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) return;
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const containerWidth = container.offsetWidth;
-                const centerOffset = (containerWidth - cardWidth) / 2;
-                track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
-                e.preventDefault();
-            });
 
-            container.addEventListener('touchend', e => {
-                if (!isDragging) return;
-                isDragging = false;
-                touchEndX = e.changedTouches[0].screenX;
-                const diff = touchStartX - touchEndX;
-                const swipeThreshold = 50;
-                const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) return;
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
 
-                if (Math.abs(diff) > swipeThreshold) {
-                    if (diff > 0) {
-                        move(1);
-                    } else {
-                        move(-1);
-                    }
-                } else {
-                    track.style.transition = 'transform 0.5s ease-in-out';
-                    const cardWidth = visibleCards[0].offsetWidth;
-                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                    const containerWidth = container.offsetWidth;
-                    const centerOffset = (containerWidth - cardWidth) / 2;
-                    track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-                }
-                startAutoplay(); // Reinicia a animação automática após o toque
-            });
-        }
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                setupCarousel();
-            });
-        });
 
-        window.addEventListener('resize', setupCarousel);
-        setupCarousel();
-    }
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
 
-    if (window.innerWidth > 992) {
-        setupInfiniteCarousel('latest-videos-section');
-        setupInfiniteCarousel('most-viewed-section');
-    } else {
-        setupInfiniteCarousel('latest-videos-section', true);
-        setupInfiniteCarousel('most-viewed-section', true);
-    }
 
-    // --- LÓGICA DO HEADER ---
-    const header = document.querySelector('header');
-    if (header) {
-        let lastScrollTop = 0;
-        const scrollThreshold = 150;
-        window.addEventListener('scroll', () => {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-                header.classList.add('header-hidden');
-            } else if (scrollTop < lastScrollTop) {
-                header.classList.remove('header-hidden');
-            }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }, { passive: true });
-    }
-});
-    </script>
+
+        </div>
+
+
+
+        <button class="mobile-nav-toggle" aria-label="Abrir menu">
+
+
+
+            <i class="fas fa-bars"></i>
+
+
+
+        </button>
+
+
+
+    </header>
+
+
+
+
+
+
+
+    <div class="mobile-nav">
+
+
+
+        <button class="close-btn" aria-label="Fechar menu">×</button>
+
+
+
+        <ul>
+
+
+
+            <li><a href="index.html">Início</a></li>
+
+
+
+            <li><a href="sorteio.html">Sorteio</a></li>
+
+
+
+            <li><a href="videos.html">Vídeos</a></li>
+
+
+
+            <li><a href="doacao.html">Doação</a></li>
+
+
+
+            <li><a href="contato.html">Contato</a></li>
+
+
+
+            <li><a href="consult.html">Consultar</a></li>
+
+
+
+        </ul>
+
+
+
+        <div class="mobile-socials">
+
+
+
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+
+
+
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+
+
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <main>
+
+
+
+        <section class="hero-section">
+
+
+
+            <div class="hero-carousel">
+
+
+
+                <div class="hero-carousel-container">
+
+
+
+                    <div class="hero-card"> <h2>Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="consulta.html" class="hero-button">Agendar</a> </div>
+
+
+
+                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="sorteio.html" class="hero-button">Verificar</a> </div>
+
+
+
+                    <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo.</p> <a href="https://www.youtube.com/@Lendario" target="_blank" class="hero-button youtube">Assistir</a> </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="slider-nav">
+
+
+
+                <span class="dot active"></span>
+
+
+
+                <span class="dot"></span>
+
+
+
+                <span class="dot"></span>
+
+
+
+            </div>
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <section class="live-section">
+
+
+
+            <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
+
+
+
+            <div class="live-content-wrapper">
+
+
+
+                <div class="live-video-player">
+
+
+
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UCnbmIi0Ddoa7BwgWQDTZHVA&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+                    <div class="video-thumbnail-container" id="liveThumbnail">
+
+
+
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
+
+
+
+                        <div class="play-button"><i class="fas fa-play"></i></div>
+
+
+
+                        <div class="video-info-overlay">
+
+
+
+                            <div>
+
+
+
+                                <div class="title">Próxima Live Em Breve</div>
+
+
+
+                                <div class="time">Atenção, buscadores de luz!</div>
+
+
+
+                            </div>
+
+
+
+                            <a href="https://www.youtube.com/@Lendario" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="social-share">
+
+
+
+                <p>O universo tem muitas mensagens para compartilhar!</p>
+
+
+
+                <div class="share-icons">
+
+
+
+                     <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
+
+
+
+                    <a href="https://www.facebook.com/lendariomagus/" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+
+
+
+                    <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+
+
+                    <a href="mailto:lendarioesoterico@gmail.com" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
+
+
+
+                    <a href="https://www.youtube.com/@Lendario" target="_blank" aria-label="Visitar canal no YouTube"><i class="fab fa-youtube"></i></a>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </section>
+
+
+
+        <section class="video-carousel-section" id="latest-videos-section">
+
+
+
+            <h2 class="section-title"><img src="https://i.postimg.cc/x8L5KPGK/fgqwgqwghwh.png" alt="Mão">RECENTES</h2>
+
+
+
+            <div class="filter-buttons">
+
+
+
+                <button class="filter-btn active" data-filter="all"
+
+
+
+                <button class="filter-btn" data-filter="entrevistas">Entrevistas</button>
+
+
+
+                <button class="filter-btn" data-filter="totem">Totem</button>
+
+
+
+                <button class="filter-btn" data-filter="elementos">Elementos</button>
+
+
+
+            </div>
+
+
+
+            <div class="video-carousel-wrapper">
+
+
+
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+
+
+
+                <div class="video-carousel-container">
+
+
+
+                    <div class="video-carousel-track">
+
+
+
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/aDNqauEvQtY/hqdefault.jpg" alt="O poder espiritual do lobo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do lobo</h3> <p class="description">Entenda a força, intuição e inteligência do lobo como animal de poder e guia espiritual.</p> <a href="http://www.youtube.com/watch?v=aDNqauEvQtY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/LoXi97f3CIE/hqdefault.jpg" alt="Poder espiritual do tigre" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do tigre</h3> <p class="description">Descubra a energia da coragem, força e proteção associada ao totem do tigre.</p> <a href="http://www.youtube.com/watch?v=LoXi97f3CIE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg" alt="Poderoso Desbloqueio com as Águas" class="thumbnail"> <div class="video-info"> <h3>Poderoso Desbloqueio com as Águas</h3> <p class="description">Uma meditação guiada para usar a energia do elemento água na purificação e desbloqueio emocional.</p> <a href="http://www.youtube.com/watch?v=qqGB-rsf8wU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg" alt="Série Elementos - Introdução - Video 1/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Introdução - Video 1/5</h3><p class="description">Saudações amigos, nesta nova série do canal faremos 4 vídeos sendo 1 para cada elemento, Terra, Fogo, Agua e Ar com participação especial de 4 escolas de magias</p><a href="https://youtu.be/fio3zIbEaOQ?si=O4c4S08jcFw" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" alt="Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5</h3><p class="description">Seguindo a nossa série elementos neste vídeo fui ate o ‪@BosquedosGnomos‬ para resgatar conhecimentos sobre o elemento Terra, magia natural, gnomos e duendes, e muito mais com o Victor Valentim, espero que você goste, esta é a primeira de uma série de 4 entrevistas que ocorrerão, cada elemento uma escola de magia diferente, espero que você goste!</p><a href="https://youtu.be/fio3zIbEaOQ?si=4FQtfrB1k8s" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg" alt="Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5</h3><p class="description">Este vídeo faz parte de um série de 4 vídeos sobre os 4 elementos, 4 escolas de magia foram convidadas para falar sobre um elemento e hoje a Tania Gori da Casa de Bruxa nos trás conhecimentos sobre o elemento Ar espero que goste.</p><a href="https://youtu.be/fio3zIbEaOQ?si=kNDUONUnEJ0" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg" alt="Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5</h3><p class="description">Este vídeo faz parte de uma série de 4 vídeos sobre os 4 elementos, cada elemento uma escola de magia diferente.</p><a href="https://youtu.be/fio3zIbEaOQ?si=SzVi4CEnlRw" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/nhQIR9CWgZA/hqdefault.jpg" alt="Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais</h3><p class="description">Neste vídeo faço algumas considerações a respeito da série elementos, trago alguns, algumas reflexões e alguns pontos onde os ensinamentos entram em sintonia. Nesta série tratamos sobre os 4 elementos: Terra, fogo, agua e ar.</p><a href="https://youtu.be/fio3zIbEaOQ?si=nhQIR9CWgZA" target="_blank" class="watch-button">Assistir</a></div></div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="O mestre do tempo - Poder espiritual da tartaruga - Totem" class="thumbnail"> <div class="video-info"> <h3>O mestre do tempo - Poder espiritual da tartaruga - Totem</h3> <p class="description">Saudações amigos, hoje o nosso papo é sobre o animal de poder tartaruga, como a sabedoria deste ser magnifico pode nos acalmar, baixar a nossa ansiedade e nos colocar no rumo daquilo que realmente importa, e para aqueles que estão estagnados, como a medicina deste totem pode nos colocar em movimento firme e constante.</p> <a href="http://www.youtube.com/watch?v=pWON8VkuACE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/SD2qgUakXqw/hqdefault.jpg" alt="Poder espiritual da águia - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual da águia - Totem - Animal de poder</h3> <p class="description">Saudações amigos lendários, neste vídeo falo sobre o animal de poder águia e suas características espirituais, além do totem falo também do arquétipo, e sua influência positiva a quem busca um recomeço na via ou se encontrar em algum novo tipo de negócio, arquétipo águia expressa foco e concentração, visão empreendedora, já o poder espiritual do totem, vemos um guardião que trás a visão plena, derrubando os véus, além de proporcionar força e coragem a quem atrai ou manifesta esta medicina.</p> <a href="http://www.youtube.com/watch?v=SD2qgUakXqw" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg" alt="O poder espiritual da borboleta - Transformação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da borboleta - Transformação - Totem - Animal de poder</h3> <p class="description">neste vídeo falaremos sobre o animal de poder borboleta, a força deste arquétipo, a mística poderosa por trás deste totem. Pessoas que possuem a borboleta como animal guardião recebem uma chave e uma mensagem muito poderosa de evolução e aprimoramento, é um chamado espiritual profundo, e cheio de significado, ligadas ao elemento ar e as fadas, as borboletas são a representação do melhor que podemos nos tornar, espero que você goste do vídeo, e que a energia ancestral faça parte da nossa jornada.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/6Z6QELUK7xY/hqdefault.jpg" alt="O poder espiritual do urso - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do urso - Totem - Animal de poder</h3> <p class="description">Saudações queridos amigos, no vídeo de hoje falaremos sobre o animal de poder urso e suas características espirituais. O urso possui uma energia poderosa de xamã, sendo um dos grandes mestres dentre os animais guardiões, representante do elemento terra, direção oeste dentro da roda das quatro direções, o totem urso é um eremita nato, levando os homens para a interiorização profunda e verdadeira, o poder espiritual do urso vai muito além de suas características físicas como força, bravura e superação, o mestre urso vem ensinar a verdadeira profundidade espiritual, esquecida no tempo.</p> <a href="http://www.youtube.com/watch?v=6Z6QELUK7xY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/3r7yfkUKUMw/hqdefault.jpg" alt="Poder espiritual da coruja - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual da coruja - Totem - Animal de poder</h3> <p class="description">Desta vez falaremos sobre o Totem Da Coruja, as propriedades deste animal de poder, sua poderosa medicina e particularidades.</p> <a href="http://www.youtube.com/watch?v=3r7yfkUKUMw" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/Yf70vQk4S7Q/hqdefault.jpg" alt="O poder espiritual da aranha - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da aranha - Totem - Animal de poder</h3> <p class="description">Saudações amigos, o video de hoje é sobre o animal de poder aranha quais as características deste grande guardião. O totem aranha possui características muito profundas com os sonhos e pensamentos, além de ser um grande guia para a nossa análise íntima mais profunda, o significado da sua teia se estande ate o filtro dos sonhos, que foi criado e inspirado pelo tecer da avó aranha, espero que este vídeo possa ser útil a você!</p> <a href="http://www.youtube.com/watch?v=Yf70vQk4S7Q" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/q8TvFlGq4ZI/hqdefault.jpg" alt="Poder espiritual dos gatos - Purificação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual dos gatos - Purificação - Totem - Animal de poder</h3> <p class="description">Neste vídeo decidi falar sobre o poder espiritual dos gatos e sua parceria para conosco, amizade essa que dura milênios, desde antes dos egípcios, passando pela energia budista, pelos caminhos pagãos, da magia, sobrevivendo a perseguição junto com as bruxas e chegando ao nosso tempo. Os gatos são seres muito espirituais.</p> <a href="http://www.youtube.com/watch?v=q8TvFlGq4ZI" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/zYrvlZxIkcQ/hqdefault.jpg" alt="Totem Cervo - Veado - Luz Divina - Animal de Poder" class="thumbnail"> <div class="video-info"> <h3>Totem Cervo - Veado - Luz Divina - Animal de Poder</h3> <p class="description">No video de hoje falamos sobre o animal de poder cervo, animal ligado ao divino e a magia da natureza. Video magia das 4 estações</p> <a href="http://www.youtube.com/watch?v=zYrvlZxIkcQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                   </div>
+
+
+
+                </div>
+
+
+
+                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+
+
+
+            </div>
+
+
+
+        </section>
+
+
+
+        <section class="video-carousel-section" id="most-viewed-section">
+
+
+
+            <h2 class="section-title"><img src="https://i.postimg.cc/JhrVXdGv/192429192-occult-esoteric-symbol-eye-in-human-hand-and-pentagram-star-inside-of-circle-with-moon-spi.png" alt="Olho">EM ALTA</h2>
+
+
+
+            <div class="filter-buttons">
+
+
+
+                <button class="filter-btn active" data-filter="all"
+
+
+
+                <button class="filter-btn" data-filter="meditacao">Meditação</button>
+
+
+
+                <button class="filter-btn" data-filter="ensinamentos">Ensinamentos</button>
+
+
+
+                <button class="filter-btn" data-filter="eventos">Eventos</button>
+
+
+
+            </div>
+
+
+
+            <div class="video-carousel-wrapper">
+
+
+
+                <button class="carousel-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+
+
+
+                <div class="video-carousel-container">
+
+
+
+                    <div class="video-carousel-track">
+
+
+
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg" alt="Meditação Guiada - Descubra seu animal de poder" class="thumbnail"> <div class="video-info"> <h3>Descubra seu animal de poder</h3> <p class="description">Meditação guiada para uma jornada de desbloqueio espiritual e encontro com seu animal de poder.</p> <a href="http://www.youtube.com/watch?v=_kFRwfeOycU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/F9WQqbgB9Po/hqdefault.jpg" alt="Meditação Guiada - Projeção Astral" class="thumbnail"> <div class="video-info"> <h3>Meditação Guiada - Projeção Astral</h3> <p class="description">Explore outros planos e expanda sua consciência com esta meditação guiada para viagem astral.</p> <a href="http://www.youtube.com/watch?v=F9WQqbgB9Po" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/t8CP_yHw-kg/hqdefault.jpg" alt="Como aprender a ler Tarot" class="thumbnail"> <div class="video-info"> <h3>Como aprender a ler Tarot</h3> <p class="description">Entenda a jornada do iniciado na espiritualidade e os primeiros passos para aprender a ler tarot.</p> <a href="http://www.youtube.com/watch?v=t8CP_yHw-kg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/tfdLYK2FBHs/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/BQMj7gx8Nz4/hqdefault.jpg" alt="A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé" class="thumbnail"> <div class="video-info"> <h3>A vida secreta das arvores - O Poder espiritual das árvores - Povo em pé</h3> <p class="description">Saudações amigos queridos, neste vídeo falo sobre a vida secreta das arvores,  o poder espiritual das arvores,  também conhecido pelo caminho xamânico como Povo em Pé. Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a href="http://www.youtube.com/watch?v=BQMj7gx8Nz4" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/pyyBqOTRuNc/hqdefault.jpg" alt="O Povo Sentado - O poder espiritual das pedras" class="thumbnail"> <div class="video-info"> <h3>O Povo Sentado - O poder espiritual das pedras</h3> <p class="description">Neste vídeo falo sobre o poder espiritual das pedras e o reino mineral como um todo desde a simples rocha ate os mais belos cristais, as memorias armazenadas e suas cargas energéticas de absorção e irradiação, espero que acrescente boas informações a você.</p> <a href="http://www.youtube.com/watch?v=pyyBqOTRuNc" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/vKHSu0bNvnE/hqdefault.jpg" alt="Ayahuasca, Santo Daime, experiência e opinião pessoal" class="thumbnail"> <div class="video-info"> <h3>Ayahuasca, Santo Daime, experiência e opinião pessoal.</h3> <p class="description">Neste vídeo falo um pouco sobre o chá de ayahuasca, hoasca ou santo daime para alguns segmentos religiosos, minha experiência pessoal e opinião referente ao uso.</p> <a href="http://www.youtube.com/watch?v=vKHSu0bNvnE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/quWr1qIJLyg/hqdefault.jpg" alt="Tambor e Maracá, a particularidade desses instrumentos espirituais" class="thumbnail"> <div class="video-info"> <h3>Tambor e Maracá, a particularidade desses instrumentos espirituais</h3> <p class="description">Neste vídeo trago algumas propriedades do tambor e do maracá e sua profunda utilização espiritual e viagem da alma, esses instrumentos tem o poder de auxiliar o processo de viagem espiritual, nos levar para dentro de nós e para o profundo, este vídeo mostra algumas das qualidades, espero que gostem!</p> <a href="http://www.youtube.com/watch?v=quWr1qIJLyg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/Zt5ao_e2y-A/hqdefault.jpg" alt="Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do beija-flor - Luz Divina, Totem, Animal de poder</h3> <p class="description">Saudações amigos e irmãos lendários desta vez o assunto é o animal de poder beija-flor ou colibri, a expressão da pureza divina em um animal, frequência de luz viva. espero que traga um pouco mais de informação a você.</p> <a href="http://www.youtube.com/watch?v=Zt5ao_e2y-A" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/D7MAQdl6tiE/hqdefault.jpg" alt="O poder espiritual da borboleta - Transformação - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual da borboleta - Transformação - Totem - Animal de poder</h3> <p class="description">neste vídeo falaremos sobre o animal de poder borboleta, a força deste arquétipo, a mística poderosa por trás deste totem. Pessoas que possuem a borboleta como animal guardião recebem uma chave e uma mensagem muito poderosa de evolução e aprimoramento, é um chamado espiritual profundo, e cheio de significado, ligadas ao elemento ar e as fadas, as borboletas são a representação do melhor que podemos nos tornar, espero que você goste do vídeo, e que a energia ancestral faça parte da nossa jornada.</p> <a href="http://www.youtube.com/watch?v=D7MAQdl6tiE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg" alt="Poder espiritual do cachorro - Totem - Animal de poder" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do cachorro - Totem - Animal de poder</h3> <p class="description">Saudações amigos, neste vídeo decidi comentar o ocorrido com o cachorro morto pelo segurança do supermercado carrefour e tbm sobre o poder espiritual desses animais, alem de suas propriedades como animal de poder. Espero que as informações sobre este totem possa ser útil a você.</p> <a href="http://www.youtube.com/watch?v=9SOpyoD3o" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/0TPRx4EcQeY/hqdefault.jpg" alt="Convenção de Magos e Bruxas de Paranapiacaba 2022" class="thumbnail"> <div class="video-info"> <h3>Convenção de Magos e Bruxas de Paranapiacaba 2022</h3> <p class="description">Saudações amigos, neste vídeo trago toda a experiência que vivi neste que foi para mim a maior edição da convenção de Magos e Bruxas de Paranapiacaba, video produzido com muito carinho, espero que goste!</p> <a href="http://www.youtube.com/watch?v=0TPRx4EcQeY" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/9OPH0yly70g/hqdefault.jpg" alt="Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs" class="thumbnail"> <div class="video-info"> <h3>Mercado Místico 2020 - Conferindo o evento - Av Paulista - Club Homs</h3> <p class="description">Saudações amigos, trago imagens de como foi o Mercado Místico primeira edição de 2020.</p> <a href="http://www.youtube.com/watch?v=9OPH0yly70g" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/_0YsJ1gWIcw/hqdefault.jpg" alt="Evento Incrível!! Bazar das Bruxas 2021 - confira!" class="thumbnail"> <div class="video-info"> <h3>Evento Incrível!! Bazar das Bruxas 2021 - confira!</h3> <p class="description">Neste dia das bruxas - halloween estive no Bazar das bruxas que ocorreu na vila Mariana em SP, foi um evento magnifico cheio de convidados especiais, artesão talentosos, oraculistas, dançarinos etc, com direito a palestras (inclusive minha) lançamento de livro e muito mais, confira!</p> <a href="http://www.youtube.com/watch?v=_0YsJ1gWIcw" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/OB55az3PHaA/hqdefault.jpg" alt="Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar" class="thumbnail"> <div class="video-info"> <h3>Expansão do Feminino - Encontro de Terapeutas - As três leis da constelação familiar</h3> <p class="description">Converso com a Lucelia de Fatima sobre diversos assuntos tais como medicina tradicional chinesa, memorias uterinas, sagrado feminino entre outros. </p> <a href="http://www.youtube.com/watch?v=OB55az3PHaA" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg" alt="Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?" class="thumbnail"> <div class="video-info"> <h3>Entrevista Caique Pereira - Escola para Youtubers - Ainda vale a pena criar um canal?</h3> <p class="description">Saudações amigos, neste vídeo eu entrevisto o Caique Pereira do canal ‪@escolaparayoutubers‬</p> <a href="http://www.youtube.com/watch?v=r2Q2hcbrFjg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/135D0iEWmAE/hqdefault.jpg" alt="3º Bazar das Bruxas - Bosque dos Gnomos 2019" class="thumbnail"> <div class="video-info"> <h3>3º Bazar das Bruxas - Bosque dos Gnomos 2019</h3> <p class="description">Saudações amigos, hoje o vídeo é sobre o 3º Bazar das Bruxas, organizado pelo bosque dos gnomos do Victor Valentim, espero que gostem!</p> <a href="http://www.youtube.com/watch?v=135D0iEWmAE" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/BuB6POFFkOg/hqdefault.jpg" alt="Halloween Bosque dos Gnomos 2017" class="thumbnail"> <div class="video-info"> <h3>Halloween Bosque dos Gnomos 2017</h3> <p class="description">Saudações irmãos lendários, participei este ano da festa do dia das bruxas no bosque dos gnomos, com o Victor Valentim e sua equipe, musicas, rituais, palestras e muita harmonia, confiram neste vídeo como foi o evento.</p> <a href="http://www.youtube.com/watch?v=BuB6POFFkOg" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/z79_cwCVtpo/hqdefault.jpg" alt="Sibila da Antevisão - Don Julio - Holistic Fair Atibaia" class="thumbnail"> <div class="video-info"> <h3>Sibila da Antevisão - Don Julio - Holistic Fair Atibaia</h3> <p class="description">Saudações amigos, hoje converso com o oraculista Don Julio sobre a sibila da antevisão e suas peculiaridades. Espero que gostem!</p> <a href="http://www.youtube.com/watch?v=z79_cwCVtpo" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                        <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/96F4TnmFWGQ/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+                <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+
+
+
+            </div>
+
+
+
+        </section>
+
+
+
+        <section class="member-section">
+
+
+
+            <div class="decorative-border"></div>
+
+
+
+            <div class="member-card">
+
+
+
+                <div class="member-card-inner">
+
+
+
+                    <div class="member-card-front">
+
+
+
+                        <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
+
+
+
+                        <h3>Torne-se um membro do canal</h3>
+
+
+
+                        <p>Gosta do nosso conteúdo? Fortaleça esta comunidade e tenha acesso a benefícios exclusivos.</p>
+
+
+
+                    </div>
+
+
+
+                    <div class="member-card-back">
+
+
+
+                        <h4>Apoie o canal!</h4>
+
+
+
+                        <p>Com sua ajuda, podemos criar ainda mais conteúdo de qualidade e fortalecer nossa comunidade. Clique abaixo para se tornar um membro oficial!</p>
+
+
+
+                        <a href="https://www.youtube.com/@Lendario/join" target="_blank" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </section>
+
+
+
+    </main>
+
+
+
+    <footer>
+
+
+
+        <div class="footer-logo-section">
+
+
+
+            <img src="https://i.postimg.cc/52ssRLdr/unnamed-removebg-preview.png" alt="Lendário TV Logo">
+
+
+
+            <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
+
+
+
+            <div class="footer-social-icons">
+
+
+
+                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+
+
+
+                <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+
+
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+
+
+
+                <a href="mailto:lendarioesoterico@gmail.com"><i class="fas fa-envelope"></i></a>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+
+
+            <div class="footer-column">
+
+
+
+                <ul>
+
+
+
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+
+
+
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+
+
+
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+
+
+
+                    <li><a href="doacao.html"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+
+
+
+                    <li><a href="contato.html"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+
+
+
+                    <li><a href="consulta.html"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+
+
+
+                </ul>
+
+
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+
+
+                <ul>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarô</a></li>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplSoQK0KCzIeoA5UesjtSjL&si=vhu0Mk-iOI0I1kSL"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopmTkwcIKOxn5KAO9U9tuQq_&si=3nFQ0whFNkLjUgNU"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm1SUxAHHHVZGjaFNjVT_gH&si=NUM2OkIuQ1WPi8bc"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplK3cUiQblqXOcNAlBlujQe&si=y-OjPs-9wIuEI0hq"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+
+
+
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Lives</a></li>
+
+
+
+                </ul>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="copyright">
+
+
+
+            © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
+
+
+
+        </div>
+
+
+
+    </footer>
+
+
+
+    
+
+
+
+    <script>
+
+
+
+        // --- LÓGICA DA LIVE (Cópia exata do seu código funcional) ---
+
+
+
+        const tag = document.createElement('script');
+
+
+
+        tag.src = "https://www.youtube.com/iframe_api";
+
+
+
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+
+
+
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+
+
+
+
+
+        let player;
+
+
+
+        window.onYouTubeIframeAPIReady = function() {
+
+
+
+            player = new YT.Player('liveVideoIframe', {
+
+
+
+                events: {
+
+
+
+                    'onStateChange': onPlayerStateChange
+
+
+
+                }
+
+
+
+            });
+
+
+
+        };
+
+
+
+
+
+
+
+        function onPlayerStateChange(event) {
+
+
+
+            const thumbnailContainer = document.getElementById('liveThumbnail');
+
+
+
+            if (!thumbnailContainer) return;
+
+
+
+
+
+
+
+            if (event.data === YT.PlayerState.PLAYING) {
+
+
+
+                thumbnailContainer.classList.add('hidden');
+
+
+
+            } else {
+
+
+
+                thumbnailContainer.classList.remove('hidden');
+
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+        // --- LÓGICA ORIGINAL DO SEU SITE (Carrosséis, etc) ---
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+
+
+
+            const mobileNav = document.querySelector('.mobile-nav');
+
+
+
+            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+
+
+
+
+
+
+
+            if(mobileNavToggle && mobileNav) {
+
+
+
+                mobileNavToggle.addEventListener('click', () => {
+
+
+
+                    mobileNav.classList.add('is-active');
+
+
+
+                });
+
+
+
+                closeNavBtn.addEventListener('click', () => {
+
+
+
+                    mobileNav.classList.remove('is-active');
+
+
+
+                });
+
+
+
+            }
+
+
+
+
+
+
+
+            const heroCarousel = document.querySelector('.hero-carousel');
+
+
+
+            if (heroCarousel) {
+
+
+
+                const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+
+
+
+                const heroCards = heroContainer.querySelectorAll('.hero-card');
+
+
+
+                const dots = document.querySelectorAll('.dot');
+
+
+
+                let currentHeroIndex = 0;
+
+
+
+                let heroAutoPlay;
+
+
+
+                let touchStartX = 0;
+
+
+
+                let touchEndX = 0;
+
+
+
+                let isDragging = false;
+
+
+
+
+
+
+
+                function updateHeroCarousel() {
+
+
+
+                    heroContainer.style.transition = 'transform 0.5s ease';
+
+
+
+                    heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+
+
+
+                    dots.forEach((dot, index) => {
+
+
+
+                        dot.classList.toggle('active', index === currentHeroIndex);
+
+
+
+                    });
+
+
+
+                }
+
+
+
+
+
+
+
+                function startHeroAutoplay() {
+
+
+
+                    stopHeroAutoplay();
+
+
+
+                    heroAutoPlay = setInterval(() => {
+
+
+
+                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+
+
+
+                        updateHeroCarousel();
+
+
+
+                    }, 5000);
+
+
+
+                }
+
+
+
+
+
+
+
+                function stopHeroAutoplay() {
+
+
+
+                    clearInterval(heroAutoPlay);
+
+
+
+                }
+
+
+
+
+
+
+
+                dots.forEach((dot, index) => {
+
+
+
+                    dot.addEventListener('click', () => {
+
+
+
+                        currentHeroIndex = index;
+
+
+
+                        updateHeroCarousel();
+
+
+
+                        startHeroAutoplay();
+
+
+
+                    });
+
+
+
+                });
+
+
+
+
+
+
+
+                heroCarousel.addEventListener('touchstart', e => {
+
+
+
+                    if (window.innerWidth > 992) return;
+
+
+
+                    touchStartX = e.changedTouches[0].screenX;
+
+
+
+                    isDragging = true;
+
+
+
+                    stopHeroAutoplay();
+
+
+
+                    heroContainer.style.transition = 'none';
+
+
+
+                });
+
+
+
+
+
+
+
+                heroCarousel.addEventListener('touchmove', e => {
+
+
+
+                    if (!isDragging || window.innerWidth > 992) return;
+
+
+
+                    touchEndX = e.changedTouches[0].screenX;
+
+
+
+                    const diff = touchEndX - touchStartX;
+
+
+
+                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+
+
+
+                    e.preventDefault();
+
+
+
+                });
+
+
+
+
+
+
+
+                heroCarousel.addEventListener('touchend', e => {
+
+
+
+                    if (!isDragging || window.innerWidth > 992) return;
+
+
+
+                    isDragging = false;
+
+
+
+                    touchEndX = e.changedTouches[0].screenX;
+
+
+
+                    const diff = touchStartX - touchEndX;
+
+
+
+                    const swipeThreshold = 50;
+
+
+
+
+
+
+
+                    if (Math.abs(diff) > swipeThreshold) {
+
+
+
+                        if (diff > 0) {
+
+
+
+                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+
+
+
+                        } else {
+
+
+
+                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
+
+
+
+                        }
+
+
+
+                    }
+
+
+
+
+
+
+
+                    updateHeroCarousel();
+
+
+
+                    startHeroAutoplay();
+
+
+
+                });
+
+
+
+
+
+
+
+                startHeroAutoplay();
+
+
+
+            }
+
+
+
+
+
+
+
+            function setupInfiniteCarousel(sectionId, isMobile = false) {
+
+
+
+                const section = document.getElementById(sectionId);
+
+
+
+                if (!section) return;
+
+
+
+
+
+
+
+                const container = section.querySelector('.video-carousel-container');
+
+
+
+                const track = section.querySelector('.video-carousel-track');
+
+
+
+                const prevBtn = section.querySelector('.prev-arrow');
+
+
+
+                const nextBtn = section.querySelector('.next-arrow');
+
+
+
+                const filterButtons = section.querySelectorAll('.filter-btn');
+
+
+
+                
+
+
+
+                let originalCards = Array.from(track.children);
+
+
+
+                let isTransitioning = false;
+
+
+
+                let autoplayInterval;
+
+
+
+                let currentIndex = 0;
+
+
+
+                let touchStartX = 0;
+
+
+
+                let touchEndX = 0;
+
+
+
+                let isDragging = false;
+
+
+
+
+
+
+
+                function getVisibleCards() {
+
+
+
+                    return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
+
+
+
+                }
+
+
+
+
+
+
+
+                function setupCarousel() {
+
+
+
+                    stopAutoplay();
+
+
+
+                    isTransitioning = false;
+
+
+
+
+
+
+
+                    const clones = track.querySelectorAll('.clone');
+
+
+
+                    clones.forEach(clone => track.removeChild(clone));
+
+
+
+                    
+
+
+
+                    track.innerHTML = '';
+
+
+
+                    originalCards.forEach(card => track.appendChild(card));
+
+
+
+
+
+
+
+                    const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+
+
+
+                    originalCards.forEach(card => {
+
+
+
+                        card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+
+
+
+                    });
+
+
+
+
+
+
+
+                    const visibleCards = getVisibleCards();
+
+
+
+                    if (visibleCards.length === 0) {
+
+
+
+                        if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+
+
+
+                        if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+
+
+
+                        track.style.transform = 'translateX(0)';
+
+
+
+                        return;
+
+
+
+                    }
+
+
+
+
+
+
+
+                    if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+
+
+
+                    if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+
+
+
+
+
+
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+
+
+
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+
+
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+
+
+
+
+
+
+                    if (visibleCards.length <= cardsInView) {
+
+
+
+                        if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+
+
+
+                        if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+
+
+
+                        track.style.transform = 'translateX(0)';
+
+
+
+                        return;
+
+
+
+                    }
+
+
+
+
+
+
+
+                    if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+
+
+
+                    if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+
+
+
+
+
+
+
+                    const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
+
+
+
+                    itemsToCloneEnd.forEach(card => {
+
+
+
+                        const clone = card.cloneNode(true);
+
+
+
+                        clone.classList.add('clone');
+
+
+
+                        track.appendChild(clone);
+
+
+
+                    });
+
+
+
+
+
+
+
+                    const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
+
+
+
+                    itemsToCloneStart.reverse().forEach(card => {
+
+
+
+                        const clone = card.cloneNode(true);
+
+
+
+                        clone.classList.add('clone');
+
+
+
+                        track.insertBefore(clone, visibleCards[0]);
+
+
+
+                    });
+
+
+
+
+
+
+
+                    currentIndex = cardsInView + 1;
+
+
+
+                    let initialOffset = -currentIndex * (cardWidth + gap);
+
+
+
+                    if (isMobile) {
+
+
+
+                        const containerWidth = container.offsetWidth;
+
+
+
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+
+
+
+                        initialOffset += centerOffset;
+
+
+
+                    }
+
+
+
+                    track.style.transition = 'none';
+
+
+
+                    track.style.transform = `translateX(${initialOffset}px)`;
+
+
+
+
+
+
+
+                    if (isMobile) {
+
+
+
+                        container.style.overflowX = 'hidden';
+
+
+
+                        container.style.scrollSnapType = 'none';
+
+
+
+                    }
+
+
+
+
+
+
+
+                    startAutoplay();
+
+
+
+                }
+
+
+
+
+
+
+
+                function move(direction) {
+
+
+
+                    if (isTransitioning) return;
+
+
+
+                    isTransitioning = true;
+
+
+
+
+
+
+
+                    const visibleCards = getVisibleCards();
+
+
+
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+
+
+
+
+
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+
+
+
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+
+
+                    const containerWidth = container.offsetWidth;
+
+
+
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+
+
+
+
+
+
+                    currentIndex += direction;
+
+
+
+                    let offset = -currentIndex * (cardWidth + gap) + centerOffset;
+
+
+
+                    track.style.transition = 'transform 0.5s ease-in-out';
+
+
+
+                    track.style.transform = `translateX(${offset}px)`;
+
+
+
+                }
+
+
+
+
+
+
+
+                track.addEventListener('transitionend', () => {
+
+
+
+                    const visibleCards = getVisibleCards();
+
+
+
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+
+
+
+
+
+
+                    const cardWidth = visibleCards[0].offsetWidth;
+
+
+
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+
+
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+
+
+                    const containerWidth = container.offsetWidth;
+
+
+
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+
+
+
+
+
+
+                    if (currentIndex <= cardsInView) {
+
+
+
+                        currentIndex += visibleCards.length;
+
+
+
+                        track.style.transition = 'none';
+
+
+
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+
+
+
+                    }
+
+
+
+
+
+
+
+                    if (currentIndex >= visibleCards.length + cardsInView + 1) {
+
+
+
+                        currentIndex -= visibleCards.length;
+
+
+
+                        track.style.transition = 'none';
+
+
+
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+
+
+
+                    }
+
+
+
+                    isTransitioning = false;
+
+
+
+                });
+
+
+
+
+
+
+
+                function stopAutoplay() {
+
+
+
+                    clearInterval(autoplayInterval);
+
+
+
+                }
+
+
+
+
+
+
+
+                function startAutoplay() {
+
+
+
+                    stopAutoplay();
+
+
+
+                    autoplayInterval = setInterval(() => move(1), 5000);
+
+
+
+                }
+
+
+
+
+
+
+
+                if (!isMobile) {
+
+
+
+                    nextBtn.addEventListener('click', () => move(1));
+
+
+
+                    prevBtn.addEventListener('click', () => move(-1));
+
+
+
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+
+
+
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+
+
+
+                } else {
+
+
+
+                    container.addEventListener('touchstart', e => {
+
+
+
+                        touchStartX = e.changedTouches[0].screenX;
+
+
+
+                        isDragging = true;
+
+
+
+                        stopAutoplay();
+
+
+
+                        track.style.transition = 'none';
+
+
+
+                    });
+
+
+
+
+
+
+
+                    container.addEventListener('touchmove', e => {
+
+
+
+                        if (!isDragging) return;
+
+
+
+                        touchEndX = e.changedTouches[0].screenX;
+
+
+
+                        const diff = touchEndX - touchStartX;
+
+
+
+                        const visibleCards = getVisibleCards();
+
+
+
+                        if (visibleCards.length === 0) return;
+
+
+
+                        const cardWidth = visibleCards[0].offsetWidth;
+
+
+
+                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+
+
+                        const containerWidth = container.offsetWidth;
+
+
+
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+
+
+
+                        track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
+
+
+
+                        e.preventDefault();
+
+
+
+                    });
+
+
+
+
+
+
+
+                    container.addEventListener('touchend', e => {
+
+
+
+                        if (!isDragging) return;
+
+
+
+                        isDragging = false;
+
+
+
+                        touchEndX = e.changedTouches[0].screenX;
+
+
+
+                        const diff = touchStartX - touchEndX;
+
+
+
+                        const swipeThreshold = 50;
+
+
+
+                        const visibleCards = getVisibleCards();
+
+
+
+                        if (visibleCards.length === 0) return;
+
+
+
+
+
+
+
+                        if (Math.abs(diff) > swipeThreshold) {
+
+
+
+                            if (diff > 0) {
+
+
+
+                                move(1);
+
+
+
+                            } else {
+
+
+
+                                move(-1);
+
+
+
+                            }
+
+
+
+                        } else {
+
+
+
+                            track.style.transition = 'transform 0.5s ease-in-out';
+
+
+
+                            const cardWidth = visibleCards[0].offsetWidth;
+
+
+
+                            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+
+
+
+                            const containerWidth = container.offsetWidth;
+
+
+
+                            const centerOffset = (containerWidth - cardWidth) / 2;
+
+
+
+                            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+
+
+
+                        }
+
+
+
+                        startAutoplay();
+
+
+
+                    });
+
+
+
+                }
+
+
+
+
+
+
+
+                filterButtons.forEach(button => {
+
+
+
+                    button.addEventListener('click', () => {
+
+
+
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+
+
+
+                        button.classList.add('active');
+
+
+
+                        setupCarousel();
+
+
+
+                    });
+
+
+
+                });
+
+
+
+
+
+
+
+                window.addEventListener('resize', setupCarousel);
+
+
+
+                setupCarousel();
+
+
+
+            }
+
+
+
+
+
+
+
+            if (window.innerWidth > 992) {
+
+
+
+                setupInfiniteCarousel('latest-videos-section');
+
+
+
+                setupInfiniteCarousel('most-viewed-section');
+
+
+
+            } else {
+
+
+
+                setupInfiniteCarousel('latest-videos-section', true);
+
+
+
+                setupInfiniteCarousel('most-viewed-section', true);
+
+
+
+            }
+
+
+
+
+
+
+
+            const header = document.querySelector('header');
+
+
+
+            if (header) {
+
+
+
+                let lastScrollTop = 0;
+
+
+
+                const scrollThreshold = 150;
+
+
+
+                window.addEventListener('scroll', () => {
+
+
+
+                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+
+
+                    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+
+
+
+                        header.classList.add('header-hidden');
+
+
+
+                    } else if (scrollTop < lastScrollTop) {
+
+
+
+                        header.classList.remove('header-hidden');
+
+
+
+                    }
+
+
+
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+
+
+                }, { passive: true });
+
+
+
+            }
+
+
+
+        });
+
+
+
+    </script>
+
+
+
 </body>
+
+
+
 </html>
+
