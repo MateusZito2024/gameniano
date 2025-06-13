@@ -48,6 +48,12 @@
             pointer-events: none;
         }
         .logo img { height: 55px; }
+        
+        /* Esconde o título do site na versão desktop */
+        .header-title-mobile {
+            display: none;
+        }
+        
         header nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
         header nav ul li { margin-left: 35px; }
         header nav ul li a { font-weight: 500; font-size: 0.95em; }
@@ -293,6 +299,17 @@
             header nav, header .social-icons {
                 display: none;
             }
+            .header-title-mobile {
+                display: block;
+                flex-grow: 1;
+                text-align: center;
+                font-family: var(--font-cinzel);
+                color: var(--gold);
+                font-size: 1.6em;
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+                margin: 0 10px;
+                line-height: 1;
+            }
             .mobile-nav-toggle {
                 display: block;
                 background: none;
@@ -342,6 +359,10 @@
                 display: block;
                 padding: 18px;
                 font-size: 1.2em;
+                transition: color 0.3s ease;
+            }
+            .mobile-nav ul li a:hover {
+                color: var(--gold);
             }
             .mobile-nav .mobile-socials {
                 margin-top: 40px;
@@ -420,8 +441,9 @@
 <body>
     <header>
         <div class="logo">
-            <a href="/"><img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo"></a>
+            <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
         </div>
+        <h1 class="header-title-mobile">Lendario Tv</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Início</a></li>
@@ -557,7 +579,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // O script completo é mantido para garantir o funcionamento.
         const videosData = [
             { videoId: '_kFRwfeOycU', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
             { videoId: 'qqGB-rsf8wU', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg', category: 'meditacao serie-elementos ensinamentos-xamanicos' },
@@ -632,7 +653,7 @@
             { videoId: 'lZPhMxmI0Kc', title: 'Reiki - Johrei - Cura pelas mãos', description: 'Saudações queridos amigos, pensando em nossa jornada espiritual e o que pode somar, decidi falar sobre o desbloqueio energético como uma ferramenta espiritual, há diversas técnicas espirituais de cura pelas mãos, e hoje decidi falar sobre o Reiki, falo um pouco tambem sobre o Johrei e porque devemos evita-lo. Espero que traga boas informações para você, abençoado seja profundamente!', thumbnail: 'https://i.ytimg.com/vi/lZPhMxmI0Kc/hqdefault.jpg', category: 'ensinamentos-lendarios' },
             { videoId: '4BTOHbBTLq0', title: 'A Justiça divina - A Lei do Retorno - Aqui se faz aqui se paga?', description: 'Saudações amigos, será que com tanta impunidade por aí existe de fato alguma justiça divina atuando nos bastidores? Existe a lei do retorno ou a impunidade espiritual é certa? Existe céu e inferno? Esses temas tão polêmicos são o assunto deste vídeo, espero que possa lhe ser útil.', thumbnail: 'https://i.ytimg.com/vi/4BTOHbBTLq0/hqdefault.jpg', category: 'ensinamentos-lendarios' },
             { videoId: 'xhhcl8Ogw2U', title: 'Meditação Guiada - Desbloqueio da terceira visão - Conexão espiritual', description: 'Esta é uma meditação guiada criada para auxiliar o desbloqueio da glândula pineal e abertura da terceira visão, os sons e estímulos neste vídeo foi preparado para auxiliar no desbloqueio e conexão espiritual, só faça se realmente desejar passar por este processo, espero que goste e que possa ser útil a sua jornada. ', thumbnail: 'https://i.ytimg.com/vi/xhhcl8Ogw2U/hqdefault.jpg', category: 'meditacao' },
-            { videoId: 'MCAQ-5I1Mg8', title: 'Jornada Xamânica - Conexão com seu mestre interior - Meditação', description: 'Saudações amigos, diferente da meditação guiada neste vídeo decidi fazer uma jornada xamânica, ao invés de direionar com palavras em todo o processo meditativo neste eu apenas ambientei e criei uma atmosfera benéfica para uma jornada espiritual, deixe sua intuição guiar durante a meditação e se permita viajar ao enontro do seu mestre interior. Medite na cachoeira, voe por aí com seu animal de poder, mergulhe fundo no mar, ou sente com uma sábia arvore para absorver sua sabedoria, ande pelo bosque, na chuva ou saia flutuando pelo universo. Esta jornada possui som ritmio de tambor xamanico junto com sons da natureza em diversos ambientes diferentes, incluindo passaros, som da chuva do mar, do fogo, da floresta o som do universo, no tambor dou 8inicio a um ritmo mais forte para induzir um estado de jornada e termino com a batida do coração, uma batida suave para finalizar e auxiliar o sono, este vídeo foi produzido com muito carinho na intenção de auxiliar cada vez mais a conexão espiritual, espero que seja de muita luz para você!', thumbnail: 'https://i.ytimg.com/vi/MCAQ-5I1Mg8/hqdefault.jpg', category: 'meditacao' },
+            { videoId: 'MCAQ-5I1Mg8', title: 'Jornada Xamânica - Conexão com seu mestre interior - Meditação', description: 'Saudações amigos, diferente da meditação guiada neste vídeo decidi fazer uma jornada xamânica, ao invés de direionar com palavras em todo o processo meditativo neste eu apenas ambientei e criei uma atmosfera benéfica para uma jornada espiritual, deixe sua intuição guiar durante a meditação e se permita viajar ao enontro do seu mestre interior. Medite na cachoeira, voe por aí com seu animal de poder, mergulhe fundo no mar, ou sente com uma sábia arvore para absorver sua sabedoria, ande pelo bosque, na chuva ou saia flutuando pelo universo. Esta jornada possui som ritmio de tambor xamanico junto com os sons da natureza em diversos ambientes diferentes, incluindo passaros, som da chuva do mar, do fogo, da floresta o som do universo, no tambor dou 8inicio a um ritmo mais forte para induzir um estado de jornada e termino com a batida do coração, uma batida suave para finalizar e auxiliar o sono, este vídeo foi produzido com muito carinho na intenção de auxiliar cada vez mais a conexão espiritual, espero que seja de muita luz para você!', thumbnail: 'https://i.ytimg.com/vi/MCAQ-5I1Mg8/hqdefault.jpg', category: 'meditacao' },
             { videoId: 'F9WQqbgB9Po', title: 'Meditação Guiada - Projeção Astral - Viagem Astral', description: 'Saudações esta é uma meditação guiada para auxiliar a projeção astral ou viagem astral, recomendo que utilize fone de ouvido e faça esta meditação no período que for dormir para aproveitar o estado profundo de relaxamento, refaça a meditação quantas vezes desejar, espero que seja uma experiência positiva para você.', thumbnail: 'https://i.ytimg.com/vi/F9WQqbgB9Po/hqdefault.jpg', category: 'meditacao' },
             { videoId: 'jbeO-4BIdbY', title: 'Meditação Guiada - Acessando a sabedoria das arvores', description: 'Saudações amigos, esta meditação guiada tem por objetivo auxiliar você a se conectar com a sabedoria das arvores e com o reino vegetal, te trazendo mais intuição, conexão e sabedoria, a intenção do video é te despertar para as forças sutis que permeiam toda natureza e em especial as arvores ancestrais, espero que possa se beneficiar deste trabalho. ', thumbnail: 'https://i.ytimg.com/vi/jbeO-4BIdbY/hqdefault.jpg', category: 'meditacao' },
             { videoId: 'aNSN-92f9K8', title: 'Live Tarot - Domingo 28/05', description: 'Saudações amigos, Neste domingo dia 25/05 estaremos juntos em mais uma Live de tarot a partir das 22 horas, venha me fazer companhia e traga a sua questão!', thumbnail: 'https://i.ytimg.com/vi/aNSN-92f9K8/hqdefault.jpg', category: 'lives' },
@@ -735,10 +756,10 @@
         function openPopup(videoData) {
             videoError.style.display = 'none';
             popupIframe.style.display = 'block';
-            popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0`;
+            popupIframe.src = `https://www.youtube.com/embed/$${videoData.videoId}?autoplay=1&rel=0`;
             popupTitle.innerText = videoData.title;
             popupDescription.innerText = videoData.description;
-            const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${videoData.videoId}`);
+            const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=$${videoData.videoId}`);
             const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
             popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${videoUrl}`;
             popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${videoUrl}`;
