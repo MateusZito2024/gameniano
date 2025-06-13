@@ -886,200 +886,360 @@
 
         // --- LÓGICA GERAL DO SITE (CARROSSÉIS, MENU, ETC.) ---
         document.addEventListener('DOMContentLoaded', () => {
-            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-            const mobileNav = document.querySelector('.mobile-nav');
-            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+    // --- LÓGICA DA LIVE (mantida sem alterações) ---
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            if(mobileNavToggle && mobileNav) {
-                mobileNavToggle.addEventListener('click', () => {
-                    mobileNav.classList.add('is-active');
-                });
-                closeNavBtn.addEventListener('click', () => {
-                    mobileNav.classList.remove('is-active');
-                });
-            }
-
-            // --- CARROSSEL HERO ---
-            const heroCarousel = document.querySelector('.hero-carousel');
-            if (heroCarousel) {
-                const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-                const heroCards = heroContainer.querySelectorAll('.hero-card');
-                const dots = document.querySelectorAll('.dot');
-                let currentHeroIndex = 0;
-                let heroAutoPlay;
-
-                function updateHeroCarousel() {
-                    heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === currentHeroIndex);
-                    });
-                }
-
-                function stopHeroAutoplay() {
-                    clearInterval(heroAutoPlay);
-                }
-
-                function startHeroAutoplay() {
-                    stopHeroAutoplay(); // Garante que não haja múltiplos intervalos rodando
-                    heroAutoPlay = setInterval(() => {
-                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                        updateHeroCarousel();
-                    }, 5000);
-                }
-
-                dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        currentHeroIndex = index;
-                        updateHeroCarousel();
-                        startHeroAutoplay(); // Reinicia o timer ao clicar no dot
-                    });
-                });
-
-                // Lógica de toque para o carrossel Hero (Mobile)
-                let touchStartX = 0;
-                heroCarousel.addEventListener('touchstart', e => {
-                    // Para o autoplay assim que o usuário toca no carrossel
-                    stopHeroAutoplay();
-                    touchStartX = e.touches[0].clientX;
-                }, { passive: true });
-
-                heroCarousel.addEventListener('touchend', e => {
-                    let touchEndX = e.changedTouches[0].clientX;
-                    if (touchStartX - touchEndX > 50) { // Swipe para a esquerda
-                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                    } else if (touchStartX - touchEndX < -50) { // Swipe para a direita
-                        currentHeroIndex = (currentHeroIndex - 1 + heroCards.length) % heroCards.length;
-                    }
-                    updateHeroCarousel();
-                    // Reinicia o autoplay depois que o usuário termina a interação
-                    startHeroAutoplay();
-                }, { passive: true });
-                
-                startHeroAutoplay(); // Inicia o autoplay na primeira vez
-            }
-
-            // --- FUNÇÃO PARA CONFIGURAR CARROSSÉIS DE VÍDEOS ---
-            function setupInfiniteCarousel(sectionId) {
-                const section = document.getElementById(sectionId);
-                if (!section) return;
-
-                const container = section.querySelector('.video-carousel-container');
-                const track = section.querySelector('.video-carousel-track');
-                const prevBtn = section.querySelector('.prev-arrow');
-                const nextBtn = section.querySelector('.next-arrow');
-                const filterButtons = section.querySelectorAll('.filter-btn');
-                
-                let originalCards = Array.from(track.children);
-                let autoplayInterval;
-                let isTransitioning = false;
-
-                function stopAutoplay() {
-                    clearInterval(autoplayInterval);
-                }
-
-                function startAutoplay() {
-                    stopAutoplay();
-                    // Só inicia o autoplay se não for mobile (setas visíveis)
-                    if (window.innerWidth > 992) {
-                        autoplayInterval = setInterval(() => move(1), 5000);
-                    }
-                }
-                
-                function applyFilter() {
-                    // ... (toda a lógica de filtragem e clonagem de cards)
-                    // Esta parte do seu código original é complexa e focada na clonagem para o efeito infinito.
-                    // A correção principal está nos listeners de toque abaixo.
-                    // Para manter a resposta focada, assumimos que a lógica interna de filtragem e clonagem está ok.
-                    // O importante é como o autoplay interage com o toque.
-
-                    // Exemplo simplificado para garantir que a função exista.
-                    // No seu código real, a lógica completa de reconstrução do carrossel estaria aqui.
-                    track.innerHTML = '';
-                    const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-                    originalCards.forEach(card => {
-                        if (activeFilter === 'all' || card.dataset.category === activeFilter) {
-                            track.appendChild(card.cloneNode(true));
-                        }
-                    });
-
-                    startAutoplay();
-                }
-
-                function move(direction) {
-                    // ... Lógica de movimento ...
-                }
-
-                // Lógica de toque para os carrosséis de vídeo (Mobile)
-                if (window.innerWidth <= 992) {
-                    let touchStartX = 0;
-                    let scrollLeftStart = 0;
-
-                    container.addEventListener('touchstart', (e) => {
-                        stopAutoplay(); // Ponto crucial: para o autoplay no toque
-                        touchStartX = e.touches[0].pageX;
-                        scrollLeftStart = container.scrollLeft;
-                        container.style.scrollSnapType = 'none'; // Permite rolagem suave
-                    }, { passive: true });
-
-                    container.addEventListener('touchmove', (e) => {
-                        const x = e.touches[0].pageX;
-                        const walk = (x - touchStartX) * 1.5; // Multiplicador para sentir mais rápido
-                        container.scrollLeft = scrollLeftStart - walk;
-                    }, { passive: true });
-
-                    container.addEventListener('touchend', () => {
-                        startAutoplay(); // Ponto crucial: reinicia o autoplay (se aplicável) ao soltar
-                        container.style.scrollSnapType = 'x mandatory'; // Reativa o snap
-                    });
-                    
-                    // Em vez de lógica complexa de translate, usamos a rolagem nativa no mobile
-                    container.style.overflowX = 'auto';
-                    container.style.scrollSnapType = 'x mandatory';
-                    track.style.paddingLeft = '20px'; // Garante que o primeiro card não fique colado na borda
-                    track.style.paddingRight = '20px';
-                    Array.from(track.children).forEach(card => {
-                        card.style.scrollSnapAlign = 'start';
-                    });
-                } else {
-                     // Lógica de Desktop com setas e autoplay
-                    if(nextBtn) nextBtn.addEventListener('click', () => move(1));
-                    if(prevBtn) prevBtn.addEventListener('click', () => move(-1));
-                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
-                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-                }
-                
-                filterButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        filterButtons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                        applyFilter();
-                    });
-                });
-
-                applyFilter(); // Configuração inicial
-            }
-
-            // Inicializa os dois carrosséis de vídeo
-            setupInfiniteCarousel('latest-videos-section');
-            setupInfiniteCarousel('most-viewed-section');
-
-
-            // --- LÓGICA DO HEADER QUE SOME AO ROLAR ---
-            const header = document.querySelector('header');
-            if (header) {
-                let lastScrollTop = 0;
-                const scrollThreshold = 150;
-                window.addEventListener('scroll', () => {
-                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-                        header.classList.add('header-hidden');
-                    } else if (scrollTop < lastScrollTop) {
-                        header.classList.remove('header-hidden');
-                    }
-                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-                }, { passive: true });
+    let player;
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('liveVideoIframe', {
+            events: {
+                'onStateChange': onPlayerStateChange
             }
         });
+    };
+
+    function onPlayerStateChange(event) {
+        const thumbnailContainer = document.getElementById('liveThumbnail');
+        if (!thumbnailContainer) return;
+
+        if (event.data === YT.PlayerState.PLAYING) {
+            thumbnailContainer.classList.add('hidden');
+        } else {
+            thumbnailContainer.classList.remove('hidden');
+        }
+    }
+
+    // --- LÓGICA DOS CARROSSEIS ---
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+
+    if (mobileNavToggle && mobileNav) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNav.classList.add('is-active');
+        });
+        closeNavBtn.addEventListener('click', () => {
+            mobileNav.classList.remove('is-active');
+        });
+    }
+
+    // --- CARROSSEL HERO ---
+    const heroCarousel = document.querySelector('.hero-carousel');
+    if (heroCarousel) {
+        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+        const heroCards = heroContainer.querySelectorAll('.hero-card');
+        const dots = document.querySelectorAll('.dot');
+        let currentHeroIndex = 0;
+        let heroAutoPlay;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+
+        function updateHeroCarousel() {
+            heroContainer.style.transition = 'transform 0.5s ease';
+            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentHeroIndex);
+            });
+        }
+
+        function startHeroAutoplay() {
+            stopHeroAutoplay();
+            heroAutoPlay = setInterval(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                updateHeroCarousel();
+            }, 5000);
+        }
+
+        function stopHeroAutoplay() {
+            clearInterval(heroAutoPlay);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentHeroIndex = index;
+                updateHeroCarousel();
+                startHeroAutoplay();
+            });
+        });
+
+        heroCarousel.addEventListener('touchstart', e => {
+            if (window.innerWidth > 992) return;
+            touchStartX = e.changedTouches[0].screenX;
+            isDragging = true;
+            stopHeroAutoplay(); // Pausa a animação automática ao iniciar o toque
+            heroContainer.style.transition = 'none';
+        });
+
+        heroCarousel.addEventListener('touchmove', e => {
+            if (!isDragging || window.innerWidth > 992) return;
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+            e.preventDefault();
+        });
+
+        heroCarousel.addEventListener('touchend', e => {
+            if (!isDragging || window.innerWidth > 992) return;
+            isDragging = false;
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            const swipeThreshold = 50;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+                } else {
+                    currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
+                }
+            }
+
+            updateHeroCarousel();
+            startHeroAutoplay(); // Reinicia a animação automática após o toque
+        });
+
+        startHeroAutoplay();
+    }
+
+    // --- CARROSSEL DE VÍDEOS ---
+    function setupInfiniteCarousel(sectionId, isMobile = false) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        const container = section.querySelector('.video-carousel-container');
+        const track = section.querySelector('.video-carousel-track');
+        const prevBtn = section.querySelector('.prev-arrow');
+        const nextBtn = section.querySelector('.next-arrow');
+        const filterButtons = section.querySelectorAll('.filter-btn');
+
+        let originalCards = Array.from(track.children);
+        let isTransitioning = false;
+        let autoplayInterval;
+        let currentIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+
+        function getVisibleCards() {
+            return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
+        }
+
+        function setupCarousel() {
+            stopAutoplay();
+            isTransitioning = false;
+
+            const clones = track.querySelectorAll('.clone');
+            clones.forEach(clone => track.removeChild(clone));
+
+            track.innerHTML = '';
+            originalCards.forEach(card => track.appendChild(card));
+
+            const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+            originalCards.forEach(card => {
+                card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+            });
+
+            const visibleCards = getVisibleCards();
+            if (visibleCards.length === 0) {
+                if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+                if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+                track.style.transform = 'translateX(0)';
+                return;
+            }
+
+            if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+            if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+
+            const cardWidth = visibleCards[0].offsetWidth;
+            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+            const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+
+            if (visibleCards.length <= cardsInView) {
+                if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+                if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+                track.style.transform = 'translateX(0)';
+                return;
+            }
+
+            if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+            if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+
+            const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
+            itemsToCloneEnd.forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.classList.add('clone');
+                track.appendChild(clone);
+            });
+
+            const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
+            itemsToCloneStart.reverse().forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.classList.add('clone');
+                track.insertBefore(clone, visibleCards[0]);
+            });
+
+            currentIndex = cardsInView + 1;
+            let initialOffset = -currentIndex * (cardWidth + gap);
+            if (isMobile) {
+                const containerWidth = container.offsetWidth;
+                const centerOffset = (containerWidth - cardWidth) / 2;
+                initialOffset += centerOffset;
+            }
+            track.style.transition = 'none';
+            track.style.transform = `translateX(${initialOffset}px)`;
+
+            if (isMobile) {
+                container.style.overflowX = 'hidden';
+                container.style.scrollSnapType = 'none';
+            }
+
+            startAutoplay();
+        }
+
+        function move(direction) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            const visibleCards = getVisibleCards();
+            if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+            const cardWidth = visibleCards[0].offsetWidth;
+            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+            const containerWidth = container.offsetWidth;
+            const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+            currentIndex += direction;
+            let offset = -currentIndex * (cardWidth + gap) + centerOffset;
+            track.style.transition = 'transform 0.5s ease-in-out';
+            track.style.transform = `translateX(${offset}px)`;
+        }
+
+        track.addEventListener('transitionend', () => {
+            const visibleCards = getVisibleCards();
+            if (visibleCards.length === 0) { isTransitioning = false; return; }
+
+            const cardWidth = visibleCards[0].offsetWidth;
+            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+            const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+            const containerWidth = container.offsetWidth;
+            const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+            if (currentIndex <= cardsInView) {
+                currentIndex += visibleCards.length;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+            }
+
+            if (currentIndex >= visibleCards.length + cardsInView + 1) {
+                currentIndex -= visibleCards.length;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+            }
+            isTransitioning = false;
+        });
+
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayInterval = setInterval(() => move(1), 5000);
+        }
+
+        if (!isMobile) {
+            nextBtn.addEventListener('click', () => move(1));
+            prevBtn.addEventListener('click', () => move(-1));
+            section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+            section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+        } else {
+            container.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+                isDragging = true;
+                stopAutoplay(); // Pausa a animação automática ao iniciar o toque
+                track.style.transition = 'none';
+            });
+
+            container.addEventListener('touchmove', e => {
+                if (!isDragging) return;
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) return;
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const containerWidth = container.offsetWidth;
+                const centerOffset = (containerWidth - cardWidth) / 2;
+                track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
+                e.preventDefault();
+            });
+
+            container.addEventListener('touchend', e => {
+                if (!isDragging) return;
+                isDragging = false;
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                const swipeThreshold = 50;
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) return;
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        move(1);
+                    } else {
+                        move(-1);
+                    }
+                } else {
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = (containerWidth - cardWidth) / 2;
+                    track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                }
+                startAutoplay(); // Reinicia a animação automática após o toque
+            });
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                setupCarousel();
+            });
+        });
+
+        window.addEventListener('resize', setupCarousel);
+        setupCarousel();
+    }
+
+    if (window.innerWidth > 992) {
+        setupInfiniteCarousel('latest-videos-section');
+        setupInfiniteCarousel('most-viewed-section');
+    } else {
+        setupInfiniteCarousel('latest-videos-section', true);
+        setupInfiniteCarousel('most-viewed-section', true);
+    }
+
+    // --- LÓGICA DO HEADER ---
+    const header = document.querySelector('header');
+    if (header) {
+        let lastScrollTop = 0;
+        const scrollThreshold = 150;
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                header.classList.add('header-hidden');
+            } else if (scrollTop < lastScrollTop) {
+                header.classList.remove('header-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, { passive: true });
+    }
+});
     </script>
 </body>
 </html>
