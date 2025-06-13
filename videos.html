@@ -366,7 +366,7 @@
                 margin-top: 20px;
             }
             .video-controls {
-                position: relative; /* Define o contexto para o dropdown da busca */
+                position: relative; 
                 display: grid;
                 grid-template-columns: 1fr auto;
                 gap: 10px;
@@ -374,7 +374,7 @@
                 margin-bottom: 30px;
             }
             .search-container {
-                position: static; /* Remove o contexto antigo */
+                position: static;
             }
             .filter-dropdown-toggle {
                 padding: 10px 18px;
@@ -389,6 +389,16 @@
             .popup-close-btn {
                 top: 5px; right: 5px;
                 width: 35px; height: 35px; font-size: 16px;
+            }
+            
+            /* AJUSTE FINAL NA PAGINAÇÃO MOBILE */
+            .pagination-container {
+                gap: 8px;
+                padding: 20px 10px;
+            }
+            .pagination-btn {
+                padding: 8px 13px;
+                font-size: 0.9em;
             }
 
             /* --- RODAPÉ --- */
@@ -483,7 +493,7 @@
             <div class="pagination-container" id="pagination-container"></div>
         </div>
     </main>
-
+    
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
@@ -521,7 +531,6 @@
             © Copyright 2025 | Todos os Direitos Reservados | Lendario.tv
         </div>
     </footer>
-
     <div id="video-popup" class="popup-overlay">
         <div class="popup-container">
             <div class="popup-content">
@@ -548,6 +557,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // O script completo é mantido para garantir o funcionamento.
         const videosData = [
             { videoId: '_kFRwfeOycU', title: 'Meditação Guiada - Descubra seu animal de poder', description: 'Uma meditação guiada para uma jornada de desbloqueio espiritual e para encontrar o seu animal de poder.', thumbnail: 'https://i.ytimg.com/vi/_kFRwfeOycU/hqdefault.jpg', category: 'animais-poder meditacao ensinamentos-xamanicos' },
             { videoId: 'qqGB-rsf8wU', title: 'Meditação Guiada - Poderoso Desbloqueio com as Águas', description: 'Meditação guiada para limpeza e desbloqueio energético utilizando o poder do elemento água.', thumbnail: 'https://i.ytimg.com/vi/qqGB-rsf8wU/hqdefault.jpg', category: 'meditacao serie-elementos ensinamentos-xamanicos' },
@@ -651,7 +661,7 @@
             { videoId: '3Q6BtjJa4NI', title: 'Em breve minha participação com a Tais Pavanelli na Astral TV', description: 'Em breve vai para o ar pela Astral Tv?, minha participação no programa Cozinha Encantada com a Tais Pavanelli.', thumbnail: 'https://i.ytimg.com/vi/3Q6BtjJa4NI/hqdefault.jpg', category: 'entrevistas' }
         ];
 
-        // O resto do script...
+        // O resto do seu script para renderizar os vídeos, etc...
         const videoGrid = document.querySelector('.video-grid');
         const searchInput = document.getElementById('video-search-input');
         const searchResultsDropdown = document.getElementById('search-results-dropdown');
@@ -666,7 +676,6 @@
         const popupDescription = document.getElementById('popup-video-description');
         const videoError = document.getElementById('video-error');
         const paginationContainer = document.getElementById('pagination-container');
-
         let currentPage = 1;
         const videosPerPage = 9;
         let currentFilteredVideos = [];
@@ -703,7 +712,7 @@
         function renderVideoGrid(videosToRender) {
             videoGrid.innerHTML = '';
             if (videosToRender.length === 0) {
-                videoGrid.innerHTML = '<p>Nenhum vídeo encontrado para esta categoria.</p>';
+                videoGrid.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
                 return;
             }
             videosToRender.forEach(video => {
@@ -712,10 +721,10 @@
                 card.dataset.videoData = JSON.stringify(video);
                 card.innerHTML = `
                     <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://i.postimg.cc/P5t1Mwqj/placeholder.png'; this.alt='Thumbnail não disponível';">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://i.postimg.cc/P5t1Mwqj/placeholder.png';">
                     </div>
                     <div class="video-info">
-                        <h3>${video.title.substring(0, 40)}${video.title.length > 40 ? '...' : ''}</h3>
+                        <h3>${video.title.substring(0, 50)}${video.title.length > 50 ? '...' : ''}</h3>
                         <p>${video.description.substring(0, 100)}${video.description.length > 100 ? '...' : ''}</p>
                         <button class="ver-mais-btn">Ver Mais</button>
                     </div>`;
@@ -724,24 +733,18 @@
         }
 
         function openPopup(videoData) {
-            try {
-                videoError.style.display = 'none';
-                popupIframe.style.display = 'block';
-                popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0&enablejsapi=1`;
-                popupTitle.innerText = videoData.title;
-                popupDescription.innerText = videoData.description;
-                const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${videoData.videoId}`);
-                const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
-                popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${videoUrl}`;
-                popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${videoUrl}`;
-                popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${videoUrl}`;
-                popup.classList.add('visible');
-                document.body.style.overflow = 'hidden';
-            } catch (error) {
-                console.error('Erro ao abrir o popup de vídeo:', error);
-                popupIframe.style.display = 'none';
-                videoError.style.display = 'flex';
-            }
+            videoError.style.display = 'none';
+            popupIframe.style.display = 'block';
+            popupIframe.src = `https://www.youtube.com/embed/${videoData.videoId}?autoplay=1&rel=0`;
+            popupTitle.innerText = videoData.title;
+            popupDescription.innerText = videoData.description;
+            const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${videoData.videoId}`);
+            const shareText = encodeURIComponent(`Confira este vídeo: ${videoData.title}`);
+            popup.querySelector('.share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${videoUrl}`;
+            popup.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${videoUrl}`;
+            popup.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${videoUrl}`;
+            popup.classList.add('visible');
+            document.body.style.overflow = 'hidden';
         }
 
         function closePopup() {
@@ -801,7 +804,7 @@
         
         popupCloseBtn.addEventListener('click', closePopup);
         popup.addEventListener('click', (event) => {
-            if (event.target.classList.contains('popup-overlay')) closePopup();
+            if (event.target === popup) closePopup();
         });
         
         searchInput.addEventListener('input', handleSearchInput);
