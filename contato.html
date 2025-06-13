@@ -52,30 +52,65 @@
             color: var(--text-light);
             margin: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        a { color: var(--text-light); text-decoration: none; }
+        a { color: var(--text-light); text-decoration: none; transition: color 0.3s ease; }
         a:hover { color: var(--gold); }
 
-        /* Header */
+        /* Header e Footer (Originais) */
         header {
             background-color: var(--dark-gray);
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: opacity 0.3s ease;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         }
-        .logo img { height: 60px; }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        nav ul li { margin-left: 40px; }
-        nav ul li a { font-weight: 500; font-size: 1em; }
-        .social-icons a { font-size: 24px; margin-left: 25px; }
-        .social-icons a:hover { color: var(--gold); }
-
-        /* Banner */
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .logo img { height: 55px; }
+        header nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        header nav ul li { margin-left: 35px; }
+        header nav ul li a {
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        header .social-icons { display: flex; align-items: center; }
+        header .social-icons a {
+            color: var(--text-light);
+            font-size: 22px;
+            margin-left: 25px;
+        }
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--text-light);
+            padding: 60px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+        .footer-logo-section { flex: 1; min-width: 280px; margin-right: 40px; }
+        .footer-logo-section img { height: 65px; margin-bottom: 20px; }
+        .footer-logo-section p { font-size: 0.95em; color: #bbb; margin-bottom: 25px; line-height: 1.8; }
+        .footer-social-icons a { font-size: 24px; margin-right: 20px; }
+        .footer-links { flex: 2; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; }
+        .footer-column { flex: 1; min-width: 180px; margin-bottom: 20px; }
+        .footer-column ul { list-style: none; padding: 0; margin: 0; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { font-size: 0.98em; font-weight: 400; display: flex; align-items: center; }
+        .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
+        .copyright { width: 100%; text-align: center; margin-top: 40px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; }
+        
+        /* Banner (Original) */
         .banner {
             position: relative;
             width: 100%;
@@ -91,24 +126,22 @@
         .banner::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1;
         }
         .banner h1 {
             font-family: var(--font-cinzel);
-            font-size: 2.5em;
+            font-size: 2.8em;
             color: var(--gold);
             text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
             z-index: 2;
             text-align: center;
-            animation: glow 2s ease-in-out infinite;
+            animation: glow 2.5s ease-in-out infinite;
         }
 
-        /* Main Content */
+        /* Main Content (Original) */
         .main-container {
             max-width: 1100px;
             margin: 0 auto;
@@ -120,54 +153,53 @@
         .cards-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 25px;
         }
         .contact-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 25px;
+            padding: 30px 25px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            animation: subtle-bounce 1.5s ease-in-out;
         }
         .contact-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
         }
-        .contact-card.whatsapp:hover { box-shadow: 0 0 10px rgba(37, 211, 102, 0.7), 0 0 15px rgba(37, 211, 102, 0.5); }
-        .contact-card.meeting:hover { box-shadow: 0 0 10px rgba(30, 144, 255, 0.7), 0 0 15px rgba(30, 144, 255, 0.5); }
-        .contact-card.form:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.5); }
-        .contact-card.feedback:hover { box-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 15px rgba(255, 105, 180, 0.5); }
-        .contact-card.comment:hover { box-shadow: 0 0 10px rgba(0, 206, 209, 0.7), 0 0 15px rgba(0, 206, 209, 0.5); }
-        .contact-card.story:hover { box-shadow: 0 0 10px rgba(128, 0, 128, 0.7), 0 0 15px rgba(128, 0, 128, 0.5); }
+        .contact-card.whatsapp:hover { box-shadow: 0 0 15px rgba(37, 211, 102, 0.7); }
+        .contact-card.meeting:hover { box-shadow: 0 0 15px rgba(30, 144, 255, 0.7); }
+        .contact-card.form:hover { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+        .contact-card.feedback:hover { box-shadow: 0 0 15px rgba(255, 105, 180, 0.7); }
+        .contact-card.comment:hover { box-shadow: 0 0 15px rgba(0, 206, 209, 0.7); }
+        .contact-card.story:hover { box-shadow: 0 0 15px rgba(128, 0, 128, 0.7); }
         .contact-card i {
-            font-size: 2em;
+            font-size: 2.5em;
             color: var(--gold);
             margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
         .contact-card h3 {
             font-family: var(--font-cinzel);
-            font-size: 1.3em;
-            color: var(--gold);
+            font-size: 1.4em;
+            color: var(--text-light);
             margin: 0 0 10px;
         }
         .contact-card p {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #ccc;
             margin: 0;
+            line-height: 1.5;
         }
 
-        /* Modal */
+        /* Modal e Formulários (Originais) */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -175,33 +207,31 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+            background: var(--dark-gray);
             border: 1px solid var(--gold);
             border-radius: 10px;
-            padding: 25px;
+            padding: 30px;
             max-width: 550px;
-            width: 90%;
+            width: 100%;
             position: relative;
             text-align: center;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
         }
         .modal-content h3 {
             font-family: var(--font-cinzel);
-            font-size: 1.6em;
+            font-size: 1.8em;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin: 0 0 20px 0;
         }
         .close-button {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5em;
+            top: 10px; right: 15px;
+            font-size: 1.8em;
             color: var(--text-light);
             cursor: pointer;
+            transition: color 0.3s ease;
         }
         .close-button:hover { color: var(--gold); }
-
-        /* Form Styles */
         .form-group {
             margin-bottom: 15px;
             text-align: left;
@@ -214,24 +244,20 @@
         }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.4);
+            padding: 12px;
+            background: var(--dark-background);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             color: var(--text-light);
-            font-size: 0.9em;
+            font-size: 1em;
+            font-family: var(--font-montserrat);
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: var(--gold);
             outline: none;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
-        .form-group textarea { resize: vertical; min-height: 80px; }
-        .form-group .error {
-            color: var(--red-youtube);
-            font-size: 0.85em;
-            margin-top: 5px;
-            display: none;
-        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
         .submit-button, .whatsapp-button {
             background: var(--button-gold);
             color: var(--dark-background);
@@ -239,108 +265,103 @@
             border: none;
             border-radius: 5px;
             font-family: var(--font-montserrat);
-            font-weight: 500;
-            font-size: 1em;
+            font-weight: bold;
+            font-size: 1.1em;
             cursor: pointer;
             display: inline-block;
             text-align: center;
             width: 100%;
+            margin-top: 10px;
             transition: background 0.3s ease;
         }
         .submit-button:hover, .whatsapp-button:hover {
             background: var(--button-gold-hover);
         }
-
-        /* Success Animation */
         .success-animation {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
+            text-align: center;
+            padding: 30px 0;
         }
         .success-animation.active {
-            display: flex;
+            display: block;
         }
         .success-checkmark {
-            width: 60px;
-            height: 60px;
-            background: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: success-glow 1s ease;
-        }
-        .success-checkmark i {
-            font-size: 30px;
-            color: var(--dark-background);
-        }
-        .success-text {
-            font-family: var(--font-cinzel);
-            font-size: 1.2em;
+            font-size: 4em;
             color: var(--gold);
-            margin-top: 10px;
         }
-        .sparkle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0;
-        }
-        .sparkle:nth-child(1) { top: 20%; left: 30%; animation: sparkle 0.5s 0.1s; }
-        .sparkle:nth-child(2) { top: 30%; left: 60%; animation: sparkle 0.5s 0.2s; }
-        .sparkle:nth-child(3) { top: 50%; left: 20%; animation: sparkle 0.5s 0.3s; }
-        .sparkle:nth-child(4) { top: 60%; left: 70%; animation: sparkle 0.5s 0.4s; }
+        .mobile-nav-toggle, .mobile-nav { display: none; }
 
-        /* Footer */
-        footer {
-            background: var(--dark-gray);
-            color: var(--text-light);
-            padding: 50px 5%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 60px;
-        }
-        .footer-logo-section { flex: 1; min-width: 280px; }
-        .footer-logo-section img { height: 70px; margin-bottom: 20px; }
-        .footer-logo-section p { font-size: 1em; color: #ccc; }
-        .footer-social-icons a { font-size: 26px; margin-right: 20px; }
-        .footer-links { flex: 2; display: flex; gap: 40px; }
-        .footer-column { flex: 1; min-width: 180px; }
-        .footer-column ul { list-style: none; padding: 0; }
-        .footer-column ul li { margin-bottom: 12px; }
-        .footer-column ul li a { font-size: 1em; }
-        .footer-column ul li a .icon { margin-right: 10px; color: var(--gold); }
-        .copyright { width: 100%; text-align: center; margin-top: 40px; font-size: 0.9em; color: #888; }
-
-        /* Responsive */
+        /* --- RESPONSIVIDADE (ADIÇÕES E AJUSTES) --- */
         @media (max-width: 992px) {
-            .cards-container { grid-template-columns: repeat(2, 1fr); }
+            /* Cabeçalho e Menu Mobile */
+            header nav, header .social-icons {
+                display: none;
+            }
+            .mobile-nav-toggle {
+                display: block;
+                background: none; border: none;
+                color: var(--text-light);
+                font-size: 28px; cursor: pointer;
+            }
+            .mobile-nav {
+                display: flex; flex-direction: column;
+                justify-content: center; align-items: center;
+                position: fixed; top: 0; right: -100%;
+                width: 80%; max-width: 320px; height: 100%;
+                background-color: var(--dark-gray);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                transition: right 0.4s ease-in-out;
+                z-index: 1001;
+                padding: 40px 20px;
+            }
+            .mobile-nav.is-active {
+                right: 0;
+            }
+            .mobile-nav .close-btn {
+                position: absolute; top: 20px; right: 20px;
+                background: none; border: none;
+                font-size: 30px; color: var(--text-light); cursor: pointer;
+            }
+            .mobile-nav ul {
+                flex-direction: column; text-align: center;
+                width: 100%; padding: 0; list-style: none;
+            }
+            .mobile-nav ul li a {
+                display: block; padding: 18px; font-size: 1.2em;
+            }
+            .mobile-nav .mobile-socials {
+                margin-top: 40px; padding-top: 30px;
+                border-top: 1px solid var(--border-color);
+                width: 100%; text-align: center;
+            }
+            .mobile-nav .mobile-socials a {
+                font-size: 28px; margin: 0 15px;
+            }
+            
+            /* Conteúdo Principal */
             .banner { height: 250px; }
-            .banner h1 { font-size: 2em; }
-            nav ul li { margin-left: 30px; }
-            .footer-links { gap: 30px; }
+            .banner h1 { font-size: 2.2em; }
+            .cards-container { grid-template-columns: repeat(2, 1fr); }
+
+             /* Rodapé */
+             footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-logo-section {
+                margin-right: 0;
+                margin-bottom: 40px;
+            }
+            .footer-links {
+                display: none;
+            }
         }
+        
         @media (max-width: 600px) {
-            .cards-container { grid-template-columns: 1fr; }
-            .modal-content { padding: 15px; }
             .banner { height: 200px; }
-            .banner h1 { font-size: 1.5em; }
-            .success-checkmark { width: 50px; height: 50px; }
-            .success-checkmark i { font-size: 25px; }
-            .success-text { font-size: 1em; }
-            header { padding: 15px 5%; }
-            .logo img { height: 50px; }
-            nav ul li { margin-left: 20px; }
-            nav ul li a { font-size: 0.9em; }
-            .social-icons a { font-size: 20px; margin-left: 15px; }
-            footer { padding: 40px 5%; }
-            .footer-logo-section img { height: 60px; }
-            .footer-social-icons a { font-size: 22px; }
+            .banner h1 { font-size: 1.8em; }
+            .cards-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -364,7 +385,27 @@
             <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
         </div>
+        <button class="mobile-nav-toggle" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
+
+    <div class="mobile-nav">
+        <button class="close-btn" aria-label="Fechar menu">×</button>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="sorteio.html">Sorteio</a></li>
+            <li><a href="videos.html">Vídeos</a></li>
+            <li><a href="doacao.html">Doação</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="consulta.html">Consulta</a></li>
+        </ul>
+        <div class="mobile-socials">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
 
     <section class="banner">
         <h1>Entre em Contato</h1>
@@ -379,7 +420,7 @@
                 </div>
                 <div class="contact-card meeting" data-modal="meeting-modal">
                     <i class="fas fa-calendar-alt"></i>
-                    <h3>Agendar Reunião</h3>
+                    <h3>Agendar Consulta</h3>
                     <p>Marque uma consulta espiritual personalizada.</p>
                 </div>
                 <div class="contact-card form" data-modal="form-modal">
@@ -399,82 +440,69 @@
                 </div>
                 <div class="contact-card story" data-modal="story-modal">
                     <i class="fas fa-book-open"></i>
-                    <h3>Enviar Conto Espiritual</h3>
+                    <h3>Enviar Conto</h3>
                     <p>Compartilhe sua história espiritual conosco.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Modals -->
         <div class="modal" id="whatsapp-modal">
             <div class="modal-content">
                 <span class="close-button">×</span>
                 <h3>Contato via WhatsApp</h3>
-                <p>Entre em contato diretamente pelo WhatsApp.</p>
-                <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" class="whatsapp-button">Abrir WhatsApp</a>
+                <p>Clique no botão abaixo para ser redirecionado para o WhatsApp e iniciar uma conversa para agendamentos ou outras informações.</p>
+                <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="whatsapp-button">Abrir WhatsApp</a>
             </div>
         </div>
         <div class="modal" id="meeting-modal">
             <div class="modal-content">
                 <span class="close-button">×</span>
-                <h3>Agendar Reunião</h3>
-                <form id="meeting-form">
+                <h3>Agendar Consulta</h3>
+                <form id="meeting-form" action="https://formspree.io/f/mgvolbyv" method="POST">
+                    <input type="hidden" name="_subject" value="Novo Agendamento de Consulta!">
                     <div class="form-group">
                         <label for="meeting-name">Nome</label>
                         <input type="text" id="meeting-name" name="name" required>
-                        <span class="error" id="meeting-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
-                        <label for="meeting-email">E-mail</label>
+                        <label for="meeting-email">E-mail para Contato</label>
                         <input type="email" id="meeting-email" name="email" required>
-                        <span class="error" id="meeting-email-error">Insira um e-mail válido.</span>
                     </div>
                     <div class="form-group">
-                        <label for="meeting-datetime">Data e Hora</label>
+                        <label for="meeting-datetime">Sugestão de Data e Hora</label>
                         <input type="datetime-local" id="meeting-datetime" name="datetime" required>
-                        <span class="error" id="meeting-datetime-error">Selecione uma data e hora.</span>
                     </div>
-                    <button type="submit" class="submit-button">Agendar</button>
+                    <button type="submit" class="submit-button">Solicitar Agendamento</button>
                 </form>
                 <div class="success-animation">
                     <div class="success-checkmark"><i class="fas fa-check"></i></div>
-                    <div class="success-text">Enviado com Sucesso!</div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
+                    <div class="success-text">Solicitação Enviada! Aguarde nosso contato.</div>
                 </div>
             </div>
         </div>
         <div class="modal" id="form-modal">
             <div class="modal-content">
                 <span class="close-button">×</span>
-                <h3>Enviar Formulário</h3>
-                <form id="contact-form">
+                <h3>Formulário Geral</h3>
+                <form id="contact-form" action="https://formspree.io/f/mgvolbyv" method="POST">
+                    <input type="hidden" name="_subject" value="Nova Mensagem do Site!">
                     <div class="form-group">
                         <label for="form-name">Nome</label>
                         <input type="text" id="form-name" name="name" required>
-                        <span class="error" id="form-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="form-email">E-mail</label>
                         <input type="email" id="form-email" name="email" required>
-                        <span class="error" id="form-email-error">Insira um e-mail válido.</span>
                     </div>
                     <div class="form-group">
                         <label for="form-message">Mensagem</label>
                         <textarea id="form-message" name="message" required></textarea>
-                        <span class="error" id="form-message-error">Insira sua mensagem.</span>
                     </div>
                     <button type="submit" class="submit-button">Enviar</button>
                 </form>
                 <div class="success-animation">
                     <div class="success-checkmark"><i class="fas fa-check"></i></div>
-                    <div class="success-text">Enviado com Sucesso!</div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
+                    <div class="success-text">Mensagem Enviada!</div>
                 </div>
             </div>
         </div>
@@ -482,38 +510,21 @@
             <div class="modal-content">
                 <span class="close-button">×</span>
                 <h3>Enviar Feedback</h3>
-                <form id="feedback-form">
+                <form id="feedback-form" action="https://formspree.io/f/mgvolbyv" method="POST">
+                    <input type="hidden" name="_subject" value="Novo Feedback do Site!">
                     <div class="form-group">
                         <label for="feedback-name">Nome</label>
                         <input type="text" id="feedback-name" name="name" required>
-                        <span class="error" id="feedback-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
-                        <label for="feedback-rating">Avaliação</label>
-                        <select id="feedback-rating" name="rating" required>
-                            <option value="">Selecione</option>
-                            <option value="5">5 Estrelas</option>
-                            <option value="4">4 Estrelas</option>
-                            <option value="3">3 Estrelas</option>
-                            <option value="2">2 Estrelas</option>
-                            <option value="1">1 Estrela</option>
-                        </select>
-                        <span class="error" id="feedback-rating-error">Selecione uma avaliação.</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="feedback-message">Feedback</label>
+                        <label for="feedback-message">Seu feedback</label>
                         <textarea id="feedback-message" name="message" required></textarea>
-                        <span class="error" id="feedback-message-error">Insira seu feedback.</span>
                     </div>
-                    <button type="submit" class="submit-button">Enviar</button>
+                    <button type="submit" class="submit-button">Enviar Feedback</button>
                 </form>
                 <div class="success-animation">
                     <div class="success-checkmark"><i class="fas fa-check"></i></div>
-                    <div class="success-text">Enviado com Sucesso!</div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
+                    <div class="success-text">Obrigado pelo seu feedback!</div>
                 </div>
             </div>
         </div>
@@ -521,63 +532,47 @@
             <div class="modal-content">
                 <span class="close-button">×</span>
                 <h3>Enviar Comentário</h3>
-                <form id="comment-form">
+                <form id="comment-form" action="https://formspree.io/f/mgvolbyv" method="POST">
+                    <input type="hidden" name="_subject" value="Novo Comentário do Site!">
                     <div class="form-group">
                         <label for="comment-name">Nome</label>
                         <input type="text" id="comment-name" name="name" required>
-                        <span class="error" id="comment-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
                         <label for="comment-message">Comentário</label>
                         <textarea id="comment-message" name="comment" required></textarea>
-                        <span class="error" id="comment-message-error">Insira seu comentário.</span>
                     </div>
-                    <button type="submit" class="submit-button">Enviar</button>
+                    <button type="submit" class="submit-button">Enviar Comentário</button>
                 </form>
                 <div class="success-animation">
                     <div class="success-checkmark"><i class="fas fa-check"></i></div>
-                    <div class="success-text">Enviado com Sucesso!</div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
+                    <div class="success-text">Comentário Enviado!</div>
                 </div>
             </div>
         </div>
         <div class="modal" id="story-modal">
             <div class="modal-content">
                 <span class="close-button">×</span>
-                <h3>Enviar Conto Espiritual</h3>
-                <form id="story-form">
+                <h3>Enviar seu Conto</h3>
+                <form id="story-form" action="https://formspree.io/f/mgvolbyv" method="POST">
+                    <input type="hidden" name="_subject" value="Novo Conto Espiritual!">
                     <div class="form-group">
                         <label for="story-name">Nome</label>
                         <input type="text" id="story-name" name="name" required>
-                        <span class="error" id="story-name-error">Insira seu nome.</span>
                     </div>
                     <div class="form-group">
-                        <label for="story-email">E-mail</label>
-                        <input type="email" id="story-email" name="email" required>
-                        <span class="error" id="story-email-error">Insira um e-mail válido.</span>
+                        <label for="story-email">E-mail (opcional)</label>
+                        <input type="email" id="story-email" name="email">
                     </div>
                     <div class="form-group">
-                        <label for="story-title">Título do Conto</label>
-                        <input type="text" id="story-title" name="title" required>
-                        <span class="error" id="story-title-error">Insira o título do conto.</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="story-content">Conto Espiritual</label>
+                        <label for="story-content">Seu conto ou experiência</label>
                         <textarea id="story-content" name="content" required></textarea>
-                        <span class="error" id="story-content-error">Insira seu conto.</span>
                     </div>
-                    <button type="submit" class="submit-button">Enviar</button>
+                    <button type="submit" class="submit-button">Enviar Conto</button>
                 </form>
                 <div class="success-animation">
                     <div class="success-checkmark"><i class="fas fa-check"></i></div>
-                    <div class="success-text">Enviado com Sucesso!</div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
+                    <div class="success-text">Seu conto foi enviado. Gratidão!</div>
                 </div>
             </div>
         </div>
@@ -589,20 +584,20 @@
             <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
             <div class="footer-social-icons">
                 <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="mailto:lendarioesoterico@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer-links">
             <div class="footer-column">
                 <ul>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplSoQK0KCzIeoA5UesjtSjL&si=vhu0Mk-iOI0I1kSL"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopmTkwcIKOxn5KAO9U9tuQq_&si=3nFQ0whFNkLjUgNU"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm1SUxAHHHVZGjaFNjVT_gH&si=NUM2OkIuQ1WPi8bc"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplK3cUiQblqXOcNAlBlujQe&si=y-OjPs-9wIuEI0hq"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="doacao.html"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="contato.html"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="consulta.html"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -623,25 +618,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded at', new Date().toLocaleString());
+            // Mobile Nav
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+
+            if (mobileNavToggle && mobileNav && closeNavBtn) {
+                mobileNavToggle.addEventListener('click', () => mobileNav.classList.add('is-active'));
+                closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
+            }
 
             // Header scroll
             const header = document.querySelector('header');
-            let lastScroll = 0;
-            window.addEventListener('scroll', () => {
-                let scrollTop = window.pageYOffset;
-                if (scrollTop <= 50) {
-                    header.style.opacity = '1';
-                } else if (scrollTop > lastScroll && scrollTop > 100) {
-                    // Scrolling down
-                    header.style.opacity = '0';
-                } else if (scrollTop < lastScroll) {
-                    // Scrolling up
-                    let opacity = Math.min(1, 1 - (scrollTop - 50) / 100);
-                    header.style.opacity = opacity.toString();
-                }
-                lastScroll = scrollTop;
-            });
+            if (header) {
+                let lastScroll = 0;
+                window.addEventListener('scroll', () => {
+                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    if (scrollTop > lastScroll && scrollTop > 100) {
+                        header.classList.add('header-hidden');
+                    } else {
+                        header.classList.remove('header-hidden');
+                    }
+                    lastScroll = scrollTop <= 0 ? 0 : scrollTop;
+                });
+            }
 
             // Modal handling
             const cards = document.querySelectorAll('.contact-card');
@@ -651,115 +651,77 @@
             cards.forEach(card => {
                 card.addEventListener('click', () => {
                     const modalId = card.dataset.modal;
-                    console.log(`Opening modal: ${modalId}`);
                     const modal = document.getElementById(modalId);
                     if (modal) {
                         modal.classList.add('active');
                         document.body.style.overflow = 'hidden';
-                    } else {
-                        console.error(`Modal ${modalId} not found`);
                     }
                 });
             });
 
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    console.log('Closing modal');
-                    modals.forEach(modal => modal.classList.remove('active'));
-                    document.body.style.overflow = 'auto';
-                });
-            });
+            const closeModal = () => {
+                modals.forEach(modal => modal.classList.remove('active'));
+                document.body.style.overflow = 'auto';
+            };
 
+            closeButtons.forEach(button => button.addEventListener('click', closeModal));
             modals.forEach(modal => {
                 modal.addEventListener('click', e => {
                     if (e.target === modal) {
-                        console.log('Closing modal via background');
-                        modal.classList.remove('active');
-                        document.body.style.overflow = 'auto';
+                        closeModal();
                     }
                 });
             });
 
             // Form submission
-            const forms = [
-                { id: 'meeting-form', fields: ['name', 'email', 'datetime'] },
-                { id: 'contact-form', fields: ['name', 'email', 'message'] },
-                { id: 'feedback-form', fields: ['name', 'rating', 'message'] },
-                { id: 'comment-form', fields: ['name', 'comment'] },
-                { id: 'story-form', fields: ['name', 'email', 'title', 'content'] }
-            ];
-            const endpoint = 'https://formspree.io/f/mgvolbyv';
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const modalContent = form.closest('.modal-content');
+                    const successAnimation = modalContent.querySelector('.success-animation');
 
-            forms.forEach(formConfig => {
-                const form = document.getElementById(formConfig.id);
-                if (form) {
-                    console.log(`Found form: ${formConfig.id}`);
-                    form.addEventListener('submit', async e => {
-                        e.preventDefault();
-                        console.log(`Submit clicked for form: ${formConfig.id}`);
-                        let isValid = true;
-
-                        formConfig.fields.forEach(field => {
-                            const input = document.getElementById(`${formConfig.id.split('-')[0]}-${field}`);
-                            const error = document.getElementById(`${formConfig.id.split('-')[0]}-${field}-error`);
-                            if (!input) {
-                                console.error(`Input not found: ${formConfig.id.split('-')[0]}-${field}`);
-                                return;
-                            }
-                            error.style.display = 'none';
-
-                            if (field === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
-                                error.style.display = 'block';
-                                isValid = false;
-                            } else if (field === 'title' && (input.value.trim().length < 1 || input.value.trim().length > 255)) {
-                                error.textContent = 'O título deve ter entre 1 e 255 caracteres.';
-                                error.style.display = 'block';
-                                isValid = false;
-                            } else if (field === 'content' && (input.value.trim().length < 1 || input.value.trim().length > 2000)) {
-                                error.textContent = 'O conto deve ter entre 1 e 2000 caracteres.';
-                                error.style.display = 'block';
-                                isValid = false;
-                            } else if (!input.value.trim()) {
-                                error.style.display = 'block';
-                                isValid = false;
-                            }
-                        });
-
-                        if (isValid) {
-                            const formData = new FormData(form);
-                            console.log(`Form ${formConfig.id} data:`, Object.fromEntries(formData));
-                            try {
-                                const response = await fetch(endpoint, {
-                                    method: 'POST',
-                                    body: formData,
-                                    headers: { 'Accept': 'application/json' }
-                                });
-                                if (response.ok) {
-                                    console.log(`Form ${formConfig.id} submitted successfully`);
-                                    const modalContent = form.closest('.modal-content');
-                                    form.style.display = 'none';
-                                    const successAnimation = modalContent.querySelector('.success-animation');
-                                    successAnimation.classList.add('active');
-                                    setTimeout(() => {
-                                        form.style.display = 'block';
-                                        successAnimation.classList.remove('active');
-                                        form.reset();
-                                        modals.forEach(modal => modal.classList.remove('active'));
-                                        document.body.style.overflow = 'auto';
-                                    }, 2000);
-                                } else {
-                                    console.error(`Form ${formConfig.id} submission failed: ${response.status} ${response.statusText}`);
-                                    alert(`Erro ao enviar o formulário ${formConfig.id}. Status: ${response.status}`);
-                                }
-                            } catch (error) {
-                                console.error(`Form ${formConfig.id} error:`, error);
-                                alert(`Erro ao enviar o formulário ${formConfig.id}. Tente novamente.`);
-                            }
+                    // Simple front-end validation
+                    let isValid = true;
+                    form.querySelectorAll('[required]').forEach(input => {
+                        const errorSpan = modalContent.querySelector(`#${input.id}-error`);
+                        if (!input.value.trim()) {
+                            if(errorSpan) errorSpan.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            if(errorSpan) errorSpan.style.display = 'none';
                         }
                     });
-                } else {
-                    console.error(`Form not found: ${formConfig.id}`);
-                }
+
+                    if (!isValid) return;
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+
+                        if (response.ok) {
+                            form.style.display = 'none';
+                            if(successAnimation) successAnimation.classList.add('active');
+                            setTimeout(() => {
+                                closeModal();
+                                // Reset form state after timeout
+                                setTimeout(() => {
+                                     form.style.display = 'block';
+                                     if(successAnimation) successAnimation.classList.remove('active');
+                                     form.reset();
+                                }, 400);
+                            }, 2000);
+                        } else {
+                            alert('Houve um erro ao enviar o formulário.');
+                        }
+                    } catch (error) {
+                        alert('Houve um erro de conexão.');
+                    }
+                });
             });
         });
     </script>
