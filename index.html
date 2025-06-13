@@ -474,16 +474,19 @@
             }
             
             .header-title-mobile {
-                display: block;
-                flex-grow: 1;
-                text-align: center;
-                font-family: var(--font-cinzel);
-                color: var(--gold);
-                font-size: 1.6em;
-                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-                margin: 0 10px;
-                line-height: 1;
-            }
+    display: block;
+    position: absolute;
+    
+    /* Mude o '0px' para mover o título para a esquerda ou direita */
+    left: calc(50% + 0px); 
+    
+    transform: translateX(-50%);
+    font-family: var(--font-cinzel);
+    color: var(--gold);
+    font-size: 1.6em;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+    line-height: 1; 
+}
 
             .mobile-nav-toggle {
                 display: block;
