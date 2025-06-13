@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
         :root {
             --dark-background: #0d0d0d;
             --dark-gray: #1a1a1a;
@@ -20,15 +23,20 @@
             --font-cinzel: 'Cinzel', serif;
             --font-montserrat: 'Montserrat', sans-serif;
         }
-
         @keyframes pulse-gold {
             50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); }
         }
-
         @keyframes pulse-youtube {
             50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
         }
-
+        @keyframes shimmer-effect {
+            0% {
+                transform: translateX(-150%) skewX(-30deg);
+            }
+            100% {
+                transform: translateX(150%) skewX(-30deg);
+            }
+        }
         body {
             font-family: var(--font-montserrat);
             background-color: var(--dark-background);
@@ -38,15 +46,12 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         a {
             color: var(--text-light);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
         a:hover { color: var(--gold); }
-
         header {
             background-color: var(--dark-gray);
             padding: 15px 5%;
@@ -54,21 +59,33 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         }
-
+        .header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .logo {
+            pointer-events: none;
+        }
         .logo img { height: 55px; margin-right: 10px; }
-
+        .header-title-mobile {
+            display: none;
+        }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
         nav ul li { margin-left: 35px; }
         nav ul li a { font-weight: 500; font-size: 0.95em; }
-
+        .social-icons { display: flex; align-items: center; }
         .social-icons a { color: var(--text-light); font-size: 22px; margin-left: 25px; transition: color 0.3s ease; }
         .social-icons a:hover { color: var(--gold); }
-
         .hero-section {
             position: relative;
             height: 520px;
-            background-image: url('https://i.postimg.cc/0yvxyfds/capa.png');
+            background-image: url('https://i.postimg.cc/WbVBrwrj/capa-site-yt.png');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -79,17 +96,14 @@
             margin-bottom: 60px;
             overflow: hidden;
         }
-
         .hero-carousel { position: relative; max-width: 700px; width: 100%; overflow: hidden; }
         .hero-carousel-container { display: flex; transition: transform 0.5s ease; width: 100%; height: 350px; }
-        
         .hero-card {
             min-width: 100%;
             background-color: rgba(0, 0, 0, 0.7);
             padding: 50px 70px;
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            box-sizing: border-box;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -98,57 +112,47 @@
             height: 100%;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
-
         .hero-card:hover {
             transform: translateY(-10px) scale(1.03) skewY(-3deg);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.25);
         }
-
         .hero-card h2, .hero-card p, .hero-card .hero-button { transition: transform 0.4s ease, text-shadow 0.4s ease; }
         .hero-card:hover h2, .hero-card:hover p, .hero-card:hover .hero-button { transform: skewY(3deg); }
-        
         .hero-card:hover h2 {
             transform: skewY(3deg) scale(1.02);
             text-shadow: 0 0 20px var(--gold), 0 0 10px rgba(255, 235, 179, 0.5);
         }
-
         .hero-button {
             background-color: var(--button-gold); color: var(--dark-background); padding: 18px 45px; text-decoration: none;
             border-radius: 30px; font-weight: bold; font-size: 1.1em; letter-spacing: 0.5px;
             transition: background-color 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             display: inline-block; width: 200px; text-align: center;
         }
-
         .hero-button.youtube { background-color: var(--red-youtube); color: var(--text-light); box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
         .hero-button:hover { background-color: var(--button-gold-hover); }
         .hero-button.youtube:hover { background-color: #cc0000; }
         .hero-card:hover .hero-button { animation: pulse-gold 1.5s infinite ease-in-out; }
         .hero-card:hover .hero-button.youtube { animation: pulse-youtube 1.5s infinite ease-in-out; }
-
         .hero-card h2 { font-family: var(--font-cinzel); font-size: 3.5em; margin: 0 0 20px 0; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); line-height: 1.2; }
         .hero-card p { font-size: 1.25em; margin: 0 0 20px 0; font-weight: 400; opacity: 0.9; min-height: 40px; }
-
         .slider-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
         .dot { height: 12px; width: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, border-color 0.3s ease; }
         .dot.active { background-color: var(--gold); border-color: var(--gold); }
-
         .section-title {
             text-align: center; font-family: var(--font-cinzel); font-size: 2.8em; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;
             color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); position: relative;
         }
         .section-title::before, .section-title::after { content: ''; flex: 1; height: 1px; background-color: var(--border-color); margin: 0 20px; }
         .section-title img { height: 45px; margin-right: 15px; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
-
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
         .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
-        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
-        .video-thumbnail-container.hidden { display: none; }
+        .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; z-index: 10; transition: opacity 0.4s ease; pointer-events: none; }
+        .video-thumbnail-container.hidden { opacity: 0; }
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-        .play-button:hover { background-color: #cc0000; transform: translate(-50%, -50%) scale(1.05); }
-        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; box-sizing: border-box; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
+        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 0, 0, 0.9); border-radius: 10px; width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+        .video-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: flex-end; font-size: 1.1em; }
         .video-info-overlay .title { font-weight: 700; font-size: 1.3em; margin-bottom: 5px; color: var(--text-light); }
         .video-info-overlay .time { font-size: 0.9em; opacity: 0.8; }
         .video-info-overlay .youtube-link { display: flex; align-items: center; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 1em; }
@@ -156,71 +160,220 @@
         .video-info-overlay .youtube-link:hover { color: var(--gold); }
         .social-share { text-align: center; margin-top: 20px; padding-top: 30px; border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; }
         .social-share p { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
-        .share-icons a { color: var(--text-light); background-color: var(--medium-gray); font-size: 26px; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin: 0 10px; transition: background-color 0.3s ease, color 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-        .share-icons a:hover { background-color: var(--gold); color: var(--dark-background); }
-
+        .share-icons a {
+            color: var(--text-light);
+            background-color: var(--medium-gray);
+            font-size: 26px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .share-icons a:hover {
+            background-color: var(--gold);
+            color: var(--dark-background);
+        }
+        .share-icons a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            transform: translateX(-150%) skewX(-30deg);
+            background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.1) 40%,rgba(255,255,255,0.4) 50%,rgba(255,255,255,0.1) 60%,rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        .share-icons a:hover::after { animation: shimmer-effect 2s linear infinite; }
         .video-carousel-section { padding: 80px 0; }
         .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; padding: 0 5%; }
         .filter-btn { background-color: var(--medium-gray); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 500; transition: all 0.3s ease; }
         .filter-btn:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
         .filter-btn.active { background-color: var(--gold); color: var(--dark-background); font-weight: bold; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        
-        .video-carousel-wrapper { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 60px; }
-        .video-carousel-container { overflow: hidden; }
-        .video-carousel-track { display: flex; gap: 25px; }
-        
+        .video-carousel-wrapper { 
+            position: relative; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px 60px;
+        }
+        .video-carousel-container { 
+            overflow: hidden;
+        }
+        .video-carousel-track { 
+            display: flex; 
+            gap: 25px; 
+        }
         .video-card-vertical {
-            background-color: var(--dark-gray); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            flex: 0 0 calc(25% - 20px);
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 5;
+            overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            flex: 0 0 calc(25% - 20px); min-width: 280px; display: flex; flex-direction: column;
         }
         .video-card-vertical.clone {
             pointer-events: none;
             user-select: none;
         }
-        .video-card-vertical.hidden { display: none; }
-        .video-card-vertical:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .video-card-vertical::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            transform: translateX(-150%) skewX(-30deg);
+            background: linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.1) 40%,rgba(255,255,255,0.4) 50%,rgba(255,255,255,0.1) 60%,rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        .video-card-vertical:hover {
+            box-shadow: 0 0 15px 4px rgba(200, 0, 0, 0.4), 0 0 5px 1px rgba(255, 100, 100, 0.6);
+        }
+        .video-card-vertical:hover::after { animation: shimmer-effect 2s linear infinite; }
         .video-card-vertical .thumbnail { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 2px solid var(--gold); background-color: #000; }
         .video-card-vertical .video-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        .video-card-vertical h3 { font-family: var(--font-cinzel); font-size: 1.2em; margin: 0 0 10px 0; height: 50px; overflow: hidden; }
+        .video-card-vertical h3 {
+            font-family: var(--font-cinzel);
+            font-size: 1.15em;
+            margin: 0 0 10px 0;
+            height: 50px;
+            overflow: hidden;
+        }
         .video-card-vertical .description { font-size: 0.9em; color: #aaa; line-height: 1.5; height: 65px; margin: 0 0 20px 0; overflow: hidden; }
         .video-card-vertical .watch-button { display: inline-block; background-color: var(--button-gold); color: var(--dark-background); padding: 10px 20px; border-radius: 5px; font-weight: 600; text-align: center; margin-top: auto; }
         .video-card-vertical .watch-button:hover { background-color: var(--button-gold-hover); color: var(--dark-background); }
-
         .video-carousel-section .carousel-arrow {
-            position: absolute; top: calc(50% + 25px); transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
+            position: absolute; top: calc(50% + 10px);
+            transform: translateY(-50%); background-color: rgba(44, 44, 44, 0.8);
             color: var(--text-light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%;
-            font-size: 1.5em; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
+            font-size: 1.5em; cursor: pointer; z-index: 20;
+            display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;
         }
         .video-carousel-section .carousel-arrow:hover { background-color: var(--gold); color: var(--dark-background); }
         .video-carousel-section .carousel-arrow.prev-arrow { left: 0; }
         .video-carousel-section .carousel-arrow.next-arrow { right: 0; }
         .video-carousel-section .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-        
         .member-section {
-            padding: 80px 5%; display: flex; justify-content: center; align-items: center;
-            min-height: 400px; position: relative; background-color: var(--dark-background); overflow: hidden;
+            padding: 80px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 450px;
+            position: relative;
+            background-color: var(--dark-background);
         }
         .decorative-border {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
-            background-size: contain; background-repeat: no-repeat; background-position: center center; opacity: 0.08; z-index: 0; pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://i.postimg.cc/J0gbg2vN/Sem-T-tulo-2.png');
+            background-size: contain; background-repeat: no-repeat; background-position: center center;
+            opacity: 0.08; z-index: 0; pointer-events: none;
         }
         .member-card {
-            background-color: var(--dark-gray); padding: 50px; border-radius: 12px; text-align: center;
-            max-width: 600px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); position: relative; z-index: 1;
+            background-color: transparent;
+            max-width: 600px;
+            width: 100%;
+            height: 380px;
+            perspective: 1500px;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            text-align: initial;
+        }
+        .member-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .member-card:hover .member-card-inner {
+            transform: rotateY(180deg);
+        }
+        .member-card-front, .member-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            background-color: var(--dark-gray);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .member-card .youtube-logo { font-size: 4em; color: var(--red-youtube); margin-bottom: 25px; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
-        .member-card h3 { font-family: var(--font-cinzel); font-size: 2.2em; margin-bottom: 20px; color: var(--gold); text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
-        .member-card p { font-size: 1.15em; margin-bottom: 35px; color: #ccc; }
-        .member-button {
-            background-color: var(--red-youtube); color: var(--text-light); padding: 18px 40px; text-decoration: none; border-radius: 30px;
-            font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        .member-card-back {
+            transform: rotateY(180deg);
         }
-        .member-button:hover { background-color: #cc0000; transform: translateY(-2px); }
-        .member-button .icon { font-size: 1.3em; color: white; }
-
+        .member-card .youtube-logo { 
+            font-size: 4em; 
+            color: var(--red-youtube); 
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); 
+        }
+        .member-card h3 { 
+            font-family: var(--font-cinzel); 
+            font-size: 2.2em; 
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--gold); 
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2); 
+        }
+        .member-card-back h4 {
+            font-family: var(--font-cinzel);
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        .member-card p { 
+            font-size: 1.15em; 
+            color: #ccc; 
+            max-width: 95%;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .member-card-back p {
+            margin-bottom: 30px;
+        }
+        .member-button {
+            background-color: var(--red-youtube); 
+            color: var(--text-light); 
+            padding: 18px 40px; 
+            text-decoration: none; 
+            border-radius: 30px;
+            font-weight: bold; 
+            font-size: 1.1em; 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        .member-button:hover { 
+            background-color: #cc0000; 
+            transform: translateY(-2px); 
+        }
+        .member-button .icon { 
+            font-size: 1.3em; 
+            color: white; 
+        }
         footer {
             background-color: var(--dark-gray); color: var(--text-light); padding: 60px 5%; display: flex; flex-wrap: wrap;
             justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--border-color); margin-top: 80px;
@@ -238,11 +391,165 @@
         .footer-column ul li a .icon { margin-right: 10px; font-size: 1.2em; color: var(--gold); }
         .footer-column ul li a:hover { color: var(--gold); }
         .copyright { width: 100%; text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid var(--border-color); font-size: 0.88em; color: #888; font-weight: 400; }
-
-        @media (max-width: 1200px) { .video-card-vertical { flex-basis: calc(33.33% - 20px); } }
-        @media (max-width: 992px) { .video-card-vertical { flex-basis: calc(50% - 15px); } }
-        @media (max-width: 768px) { .video-carousel-wrapper { padding: 0 50px; } }
-        @media (max-width: 600px) { .video-card-vertical { min-width: 70%; } }
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav { display: none; }
+        @media (max-width: 992px) {
+            header nav, header .social-icons {
+                display: none;
+            }
+            .header-title-mobile {
+                display: block;
+                flex-grow: 1;
+                text-align: center;
+                font-family: var(--font-cinzel);
+                color: var(--gold);
+                font-size: 1.6em;
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+                margin: 0 10px;
+                line-height: 1;
+            }
+            .mobile-nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-light);
+                font-size: 28px;
+                cursor: pointer;
+            }
+            .mobile-nav {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100%;
+                background-color: var(--dark-gray);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                transition: right 0.4s ease-in-out;
+                z-index: 1001;
+                padding: 40px 20px;
+            }
+            .mobile-nav.is-active {
+                right: 0;
+            }
+            .mobile-nav .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                font-size: 30px;
+                color: var(--text-light);
+                cursor: pointer;
+            }
+            .mobile-nav ul {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .mobile-nav ul li {
+                margin: 0;
+            }
+            .mobile-nav ul li a {
+                display: block;
+                padding: 18px;
+                font-size: 1.2em;
+            }
+            .mobile-nav .mobile-socials {
+                margin-top: 40px;
+                padding-top: 30px;
+                border-top: 1px solid var(--border-color);
+                width: 100%;
+                text-align: center;
+            }
+            .mobile-nav .mobile-socials a {
+                font-size: 28px;
+                margin: 0 15px;
+            }
+            .hero-card h2 { font-size: 2.5em; }
+            .hero-card p { font-size: 1.1em; }
+            .hero-card { padding: 40px 25px; }
+            .section-title { font-size: 2.2em; }
+            .section-title img { height: 35px; }
+            .video-info-overlay { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .play-button,
+            #liveTitle,
+            #liveTime {
+                display: none;
+            }
+            .social-share .share-icons {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            .share-icons a[aria-label*='E-mail'], 
+            .share-icons a[aria-label*='YouTube'] {
+                display: none;
+            }
+            .video-carousel-wrapper { 
+                padding: 20px 0;
+                touch-action: pan-y;
+            }
+            .video-carousel-container { 
+                overflow-x: hidden;
+            }
+            .video-carousel-track {
+            }
+            .video-card-vertical {
+                flex: 0 0 280px; 
+                min-width: 280px;
+            }
+            .video-carousel-section .carousel-arrow { display: none; }
+            .filter-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .filter-btn { padding: 10px 20px; font-size: 0.9em; }
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-logo-section {
+                margin-right: 0;
+                margin-bottom: 40px;
+            }
+            .footer-links {
+                display: none;
+            }
+            .member-card { 
+                height: auto; 
+                padding: 20px 0;
+            }
+            .member-card-inner, .member-card:hover .member-card-inner {
+                transform-style: flat;
+                transform: none;
+                position: static;
+                height: auto;
+            }
+            .member-card-front {
+                display: none; 
+            }
+            .member-card-back {
+                position: static;
+                transform: none;
+                height: auto;
+                padding: 30px;
+                display: flex;
+            }
+            .video-info-overlay .title,
+            .video-info-overlay .time {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -250,30 +557,51 @@
         <div class="logo">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
         </div>
+        <h1 class="header-title-mobile">Lendario Tv</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Sorteio</a></li>
-                <li><a href="#">Vídeos</a></li>
-                <li><a href="#">Doação</a></li>
-                <li><a href="#">Contato</a></li>
-                <li><a href="#">Consulta</a></li>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sorteio.html">Sorteio</a></li>
+                <li><a href="videos.html">Vídeos</a></li>
+                <li><a href="doacao.html">Doação</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="consult.html">Consulta</a></li>
             </ul>
         </nav>
         <div class="social-icons">
-            <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
+        <button class="mobile-nav-toggle" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
+
+    <div class="mobile-nav">
+        <button class="close-btn" aria-label="Fechar menu">×</button>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="sorteio.html">Sorteio</a></li>
+            <li><a href="videos.html">Vídeos</a></li>
+            <li><a href="doacao.html">Doação</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="consult.html">Consulta</a></li>
+        </ul>
+        <div class="mobile-socials">
+            <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
 
     <main>
         <section class="hero-section">
             <div class="hero-carousel">
                 <div class="hero-carousel-container">
-                    <div class="hero-card"> <h2>Agendar Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="#" class="hero-button">Agendar</a> </div>
-                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="#" class="hero-button">Verificar</a> </div>
-                    <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo e interação.</p> <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a> </div>
+                    <div class="hero-card"> <h2>Agendar Consulta</h2> <p>Está em busca de direcionamento ou respostas?</p> <a href="consulta.html" class="hero-button">Agendar</a> </div>
+                    <div class="hero-card"> <h2>Sorteios Especiais</h2> <p>Fique de olho! Nossos sorteios são anunciados aqui.</p> <a href="sorteio.html" class="hero-button">Verificar</a> </div>
+                    <div class="hero-card"> <h2>Live Tarot</h2> <p>Junte-se à nossa live de tarot para leituras ao vivo.</p> <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="hero-button youtube">Assistir no YouTube</a> </div>
                 </div>
             </div>
             <div class="slider-nav">
@@ -282,21 +610,24 @@
                 <span class="dot"></span>
             </div>
         </section>
-
         <section class="live-section">
-            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDARIO LIVE</h2>
+            <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/afwywyhw.png" alt="Estrela">LENDÁRIO LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" 
+                            src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1?enablejsapi=1&autoplay=1&mute=1" 
+                            title="Tarô ao Vivo" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
+                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Miniatura ao vivo offline">
                         <div class="play-button"><i class="fas fa-play"></i></div>
                         <div class="video-info-overlay">
                             <div>
-                                <div class="title">Live Tarot - Em Breve</div>
-                                <div class="time">Próxima live em breve</div>
+                                <div class="title" id="liveTitle">Tarô ao vivo</div>
+                                <div class="time" id="liveTime">Próxima live: Em breve</div>
                             </div>
-                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assistir no YouTube</a>
+                            <a href="https://www.youtube.com/@Gameniano-x" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i>Assista no YouTube</a>
                         </div>
                     </div>
                 </div>
@@ -304,11 +635,11 @@
             <div class="social-share">
                 <p>Compartilhe Live Tarot – Próxima Transmissão</p>
                 <div class="share-icons">
-                    <a href="https://facebook.com/sharer/sharer.php?u=YOUR_VIDEO_URL" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/intent/tweet?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://telegram.me/share/url?url=YOUR_VIDEO_URL&text=Live%20Tarot" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="https://api.whatsapp.com/send?text=Live%20Tarot:%20YOUR_VIDEO_URL" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:?subject=Assista%20essa%20Live&body=Confira%20a%20Live%20de%20Tarot:%20YOUR_VIDEO_URL"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.instagram.com/lendarioesoterico/" target="_blank" aria-label="Visite o Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/lendariomagus/" target="_blank" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=5511960585584&text&type=phone_number&app_absent=0" target="_blank" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:lendarioesoterico@gmail.com" aria-label="Compartilhar por E-mail"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.youtube.com/@Lendario" target="_blank" aria-label="Visitar canal no YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </section>
@@ -331,40 +662,13 @@
                         <div class="video-card-vertical" data-category="entrevistas"> <img src="https://i.ytimg.com/vi/pWON8VkuACE/hqdefault.jpg" alt="Entrevista - Bruxaria Moderna" class="thumbnail"> <div class="video-info"> <h3>Entrevista - Bruxaria Moderna</h3> <p class="description">Uma conversa esclarecedora sobre as práticas e os mitos da bruxaria nos dias de hoje.</p> <a href="https://youtu.be/pWON8VkuACE?si=jzm8PwIGAJB1jCmY" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/ykdzJtuxs0o/hqdefault.jpg" alt="O poder espiritual do cavalo" class="thumbnail"> <div class="video-info"> <h3>O poder espiritual do cavalo</h3> <p class="description">Explore a simbologia da liberdade, resistência e poder do cavalo como seu guia espiritual.</p> <a href="http://www.youtube.com/watch?v=ykdzJtuxs0o" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/fio3zIbEaOQ/hqdefault.jpg" alt="Traumas do Passado e o Elemento Água" class="thumbnail"> <div class="video-info"><h3>Traumas e o Elemento Água</h3><p class="description">Uma exploração sobre como o elemento água pode auxiliar na cura de traumas emocionais.</p><a href="https://youtu.be/fio3zIbEaOQ?si=45IfIipTkm6cULq2" target="_blank" class="watch-button">Assistir</a></div></div>
-                        
                         <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conexão com o Elemento Fogo</h3><p class="description">Aprenda a usar a energia do fogo para transmutação e força interior.</p><a href="https://youtu.be/O4c4S08jcFw?si=QPGE9plbWYLSXf1d" target="_blank" class="watch-button">Assistir</a></div></div>
                         <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Elemento Ar - O Sopro da Vida</h3><p class="description">Explore a força do pensamento e da comunicação através do elemento Ar.</p><a href="https://youtu.be/4FQtfrB1k8s?si=kYB9dPkkRXw8T4AT" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Força do Elemento Terra</h3><p class="description">Conecte-se com a estabilidade e a nutrição do elemento Terra.</p><a href="https://youtu.be/kNDUONUnEJ0?si=xwn5qoj6SJTA19jw" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Equilíbrio dos Quatro Elementos</h3><p class="description">Uma meditação para harmonizar as energias dos quatro elementos em você.</p><a href="https://youtu.be/SzVi4CEnlRw?si=HPMj5Z2iIDDfaQI0" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="elementos"><img src="https://i.ytimg.com/vi/LzJCXg9PMWc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Ritual dos Elementos</h3><p class="description">Aprenda um ritual prático para honrar e trabalhar com os quatro elementos.</p><a href="https://youtu.be/Wp-WJ0RekbM?si=phjTokhvhYXVbic-" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conversa sobre Xamanismo</h3><p class="description">Uma entrevista sobre as práticas e visões do xamanismo na atualidade.</p><a href="https://youtu.be/r2Q2hcbrFjg?si=AJd73DpjAh9nnnGb" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/Vq0UVZcjJ9E/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Astrologia</h3><p class="description">Entenda como os astros influenciam sua vida em uma conversa reveladora.</p><a href="https://youtu.be/Vq0UVZcjJ9E?si=JBFNZ2_mdpuW_gcB" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/tHh99aKscJg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Universo dos Oráculos</h3><p class="description">Uma entrevista sobre os diferentes tipos de oráculos e como usá-los.</p><a href="https://youtu.be/tHh99aKscJg?si=ABXxftDBVwQfbQWc" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/s7PvSWSRtEc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Mestres e Guias Espirituais</h3><p class="description">Uma conversa sobre como se conectar com seus mentores e guias.</p><a href="https://youtu.be/s7PvSWSRtEc?si=J9tseD56Ea_6xDn3" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/ArdGgBiD-mA/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Jornada da Alma</h3><p class="description">Uma entrevista profunda sobre o propósito e os caminhos da alma.</p><a href="https://youtu.be/ArdGgBiD-mA?si=g8UbbKSBlYQkHSI8" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/z79_cwCVtpo/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo com Daniel Pires</h3><p class="description">Um bate papo descontraído sobre espiritualidade, caminhos e jornadas.</p><a href="https://youtu.be/z79_cwCVtpo?si=KDGbmaOUmIfRy8AK" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/SDqdIdpSAOw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Reiki e Cura Energética</h3><p class="description">Entenda os princípios e benefícios do Reiki em uma entrevista especial.</p><a href="https://youtu.be/SDqdIdpSAOw?si=boi7NucRBJi36elH" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/18Z3uCzE6zc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Despertar da Kundalini</h3><p class="description">Uma conversa séria e esclarecedora sobre a energia da Kundalini.</p><a href="https://youtu.be/18Z3uCzE6zc?si=spdgDIT0YhnbrOP1" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/YUFjwxoAd_Q/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Magia e Ocultismo</h3><p class="description">Uma entrevista sobre os fundamentos da magia e do ocultismo prático.</p><a href="https://youtu.be/YUFjwxoAd_Q?si=ww5mMgg5MxCIVFjX" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/7uqXm8jOaE4/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Conversando sobre Projeção Astral</h3><p class="description">Entenda as técnicas e experiências da projeção astral nesta entrevista.</p><a href="https://youtu.be/7uqXm8jOaE4?si=AfX6D7EzWTCYCsO5" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/ufnDR163N1k/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Plantas de Poder</h3><p class="description">Uma conversa sobre o uso sagrado e terapêutico das plantas de poder.</p><a href="https://youtu.be/ufnDR163N1k?si=eKRaWxzIA_XqCBr1" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/vpevIb5ZgMA/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Cristais e Cristaloterapia</h3><p class="description">Entrevista sobre como usar o poder dos cristais para cura e equilíbrio.</p><a href="https://youtu.be/vpevIb5ZgMA?si=DBx1cWDMFsY3ncKI" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/FTN7AVoNlgE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Numerologia na Prática</h3><p class="description">Descubra o poder dos números em uma conversa sobre numerologia.</p><a href="https://youtu.be/FTN7AVoNlgE?si=uCaliuYAGSfh5YJ1" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/SezUmwk41Ik/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Umbanda</h3><p class="description">Uma conversa franca e respeitosa sobre os fundamentos da Umbanda.</p><a href="https://youtu.be/SezUmwk41Ik?si=uPl9gFVsfCETmzOI" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/hCsKriczacs/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Energia dos Chakras</h3><p class="description">Aprenda sobre os centros de energia do corpo em uma entrevista detalhada.</p><a href="https://youtu.be/hCsKriczacs?si=0nxOUdu4PxRxbo1g" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/fR5DU6wCcX8/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Sonhos e Seus Significados</h3><p class="description">Uma conversa sobre a interpretação dos sonhos e o que eles revelam.</p><a href="https://youtu.be/fR5DU6wCcX8?si=M4iodHJEpVxfg6CY" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/dRyotPqXcv4/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Caminhos da Mão Esquerda</h3><p class="description">Uma entrevista sobre as filosofias e práticas do Caminho da Mão Esquerda.</p><a href="https://youtu.be/dRyotPqXcv4?si=ndxUbMNmFT333CxZ" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/A3sPcAYueaE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Registros Akáshicos</h3><p class="description">Descubra o que são e como acessar os Registros Akáshicos.</p><a href="https://youtu.be/A3sPcAYueaE?si=rn7OqNqlf1iUgMey" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Visão Celta da Espiritualidade</h3><p class="description">Uma entrevista sobre a mitologia, os deuses e a magia do povo celta.</p><a href="https://youtu.be/-ohz80gwIiU?si=udFy8flVsDYFcNHO" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="entrevistas"><img src="https://i.ytimg.com/vi/e-l7qo5ZvLQ/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Papo sobre Meditação</h3><p class="description">Diferentes técnicas e os benefícios da meditação para a vida diária.</p><a href="https://youtu.be/e-l7qo5ZvLQ?si=MMWierInIihyuvdA" target="_blank" class="watch-button">Assistir</a></div></div>
-                        
-                        <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/J-9SOpyoD3o/hqdefault.jpg" alt="Poder espiritual do Cachorro" class="thumbnail"> <div class="video-info"> <h3>Poder espiritual do Cachorro</h3> <p class="description">Descubra a lealdade, proteção e o amor incondicional do totem do Cachorro.</p> <a href="https://youtu.be/J-9SOpyoD3o?si=XhAGn-E_xCJ-vxOU" target="_blank" class="watch-button">Assistir</a> </div> </div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
-
         <section class="video-carousel-section" id="most-viewed-section">
             <h2 class="section-title"><img src="https://lendario.tv/wp-content/uploads/2025/05/ds_00031.png" alt="Olho">MAIS VISTOS</h2>
             <div class="filter-buttons">
@@ -383,77 +687,59 @@
                         <div class="video-card-vertical" data-category="ensinamentos"> <img src="https://i.ytimg.com/vi/tfdLYK2FBHs/hqdefault.jpg" alt="Quantos animais de poder nos acompanham?" class="thumbnail"> <div class="video-info"> <h3>Quantos animais de poder nos acompanham?</h3> <p class="description">Um ensinamento sobre os diferentes guias que nos acompanham durante a jornada da vida.</p> <a href="http://www.youtube.com/watch?v=tfdLYK2FBHs" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="eventos"> <img src="https://i.ytimg.com/vi/-ohz80gwIiU/hqdefault.jpg" alt="Rosana Santiago - Tarot Arthuriano" class="thumbnail"> <div class="video-info"> <h3>Evento: Tarot Arthuriano - Bazar das Bruxas</h3> <p class="description">Uma apresentação especial sobre o Tarot Arthuriano, explorando a lenda do Rei Arthur.</p> <a href="http://www.youtube.com/watch?v=-ohz80gwIiU" target="_blank" class="watch-button">Assistir</a> </div> </div>
                         <div class="video-card-vertical" data-category="meditacao"> <img src="https://i.ytimg.com/vi/96F4TnmFWGQ/hqdefault.jpg" alt="Meditação Guiada - Conexão Espiritual" class="thumbnail"> <div class="video-info"> <h3>Meditação - Conexão Espiritual</h3> <p class="description">Ative seu chakra coronário e aprofunde sua conexão espiritual com esta meditação guiada.</p> <a href="http://www.youtube.com/watch?v=96F4TnmFWGQ" target="_blank" class="watch-button">Assistir</a> </div> </div>
-
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/WFG0AdgWCAg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Evento de Solstício</h3><p class="description">Celebração especial do Solstício, com rituais e meditações ao vivo.</p><a href="https://youtu.be/WFG0AdgWCAg?si=6CB5q73KGekwKNid" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/TukQjTJyaUA/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Jornada Xamânica ao Vivo</h3><p class="description">Participe de uma jornada xamânica guiada em um evento especial ao vivo.</p><a href="https://youtu.be/TukQjTJyaUA?si=WF4kSBMDVC0ejzaX" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/MkIur2e-oHM/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Ritual de Lua Cheia</h3><p class="description">Evento ao vivo com um poderoso ritual para aproveitar a energia da Lua Cheia.</p><a href="https://youtu.be/MkIur2e-oHM?si=zdYarTUW-tLAAUt4" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/xoIGNct-oFg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Workshop de Oráculos</h3><p class="description">Aprenda os fundamentos dos oráculos em nosso workshop online.</p><a href="https://youtu.be/xoIGNct-oFg?si=v5nMqaTpY18FWR5A" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/r2Q2hcbrFjg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Palestra sobre Magia Natural</h3><p class="description">Assista à gravação da palestra sobre o uso de elementos naturais na magia.</p><a href="https://youtu.be/r2Q2hcbrFjg?si=7VMpbzfn9AHdjGy0" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="eventos"><img src="https://i.ytimg.com/vi/135D0iEWmAE/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Semana da Espiritualidade</h3><p class="description">Participe de uma semana de lives e eventos focados no despertar espiritual.</p><a href="https://youtu.be/135D0iEWmAE?si=3fijaMzxPqQRVByX" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/nhQIR9CWgZA/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Os Arquétipos e o Tarot</h3><p class="description">Entenda a relação entre os arquétipos e as cartas do Tarot.</p><a href="https://youtu.be/nhQIR9CWgZA?si=DlAzxiWOP1tuNbAK" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/u0HI1JkoJGg/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Leis Herméticas Explicadas</h3><p class="description">Um resumo claro e objetivo sobre as Sete Leis Herméticas.</p><a href="https://youtu.be/u0HI1JkoJGg?si=p57IuOcuzb2jEJHn" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/i39MqBSEYZ4/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Poder da Intuição</h3><p class="description">Aprenda a ouvir sua voz interior e a confiar na sua intuição como guia.</p><a href="https://youtu.be/i39MqBSEYZ4?si=8U12LyfRIfVYCMJn" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/0r40GE5mfo8/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Como Consagrar seus Instrumentos</h3><p class="description">Aprenda a limpar e consagrar seus objetos mágicos e de poder.</p><a href="https://youtu.be/0r40GE5mfo8?si=dCTZjODecRACO6RN" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/XgdVtd809F0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Roda do Ano e os Sabás</h3><p class="description">Um guia sobre as celebrações pagãs da Roda do Ano.</p><a href="https://youtu.be/XgdVtd809F0?si=FMRs2GaYpGOQLZAb" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/UBcAs13slOs/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O que é a Sombra?</h3><p class="description">Um ensinamento sobre o conceito da Sombra de Jung e como integrá-la.</p><a href="https://youtu.be/UBcAs13slOs?si=cePpy2NhwHujeG-r" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/wCJ7yfAm4Uc/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Espiral da Criação</h3><p class="description">Um ensinamento sobre o movimento espiralado da energia e da criação.</p><a href="https://youtu.be/wCJ7yfAm4Uc?si=7WkTiuUnmXvPR6mx" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/Wp-WJ0RekbM/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>A Ética na Magia</h3><p class="description">Reflexões importantes sobre a responsabilidade e a ética no fazer mágico.</p><a href="https://youtu.be/Wp-WJ0RekbM?si=-CeXDZ4c2BIc5TsL" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Pacto com Hécate</h3><p class="description">Um ensinamento sobre a deusa Hécate e o que significa um pacto.</p><a href="https://youtu.be/SzVi4CEnlRw?si=cbNCcD2p32EfaV1S" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Montando seu Altar</h3><p class="description">Dicas e fundamentos para você montar seu primeiro altar sagrado.</p><a href="https://youtu.be/kNDUONUnEJ0?si=Vc_3LhE2LBr7ztRf" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>O Simbolismo da Serpente</h3><p class="description">Descubra os significados ocultos do arquétipo da serpente.</p><a href="https://youtu.be/4FQtfrB1k8s?si=xt2winVP9OhYAF9V" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/O4c4S08jcFw/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Proteção Energética para Iniciantes</h3><p class="description">Técnicas simples e eficazes para proteger sua energia no dia a dia.</p><a href="https://youtu.be/O4c4S08jcFw?si=0MB_2g6JuXw_kBf_" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/qzl2GSBGj1U/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Os Oráculos e o Livre Arbítrio</h3><p class="description">Uma reflexão sobre como os oráculos funcionam em relação ao livre arbítrio.</p><a href="https://youtu.be/qzl2GSBGj1U?si=2V1LvGGh_HUzKwhI" target="_blank" class="watch-button">Assistir</a></div></div>
-                        <div class="video-card-vertical" data-category="ensinamentos"><img src="https://i.ytimg.com/vi/cOW3y42tLfs/hqdefault.jpg" class="thumbnail"><div class="video-info"><h3>Tipos de Tarot</h3><p class="description">Conheça as diferenças entre os principais tipos de baralhos de Tarot.</p><a href="https://youtu.be/cOW3y42tLfs?si=-s5SEZ3N2saGKSwC" target="_blank" class="watch-button">Assistir</a></div></div>
-                        
-                        <div class="video-card-vertical" data-category="meditacao"><img src="https://i.ytimg.com/vi/qClcrPH2HrI/hqdefault.jpg" alt="Meditação para Equilíbrio dos Chakras" class="thumbnail"><div class="video-info"><h3>Meditação para Equilíbrio dos Chakras</h3><p class="description">Uma meditação guiada para alinhar e harmonizar seus centros de energia.</p><a href="https://youtu.be/qClcrPH2HrI?si=APyehgkO4vreo7BN" target="_blank" class="watch-button">Assistir</a></div></div>
                     </div>
                 </div>
                 <button class="carousel-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
-
         <section class="member-section">
             <div class="decorative-border"></div>
             <div class="member-card">
-                <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
-                <h3>Torne-se membro do canal</h3>
-                <p>Se você gosta deste trabalho, ajude a fortalecê-lo se tornando um patrono mantenedor.</p>
-                <a href="#" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+                <div class="member-card-inner">
+                    <div class="member-card-front">
+                        <div class="youtube-logo"><i class="fab fa-youtube"></i></div>
+                        <h3>Torne-se um membro do canal</h3>
+                        <p>Gosta do nosso conteúdo? Fortaleça esta comunidade e tenha acesso a benefícios exclusivos.</p>
+                    </div>
+                    <div class="member-card-back">
+                        <h4>Apoie o canal!</h4>
+                        <p>Com sua ajuda, podemos criar ainda mais conteúdo de qualidade e fortalecer nossa comunidade. Clique abaixo para se tornar um membro oficial!</p>
+                        <a href="https://www.youtube.com/@Lendario/join" target="_blank" class="member-button"><span class="icon">🧡</span> Seja membro</a>
+                    </div>
+                </div>
             </div>
         </section>
-        
     </main>
-    
     <footer>
         <div class="footer-logo-section">
             <img src="https://lendario.tv/wp-content/uploads/2025/01/icon-lendario.png" alt="Lendário TV Logo">
             <p>Conteúdo místico e espiritual, com foco no empoderamento e despertar. O objetivo é te auxiliar nesta jornada e compartilhar um pouco da minha visão.</p>
             <div class="footer-social-icons">
-                <a href="https://instagram.com/lendario.tv" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com/lendario.tv" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/lendarioesoterico/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/lendariomagus/" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://www.youtube.com/@Lendario" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="mailto:contato@lendario.tv"><i class="fas fa-envelope"></i></a>
+                <a href="mailto:lendarioesoterico@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer-links">
             <div class="footer-column">
                 <ul>
-                    <li><a href="#"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
+                    <li><a href="index.html"><span class="icon"><i class="fas fa-home"></i></span> Início</a></li>
+                    <li><a href="sorteio.html"><span class="icon"><i class="fas fa-magic"></i></span> Sorteio</a></li>
+                    <li><a href="videos.html"><span class="icon"><i class="fas fa-video"></i></span> Vídeos</a></li>
+                    <li><a href="doacao.html"><span class="icon"><i class="fas fa-heart"></i></span> Doação</a></li>
+                    <li><a href="contato.html"><span class="icon"><i class="fas fa-phone-alt"></i></span> Contato</a></li>
+                    <li><a href="consulta.html"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Consulta</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <ul>
-                    <li><a href="#"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarot</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
-                    <li><a href="#"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Transmissões Ao Vivo</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm_omW-x7yLpCQETJFB-Jus&si=WAvyRrSmSQskF_0Q"><span class="icon"><i class="fas fa-hat-wizard"></i></span> Tarô</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplSoQK0KCzIeoA5UesjtSjL&si=vhu0Mk-iOI0I1kSL"><span class="icon"><i class="fas fa-comments"></i></span> Entrevistas</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopmTkwcIKOxn5KAO9U9tuQq_&si=3nFQ0whFNkLjUgNU"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Eventos</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopm1SUxAHHHVZGjaFNjVT_gH&si=NUM2OkIuQ1WPi8bc"><span class="icon"><i class="fas fa-paw"></i></span> Animais de Poder</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSioplK3cUiQblqXOcNAlBlujQe&si=y-OjPs-9wIuEI0hq"><span class="icon"><i class="fas fa-tree"></i></span> Série Elementos</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLHnSXIOSiopkrPc21gNQbFlcS5XopKXWt&si=HKgbOG_ldnCoOGo6"><span class="icon"><i class="fas fa-satellite-dish"></i></span> Lives</a></li>
                 </ul>
             </div>
         </div>
@@ -463,227 +749,369 @@
     </footer>
     
     <script>
-    // --- LÓGICA CORRETA DA LIVE (RESTAURADA DO CÓDIGO ANTIGO) ---
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    let player;
-    window.onYouTubeIframeAPIReady = function() {
-        // Instancia o player, associando-o ao iframe 'liveVideoIframe'.
-        // É esta parte que "ativa" o player para que ele possa responder aos eventos do YouTube.
-        player = new YT.Player('liveVideoIframe', {
-            events: {
-                // Define a função que será chamada quando o estado do player mudar.
-                'onStateChange': onPlayerStateChange
+        // --- SCRIPT UNIFICADO ---
+    
+        // 1. CARREGADOR DA API DO YOUTUBE
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+        // 2. LÓGICA DA LIVE (BASEADA NO SEU CÓDIGO FUNCIONAL)
+        let player;
+        window.onYouTubeIframeAPIReady = function() {
+            // Anexa a API ao iframe da live que já está na página
+            player = new YT.Player('liveVideoIframe', {
+                events: {
+                    // Define a função que será chamada quando o estado do player mudar
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        };
+    
+        function onPlayerStateChange(event) {
+            const thumbnailContainer = document.getElementById('liveThumbnail');
+            const liveTitle = document.getElementById('liveTitle');
+            const liveTime = document.getElementById('liveTime');
+            if (!thumbnailContainer) return;
+    
+            // Se o vídeo estiver tocando (PLAYING), esconde a thumbnail e atualiza o texto.
+            if (event.data === YT.PlayerState.PLAYING) {
+                thumbnailContainer.classList.add('hidden');
+                if (liveTitle) liveTitle.textContent = "TAROT AO VIVO - AGORA";
+                if (liveTime) liveTime.innerHTML = '<i class="fas fa-circle" style="color:red; animation: pulse-live 1.5s infinite;"></i> ONLINE';
+            } else {
+                // Para qualquer outro estado (não iniciado, pausado, encerrado), a thumbnail é mostrada.
+                thumbnailContainer.classList.remove('hidden');
             }
-        });
-    };
-
-    function onPlayerStateChange(event) {
-        const thumbnailContainer = document.getElementById('liveThumbnail');
-        if (!thumbnailContainer) return;
-
-        // Se o vídeo estiver tocando (PLAYING), esconde a thumbnail.
-        if (event.data === YT.PlayerState.PLAYING) {
-            thumbnailContainer.classList.add('hidden');
-        } else {
-            // Para qualquer outro estado (pausado, bufferizando, etc.), a thumbnail é mostrada.
-            thumbnailContainer.classList.remove('hidden');
         }
-    }
-
-    // --- LÓGICA DOS CARROSSÉIS (DO CÓDIGO NOVO) ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // Lógica do carrossel do topo (hero)
-        const heroCarousel = document.querySelector('.hero-carousel');
-        if (heroCarousel) {
-            const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-            const heroCards = heroContainer.querySelectorAll('.hero-card');
-            const dots = document.querySelectorAll('.dot');
-            let currentHeroIndex = 0;
-            let heroAutoPlay;
-
-            function updateHeroCarousel() {
-                heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentHeroIndex);
+    
+        // 3. LÓGICA DO RESTANTE DO SITE (CARROSSÉIS, MENU, HEADER)
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+    
+            if(mobileNavToggle && mobileNav) {
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNav.classList.add('is-active');
+                });
+                closeNavBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('is-active');
                 });
             }
-
-            function startHeroAutoplay() {
-                stopHeroAutoplay();
-                heroAutoPlay = setInterval(() => {
-                    currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                    updateHeroCarousel();
-                }, 5000);
-            }
-
-            function stopHeroAutoplay() {
-                clearInterval(heroAutoPlay);
-            }
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentHeroIndex = index;
+    
+            const heroCarousel = document.querySelector('.hero-carousel');
+            if (heroCarousel) {
+                const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+                const heroCards = heroContainer.querySelectorAll('.hero-card');
+                const dots = document.querySelectorAll('.dot');
+                let currentHeroIndex = 0;
+                let heroAutoPlay;
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let isDragging = false;
+    
+                function updateHeroCarousel() {
+                    heroContainer.style.transition = 'transform 0.5s ease';
+                    heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentHeroIndex);
+                    });
+                }
+    
+                function startHeroAutoplay() {
+                    stopHeroAutoplay();
+                    heroAutoPlay = setInterval(() => {
+                        currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                        updateHeroCarousel();
+                    }, 5000);
+                }
+    
+                function stopHeroAutoplay() {
+                    clearInterval(heroAutoPlay);
+                }
+    
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentHeroIndex = index;
+                        updateHeroCarousel();
+                        startHeroAutoplay();
+                    });
+                });
+    
+                heroCarousel.addEventListener('touchstart', e => {
+                    if (window.innerWidth > 992) return;
+                    touchStartX = e.changedTouches[0].screenX;
+                    isDragging = true;
+                    stopHeroAutoplay();
+                    heroContainer.style.transition = 'none';
+                });
+    
+                heroCarousel.addEventListener('touchmove', e => {
+                    if (!isDragging || window.innerWidth > 992) return;
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchEndX - touchStartX;
+                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+                    e.preventDefault();
+                });
+    
+                heroCarousel.addEventListener('touchend', e => {
+                    if (!isDragging || window.innerWidth > 992) return;
+                    isDragging = false;
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    const swipeThreshold = 50;
+    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0) {
+                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+                        } else {
+                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
+                        }
+                    }
+    
                     updateHeroCarousel();
                     startHeroAutoplay();
                 });
-            });
-            startHeroAutoplay();
-        }
-
-        // Lógica dos carrosséis de vídeo infinitos
-        function setupInfiniteCarousel(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (!section) return;
-
-            const container = section.querySelector('.video-carousel-container');
-            const track = section.querySelector('.video-carousel-track');
-            const prevBtn = section.querySelector('.prev-arrow');
-            const nextBtn = section.querySelector('.next-arrow');
-            const filterButtons = section.querySelectorAll('.filter-btn');
-            
-            let originalCards = Array.from(track.children);
-            let isTransitioning = false;
-            let autoplayInterval;
-            let currentIndex = 0;
-
-            function getVisibleCards() {
-                return Array.from(track.children).filter(card => !card.classList.contains('hidden') && !card.classList.contains('clone'));
+    
+                startHeroAutoplay();
             }
-
-            function setupCarousel() {
-                stopAutoplay();
-                isTransitioning = false;
+    
+            function setupInfiniteCarousel(sectionId, isMobile = false) {
+                const section = document.getElementById(sectionId);
+                if (!section) return;
+    
+                const container = section.querySelector('.video-carousel-container');
+                const track = section.querySelector('.video-carousel-track');
+                const prevBtn = section.querySelector('.prev-arrow');
+                const nextBtn = section.querySelector('.next-arrow');
+                const filterButtons = section.querySelectorAll('.filter-btn');
                 
-                const clones = track.querySelectorAll('.clone');
-                clones.forEach(clone => track.removeChild(clone));
-                track.innerHTML = '';
-                originalCards.forEach(card => track.appendChild(card));
-                
-                const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-                originalCards.forEach(card => {
-                    const isVisible = activeFilter === 'all' || card.dataset.category === activeFilter;
-                    card.classList.toggle('hidden', !isVisible);
-                });
-
-                const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) {
-                    if (prevBtn) prevBtn.classList.add('disabled');
-                    if (nextBtn) nextBtn.classList.add('disabled');
-                    return;
-                };
-
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
-
-                if (visibleCards.length <= cardsInView) {
-                    prevBtn.classList.add('disabled');
-                    nextBtn.classList.add('disabled');
-                    track.style.transform = 'translateX(0)';
-                    return;
+                let originalCards = Array.from(track.children);
+                let isTransitioning = false;
+                let autoplayInterval;
+                let currentIndex = 0;
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let isDragging = false;
+    
+                function getVisibleCards() {
+                    return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone'));
                 }
-                
-                prevBtn.classList.remove('disabled');
-                nextBtn.classList.remove('disabled');
-
-                const itemsToCloneEnd = visibleCards.slice(0, cardsInView);
-                itemsToCloneEnd.forEach(card => {
-                    const clone = card.cloneNode(true);
-                    clone.classList.add('clone');
-                    track.appendChild(clone);
-                });
-
-                const itemsToCloneStart = visibleCards.slice(-cardsInView);
-                itemsToCloneStart.reverse().forEach(card => {
-                    const clone = card.cloneNode(true);
-                    clone.classList.add('clone');
-                    track.insertBefore(clone, track.firstChild);
-                });
-
-                currentIndex = cardsInView;
-                const initialOffset = -currentIndex * (cardWidth + gap);
-                track.style.transition = 'none';
-                track.style.transform = `translateX(${initialOffset}px)`;
-                
-                startAutoplay();
-            }
-
-            function move(direction) {
-                if (isTransitioning) return;
-                isTransitioning = true;
-                
-                const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) {
+    
+                function setupCarousel() {
+                    stopAutoplay();
                     isTransitioning = false;
-                    return;
-                }
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-
-                currentIndex += direction;
-                const offset = -currentIndex * (cardWidth + gap);
-
-                track.style.transition = 'transform 0.5s ease-in-out';
-                track.style.transform = `translateX(${offset}px)`;
-            }
-
-            track.addEventListener('transitionend', () => {
-                const visibleCards = getVisibleCards();
-                if (visibleCards.length === 0) {
-                    isTransitioning = false;
-                    return;
-                }
-                const cardWidth = visibleCards[0].offsetWidth;
-                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-                const cardsInView = Math.floor(container.offsetWidth / (cardWidth + gap));
-                
-                if (currentIndex <= (cardsInView -1)) {
-                    currentIndex = visibleCards.length + (cardsInView -1);
-                    const offset = -currentIndex * (cardWidth + gap);
+    
+                    const clones = track.querySelectorAll('.clone');
+                    clones.forEach(clone => track.removeChild(clone));
+                    
+                    track.innerHTML = '';
+                    originalCards.forEach(card => track.appendChild(card));
+    
+                    const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+                    originalCards.forEach(card => {
+                        card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+                    });
+    
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) {
+                        if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+                        if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+    
+                    if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+                    if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+    
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+    
+                    if (visibleCards.length <= cardsInView) {
+                        if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+                        if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+                        track.style.transform = 'translateX(0)';
+                        return;
+                    }
+    
+                    if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+                    if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+    
+                    const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 1);
+                    itemsToCloneEnd.forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.appendChild(clone);
+                    });
+    
+                    const itemsToCloneStart = visibleCards.slice(-(cardsInView + 1));
+                    itemsToCloneStart.reverse().forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.classList.add('clone');
+                        track.insertBefore(clone, visibleCards[0]);
+                    });
+    
+                    currentIndex = cardsInView + 1;
+                    let initialOffset = -currentIndex * (cardWidth + gap);
+                    if (isMobile) {
+                        const containerWidth = container.offsetWidth;
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+                        initialOffset += centerOffset;
+                    }
                     track.style.transition = 'none';
+                    track.style.transform = `translateX(${initialOffset}px)`;
+    
+                    if (isMobile) {
+                        container.style.overflowX = 'hidden';
+                        container.style.scrollSnapType = 'none';
+                    }
+    
+                    startAutoplay();
+                }
+    
+                function move(direction) {
+                    if (isTransitioning) return;
+                    isTransitioning = true;
+    
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+    
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+    
+                    currentIndex += direction;
+                    let offset = -currentIndex * (cardWidth + gap) + centerOffset;
+                    track.style.transition = 'transform 0.5s ease-in-out';
                     track.style.transform = `translateX(${offset}px)`;
                 }
-
-                if (currentIndex >= visibleCards.length + cardsInView) {
-                    currentIndex = cardsInView;
-                    const offset = -currentIndex * (cardWidth + gap);
-                    track.style.transition = 'none';
-                    track.style.transform = `translateX(${offset}px)`;
-                }
-                isTransitioning = false;
-            });
-            
-            const stopAutoplay = () => clearInterval(autoplayInterval);
-            const startAutoplay = () => {
-                stopAutoplay();
-                autoplayInterval = setInterval(() => move(1), 5000);
-            };
-
-            nextBtn.addEventListener('click', () => move(1));
-            prevBtn.addEventListener('click', () => move(-1));
-
-            section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
-            section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    setupCarousel();
+    
+                track.addEventListener('transitionend', () => {
+                    const visibleCards = getVisibleCards();
+                    if (visibleCards.length === 0) { isTransitioning = false; return; }
+    
+                    const cardWidth = visibleCards[0].offsetWidth;
+                    const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                    const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+    
+                    if (currentIndex <= cardsInView) {
+                        currentIndex += visibleCards.length;
+                        track.style.transition = 'none';
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                    }
+    
+                    if (currentIndex >= visibleCards.length + cardsInView + 1) {
+                        currentIndex -= visibleCards.length;
+                        track.style.transition = 'none';
+                        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                    }
+                    isTransitioning = false;
                 });
-            });
-
-            window.addEventListener('resize', setupCarousel);
-            setupCarousel();
-        }
-
-        setupInfiniteCarousel('latest-videos-section');
-        setupInfiniteCarousel('most-viewed-section');
-    });
+    
+                function stopAutoplay() {
+                    clearInterval(autoplayInterval);
+                }
+    
+                function startAutoplay() {
+                    stopAutoplay();
+                    autoplayInterval = setInterval(() => move(1), 5000);
+                }
+    
+                if (!isMobile) {
+                    nextBtn.addEventListener('click', () => move(1));
+                    prevBtn.addEventListener('click', () => move(-1));
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+                    section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+                } else {
+                    container.addEventListener('touchstart', e => {
+                        touchStartX = e.changedTouches[0].screenX;
+                        isDragging = true;
+                        stopAutoplay();
+                        track.style.transition = 'none';
+                    });
+    
+                    container.addEventListener('touchmove', e => {
+                        if (!isDragging) return;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchEndX - touchStartX;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+                        const cardWidth = visibleCards[0].offsetWidth;
+                        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                        const containerWidth = container.offsetWidth;
+                        const centerOffset = (containerWidth - cardWidth) / 2;
+                        track.style.transform = `translateX(calc(${-(currentIndex * (cardWidth + gap))}px + ${diff}px + ${centerOffset}px))`;
+                        e.preventDefault();
+                    });
+    
+                    container.addEventListener('touchend', e => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        touchEndX = e.changedTouches[0].screenX;
+                        const diff = touchStartX - touchEndX;
+                        const swipeThreshold = 50;
+                        const visibleCards = getVisibleCards();
+                        if (visibleCards.length === 0) return;
+    
+                        if (Math.abs(diff) > swipeThreshold) {
+                            if (diff > 0) {
+                                move(1);
+                            } else {
+                                move(-1);
+                            }
+                        } else {
+                            track.style.transition = 'transform 0.5s ease-in-out';
+                            const cardWidth = visibleCards[0].offsetWidth;
+                            const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                            const containerWidth = container.offsetWidth;
+                            const centerOffset = (containerWidth - cardWidth) / 2;
+                            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                        }
+                        startAutoplay();
+                    });
+                }
+    
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        setupCarousel();
+                    });
+                });
+    
+                window.addEventListener('resize', setupCarousel);
+                setupCarousel();
+            }
+    
+            if (window.innerWidth > 992) {
+                setupInfiniteCarousel('latest-videos-section');
+                setupInfiniteCarousel('most-viewed-section');
+            } else {
+                setupInfiniteCarousel('latest-videos-section', true);
+                setupInfiniteCarousel('most-viewed-section', true);
+            }
+    
+            const header = document.querySelector('header');
+            if (header) {
+                let lastScrollTop = 0;
+                const scrollThreshold = 150;
+                window.addEventListener('scroll', () => {
+                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                        header.classList.add('header-hidden');
+                    } else if (scrollTop < lastScrollTop) {
+                        header.classList.remove('header-hidden');
+                    }
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                }, { passive: true });
+            }
+        });
     </script>
 </body>
 </html>
