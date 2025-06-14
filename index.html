@@ -1018,7 +1018,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     </footer>
     
     <script>
-    // --- LÓGICA DA LIVE (AJUSTADA COM POP-UP PARA MOBILE) ---
+    // --- LÓGICA DA LIVE (100% RESTAURADA E FUNCIONAL) ---
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -1035,31 +1035,22 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     };
 
     function onPlayerReady(event) {
-        // Pega os elementos do pop-up que criamos
         const popupOverlay = document.getElementById('live-popup-overlay');
         const popupCloseBtn = document.getElementById('live-popup-close');
         const thumbnailClickArea = document.getElementById('liveThumbnail');
 
-        // Lógica de clique na thumbnail
         if (thumbnailClickArea) {
             thumbnailClickArea.addEventListener('click', () => {
-                // A lógica agora só roda no clique!
                 const isDesktop = window.innerWidth > 992;
-                
-                // No PC, o comportamento de autoplay continua normal (via onStateChange)
                 if (isDesktop) {
                     player.playVideo();
                     return;
                 }
-
-                // --- LÓGICA EXCLUSIVA PARA MOBILE ---
+                
                 const isLive = player.getVideoData().isLive;
-
                 if (isLive) {
-                    // Cenário B: Live está ON. Toca o vídeo.
                     player.playVideo();
                 } else {
-                    // Cenário A: Live está OFF. Mostra o pop-up.
                     if (popupOverlay) {
                         popupOverlay.classList.add('active');
                     }
@@ -1067,7 +1058,6 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             });
         }
         
-        // Listener para fechar o pop-up
         if (popupCloseBtn) {
             popupCloseBtn.addEventListener('click', () => {
                 if (popupOverlay) {
@@ -1081,19 +1071,14 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
         const thumbnailContainer = document.getElementById('liveThumbnail');
         if (!thumbnailContainer) return;
 
-        // Esta função agora lida com o estado DEPOIS da interação.
-        // Se o vídeo começar a tocar (autoplay no PC ou clique no mobile)...
         if (event.data === YT.PlayerState.PLAYING) {
-            // ...esconde a thumbnail.
             thumbnailContainer.classList.add('hidden');
         }
     }
 
-    // --- LÓGICA DO SITE (Sem alterações, mantida da versão anterior) ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // (O resto do seu código, exatamente como na resposta anterior, vai aqui)
-        // Menu mobile, carrosséis, header, etc...
 
+    // --- LÓGICA GERAL DO SITE E CARROSSÉIS (COM SENSIBILIDADE CORRIGIDA) ---
+    document.addEventListener('DOMContentLoaded', () => {
         // Menu mobile
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
         const mobileNav = document.querySelector('.mobile-nav');
@@ -1104,7 +1089,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
         }
 
-        // --- CARROSSEL HERO ---
+        // --- CARROSSEL HERO (Com sensibilidade ajustada) ---
         const heroCarousel = document.querySelector('.hero-carousel');
         if (heroCarousel) {
             const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -1112,8 +1097,13 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             const dots = document.querySelectorAll('.dot');
             let currentHeroIndex = 0;
             let heroAutoPlay;
-            let touchStartX = 0;
             let isDragging = false;
+            
+            // Variáveis de toque para o Hero
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let diffX = 0;
+            let isScrolling = false;
 
             function updateHeroCarousel() {
                 heroContainer.style.transition = 'transform 0.5s ease';
@@ -1139,255 +1129,241 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
                 });
             });
 
+            // Lógica de toque para o Hero Carousel
             heroCarousel.addEventListener('touchstart', e => {
                 if (window.innerWidth > 992) return;
-                touchStartX = e.changedTouches[0].screenX;
                 isDragging = true;
+                isScrolling = false;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                diffX = 0;
                 stopHeroAutoplay();
                 heroContainer.style.transition = 'none';
             });
 
             heroCarousel.addEventListener('touchmove', e => {
                 if (!isDragging || window.innerWidth > 992) return;
-                const touchEndX = e.changedTouches[0].screenX;
-                const diff = touchEndX - touchStartX;
-                heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
+                
+                const currentX = e.touches[0].clientX;
+                const currentY = e.touches[0].clientY;
+                diffX = currentX - touchStartX;
+                const diffY = currentY - touchStartY;
+
+                if (isScrolling === false) {
+                    if (Math.abs(diffY) > Math.abs(diffX)) {
+                        isScrolling = true;
+                    }
+                }
+
+                if (!isScrolling) {
+                    e.preventDefault();
+                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diffX}px))`;
+                }
             });
 
             heroCarousel.addEventListener('touchend', e => {
-                if (!isDragging || window.innerWidth > 992) return;
+                if (window.innerWidth > 992) return;
                 isDragging = false;
-                const touchEndX = e.changedTouches[0].screenX;
-                const diff = touchStartX - touchEndX;
 
-                if (Math.abs(diff) > 50) {
-                    if (diff > 0) {
-                        currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-                    } else {
-                        currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
+                if (!isScrolling) {
+                    const swipeThreshold = 50;
+                    if (Math.abs(diffX) > swipeThreshold) {
+                        if (diffX < 0) {
+                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+                        } else {
+                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
+                        }
                     }
+                    updateHeroCarousel();
                 }
-                updateHeroCarousel();
                 startHeroAutoplay();
             });
 
             startHeroAutoplay();
         }
 
-        // --- CARROSSÉIS DE VÍDEOS ---
-        // POR FAVOR, SUBSTITUA A FUNÇÃO ANTIGA POR ESTA VERSÃO COMPLETA E CORRIGIDA
+        // --- FUNÇÃO PARA CARROSSÉIS DE VÍDEOS (COM SENSIBILIDADE CORRIGIDA) ---
+        function setupInfiniteCarousel(sectionId, isMobile = false) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
 
-function setupInfiniteCarousel(sectionId, isMobile = false) {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
-
-    const container = section.querySelector('.video-carousel-container');
-    const track = section.querySelector('.video-carousel-track');
-    const prevBtn = section.querySelector('.prev-arrow');
-    const nextBtn = section.querySelector('.next-arrow');
-    const filterButtons = section.querySelectorAll('.filter-btn');
-    
-    let originalCards = Array.from(track.children);
-    let isTransitioning = false;
-    let autoplayInterval;
-    let currentIndex = 0;
-
-    // Funções internas do carrossel (inalteradas)
-    function getVisibleCards() { return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone')); }
-    function stopAutoplay() { clearInterval(autoplayInterval); }
-    function startAutoplay() {
-        stopAutoplay();
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length > 0) {
-            const containerWidth = container.offsetWidth;
-            if(track.scrollWidth > containerWidth) {
-                autoplayInterval = setInterval(() => move(1), 3000); // Ajustei o tempo para 3s para testar, pode voltar para 5000
-            }
-        }
-    }
-
-    function move(direction) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) { isTransitioning = false; return; }
-        
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const containerWidth = container.offsetWidth;
-        const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
-        
-        currentIndex += direction;
-        
-        track.style.transition = 'transform 0.5s ease-in-out';
-        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-    }
-    
-    track.addEventListener('transitionend', () => {
-        isTransitioning = false;
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) return;
-        
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-        const containerWidth = container.offsetWidth;
-        const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
-
-        if (currentIndex <= cardsInView) {
-            currentIndex += visibleCards.length;
-            track.style.transition = 'none';
-            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-        }
-        if (currentIndex >= visibleCards.length + cardsInView + 1) {
-            currentIndex -= visibleCards.length;
-            track.style.transition = 'none';
-            track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
-        }
-    });
-
-    function setupCarousel() {
-        stopAutoplay();
-        isTransitioning = false;
-        const clones = track.querySelectorAll('.clone');
-        clones.forEach(clone => track.removeChild(clone));
-        track.innerHTML = '';
-        originalCards.forEach(card => track.appendChild(card));
-        const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
-        originalCards.forEach(card => {
-            card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
-        });
-
-        const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) {
-            if (prevBtn && !isMobile) prevBtn.style.display = 'none';
-            if (nextBtn && !isMobile) nextBtn.style.display = 'none';
-            track.style.transform = 'translateX(0)';
-            return;
-        }
-
-        if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
-        if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
-        
-        const cardWidth = visibleCards[0].offsetWidth;
-        const gap = parseInt(window.getComputedStyle(track).gap) || 25;
-        const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-
-        if (visibleCards.length <= cardsInView) {
-            if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
-            if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
-            track.style.transform = 'translateX(0)';
-            return;
-        }
-
-        if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
-        if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
-
-        const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 2);
-        itemsToCloneEnd.forEach(card => {
-            const clone = card.cloneNode(true);
-            clone.classList.add('clone');
-            track.appendChild(clone);
-        });
-
-        const itemsToCloneStart = visibleCards.slice(-(cardsInView + 2));
-        itemsToCloneStart.reverse().forEach(card => {
-            const clone = card.cloneNode(true);
-            clone.classList.add('clone');
-            track.insertBefore(clone, visibleCards[0]);
-        });
-
-        currentIndex = cardsInView + 2;
-        let initialOffset = -currentIndex * (cardWidth + gap);
-        if (isMobile) {
-            const containerWidth = container.offsetWidth;
-            const centerOffset = (containerWidth - cardWidth) / 2;
-            initialOffset += centerOffset;
-        }
-        track.style.transition = 'none';
-        track.style.transform = `translateX(${initialOffset}px)`;
-        if (isMobile) { container.style.overflowX = 'hidden'; }
-        
-        startAutoplay();
-    }
-
-    // --- LÓGICA DE INTERAÇÃO ---
-    if (!isMobile) {
-        // LÓGICA PC - Permanece exatamente como a original e funcional.
-        nextBtn.addEventListener('click', () => move(1));
-        prevBtn.addEventListener('click', () => move(-1));
-        section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
-        section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
-    } else {
-        // LÓGICA MOBILE - Com o ajuste de sensibilidade.
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let diffX = 0;
-        let isSwipe = false;
-        let isScrolling = false; // Flag para saber se é scroll vertical
-
-        container.addEventListener('touchstart', e => {
-            isSwipe = true;
-            isScrolling = false; // Reseta a flag
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-            stopAutoplay();
-            track.style.transition = 'none'; // Permite arrastar suavemente
-        });
-
-        container.addEventListener('touchmove', e => {
-            if (!isSwipe) return;
-
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-            diffX = currentX - touchStartX;
-            const diffY = currentY - touchStartY;
-
-            // Se for a primeira vez que o move é detectado
-            if (isScrolling === false) {
-                // Se o movimento vertical for maior que o horizontal, marca como scroll
-                if (Math.abs(diffY) > Math.abs(diffX)) {
-                    isScrolling = true;
+            const container = section.querySelector('.video-carousel-container');
+            const track = section.querySelector('.video-carousel-track');
+            const prevBtn = section.querySelector('.prev-arrow');
+            const nextBtn = section.querySelector('.next-arrow');
+            const filterButtons = section.querySelectorAll('.filter-btn');
+            
+            let originalCards = Array.from(track.children);
+            let isTransitioning = false;
+            let autoplayInterval;
+            let currentIndex = 0;
+            
+            function getVisibleCards() { return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone')); }
+            function stopAutoplay() { clearInterval(autoplayInterval); }
+            function startAutoplay() {
+                stopAutoplay();
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length > 0) {
+                    const containerWidth = container.offsetWidth;
+                    if(track.scrollWidth > containerWidth) {
+                        autoplayInterval = setInterval(() => move(1), 5000);
+                    }
                 }
             }
-            
-            // Se NÃO for scroll vertical, move o carrossel
-            if (!isScrolling) {
-                e.preventDefault(); // Previne o scroll da página apenas se for swipe horizontal
-                const currentOffset = -currentIndex * (getVisibleCards()[0].offsetWidth + 25) + (getVisibleCards()[0].offsetParent.offsetWidth - getVisibleCards()[0].offsetWidth) / 2;
-                track.style.transform = `translateX(${currentOffset + diffX}px)`;
-            }
-        });
 
-        container.addEventListener('touchend', e => {
-            isSwipe = false;
+            function move(direction) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) { isTransitioning = false; return; }
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const containerWidth = container.offsetWidth;
+                const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+                currentIndex += direction;
+                track.style.transition = 'transform 0.5s ease-in-out';
+                track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+            }
             
-            // Só processa o fim do swipe se não for um scroll vertical
-            if (!isScrolling) {
-                const swipeThreshold = 50;
-                if (Math.abs(diffX) > swipeThreshold) {
-                    move(diffX < 0 ? 1 : -1);
-                } else {
-                    move(0); // Volta para a posição original
+            track.addEventListener('transitionend', () => {
+                isTransitioning = false;
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) return;
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+                const containerWidth = container.offsetWidth;
+                const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+
+                if (currentIndex <= cardsInView) {
+                    currentIndex += visibleCards.length;
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
                 }
-            }
-            startAutoplay(); // Reinicia a animação de qualquer forma
-        });
-    }
+                if (currentIndex >= visibleCards.length + cardsInView + 1) {
+                    currentIndex -= visibleCards.length;
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+                }
+            });
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+            function setupCarousel() {
+                stopAutoplay();
+                isTransitioning = false;
+                const clones = track.querySelectorAll('.clone');
+                clones.forEach(clone => track.removeChild(clone));
+                track.innerHTML = '';
+                originalCards.forEach(card => track.appendChild(card));
+                const activeFilter = section.querySelector('.filter-btn.active').dataset.filter;
+                originalCards.forEach(card => {
+                    card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
+                });
+                const visibleCards = getVisibleCards();
+                if (visibleCards.length === 0) {
+                    if (prevBtn && !isMobile) prevBtn.style.display = 'none';
+                    if (nextBtn && !isMobile) nextBtn.style.display = 'none';
+                    track.style.transform = 'translateX(0)';
+                    return;
+                }
+                if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
+                if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
+                const cardWidth = visibleCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(track).gap) || 25;
+                const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
+                if (visibleCards.length <= cardsInView) {
+                    if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
+                    if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
+                    track.style.transform = 'translateX(0)';
+                    return;
+                }
+                if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
+                if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
+                const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 2);
+                itemsToCloneEnd.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.classList.add('clone');
+                    track.appendChild(clone);
+                });
+                const itemsToCloneStart = visibleCards.slice(-(cardsInView + 2));
+                itemsToCloneStart.reverse().forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.classList.add('clone');
+                    track.insertBefore(clone, visibleCards[0]);
+                });
+                currentIndex = cardsInView + 2;
+                let initialOffset = -currentIndex * (cardWidth + gap);
+                if (isMobile) {
+                    const containerWidth = container.offsetWidth;
+                    const centerOffset = (containerWidth - cardWidth) / 2;
+                    initialOffset += centerOffset;
+                }
+                track.style.transition = 'none';
+                track.style.transform = `translateX(${initialOffset}px)`;
+                if (isMobile) { container.style.overflowX = 'hidden'; }
+                startAutoplay();
+            }
+
+            if (!isMobile) {
+                nextBtn.addEventListener('click', () => move(1));
+                prevBtn.addEventListener('click', () => move(-1));
+                section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
+                section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
+            } else {
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let diffX = 0;
+                let isSwipe = false;
+                let isScrolling = false;
+                container.addEventListener('touchstart', e => {
+                    isSwipe = true;
+                    isScrolling = false;
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    stopAutoplay();
+                    track.style.transition = 'none';
+                });
+                container.addEventListener('touchmove', e => {
+                    if (!isSwipe) return;
+                    const currentX = e.touches[0].clientX;
+                    const currentY = e.touches[0].clientY;
+                    diffX = currentX - touchStartX;
+                    const diffY = currentY - touchStartY;
+                    if (isScrolling === false) {
+                        if (Math.abs(diffY) > Math.abs(diffX)) {
+                            isScrolling = true;
+                        }
+                    }
+                    if (!isScrolling) {
+                        e.preventDefault();
+                        const currentOffset = -currentIndex * (getVisibleCards()[0].offsetWidth + 25) + (getVisibleCards()[0].offsetParent.offsetWidth - getVisibleCards()[0].offsetWidth) / 2;
+                        track.style.transform = `translateX(${currentOffset + diffX}px)`;
+                    }
+                });
+                container.addEventListener('touchend', e => {
+                    isSwipe = false;
+                    if (!isScrolling) {
+                        const swipeThreshold = 50;
+                        if (Math.abs(diffX) > swipeThreshold) {
+                            move(diffX < 0 ? 1 : -1);
+                        } else {
+                            move(0);
+                        }
+                    }
+                    startAutoplay();
+                });
+            }
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    setupCarousel();
+                });
+            });
+            window.addEventListener('resize', setupCarousel);
             setupCarousel();
-        });
-    });
+        }
 
-    window.addEventListener('resize', setupCarousel);
-    setupCarousel();
-}
-
+        // --- CHAMADA DAS FUNÇÕES DE CARROSSEL ---
         if (window.innerWidth > 992) {
             setupInfiniteCarousel('latest-videos-section');
             setupInfiniteCarousel('most-viewed-section');
@@ -1396,7 +1372,7 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
             setupInfiniteCarousel('most-viewed-section', true);
         }
 
-        // Header
+        // --- LÓGICA DO HEADER ---
         const header = document.querySelector('header');
         if (header) {
             let lastScrollTop = 0;
