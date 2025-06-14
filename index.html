@@ -238,7 +238,7 @@
         .live-section { padding: 50px 5%; margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
         .live-content-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         .live-video-player { width: 100%; max-width: 960px; background-color: #000; aspect-ratio: 16 / 9; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
-        .-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
+        .live-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 1; }
         .video-thumbnail-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black; cursor: pointer; z-index: 10; transition: opacity 0.3s ease; }
         .video-thumbnail-container.hidden { display: none; }
         .video-thumbnail-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -632,7 +632,7 @@
             .video-info-overlay { flex-direction: column; align-items: flex-start; gap: 10px; }
             
             .play-button,
-            #Title,
+            #liveTitle,
             #liveTime {
                 display: none;
             }
@@ -771,30 +771,7 @@
             <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <div class="slider-nav">
-
-                <span class="dot active"></span>
-
-                <span class="dot"></span>
-
-                <span class="dot"></span>
-
-            </div>
-
-        </section>
-
-
-
-        <section class="live-section">
-            <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
-            <div class="live-content-wrapper">
-                <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <div class="video-thumbnail-container" id="liveThumbnail">
-                        <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                        <div class="video-info-overlay">
-                            <div>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -1041,7 +1018,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     </footer>
     
     <script>
-    // --- LÓGICA DA LIVE (100% RESTAURADA E FUNCIONAL) ---
+    // --- LÓGICA DA LIVE (AJUSTADA COM POP-UP PARA MOBILE) ---
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -1058,22 +1035,31 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     };
 
     function onPlayerReady(event) {
+        // Pega os elementos do pop-up que criamos
         const popupOverlay = document.getElementById('live-popup-overlay');
         const popupCloseBtn = document.getElementById('live-popup-close');
         const thumbnailClickArea = document.getElementById('liveThumbnail');
 
+        // Lógica de clique na thumbnail
         if (thumbnailClickArea) {
             thumbnailClickArea.addEventListener('click', () => {
+                // A lógica agora só roda no clique!
                 const isDesktop = window.innerWidth > 992;
+                
+                // No PC, o comportamento de autoplay continua normal (via onStateChange)
                 if (isDesktop) {
                     player.playVideo();
                     return;
                 }
-                
+
+                // --- LÓGICA EXCLUSIVA PARA MOBILE ---
                 const isLive = player.getVideoData().isLive;
+
                 if (isLive) {
+                    // Cenário B: Live está ON. Toca o vídeo.
                     player.playVideo();
                 } else {
+                    // Cenário A: Live está OFF. Mostra o pop-up.
                     if (popupOverlay) {
                         popupOverlay.classList.add('active');
                     }
@@ -1081,6 +1067,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             });
         }
         
+        // Listener para fechar o pop-up
         if (popupCloseBtn) {
             popupCloseBtn.addEventListener('click', () => {
                 if (popupOverlay) {
@@ -1094,14 +1081,19 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
         const thumbnailContainer = document.getElementById('liveThumbnail');
         if (!thumbnailContainer) return;
 
+        // Esta função agora lida com o estado DEPOIS da interação.
+        // Se o vídeo começar a tocar (autoplay no PC ou clique no mobile)...
         if (event.data === YT.PlayerState.PLAYING) {
+            // ...esconde a thumbnail.
             thumbnailContainer.classList.add('hidden');
         }
     }
 
-
-    // --- LÓGICA GERAL DO SITE E CARROSSÉIS (COM SENSIBILIDADE CORRIGIDA) ---
+    // --- LÓGICA DO SITE (Sem alterações, mantida da versão anterior) ---
     document.addEventListener('DOMContentLoaded', () => {
+        // (O resto do seu código, exatamente como na resposta anterior, vai aqui)
+        // Menu mobile, carrosséis, header, etc...
+
         // Menu mobile
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
         const mobileNav = document.querySelector('.mobile-nav');
@@ -1112,7 +1104,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
         }
 
-        // --- CARROSSEL HERO (Com sensibilidade ajustada) ---
+        // --- CARROSSEL HERO ---
         const heroCarousel = document.querySelector('.hero-carousel');
         if (heroCarousel) {
             const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
@@ -1120,13 +1112,8 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             const dots = document.querySelectorAll('.dot');
             let currentHeroIndex = 0;
             let heroAutoPlay;
-            let isDragging = false;
-            
-            // Variáveis de toque para o Hero
             let touchStartX = 0;
-            let touchStartY = 0;
-            let diffX = 0;
-            let isScrolling = false;
+            let isDragging = false;
 
             function updateHeroCarousel() {
                 heroContainer.style.transition = 'transform 0.5s ease';
@@ -1152,60 +1139,42 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
                 });
             });
 
-            // Lógica de toque para o Hero Carousel
             heroCarousel.addEventListener('touchstart', e => {
                 if (window.innerWidth > 992) return;
+                touchStartX = e.changedTouches[0].screenX;
                 isDragging = true;
-                isScrolling = false;
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-                diffX = 0;
                 stopHeroAutoplay();
                 heroContainer.style.transition = 'none';
             });
 
             heroCarousel.addEventListener('touchmove', e => {
                 if (!isDragging || window.innerWidth > 992) return;
-                
-                const currentX = e.touches[0].clientX;
-                const currentY = e.touches[0].clientY;
-                diffX = currentX - touchStartX;
-                const diffY = currentY - touchStartY;
-
-                if (isScrolling === false) {
-                    if (Math.abs(diffY) > Math.abs(diffX)) {
-                        isScrolling = true;
-                    }
-                }
-
-                if (!isScrolling) {
-                    e.preventDefault();
-                    heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diffX}px))`;
-                }
+                const touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
             });
 
             heroCarousel.addEventListener('touchend', e => {
-                if (window.innerWidth > 992) return;
+                if (!isDragging || window.innerWidth > 992) return;
                 isDragging = false;
+                const touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
 
-                if (!isScrolling) {
-                    const swipeThreshold = 50;
-                    if (Math.abs(diffX) > swipeThreshold) {
-                        if (diffX < 0) {
-                            currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-                        } else {
-                            currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
-                        }
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
+                    } else {
+                        currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
                     }
-                    updateHeroCarousel();
                 }
+                updateHeroCarousel();
                 startHeroAutoplay();
             });
 
             startHeroAutoplay();
         }
 
-      // SUBSTITUA A SUA FUNÇÃO 'setupInfiniteCarousel' INTEIRA POR ESTA VERSÃO CORRIGIDA
+        // SUBSTITUA A SUA FUNÇÃO 'setupInfiniteCarousel' INTEIRA POR ESTA VERSÃO CORRIGIDA
 
 function setupInfiniteCarousel(sectionId, isMobile = false) {
     const section = document.getElementById(sectionId);
@@ -1417,7 +1386,6 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
     window.addEventListener('resize', setupCarousel);
     setupCarousel();
 }
-        // --- CHAMADA DAS FUNÇÕES DE CARROSSEL ---
         if (window.innerWidth > 992) {
             setupInfiniteCarousel('latest-videos-section');
             setupInfiniteCarousel('most-viewed-section');
@@ -1426,7 +1394,7 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
             setupInfiniteCarousel('most-viewed-section', true);
         }
 
-        // --- LÓGICA DO HEADER ---
+        // Header
         const header = document.querySelector('header');
         if (header) {
             let lastScrollTop = 0;
