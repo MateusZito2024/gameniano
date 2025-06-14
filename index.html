@@ -1034,46 +1034,31 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
         });
     };
 
-    // NOVA VERSÃO DA FUNÇÃO (substitua a antiga por esta)
+    // COLE ESTE NOVO BLOCO NO LUGAR DO QUE VOCÊ APAGOU
+
 function onPlayerReady(event) {
-    // Pega os elementos do pop-up e da thumbnail
+    const player = event.target;
+
+    // Tenta dar autoplay mudo APENAS em dispositivos mobile
+    if (window.innerWidth <= 992) {
+        player.mute();
+        player.playVideo();
+    }
+
+    // A lógica de clique e pop-up continua aqui, como um método alternativo
+    // caso o autoplay mudo não funcione ou a live esteja offline.
     const popupOverlay = document.getElementById('live-popup-overlay');
     const popupCloseBtn = document.getElementById('live-popup-close');
     const thumbnailContainer = document.getElementById('liveThumbnail');
 
-    // ADICIONADO: Verificação automática para mobile assim que o player carrega
-    const isMobile = window.innerWidth <= 992;
-    if (isMobile) {
-        const isStreamLive = player.getVideoData().isLive;
-        if (isStreamLive) {
-            // Se a live estiver online no mobile, esconde a thumbnail para mostrar o player
-            thumbnailContainer.classList.add('hidden');
-        }
-    }
-
-    // Lógica de clique na thumbnail (continua funcionando para o caso de a live estar offline)
     if (thumbnailContainer) {
         thumbnailContainer.addEventListener('click', () => {
-            const isDesktop = window.innerWidth > 992;
-
-            if (isDesktop) {
-                player.playVideo();
-                return;
-            }
-
-            // No mobile, este clique só será registrado se a thumbnail ainda estiver visível (ou seja, se a live estiver offline)
-            const isLive = player.getVideoData().isLive;
-            if (isLive) {
-                player.playVideo();
-            } else {
-                if (popupOverlay) {
-                    popupOverlay.classList.add('active');
-                }
-            }
+            // Ao clicar, sempre tenta tocar o vídeo.
+            // A lógica de pop-up foi movida para o onStateChange para mais confiabilidade.
+            player.playVideo();
         });
     }
-
-    // Listener para fechar o pop-up (inalterado)
+    
     if (popupCloseBtn) {
         popupCloseBtn.addEventListener('click', () => {
             if (popupOverlay) {
@@ -1083,17 +1068,33 @@ function onPlayerReady(event) {
     }
 }
 
-    function onPlayerStateChange(event) {
-        const thumbnailContainer = document.getElementById('liveThumbnail');
-        if (!thumbnailContainer) return;
+function onPlayerStateChange(event) {
+    const player = event.target;
+    const thumbnailContainer = document.getElementById('liveThumbnail');
+    const popupOverlay = document.getElementById('live-popup-overlay');
 
-        // Esta função agora lida com o estado DEPOIS da interação.
-        // Se o vídeo começar a tocar (autoplay no PC ou clique no mobile)...
-        if (event.data === YT.PlayerState.PLAYING) {
-            // ...esconde a thumbnail.
+    // Se o player começar a tocar (YT.PlayerState.PLAYING = 1)
+    if (event.data === YT.PlayerState.PLAYING) {
+        if (thumbnailContainer) {
             thumbnailContainer.classList.add('hidden');
         }
+        // Garante que o vídeo não fique mudo se o autoplay tiver funcionado
+        if (player.isMuted()) {
+            player.unMute();
+        }
+    } 
+    // Se o player carregar um vídeo mas não tocar (YT.PlayerState.CUED = 5)
+    // Isso geralmente acontece quando a live está offline.
+    else if (event.data === YT.PlayerState.CUED) {
+         const isDesktop = window.innerWidth > 992;
+         // Mostra o pop-up apenas no mobile, pois no desktop o usuário não clicou em nada
+         if(!isDesktop) {
+             if (popupOverlay) {
+                popupOverlay.classList.add('active');
+             }
+         }
     }
+}
 
     // --- LÓGICA DO SITE (Sem alterações, mantida da versão anterior) ---
     document.addEventListener('DOMContentLoaded', () => {
