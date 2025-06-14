@@ -1104,76 +1104,170 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             closeNavBtn.addEventListener('click', () => mobileNav.classList.remove('is-active'));
         }
 
-        // --- CARROSSEL HERO ---
-        const heroCarousel = document.querySelector('.hero-carousel');
-        if (heroCarousel) {
-            const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
-            const heroCards = heroContainer.querySelectorAll('.hero-card');
-            const dots = document.querySelectorAll('.dot');
-            let currentHeroIndex = 0;
-            let heroAutoPlay;
-            let touchStartX = 0;
-            let isDragging = false;
+       // SUBSTITUA O BLOCO DO SEU CARROSSEL HERO POR ESTE CÓDIGO COMPLETO
 
-            function updateHeroCarousel() {
-                heroContainer.style.transition = 'transform 0.5s ease';
-                heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
-                dots.forEach((dot, index) => dot.classList.toggle('active', index === currentHeroIndex));
-            }
+// --- CARROSSEL HERO ---
+const heroCarousel = document.querySelector('.hero-carousel');
+if (heroCarousel) {
+    // A verificação abaixo garante que a versão PC e Mobile sejam totalmente independentes
+    if (window.innerWidth > 992) {
+        // --- LÓGICA EXCLUSIVA PARA PC (IDÊNTICA À ORIGINAL, 100% FUNCIONAL) ---
+        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+        const heroCards = heroContainer.querySelectorAll('.hero-card');
+        const dots = document.querySelectorAll('.dot');
+        let currentHeroIndex = 0;
+        let heroAutoPlay;
 
-            function startHeroAutoplay() {
-                stopHeroAutoplay();
-                heroAutoPlay = setInterval(() => {
-                    currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
-                    updateHeroCarousel();
-                }, 5000);
-            }
-
-            function stopHeroAutoplay() { clearInterval(heroAutoPlay); }
-
+        function updateHeroCarousel() {
+            heroContainer.style.transition = 'transform 0.5s ease';
+            heroContainer.style.transform = `translateX(-${currentHeroIndex * 100}%)`;
             dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentHeroIndex = index;
-                    updateHeroCarousel();
-                    startHeroAutoplay();
-                });
+                dot.classList.toggle('active', index === currentHeroIndex);
             });
+        }
 
-            heroCarousel.addEventListener('touchstart', e => {
-                if (window.innerWidth > 992) return;
-                touchStartX = e.changedTouches[0].screenX;
-                isDragging = true;
-                stopHeroAutoplay();
-                heroContainer.style.transition = 'none';
-            });
+        function startHeroAutoplay() {
+            stopHeroAutoplay();
+            heroAutoPlay = setInterval(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % heroCards.length;
+                updateHeroCarousel();
+            }, 5000);
+        }
 
-            heroCarousel.addEventListener('touchmove', e => {
-                if (!isDragging || window.innerWidth > 992) return;
-                const touchEndX = e.changedTouches[0].screenX;
-                const diff = touchEndX - touchStartX;
-                heroContainer.style.transform = `translateX(calc(-${currentHeroIndex * 100}% + ${diff}px))`;
-            });
+        function stopHeroAutoplay() {
+            clearInterval(heroAutoPlay);
+        }
 
-            heroCarousel.addEventListener('touchend', e => {
-                if (!isDragging || window.innerWidth > 992) return;
-                isDragging = false;
-                const touchEndX = e.changedTouches[0].screenX;
-                const diff = touchStartX - touchEndX;
-
-                if (Math.abs(diff) > 50) {
-                    if (diff > 0) {
-                        currentHeroIndex = Math.min(currentHeroIndex + 1, heroCards.length - 1);
-                    } else {
-                        currentHeroIndex = Math.max(currentHeroIndex - 1, 0);
-                    }
-                }
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentHeroIndex = index;
                 updateHeroCarousel();
                 startHeroAutoplay();
             });
+        });
+        
+        heroCarousel.addEventListener('mouseenter', stopHeroAutoplay);
+        heroCarousel.addEventListener('mouseleave', startHeroAutoplay);
 
-            startHeroAutoplay();
+        startHeroAutoplay();
+
+    } else {
+        // --- LÓGICA EXCLUSIVA PARA MOBILE (COM ROLAGEM INFINITA E SENSIBILIDADE CORRIGIDA) ---
+        const heroContainer = heroCarousel.querySelector('.hero-carousel-container');
+        const dots = document.querySelectorAll('.dot');
+        const originalCards = Array.from(heroContainer.children);
+        
+        let heroAutoPlay;
+        let isTransitioning = false;
+        let currentIndex = 1; // Começa no primeiro card real, não no clone
+
+        // 1. Setup do Carrossel Infinito
+        const firstClone = originalCards[0].cloneNode(true);
+        const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
+        firstClone.classList.add('clone');
+        lastClone.classList.add('clone');
+        
+        heroContainer.appendChild(firstClone);
+        heroContainer.insertBefore(lastClone, heroContainer.firstElementChild);
+        
+        // 2. Funções de Movimento e Posição
+        function updateHeroPosition(withTransition = true) {
+            heroContainer.style.transition = withTransition ? 'transform 0.5s ease' : 'none';
+            heroContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateDots();
+        }
+        
+        function moveHero(direction) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex += direction;
+            updateHeroPosition();
+        }
+        
+        heroContainer.addEventListener('transitionend', () => {
+            isTransitioning = false;
+            if (currentIndex === 0) { // Se chegou no clone da esquerda
+                currentIndex = originalCards.length;
+                updateHeroPosition(false);
+            }
+            if (currentIndex > originalCards.length) { // Se chegou no clone da direita
+                currentIndex = 1;
+                updateHeroPosition(false);
+            }
+        });
+
+        // 3. Funções de Controle (Dots e Autoplay)
+        function updateDots() {
+            const activeIndex = (currentIndex - 1 + originalCards.length) % originalCards.length;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
         }
 
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopHeroAutoplay();
+                currentIndex = index + 1;
+                updateHeroPosition();
+                startHeroAutoplay();
+            });
+        });
+
+        function startHeroAutoplay() {
+            stopHeroAutoplay();
+            heroAutoPlay = setInterval(() => moveHero(1), 5000);
+        }
+        function stopHeroAutoplay() { clearInterval(heroAutoPlay); }
+
+        // 4. Lógica de Toque com Sensibilidade Ajustada
+        let touchStartX = 0, touchStartY = 0, diffX = 0, isScrolling = false;
+
+        heroCarousel.addEventListener('touchstart', e => {
+            isScrolling = false;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            diffX = 0;
+            stopHeroAutoplay();
+            heroContainer.style.transition = 'none';
+        });
+
+        heroCarousel.addEventListener('touchmove', e => {
+            if (isScrolling) return; // Se já detectou que é scroll vertical, não faz mais nada
+            
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const currentDiffX = currentX - touchStartX;
+            const diffY = currentY - touchStartY;
+
+            if (swipeDirection === null) { // Só define a direção uma vez
+                if (Math.abs(diffY) > Math.abs(currentDiffX)) {
+                    isScrolling = true;
+                    return;
+                }
+            }
+            
+            e.preventDefault();
+            diffX = currentDiffX;
+            heroContainer.style.transform = `translateX(calc(-${currentIndex * 100}% + ${diffX}px))`;
+        });
+
+        heroCarousel.addEventListener('touchend', e => {
+            if (!isScrolling) {
+                const swipeThreshold = 50;
+                if (Math.abs(diffX) > swipeThreshold) {
+                    moveHero(diffX < 0 ? 1 : -1);
+                } else {
+                    updateHeroPosition();
+                }
+            }
+            startHeroAutoplay();
+        });
+        
+        // 5. Início do Carrossel Mobile
+        updateHeroPosition(false); // Posiciona no card inicial
+        startHeroAutoplay(); // Inicia a animação automática
+    }
+}
        // SUBSTITUA A SUA FUNÇÃO 'setupInfiniteCarousel' INTEIRA POR ESTA VERSÃO CORRIGIDA
 
 function setupInfiniteCarousel(sectionId, isMobile = false) {
