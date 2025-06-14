@@ -1034,48 +1034,54 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
         });
     };
 
-    function onPlayerReady(event) {
-        // Pega os elementos do pop-up que criamos
-        const popupOverlay = document.getElementById('live-popup-overlay');
-        const popupCloseBtn = document.getElementById('live-popup-close');
-        const thumbnailClickArea = document.getElementById('liveThumbnail');
+    // NOVA VERSÃO DA FUNÇÃO (substitua a antiga por esta)
+function onPlayerReady(event) {
+    // Pega os elementos do pop-up e da thumbnail
+    const popupOverlay = document.getElementById('live-popup-overlay');
+    const popupCloseBtn = document.getElementById('live-popup-close');
+    const thumbnailContainer = document.getElementById('liveThumbnail');
 
-        // Lógica de clique na thumbnail
-        if (thumbnailClickArea) {
-            thumbnailClickArea.addEventListener('click', () => {
-                // A lógica agora só roda no clique!
-                const isDesktop = window.innerWidth > 992;
-                
-                // No PC, o comportamento de autoplay continua normal (via onStateChange)
-                if (isDesktop) {
-                    player.playVideo();
-                    return;
-                }
-
-                // --- LÓGICA EXCLUSIVA PARA MOBILE ---
-                const isLive = player.getVideoData().isLive;
-
-                if (isLive) {
-                    // Cenário B: Live está ON. Toca o vídeo.
-                    player.playVideo();
-                } else {
-                    // Cenário A: Live está OFF. Mostra o pop-up.
-                    if (popupOverlay) {
-                        popupOverlay.classList.add('active');
-                    }
-                }
-            });
-        }
-        
-        // Listener para fechar o pop-up
-        if (popupCloseBtn) {
-            popupCloseBtn.addEventListener('click', () => {
-                if (popupOverlay) {
-                    popupOverlay.classList.remove('active');
-                }
-            });
+    // ADICIONADO: Verificação automática para mobile assim que o player carrega
+    const isMobile = window.innerWidth <= 992;
+    if (isMobile) {
+        const isStreamLive = player.getVideoData().isLive;
+        if (isStreamLive) {
+            // Se a live estiver online no mobile, esconde a thumbnail para mostrar o player
+            thumbnailContainer.classList.add('hidden');
         }
     }
+
+    // Lógica de clique na thumbnail (continua funcionando para o caso de a live estar offline)
+    if (thumbnailContainer) {
+        thumbnailContainer.addEventListener('click', () => {
+            const isDesktop = window.innerWidth > 992;
+
+            if (isDesktop) {
+                player.playVideo();
+                return;
+            }
+
+            // No mobile, este clique só será registrado se a thumbnail ainda estiver visível (ou seja, se a live estiver offline)
+            const isLive = player.getVideoData().isLive;
+            if (isLive) {
+                player.playVideo();
+            } else {
+                if (popupOverlay) {
+                    popupOverlay.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // Listener para fechar o pop-up (inalterado)
+    if (popupCloseBtn) {
+        popupCloseBtn.addEventListener('click', () => {
+            if (popupOverlay) {
+                popupOverlay.classList.remove('active');
+            }
+        });
+    }
+}
 
     function onPlayerStateChange(event) {
         const thumbnailContainer = document.getElementById('liveThumbnail');
