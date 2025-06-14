@@ -1182,7 +1182,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
             startHeroAutoplay();
         }
 
-       // POR FAVOR, SUBSTITUA A FUNÇÃO ANTIGA POR ESTA VERSÃO COMPLETA E CORRIGIDA
+      // SUBSTITUA A SUA FUNÇÃO 'setupInfiniteCarousel' INTEIRA POR ESTA VERSÃO CORRIGIDA
 
 function setupInfiniteCarousel(sectionId, isMobile = false) {
     const section = document.getElementById(sectionId);
@@ -1198,44 +1198,47 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
     let isTransitioning = false;
     let autoplayInterval;
     let currentIndex = 0;
+    
+    // --- LÓGICA DE TOQUE (COM AJUSTE DE SENSIBILIDADE REFINADO) ---
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchCurrentX = 0;
+    let isDragging = false;
+    let swipeDirection = null; // MUDANÇA: Começa como nulo
 
-    // Funções internas do carrossel (inalteradas)
+    // --- Funções do carrossel (sem alterações no funcionamento) ---
     function getVisibleCards() { return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone')); }
     function stopAutoplay() { clearInterval(autoplayInterval); }
+
     function startAutoplay() {
         stopAutoplay();
         const visibleCards = getVisibleCards();
-        if (visibleCards.length > 0) {
-            const containerWidth = container.offsetWidth;
-            if(track.scrollWidth > containerWidth) {
-                autoplayInterval = setInterval(() => move(1), 3000); // Ajustei o tempo para 3s para testar, pode voltar para 5000
-            }
+        if (visibleCards.length === 0) return;
+        const containerWidth = container.offsetWidth;
+        if(track.scrollWidth > containerWidth) {
+             autoplayInterval = setInterval(() => move(1), 5000);
         }
     }
 
     function move(direction) {
         if (isTransitioning) return;
         isTransitioning = true;
-        
         const visibleCards = getVisibleCards();
         if (visibleCards.length === 0) { isTransitioning = false; return; }
-        
         const cardWidth = visibleCards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(track).gap) || 25;
         const containerWidth = container.offsetWidth;
         const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
-        
         currentIndex += direction;
-        
+        let offset = -currentIndex * (cardWidth + gap) + centerOffset;
         track.style.transition = 'transform 0.5s ease-in-out';
-        track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
+        track.style.transform = `translateX(${offset}px)`;
     }
     
     track.addEventListener('transitionend', () => {
-        isTransitioning = false;
+        isTransitioning = false; // Garante que a transição seja marcada como finalizada
         const visibleCards = getVisibleCards();
         if (visibleCards.length === 0) return;
-        
         const cardWidth = visibleCards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(track).gap) || 25;
         const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
@@ -1254,7 +1257,7 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
         }
     });
 
-    function setupCarousel() {
+    function setupCarousel() { /* ... sua função original inalterada ... */ 
         stopAutoplay();
         isTransitioning = false;
         const clones = track.querySelectorAll('.clone');
@@ -1265,7 +1268,6 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
         originalCards.forEach(card => {
             card.style.display = (activeFilter === 'all' || card.dataset.category === activeFilter) ? 'flex' : 'none';
         });
-
         const visibleCards = getVisibleCards();
         if (visibleCards.length === 0) {
             if (prevBtn && !isMobile) prevBtn.style.display = 'none';
@@ -1273,38 +1275,31 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
             track.style.transform = 'translateX(0)';
             return;
         }
-
         if (prevBtn && !isMobile) prevBtn.style.display = 'flex';
         if (nextBtn && !isMobile) nextBtn.style.display = 'flex';
-        
         const cardWidth = visibleCards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(track).gap) || 25;
         const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
-
         if (visibleCards.length <= cardsInView) {
             if (prevBtn && !isMobile) prevBtn.classList.add('disabled');
             if (nextBtn && !isMobile) nextBtn.classList.add('disabled');
             track.style.transform = 'translateX(0)';
             return;
         }
-
         if (prevBtn && !isMobile) prevBtn.classList.remove('disabled');
         if (nextBtn && !isMobile) nextBtn.classList.remove('disabled');
-
         const itemsToCloneEnd = visibleCards.slice(0, cardsInView + 2);
         itemsToCloneEnd.forEach(card => {
             const clone = card.cloneNode(true);
             clone.classList.add('clone');
             track.appendChild(clone);
         });
-
         const itemsToCloneStart = visibleCards.slice(-(cardsInView + 2));
         itemsToCloneStart.reverse().forEach(card => {
             const clone = card.cloneNode(true);
             clone.classList.add('clone');
             track.insertBefore(clone, visibleCards[0]);
         });
-
         currentIndex = cardsInView + 2;
         let initialOffset = -currentIndex * (cardWidth + gap);
         if (isMobile) {
@@ -1315,71 +1310,76 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
         track.style.transition = 'none';
         track.style.transform = `translateX(${initialOffset}px)`;
         if (isMobile) { container.style.overflowX = 'hidden'; }
-        
         startAutoplay();
     }
 
+
     // --- LÓGICA DE INTERAÇÃO ---
     if (!isMobile) {
-        // LÓGICA PC - Permanece exatamente como a original e funcional.
+        // Lógica PC (inalterada)
         nextBtn.addEventListener('click', () => move(1));
         prevBtn.addEventListener('click', () => move(-1));
         section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
         section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
     } else {
-        // LÓGICA MOBILE - Com o ajuste de sensibilidade.
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let diffX = 0;
-        let isSwipe = false;
-        let isScrolling = false; // Flag para saber se é scroll vertical
-
+        // Lógica Mobile (REFINADA)
         container.addEventListener('touchstart', e => {
-            isSwipe = true;
-            isScrolling = false; // Reseta a flag
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
+            isDragging = true;
+            swipeDirection = null; // Reseta a direção a cada novo toque
+            touchCurrentX = touchStartX; // Inicia a posição atual
             stopAutoplay();
-            track.style.transition = 'none'; // Permite arrastar suavemente
+            track.style.transition = 'none';
         });
 
         container.addEventListener('touchmove', e => {
-            if (!isSwipe) return;
+            if (!isDragging) return;
+            
+            touchCurrentX = e.touches[0].clientX;
+            const touchCurrentY = e.touches[0].clientY;
+            
+            const diffX = touchStartX - touchCurrentX;
+            const diffY = touchStartY - touchCurrentY;
 
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-            diffX = currentX - touchStartX;
-            const diffY = currentY - touchStartY;
-
-            // Se for a primeira vez que o move é detectado
-            if (isScrolling === false) {
-                // Se o movimento vertical for maior que o horizontal, marca como scroll
-                if (Math.abs(diffY) > Math.abs(diffX)) {
-                    isScrolling = true;
+            // Se a direção ainda não foi definida...
+            if (swipeDirection === null) {
+                // ...só define se o movimento for maior que uma pequena "zona morta" (ex: 10px)
+                if (Math.abs(diffX) > 10 || Math.abs(diffY) > 10) {
+                    // Compara qual movimento é maior para definir a direção
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        swipeDirection = 'horizontal';
+                    } else {
+                        swipeDirection = 'vertical';
+                    }
                 }
             }
-            
-            // Se NÃO for scroll vertical, move o carrossel
-            if (!isScrolling) {
-                e.preventDefault(); // Previne o scroll da página apenas se for swipe horizontal
+
+            // Apenas executa a lógica do carrossel se a direção for horizontal
+            if (swipeDirection === 'horizontal') {
+                e.preventDefault(); // Previne o scroll vertical da página
                 const currentOffset = -currentIndex * (getVisibleCards()[0].offsetWidth + 25) + (getVisibleCards()[0].offsetParent.offsetWidth - getVisibleCards()[0].offsetWidth) / 2;
-                track.style.transform = `translateX(${currentOffset + diffX}px)`;
+                track.style.transform = `translateX(${currentOffset - diffX}px)`;
             }
         });
 
         container.addEventListener('touchend', e => {
-            isSwipe = false;
+            if (!isDragging) return;
+            isDragging = false;
             
-            // Só processa o fim do swipe se não for um scroll vertical
-            if (!isScrolling) {
-                const swipeThreshold = 50;
-                if (Math.abs(diffX) > swipeThreshold) {
-                    move(diffX < 0 ? 1 : -1);
+            // Apenas processa o swipe se a direção for horizontal
+            if (swipeDirection === 'horizontal') {
+                const diff = touchStartX - touchCurrentX;
+                const swipeThreshold = 50; // Limite para considerar um swipe
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    move(diff > 0 ? 1 : -1);
                 } else {
-                    move(0); // Volta para a posição original
+                    // Se o swipe for muito curto, volta para o lugar
+                    move(0);
                 }
             }
-            startAutoplay(); // Reinicia a animação de qualquer forma
+            startAutoplay(); // Reinicia a animação em todos os casos
         });
     }
 
@@ -1394,7 +1394,6 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
     window.addEventListener('resize', setupCarousel);
     setupCarousel();
 }
-
         // --- CHAMADA DAS FUNÇÕES DE CARROSSEL ---
         if (window.innerWidth > 992) {
             setupInfiniteCarousel('latest-videos-section');
