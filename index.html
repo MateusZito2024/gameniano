@@ -714,7 +714,7 @@ CÓDIGO PARA AJUSTAR O CARROSSEL E SEU CONTEÚDO NO CELULAR
 @media (max-width: 992px) {
   /* 1. Diminui a altura geral da área do banner */
   .hero-section {
-    height: 160px; /* Você pode ajustar este valor */
+    height: 150px; /* Você pode ajustar este valor */
        /* --- AJUSTE DA IMAGEM --- */
     background-image: url('https://i.postimg.cc/pLjX72fq/tarot-reverce-border-magic-sacred-cover-card-frame-gold-line-border-celelstial-mystery-esoteric-deco.jpg'); /* <-- TROQUE A URL AQUI */
     background-size: contain;  /* Garante que toda a imagem apareça, sem cortar */
@@ -750,6 +750,51 @@ CÓDIGO PARA AJUSTAR O CARROSSEL E SEU CONTEÚDO NO CELULAR
 }
 .slider-nav {
   display: none;
+}
+/*
+================================================================
+CÓDIGO PARA DIMINUIR O ESPAÇO ENTRE O BANNER E A SEÇÃO "LIVE"
+================================================================
+*/
+.hero-section {
+  margin-bottom: -5px; /* Diminuímos a margem de baixo do banner (era 60px) */
+}
+
+.live-section {
+  margin-top: 0;       /* Zeramos a margem de cima da seção LIVE (era 60px) */
+  padding-top: 40px;   /* Apenas ajustamos o espaço interno (era 50px) */
+}
+/*
+================================================================
+CÓDIGO PARA DIMINUIR O ESPAÇO ENTRE AS SEÇÕES DE VÍDEOS
+================================================================
+*/
+
+/* Ajusta o espaço abaixo da seção LIVE */
+.live-section {
+  padding-bottom: 30px; /* Era 50px */
+}
+
+/* Ajusta o espaço acima e abaixo de "Recentes" e "Em Alta" de uma só vez */
+.video-carousel-section {
+  padding-top: 40px;    /* Era 80px */
+  padding-bottom: 40px; /* Era 80px */
+}
+/*
+================================================================
+CÓDIGO PARA DIMINUIR OS ESPAÇOS FINAIS DA PÁGINA
+================================================================
+*/
+
+/* Ajusta os espaços acima e abaixo da seção "Seja Membro" */
+.member-section {
+  padding-top: 40px;    /* Era 80px */
+  padding-bottom: 40px; /* Era 80px */
+}
+
+/* Ajusta o espaço acima do Rodapé */
+footer {
+  margin-top: 40px; /* Era 80px */
 }
     </style>
 </head>
