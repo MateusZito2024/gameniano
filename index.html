@@ -1325,6 +1325,7 @@ if (heroCarousel) {
         let direction = null; // 'horizontal', 'vertical' ou null
 
         heroCarousel.addEventListener('touchstart', (e) => {
+            if (isTransitioning) return;
             stopHeroAutoplay();
             isDragging = true;
             direction = null; // Reseta a direção
@@ -1334,7 +1335,7 @@ if (heroCarousel) {
         });
 
         heroCarousel.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
+             if (!isDragging || isTransitioning) return;
 
             distX = e.touches[0].clientX - startX;
             distY = e.touches[0].clientY - startY;
@@ -1356,6 +1357,7 @@ if (heroCarousel) {
         });
 
         heroCarousel.addEventListener('touchend', (e) => {
+            if (isTransitioning) return;
             isDragging = false;
             const swipeThreshold = 50;
 
