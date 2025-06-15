@@ -708,16 +708,43 @@
         }
 /*
 ================================================================
-CÓDIGO PARA AJUSTAR O TAMANHO DO CARROSSEL NO CELULAR
+CÓDIGO PARA AJUSTAR O CARROSSEL E SEU CONTEÚDO NO CELULAR
 ================================================================
 */
 @media (max-width: 992px) {
+  /* 1. Diminui a altura geral da área do banner */
   .hero-section {
-    height: 380px; /* Reduz o tamanho do banner no celular */
+    height: 135px; /* Você pode ajustar este valor */
   }
+
+  /* 2. Diminui a altura da caixa onde os cards ficam */
   .hero-carousel-container {
-    height: 280px; /* Reduz o tamanho dos cards no celular */
+    height: 146px; /* Você pode ajustar este valor */
   }
+
+  /* 3. Ajusta o conteúdo DENTRO do card para caber no novo espaço */
+  .hero-card {
+    padding-top: 40px;    /* Diminui o espaçamento interno de cima */
+    padding-bottom: 40px; /* Diminui o espaçamento interno de baixo */
+    justify-content: center; /* Garante que o conteúdo fique centralizado */
+  }
+  .hero-card h2 {
+    font-size: 2em;       /* Diminui o tamanho do título */
+    margin-bottom: 6px;  /* Diminui o espaço abaixo do título */
+  }
+  .hero-card p {
+    font-size: 0.95em;    /* Diminui o tamanho do parágrafo */
+    margin-bottom: 10px;  /* Ajusta o espaço abaixo do parágrafo */
+    min-height: auto;     /* Permite que o texto ocupe menos altura */
+  }
+  .hero-button {
+    padding: 5px 15px;   /* Diminui o tamanho do botão */
+    font-size: 0.7em;     /* Diminui o texto do botão */
+    width: auto;          /* Deixa o botão se ajustar ao texto */
+  }
+}
+.slider-nav {
+  display: none;
 }
     </style>
 </head>
