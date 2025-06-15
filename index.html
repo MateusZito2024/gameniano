@@ -164,7 +164,7 @@
         .hero-section {
             position: relative;
             height: 520px;
-            background-image: url('https://i.postimg.cc/WbVBrwrj/capa-site-yt.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1.5)), url('https://i.postimg.cc/WbVBrwrj/capa-site-yt.png');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -747,7 +747,6 @@ CÓDIGO PARA AJUSTAR O CARROSSEL E SEU CONTEÚDO NO CELULAR
     font-size: 0.8em;     /* Diminui o texto do botão */
     width: auto;          /* Deixa o botão se ajustar ao texto */
   }
-}
 .slider-nav {
   display: none;
 }
@@ -795,6 +794,26 @@ CÓDIGO PARA DIMINUIR OS ESPAÇOS FINAIS DA PÁGINA
 /* Ajusta o espaço acima do Rodapé */
 footer {
   margin-top: 40px; /* Era 80px */
+}
+/*
+================================================================
+CÓDIGO PARA AJUSTAR O LAYOUT DOS BOTÕES DE FILTRO NO CELULAR
+================================================================
+*/
+@media (max-width: 992px) {
+  /* Primeiro, definimos a base com 2 colunas */
+  .filter-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px; /* Um pouco menos de espaço entre eles fica bom */
+  }
+
+  /* Esta é a regra mágica: para o último botão de cada grupo */
+  .filter-buttons .filter-btn:last-child {
+    grid-column: 1 / -1;   /* Faz o botão ocupar o espaço das 2 colunas */
+    justify-self: center;  /* Centraliza o próprio botão nesse espaço largo */
+    width: 60%;            /* Define uma largura para o botão não ficar esticado demais */
+  }
 }
     </style>
 </head>
@@ -861,7 +880,7 @@ footer {
             <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UCnbmIi0Ddoa7BwgWQDTZHVA&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -1510,7 +1529,7 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
         });
 
         container.addEventListener('touchmove', e => {
-            if (!isDragging) return;
+            if (!isDragging || isTransitioning) return;
             
             touchCurrentX = e.touches[0].clientX;
             const touchCurrentY = e.touches[0].clientY;
