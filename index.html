@@ -1394,16 +1394,17 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
     let autoplayInterval;
     let currentIndex = 0;
     
-    // --- LÓGICA DE TOQUE (COM AJUSTE DE SENSIBILIDADE REFINADO) ---
     let touchStartX = 0;
     let touchStartY = 0;
     let touchCurrentX = 0;
     let isDragging = false;
-    let swipeDirection = null; // MUDANÇA: Começa como nulo
+    let swipeDirection = null;
 
-    // --- Funções do carrossel (sem alterações no funcionamento) ---
     function getVisibleCards() { return Array.from(track.children).filter(card => window.getComputedStyle(card).display !== 'none' && !card.classList.contains('clone')); }
-    function stopAutoplay() { clearInterval(autoplayInterval); }
+    
+    function stopAutoplay() { 
+        clearInterval(autoplayInterval); 
+    }
 
     function startAutoplay() {
         stopAutoplay();
@@ -1417,13 +1418,16 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
 
     function move(direction) {
         if (isTransitioning) return;
-        isTransitioning = true;
+        isTransitioning = true; // << TRAVA o carrossel
+        
         const visibleCards = getVisibleCards();
         if (visibleCards.length === 0) { isTransitioning = false; return; }
+        
         const cardWidth = visibleCards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(track).gap) || 25;
         const containerWidth = container.offsetWidth;
         const centerOffset = isMobile ? (containerWidth - cardWidth) / 2 : 0;
+        
         currentIndex += direction;
         let offset = -currentIndex * (cardWidth + gap) + centerOffset;
         track.style.transition = 'transform 0.5s ease-in-out';
@@ -1431,9 +1435,12 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
     }
     
     track.addEventListener('transitionend', () => {
-        isTransitioning = false; // Garante que a transição seja marcada como finalizada
         const visibleCards = getVisibleCards();
-        if (visibleCards.length === 0) return;
+        if (visibleCards.length === 0) {
+            isTransitioning = false;
+            return;
+        }
+        
         const cardWidth = visibleCards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(track).gap) || 25;
         const cardsInView = isMobile ? 1 : Math.floor(container.offsetWidth / (cardWidth + gap));
@@ -1450,9 +1457,11 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
             track.style.transition = 'none';
             track.style.transform = `translateX(${-(currentIndex * (cardWidth + gap)) + centerOffset}px)`;
         }
+        
+        isTransitioning = false; // << DESTRAVA o carrossel SÓ DEPOIS que a animação termina
     });
 
-    function setupCarousel() { /* ... sua função original inalterada ... */ 
+    function setupCarousel() {
         stopAutoplay();
         isTransitioning = false;
         const clones = track.querySelectorAll('.clone');
@@ -1508,73 +1517,55 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
         startAutoplay();
     }
 
-
-    // --- LÓGICA DE INTERAÇÃO ---
     if (!isMobile) {
-        // Lógica PC (inalterada)
         nextBtn.addEventListener('click', () => move(1));
         prevBtn.addEventListener('click', () => move(-1));
         section.querySelector('.video-carousel-wrapper').addEventListener('mouseenter', stopAutoplay);
         section.querySelector('.video-carousel-wrapper').addEventListener('mouseleave', startAutoplay);
     } else {
-        // Lógica Mobile (REFINADA)
         container.addEventListener('touchstart', e => {
+            if (isTransitioning) return; // CORREÇÃO: Se está animando, ignora completamente o novo toque.
+            stopAutoplay();
+            isDragging = true;
+            swipeDirection = null;
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-            isDragging = true;
-            swipeDirection = null; // Reseta a direção a cada novo toque
-            touchCurrentX = touchStartX; // Inicia a posição atual
-            stopAutoplay();
             track.style.transition = 'none';
         });
 
         container.addEventListener('touchmove', e => {
-            if (!isDragging || isTransitioning) return;
+            if (!isDragging || isTransitioning) return; // CORREÇÃO: Ignora o arrastar se estiver animando.
             
             touchCurrentX = e.touches[0].clientX;
             const touchCurrentY = e.touches[0].clientY;
-            
             const diffX = touchStartX - touchCurrentX;
             const diffY = touchStartY - touchCurrentY;
 
-            // Se a direção ainda não foi definida...
-            if (swipeDirection === null) {
-                // ...só define se o movimento for maior que uma pequena "zona morta" (ex: 10px)
-                if (Math.abs(diffX) > 10 || Math.abs(diffY) > 10) {
-                    // Compara qual movimento é maior para definir a direção
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        swipeDirection = 'horizontal';
-                    } else {
-                        swipeDirection = 'vertical';
-                    }
-                }
+            if (swipeDirection === null && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
+                swipeDirection = Math.abs(diffX) > Math.abs(diffY) ? 'horizontal' : 'vertical';
             }
 
-            // Apenas executa a lógica do carrossel se a direção for horizontal
             if (swipeDirection === 'horizontal') {
-                e.preventDefault(); // Previne o scroll vertical da página
-                const currentOffset = -currentIndex * (getVisibleCards()[0].offsetWidth + 25) + (getVisibleCards()[0].offsetParent.offsetWidth - getVisibleCards()[0].offsetWidth) / 2;
+                e.preventDefault();
+                const currentOffset = -currentIndex * (getVisibleCards()[0].offsetWidth + 25) + (container.offsetWidth - getVisibleCards()[0].offsetWidth) / 2;
                 track.style.transform = `translateX(${currentOffset - diffX}px)`;
             }
         });
 
         container.addEventListener('touchend', e => {
-            if (!isDragging) return;
+            if (!isDragging || isTransitioning) return; // CORREÇÃO: Ignora o fim do toque se estiver animando.
+            
             isDragging = false;
             
-            // Apenas processa o swipe se a direção for horizontal
             if (swipeDirection === 'horizontal') {
                 const diff = touchStartX - touchCurrentX;
-                const swipeThreshold = 50; // Limite para considerar um swipe
-
-                if (Math.abs(diff) > swipeThreshold) {
+                if (Math.abs(diff) > 50) {
                     move(diff > 0 ? 1 : -1);
                 } else {
-                    // Se o swipe for muito curto, volta para o lugar
-                    move(0);
+                    move(0); // Volta ao lugar se o arrastar for curto
                 }
             }
-            startAutoplay(); // Reinicia a animação em todos os casos
+            startAutoplay();
         });
     }
 
