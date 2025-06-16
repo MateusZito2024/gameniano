@@ -1695,6 +1695,12 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, { passive: true });
         }
+// Lógica para abrir links dos vídeos em nova aba
+        const watchButtons = document.querySelectorAll('.video-card-vertical .watch-button');
+        watchButtons.forEach(button => {
+            button.target = '_blank';
+            button.rel = 'noopener noreferrer';
+        });
     });
 // --- LÓGICA DOS BOTÕES DO POP-UP DE SOM ---
 const unmutePopup = document.getElementById('unmute-popup');
