@@ -815,6 +815,71 @@ CÓDIGO PARA AJUSTAR O LAYOUT DOS BOTÕES DE FILTRO NO CELULAR
     width: 60%;            /* Define uma largura para o botão não ficar esticado demais */
   }
 }
+/*
+================================================================
+CÓDIGO CSS PARA O POP-UP DE SOM
+================================================================
+*/
+.unmute-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(200%); /* Começa escondido abaixo da tela */
+    background-color: var(--dark-gray);
+    color: var(--text-light);
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.6);
+    transition: transform 0.4s ease-out;
+}
+
+.unmute-popup.show {
+    transform: translateX(-50%) translateY(0); /* Faz o pop-up aparecer */
+}
+
+.unmute-popup p {
+    margin: 0;
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+.unmute-popup-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.unmute-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.unmute-btn.yes {
+    background-color: var(--gold);
+    color: var(--dark-background);
+}
+.unmute-btn.yes:hover {
+    background-color: var(--button-gold-hover);
+}
+
+.unmute-btn.no {
+    background-color: var(--medium-gray);
+    color: var(--text-light);
+}
+.unmute-btn.no:hover {
+    background-color: #444;
+}
     </style>
 </head>
 <body>
@@ -880,7 +945,7 @@ CÓDIGO PARA AJUSTAR O LAYOUT DOS BOTÕES DE FILTRO NO CELULAR
             <h2 class="section-title"><img src="https://i.postimg.cc/JhK9XR71/asset-1-4x.png" alt="Estrela">LIVE</h2>
             <div class="live-content-wrapper">
                 <div class="live-video-player">
-                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UC4qMNZEr7SPOcPyitB8VAhw&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="liveVideoIframe" src="https://www.youtube.com/embed/live_stream?channel=UCnbmIi0Ddoa7BwgWQDTZHVA&autoplay=1&mute=1&enablejsapi=1" title="Live Tarot" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-thumbnail-container" id="liveThumbnail">
                         <img src="https://i.postimg.cc/nLwW1P5Y/1000202945.png" alt="Live Offline Thumbnail">
                         <div class="play-button"><i class="fas fa-play"></i></div>
@@ -959,6 +1024,8 @@ Venha participar conosco ao vivo.</p> <a href="https://www.youtube.com/live/vMrN
                     <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/4FQtfrB1k8s/hqdefault.jpg" alt="Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Victor Valentim - Bosque dos gnomos - video 2/5</h3><p class="description">Seguindo a nossa série elementos neste vídeo fui ate o ‪@BosquedosGnomos‬ para resgatar conhecimentos sobre o elemento Terra, magia natural, gnomos e duendes, e muito mais com o Victor Valentim, espero que você goste, esta é a primeira de uma série de 4 entrevistas que ocorrerão, cada elemento uma escola de magia diferente, espero que você goste!</p><a href="https://youtu.be/fio3zIbEaOQ?si=4FQtfrB1k8s" target="_blank" class="watch-button">Assistir</a></div></div>
                     <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/kNDUONUnEJ0/hqdefault.jpg" alt="Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Ar - Tânia Gori - Casa de Bruxa - video 3/5</h3><p class="description">Este vídeo faz parte de um série de 4 vídeos sobre os 4 elementos, 4 escolas de magia foram convidadas para falar sobre um elemento e hoje a Tania Gori da Casa de Bruxa nos trás conhecimentos sobre o elemento Ar espero que goste.</p><a href="https://youtu.be/fio3zIbEaOQ?si=kNDUONUnEJ0" target="_blank" class="watch-button">Assistir</a></div></div>
                     <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/SzVi4CEnlRw/hqdefault.jpg" alt="Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Fogo - Alline Lima - Casa Tatwa - vídeo 4/5</h3><p class="description">Este vídeo faz parte de uma série de 4 vídeos sobre os 4 elementos, cada elemento uma escola de magia diferente.</p><a href="https://youtu.be/fio3zIbEaOQ?si=SzVi4CEnlRw" target="_blank" class="watch-button">Assistir</a></div></div>
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/Wp-WJ0RekbM/hqdefault.jpg" alt="Série elementos - Água - Claudhia Issa - Santuário da Grande Mãe - vídeo 5/5" class="thumbnail"> <div class="video-info"><h3>Série elementos - Água - Claudhia Issa - Santuário da Grande Mãe - vídeo 5/5</h3><p class="description">Este é o ultimo vídeo da série elementos e a Claudhia Issa nos trás conhecimentos sobre o elemento agua, passamos por 4 escolas de magia e cada escola nos trouxe um pouco de conhecimento sobre cada elemento.</p><a href="https://www.youtube.com/watch?v=Wp-WJ0RekbM" target="_blank" class="watch-button">Assistir</a></div></div>
+                    <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/nhQIR9CWgZA/hqdefault.jpg" alt="Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais</h3><p class="description">Neste vídeo faço algumas considerações a respeito da série elementos, trago alguns, algumas reflexões e alguns pontos onde os ensinamentos entram em sintonia. Nesta série tratamos sobre os 4 elementos: Terra, fogo, agua e ar.</p><a href="https://youtu.be/fio3zIbEaOQ?si=nhQIR9CWgZA" target="_blank" class="watch-button">Assistir</a></div></div>
                     <div class="video-card-vertical" data-category="elementos"> <img src="https://i.ytimg.com/vi/nhQIR9CWgZA/hqdefault.jpg" alt="Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais" class="thumbnail"> <div class="video-info"><h3>Série Elementos - Terra - Fogo - Agua- Ar - Trechos, comentários e considerações finais</h3><p class="description">Neste vídeo faço algumas considerações a respeito da série elementos, trago alguns, algumas reflexões e alguns pontos onde os ensinamentos entram em sintonia. Nesta série tratamos sobre os 4 elementos: Terra, fogo, agua e ar.</p><a href="https://youtu.be/fio3zIbEaOQ?si=nhQIR9CWgZA" target="_blank" class="watch-button">Assistir</a></div></div>
                     <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/HreNpLFNNqk/hqdefault.jpg" alt="LIVE - sábado 10/10 às 22:00" class="thumbnail"> <div class="video-info"> <h3>LIVE - sábado 10/10 às 22:00</h3> <p class="description">Saudações queridos amigos, vamos conversar ao vivo? nosso encontro está marcado para sábado dia 10/10 e será transmitido simultaneamente pelo youtube e facebook. Traga sua questão ou venha apenas bater papo, espero você!</p> <a href="https://www.youtube.com/live/HreNpLFNNqk" target="_blank" class="watch-button">Assistir</a> </div> </div>
 <div class="video-card-vertical" data-category="totem"> <img src="https://i.ytimg.com/vi/jVPBbOLQU1o/hqdefault.jpg" alt="Live Tarot - Quinta 12/06 às 21h" class="thumbnail"> <div class="video-info"> <h3>Live Tarot - Quinta 12/06 às 21h</h3> <p class="description">Saudações amigos, Nesta quinta dia 12 estaremos juntos em mais uma Live de tarot a partir das 21 horas, venha me fazer companhia e traga a sua questão! </p> <a href="https://www.youtube.com/live/jVPBbOLQU1o" target="_blank" class="watch-button">Assistir</a> </div> </div>
@@ -1087,6 +1154,13 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
         <button id="live-popup-close" class="live-popup-close-btn">ESTÁ BEM</button>
     </div>
 </div>
+<div id="unmute-popup" class="unmute-popup">
+    <p>Deseja ativar o som da live?</p>
+    <div class="unmute-popup-buttons">
+        <button id="unmute-yes-btn" class="unmute-btn yes">Sim</button>
+        <button id="unmute-no-btn" class="unmute-btn no">Não</button>
+    </div>
+</div>
 </main> 
     <footer>
         <div class="footer-logo-section">
@@ -1134,6 +1208,7 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     let player;
+    let unmutePopupShown = false;
     window.onYouTubeIframeAPIReady = function() {
         player = new YT.Player('liveVideoIframe', {
             events: {
@@ -1187,16 +1262,22 @@ Sua mística, benefícios, vibração da floresta e conexão espiritual.</p> <a 
     }
 
     function onPlayerStateChange(event) {
-        const thumbnailContainer = document.getElementById('liveThumbnail');
-        if (!thumbnailContainer) return;
-
-        // Esta função agora lida com o estado DEPOIS da interação.
-        // Se o vídeo começar a tocar (autoplay no PC ou clique no mobile)...
-        if (event.data === YT.PlayerState.PLAYING) {
-            // ...esconde a thumbnail.
-            thumbnailContainer.classList.add('hidden');
-        }
+    const thumbnailContainer = document.getElementById('liveThumbnail');
+    if (thumbnailContainer && event.data === YT.PlayerState.PLAYING) {
+        thumbnailContainer.classList.add('hidden');
     }
+
+    // --- NOVA LÓGICA DO POP-UP DE SOM ---
+    const isMobile = window.innerWidth <= 992;
+    // Se o vídeo começou a tocar, se for mobile e se o pop-up ainda não foi mostrado
+    if (event.data === YT.PlayerState.PLAYING && isMobile && !unmutePopupShown) {
+        const unmutePopup = document.getElementById('unmute-popup');
+        if (unmutePopup) {
+            unmutePopup.classList.add('show');
+        }
+        unmutePopupShown = true; // Marca que o pop-up já foi exibido nesta sessão
+    }
+}
 
     // --- LÓGICA DO SITE (Sem alterações, mantida da versão anterior) ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -1604,6 +1685,23 @@ function setupInfiniteCarousel(sectionId, isMobile = false) {
             }, { passive: true });
         }
     });
+// --- LÓGICA DOS BOTÕES DO POP-UP DE SOM ---
+const unmutePopup = document.getElementById('unmute-popup');
+const unmuteYesBtn = document.getElementById('unmute-yes-btn');
+const unmuteNoBtn = document.getElementById('unmute-no-btn');
+
+if (unmutePopup && unmuteYesBtn && unmuteNoBtn) {
+    unmuteYesBtn.addEventListener('click', () => {
+        if (player && typeof player.unMute === 'function') {
+            player.unMute(); // Ativa o som
+        }
+        unmutePopup.classList.remove('show'); // Esconde o pop-up
+    });
+
+    unmuteNoBtn.addEventListener('click', () => {
+        unmutePopup.classList.remove('show'); // Apenas esconde o pop-up
+    });
+}
 </script>
 </body>
 </html>
